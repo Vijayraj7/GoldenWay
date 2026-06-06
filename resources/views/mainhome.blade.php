@@ -1273,7 +1273,7 @@ if(isset($_GET['page'])){
                                                         International
                                                     </h1>
                                                     <p class="banner__content-moto">
-                                                        Anyone can invest money to different currency to increase their earnings by the help of GMS through online.
+                                                        Anyone can invest money to different currency to increase their earnings by the help of GWI through online.
                                                     </p>
                                                     <div class="banner__btn-group btn-group">
                                                         <a
