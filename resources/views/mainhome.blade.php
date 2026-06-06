@@ -1214,7 +1214,7 @@ if(isset($_GET['page'])){
 
 
         <!-- main-area -->
-        <main class="main-area fix">
+        <main class="main-area fix" style="background-color: #8d6900 !important;">
             <div data-elementor-type="wp-page" data-elementor-id="67" class="elementor elementor-67">
              
                 <!-- banner -->
