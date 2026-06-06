@@ -54,7 +54,7 @@
         <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
         <script src="../assets/js/config.js"></script>
     </head>
-    <body style="background-color: #00150f !important;">
+    <body style="background-color: #8d6900 !important;">
         <!-- Content -->
         <div class="container-xxl" style="display: flex; justify-content: space-around; align-items: center;">
             <div class="imag" style="background-image: url('https://infinqx.ai/assets/images/login/wave.png');">
@@ -77,7 +77,7 @@
                                 </a>
                             </div>
                             <!-- /Logo -->
-                            <h4 class="mb-2">Welcome to GMS!</h4>
+                            <h4 class="mb-2">Welcome to Golden Way</h4>
                             <p class="mb-4">
                                 Please sign-in to your account and
                                 make the profit.
