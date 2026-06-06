@@ -922,7 +922,7 @@ if(isset($_GET['page'])){
             <div class="header-bottom">
                 <div class="container">
                     <div class="header-wrapper">
-                        <div class="logo">
+                        <div class="logo" style="display: none;">
                             <a class="main-logo" href="/dark/" style="display: flex; justify-content: center;">
                                 <img src="/tst/grnyellow.png" style="max-height: 60px" alt="Logo">
                             </a>
@@ -1256,20 +1256,21 @@ if(isset($_GET['page'])){
                                     <div class="banner__wrapper">
                                         <div class="row gy-5 gx-4">
                                             <div class="col-lg-6 col-md-7">
-                                                <div class="banner__content tg-content" data-aos="fade-right" data-aos-duration="1000">
+                                                <div>
+                                                {{-- <div class="banner__content tg-content" data-aos="fade-right" data-aos-duration="1000"> --}}
                                                     <div class="banner__content-coi">
                                                         <div style="height: 80px;"></div>
                                                         <img
                                                             decoding="async"
                                                             style="height: 160px; display: none;"
-                                                            src="https://media4.giphy.com/media/OccMlQrNO0YU4zFchY/source.gif"
+                                                            src="/tst/grnyellow.png"
                                                             alt="Coin icon"
                                                         >
                                                     </div>
                                                     <h1 class="banner-title banner__content-heading title">
-                                                        Rule of success
-                                                        <span>Never give up</span>
-                                                        Keep on Trading
+                                                        Golden
+                                                        <span>Way</span>
+                                                        International
                                                     </h1>
                                                     <p class="banner__content-moto">
                                                         Anyone can invest money to different currency to increase their earnings by the help of GMS through online.
