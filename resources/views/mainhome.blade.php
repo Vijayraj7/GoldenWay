@@ -11,7 +11,7 @@ if(isset($_GET['page'])){
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-adsense-account" content="ca-pub-6586185621941206">
         <link rel="profile" href="https://gmpg.org/xfn/11">
-        <title>GMS</title>
+        <title>GWI</title>
         <meta name="robots" content="max-image-preview:large">
         <link
             rel="alternate"
@@ -927,7 +927,7 @@ if(isset($_GET['page'])){
                                 <img src="/tst/grnyellow.png" style="max-height: 60px" alt="Logo">
                             </a>
                             <h3 style="text-align: center;">Golden Way International</h3>
-                            <h3 style="text-align: center; font-size: 13px;">Global Markets Stars</h3>
+                            <h3 style="text-align: center; font-size: 13px;">Golden Way International</h3>
                         </div>
                         <div class="menu-area menu--style1">
                             <ul id="menu-main-menu" class="main-menu">
