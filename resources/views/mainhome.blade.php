@@ -1245,7 +1245,7 @@ if(isset($_GET['page'])){
                                     <div class="banner__bg-element">
                                         <img
                                             decoding="async"
-                                            src="/dark/wp-content/uploads/2023/10/banner_bg_dark.png"
+                                            src="/tst/grnyellow.png"
                                             alt="section-bg-element"
                                             class="dark d-none d-lg-block"
                                         >
