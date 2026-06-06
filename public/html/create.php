@@ -1,6 +1,6 @@
 <?php
 
-$url = 'https://globalmarketstars.com/html/create.html';
+$url = 'https://goldenway-international.com/html/create.html';
 
 
 // Initialize cURL session

@@ -308,7 +308,7 @@ updateBalances();
                 echo "<td>$rv->name(ref)</td>";
                 echo "<td>$v->phone</td>";
                 echo "<td>$v->email</td>";
-                echo "<td style='cursor:pointer;'>https://globalmarketstars.com/activate/$id/$code</td>";
+                echo "<td style='cursor:pointer;'>https://goldenway-international.com/activate/$id/$code</td>";
                 echo '</tr>';
             }
         }

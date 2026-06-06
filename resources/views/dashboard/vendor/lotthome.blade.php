@@ -339,7 +339,7 @@ if(count($plans) == 0){
 
                                                 <?php
                                                 // URL encode the parameter values
-                                                $text = urlencode("https://globalmarketstars.com/register?ref=" . $v->id . "&name=" . $v->name);
+                                                $text = urlencode("https://goldenway-international.com/register?ref=" . $v->id . "&name=" . $v->name);
                                                 
                                                 // Construct the WhatsApp message link
                                                 $whatsappLink = "whatsapp://send?text=" . $text;
@@ -351,7 +351,7 @@ Share Referral
 
 <script>
     document.getElementById('shcopyButton').addEventListener('click', function() {
-        var url = "https://globalmarketstars.com/register?ref={{ $v->id }}&name={{ $v->name }}";
+        var url = "https://goldenway-international.com/register?ref={{ $v->id }}&name={{ $v->name }}";
 
         navigator.clipboard.writeText(url)
             .then(function() {

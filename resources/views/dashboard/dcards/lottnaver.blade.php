@@ -239,7 +239,7 @@ if (count($nplans) == 0) {
                         <li id="copyButton">
                             <?php
                             // URL encode the parameter values
-                            $text = urlencode('https://globalmarketstars.com/register?ref=' . $v->id . '&name=' . $v->name);
+                            $text = urlencode('https://goldenway-international.com/register?ref=' . $v->id . '&name=' . $v->name);
                             
                             // Construct the WhatsApp message link
                             $whatsappLink = 'whatsapp://send?text=' . $text;
@@ -248,14 +248,14 @@ if (count($nplans) == 0) {
                                 <i style="color: black !important;" class="bx bx-copy me-2"></i>
                                 <span style="color: black !important;" class="align-middle">Share Referral Url</span>
                                 <h6 style="font-size: 9px;">
-                                    https://globalmarketstars.com/register?ref={{ $v->id }}&name={{ $v->name }}
+                                    https://goldenway-international.com/register?ref={{ $v->id }}&name={{ $v->name }}
                                 </h6>
                             </a>
                         </li>
                     @endif
                     <script>
                         document.getElementById('copyButton').addEventListener('click', function() {
-                            var url = "https://globalmarketstars.com/register?ref={{ $v->id }}&name={{ $v->name }}";
+                            var url = "https://goldenway-international.com/register?ref={{ $v->id }}&name={{ $v->name }}";
 
                             navigator.clipboard.writeText(url)
                                 .then(function() {
