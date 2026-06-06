@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESP32 USB Communication</title>
+</head>
+<body>
+  <h1>ESP32 USB Communication</h1>
+  <button id="connect">Connect to ESP32</button>
+  <br><br>
+  <textarea id="log" rows="10" cols="50" readonly></textarea>
+  <br><br>
+  <input type="text" id="message" placeholder="Enter message" />
+  <button id="send">Send Message</button>
+
+  <script>
+    let port;
+    let reader;
+    let inputDone;
+    let outputDone;
+
+    async function connectToESP32() {
+      try {
+        // Request a port and open a connection
+        port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 115200 });
+
+        // Setup the input stream
+        const decoder = new TextDecoderStream();
+        inputDone = port.readable.pipeTo(decoder.writable);
+        reader = decoder.readable.getReader();
+
+        // Log received data
+        readLoop();
+
+        // Setup the output stream
+        const encoder = new TextEncoderStream();
+        outputDone = encoder.readable.pipeTo(port.writable);
+        outputWriter = encoder.writable.getWriter();
+
+        log('Connected to ESP32!');
+      } catch (error) {
+        log('Connection failed: ' + error.message);
+      }
+    }
+
+    async function readLoop() {
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) {
+          break;
+        }
+        log('Received: ' + value);
+      }
+    }
+
+    function log(message) {
+      const logElement = document.getElementById('log');
+      logElement.value += message + '\n';
+      logElement.scrollTop = logElement.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const message = document.getElementById('message').value + '\n';
+      await outputWriter.write(message);
+      log('Sent: ' + message);
+    }
+
+    // Attach event listeners
+    document.getElementById('connect').addEventListener('click', connectToESP32);
+    document.getElementById('send').addEventListener('click', sendMessage);
+  </script>
+</body>
+</html>

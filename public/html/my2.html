@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USDT Reward Checker (BEP20)</title>
+</head>
+<body>
+    <h1>Claim USDT Reward (BEP20)</h1>
+    <button id="claim-reward">Claim Reward</button>
+    <p id="result"></p>
+    <p id="error" style="color:red;"></p>
+
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.5.2/dist/web3.min.js"></script>
+    <script>
+        const USDT_CONTRACT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955"; // BEP20 USDT contract address
+        const USDT_ABI = [
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "owner",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "type": "function"
+            },
+            {
+                "constant": false,
+                "inputs": [],
+                "name": "claimReward",
+                "outputs": [],
+                "type": "function"
+            }
+        ];
+
+        const PRIVATE_KEY = '0x381ab6372293a733f9552ca8c4ca655269616972aa7b6639bd1fc2875162db59';
+        const WALLET_ADDRESS = '0x6D6433921e7BFd6cbe11C9713b33b0633Bbb4191';
+        const BSC_RPC_URL = 'https://bsc-dataseed.binance.org/';
+
+        async function claimReward() {
+            document.getElementById("result").innerText = '';
+            document.getElementById("error").innerText = '';
+
+            try {
+                const web3 = new Web3(new Web3.providers.HttpProvider(BSC_RPC_URL));
+
+                const account = web3.eth.accounts.privateKeyToAccount(PRIVATE_KEY);
+                web3.eth.accounts.wallet.add(account);
+                web3.eth.defaultAccount = account.address;
+
+                const usdtContract = new web3.eth.Contract(USDT_ABI, USDT_CONTRACT_ADDRESS);
+
+                // Claim reward
+                const claim = usdtContract.methods.claimReward();
+                const gas = await claim.estimateGas({ from: WALLET_ADDRESS });
+                const gasPrice = await web3.eth.getGasPrice();
+
+                const tx = {
+                    from: WALLET_ADDRESS,
+                    to: USDT_CONTRACT_ADDRESS,
+                    data: claim.encodeABI(),
+                    gas: gas,
+                    gasPrice: gasPrice
+                };
+
+                const receipt = await web3.eth.sendTransaction(tx);
+                document.getElementById("result").innerText = `Transaction successful: ${receipt.transactionHash}`;
+
+                // Check updated balance
+                const balance = await usdtContract.methods.balanceOf(WALLET_ADDRESS).call();
+                document.getElementById("result").innerText += `\nYour updated USDT balance: ${web3.utils.fromWei(balance, 'mwei')} USDT`;
+
+            } catch (error) {
+                document.getElementById("error").innerText = `Error: ${error.message}`;
+            }
+        }
+
+        document.getElementById("claim-reward").addEventListener("click", claimReward);
+    </script>
+</body>
+</html>

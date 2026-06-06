@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-signin-client_id" content="898296056927-ne3t5e4qbmg6jobbgrt04ucisvu9i9o8.apps.googleusercontent.com">
+  <title>Google Sign-In</title>
+
+  <!-- Google Sign-In API -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  
+  <!-- JWT Decoder library (Ensure this is loaded first) -->
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+
+  <script>
+    function handleCredentialResponse(response) {
+      try {
+        // Decode the JWT to get the user info
+        const userObject = jwt_decode(response.credential);
+        console.log("Decoded user data:", userObject);
+        
+        // Display the user's email
+        document.getElementById('email').textContent = "Email: " + userObject.email;
+      } catch (error) {
+        console.error("Error decoding JWT", error);
+      }
+    }
+
+    function initializeGoogleSignIn() {
+      google.accounts.id.initialize({
+        client_id: "898296056927-ne3t5e4qbmg6jobbgrt04ucisvu9i9o8.apps.googleusercontent.com", // Replace with your actual client ID
+        callback: handleCredentialResponse
+      });
+
+      google.accounts.id.renderButton(
+        document.getElementById("google-signin-button"), // Render the Google Sign-In button
+        { theme: "outline", size: "large" } // Customize button theme and size
+      );
+    }
+  </script>
+</head>
+<body onload="initializeGoogleSignIn()">
+
+  <h2>Sign in with Google</h2>
+  <div id="google-signin-button"></div> <!-- Google Sign-In button -->
+  
+  <!-- Display the user's email after sign-in -->
+  <p id="email"></p>
+
+</body>
+</html>

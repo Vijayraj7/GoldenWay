@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Create Wallet Once and Send USDT (BEP-20)</title>
+        <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
+    </head>
+    <body>
+        <h1>Create Wallet Once and Send USDT (BEP-20)</h1>
+        <button onclick="createOrLoadWallet()">Create or Load Wallet</button>
+        <div id="address"></div>
+        <div>
+            <label for="recipientInput">Recipient Address:</label>
+            <input type="text" id="recipientInput" placeholder="0xRecipientAddress">
+            <br>
+            <label for="amountInput">Amount (USDT):</label>
+            <input
+                type="number"
+                id="amountInput"
+                step="any"
+                placeholder="Amount"
+            >
+            <br>
+            <button onclick="sendUSDT()">Send USDT</button>
+            <br>
+            <button onclick="sendBNB()">Send BNB</button>
+            <button onclick="getTransactionDetails()">Check txid</button>
+        </div>
+        <div id="usdtBalance"></div>
+        <div id="bnbBalance"></div>
+        <div id="output"></div>
+        <input type="text" id="txid_input" placeholder="Enter Transaction ID">
+        <button onclick="getTransactionDetails()">Get Transaction Details</button>
+        <pre id="transaction_details"></pre>
+        <br>
+        <input type="text" id="swap_amount" placeholder="Swap Usdt">
+        <button onclick="swapUSDTForBNB()">Swap USDT for BNB</button>
+        <div id="swap_output"></div>
+        <script>
+    // Check if web3 is available
+    if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        // If no injected web3 instance is detected, fallback to BSC RPC endpoint
+        web3 = new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed.binance.org/'));
+    }
+
+    // Variable to store the created wallet address and private key
+    var walletAddress = '0x6D6433921e7BFd6cbe11C9713b33b0633Bbb4191';
+    var privateKey = '0x381ab6372293a733f9552ca8c4ca655269616972aa7b6639bd1fc2875162db59';
+    var usdtContract = null; // Declare usdtContract variable
+    // Replace with the actual contract address of USDT on BSC
+    var storedPrivateKey = '0x381ab6372293a733f9552ca8c4ca655269616972aa7b6639bd1fc2875162db59';
+    var usdtContractAddress = '0x55d398326f99059ff775485246999027b3197955';
+
+     
+    const pancakeRouterAbi = [
+    {
+        "constant": false,
+        "inputs": [
+            { "name": "amountIn", "type": "uint256" },
+            { "name": "amountOutMin", "type": "uint256" },
+            { "name": "path", "type": "address[]" },
+            { "name": "to", "type": "address" },
+            { "name": "deadline", "type": "uint256" }
+        ],
+        "name": "swapExactTokensForETH",
+        "outputs": [
+            { "name": "amounts", "type": "uint256[]" }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+];
+
+
+    // Function to create or load wallet from localStorage
+    function createOrLoadWallet() {
+        // var storedAddress = localStorage.getItem('walletAddress');
+        //  storedPrivateKey = localStorage.getItem('privateKeyy');
+        // if (storedAddress && storedPrivateKey) {
+            // walletAddress = storedAddress;
+            // privateKey = storedPrivateKey;
+            displayWallet(walletAddress);
+        // } else {
+        //     var newAccount = web3.eth.accounts.create();
+        //     walletAddress = newAccount.address;
+        //     privateKey = newAccount.privateKey;
+        //     localStorage.setItem('walletAddress', walletAddress);
+        //     localStorage.setItem('privateKeyy', privateKey);
+        //     displayWallet(walletAddress);
+        // }
+
+        // Define the ABI of the BEP-20 token contract (USDT on BSC)
+        var usdtAbi = [
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "name",
+                "outputs": [{ "name": "", "type": "string" }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [{ "name": "", "type": "string" }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [{ "name": "_owner", "type": "address" }],
+                "name": "balanceOf",
+                "outputs": [{ "name": "balance", "type": "uint256" }],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+        "constant": false,
+        "inputs": [
+            { "name": "_spender", "type": "address" },
+            { "name": "_value", "type": "uint256" }
+        ],
+        "name": "approve",
+        "outputs": [{ "name": "success", "type": "bool" }],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+            {
+                "constant": false,
+                "inputs": [
+                    { "name": "_to", "type": "address" },
+                    { "name": "_value", "type": "uint256" }
+                ],
+                "name": "transfer",
+                "outputs": [{ "name": "success", "type": "bool" }],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ];
+
+
+
+        // Create a web3 contract instance
+        usdtContract = new web3.eth.Contract(usdtAbi, usdtContractAddress);
+        checkUSDTBalance(walletAddress);
+        checkBNBBalance(walletAddress);
+
+
+       
+
+
+
+    }
+
+
+
+const pancakeRouterAddress = "0x10ED43C718714eb63d5aA57B78B54704E256024E"; // Mainnet Router address
+async function swapUSDTForBNB()  {
+        // Ensure the wallet is connected
+        // await connectWallet();
+    var amount = document.getElementById('swap_amount').value.trim();
+
+    if (isNaN(amount) || amount <= 0) {
+        alert('Invalid amount');
+        return;
+    }
+
+    var amountInWei = web3.utils.toBN(amount * Math.pow(10, 18));
+        var path = [usdtContractAddress, '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE']; // USDT -> BNB
+        var pancakeRouter = new web3.eth.Contract(pancakeRouterAbi, pancakeRouterAddress);
+        var deadline = Math.floor(Date.now() / 1000) + 1200;
+
+        // Create transaction data for the approval
+        var approveData = usdtContract.methods.approve(pancakeRouterAddress, amountInWei).encodeABI();
+
+        // Create the transaction object for approval
+        var approveTransactionObject = {
+            from: walletAddress,
+            to: usdtContractAddress,
+            gas: 21632, // Adjust gas limit as needed
+            gasPrice: web3.utils.toWei('5', 'gwei'),
+            data: approveData
+        };
+
+    // // Approve the PancakeSwap router to spend USDT
+    // usdtContract.methods.approve(pancakeRouterAddress, amountInWei).send({ from: walletAddress })
+    // .then(() => {
+        // Sign and send the swap transaction
+        web3.eth.accounts.signTransaction(approveTransactionObject, privateKey).then(function(signedTx) {
+            web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+                .on('transactionHash', function(hash) {
+                    document.getElementById('swap_output').innerHTML = 'Swap transaction sent. Hash: ' + hash;
+                })
+                .on('receipt', function(receipt) {
+                    console.log('Swap Receipt:', receipt);
+                })
+                .on('error', function(error) {
+                    console.error('Swap Error:', error);
+                    document.getElementById('swap_output').innerHTML = 'Swap Error: ' + error.message;
+                });
+        }).catch(function(error) {
+            console.error('Signing Error:', error);
+            document.getElementById('swap_output').innerHTML = 'Signing Error: ' + error.message;
+        });
+    // }).catch(function(error) {
+    //     console.error('Approval Error:', error);
+    //     document.getElementById('swap_output').innerHTML = 'Approval Error: ' + error.message;
+    // });
+}
+
+async function connectWallet() {
+    if (typeof window.ethereum !== 'undefined') {
+        try {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            walletAddress = accounts[0];
+            console.log('Connected Wallet:', walletAddress);
+        } catch (error) {
+            console.error('User denied account access:', error);
+        }
+    } else {
+        console.error('Ethereum provider not found');
+    }
+}
+
+    // Function to display wallet address
+    function displayWallet(address) {
+        document.getElementById('address').innerHTML = 'Wallet Address: ' + address + '<br> Pvt key : '+ storedPrivateKey;
+    }
+
+    // Function to check USDT balance for a given address
+    function checkUSDTBalance(address) {
+        // Get USDT balance
+        usdtContract.methods.balanceOf(address).call(function(error, result) {
+            if (!error) {
+                var balance = result / Math.pow(10, 18); // Adjust decimals based on token decimals (USDT has 18 decimals on BSC)
+                document.getElementById('usdtBalance').innerHTML = 'USDT Balance: ' + balance;
+            } else {
+                console.error('Error:', error);
+                document.getElementById('usdtBalance').innerHTML = 'Error: ' + error.message;
+            }
+        });
+    }
+
+    // Function to check BNB balance for a given address
+    function checkBNBBalance(address) {
+        web3.eth.getBalance(address, function(error, result) {
+            if (!error) {
+                var balance = web3.utils.fromWei(result, 'ether'); // Convert balance from Wei to Ether
+                // balance = result; // Convert balance from Wei to Ether
+                document.getElementById('bnbBalance').innerHTML = 'BNB Balance: ' + balance;
+            } else {
+                console.error('Error:', error);
+                document.getElementById('bnbBalance').innerHTML = 'Error: ' + error.message;
+            }
+        });
+    }
+
+    // Function to send USDT tokens
+    function sendUSDT() {
+        var recipient = document.getElementById('recipientInput').value.trim();
+        var amount = document.getElementById('amountInput').value.trim();
+
+        if (!web3.utils.isAddress(recipient)) {
+            alert('Invalid recipient address');
+            return;
+        }
+
+        if (isNaN(amount) || amount <= 0) {
+            alert('Invalid amount');
+            return;
+        }
+
+        // Convert amount to Wei (USDT has 18 decimals on BSC)
+        var amountWei = web3.utils.toBN(amount * Math.pow(10, 18));
+        const amountWe = web3.utils.toWei(amount, 'ether');
+console.log(amountWe);
+        // Prepare transaction parameters
+        var transactionObject = {
+            from: walletAddress,
+            to: usdtContractAddress, // Use the contract address from usdtContract
+            gas: 100000, // Adjust gas limit as needed
+            gasPrice: web3.utils.toWei('1', 'gwei'), // Example gas price, adjust as needed
+            data: usdtContract.methods.transfer(recipient, amountWei).encodeABI()
+        };
+
+        // Sign transaction with private key
+        web3.eth.accounts.signTransaction(transactionObject, privateKey).then(function(signedTx) {
+            console.log(signedTx);
+            web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+                .on('transactionHash', function(hash) {
+                    document.getElementById('output').innerHTML = 'Transaction sent. Hash: ' + hash;
+                })
+                .on('receipt', function(receipt) {
+                    console.log('Receipt:', receipt);
+                    // Optionally do something when transaction is confirmed
+                })
+                .on('error', function(error) {
+                    console.error('Error:', error);
+                    document.getElementById('output').innerHTML = 'Error: ' + error.message;
+                });
+        }).catch(function(error) {
+            console.error('Error:', error);
+            document.getElementById('output').innerHTML = 'Error: ' + error.message;
+        });
+    }
+      
+
+    // Function to send BNB
+function sendBNB() {
+    var recipient = document.getElementById('recipientInput').value.trim();
+    var amount = document.getElementById('amountInput').value.trim();
+
+    if (!web3.utils.isAddress(recipient)) {
+        alert('Invalid recipient address');
+        return;
+    }
+
+    if (isNaN(amount) || amount <= 0) {
+        alert('Invalid amount');
+        return;
+    }
+
+    // Convert amount to Wei (1 BNB = 10^18 Wei)
+    var amountWei = web3.utils.toWei(amount, 'ether');
+
+    // Prepare transaction parameters
+    var transactionObject = {
+        from: walletAddress,
+        to: recipient,
+        value: amountWei,
+        gas: 100000, // Adjust gas limit as needed
+        gasPrice: web3.utils.toWei('1', 'gwei') // Example gas price, adjust as needed
+    };
+
+    // Sign transaction with private key
+    web3.eth.accounts.signTransaction(transactionObject, privateKey).then(function(signedTx) {
+        console.log(signedTx);
+        web3.eth.sendSignedTransaction(signedTx.rawTransaction)
+            .on('transactionHash', function(hash) {
+                document.getElementById('output').innerHTML = 'Transaction sent. Hash: ' + hash;
+            })
+            .on('receipt', function(receipt) {
+                console.log('Receipt:', receipt);
+                // Optionally do something when transaction is confirmed
+            })
+            .on('error', function(error) {
+                console.error('Error:', error);
+                document.getElementById('output').innerHTML = 'Error: ' + error.message;
+            });
+    }).catch(function(error) {
+        console.error('Error:', error);
+        document.getElementById('output').innerHTML = 'Error: ' + error.message;
+    });
+}
+
+async function getTransactionDetails() {
+            var txid = document.getElementById('txid_input').value.trim();
+
+            if (!txid) {
+                alert('Please enter a transaction ID');
+                return;
+            }
+
+            try {
+                var transaction = await web3.eth.getTransaction(txid);
+                if (transaction) {
+                    document.getElementById('transaction_details').textContent = JSON.stringify(transaction, null, 2);
+                } else {
+                    document.getElementById('transaction_details').textContent = 'Transaction not found';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('transaction_details').textContent = 'Error: ' + error.message;
+            }
+        }
+
+// Function to listen to transactions of the wallet address
+// function listenToTransactions(address) {
+//         web3.eth.subscribe('pendingTransactions', function(error, transactionHash) {
+//             if (!error) {
+//                 web3.eth.getTransaction(transactionHash, function(error, transaction) {
+//                     if (!error && transaction && (transaction.from === address || transaction.to === address)) {
+//                         var log = 'Transaction: ' + transactionHash + ' - From: ' + transaction.from + ' To: ' + transaction.to + ' Value: ' + web3.utils.fromWei(transaction.value, 'ether') + ' ETH';
+//                         console.log(log);
+//                         var logElement = document.createElement('div');
+//                         logElement.textContent = log;
+//                         document.getElementById('transactionLogs').appendChild(logElement);
+//                     }
+//                 });
+//             } else {
+//                 console.error('Error:', error);
+//             }
+//         });
+//     }
+        </script>
+    </body>
+</html>

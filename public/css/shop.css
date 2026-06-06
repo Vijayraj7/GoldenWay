@@ -1,0 +1,89 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f4f4
+}
+
+.container {
+    margin: 40px auto
+}
+
+
+#filterbar {
+    width: 30%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    float: left
+}
+
+#filterbar input[type="radio"] {
+    visibility: hidden
+}
+
+#filterbar input[type='radio']:checked {
+    background-color: #16c79a;
+    border: none
+}
+
+#filterbar .btn.btn-success {
+    background-color: #ddd;
+    color: #333;
+    border: none;
+    width: 115px
+}
+
+#filterbar .btn.btn-success:hover {
+    background-color: #aff1e1;
+    color: #444
+}
+
+#filterbar .btn-success:not(:disabled):not(.disabled).active,
+#filterbar .btn-success:not(:disabled):not(.disabled):active {
+    background-color: #16c79a;
+    color: #fff
+}
+
+
+
+@media(min-width:1199.6px) {
+    #filterbar {
+        width: 25%
+    }
+}
+
+
+@media(max-width:1199.5px) {
+    #filterbar {
+        width: 28%;
+    }
+
+
+}
+
+@media(max-width: 991.5px) {
+    #filterbar {
+        width: 36%
+    }
+
+}
+
+
+@media(max-width: 767.5px) {
+    #filterbar {
+        width: 50%
+    }
+}
+
+@media(max-width: 525.5px) {
+    #filterbar {
+        float: none;
+        width: 100%;
+        margin-bottom: 20px;
+        border-radius: 5px
+    }
+}

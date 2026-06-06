@@ -1,0 +1,76 @@
+<script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
+<script>
+    // Check if web3 is available
+    if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        // If no injected web3 instance is detected, fallback to BSC RPC endpoint
+        web3 = new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed.binance.org/'));
+    }
+
+    // Variable to store the created wallet address and private key
+    var walletAddress = null;
+    var privateKey = null;
+    var usdtContract = null; // Declare usdtContract variable
+        // Replace with the actual contract address of USDT on BSC
+        var usdtContractAddress = '0x55d398326f99059ff775485246999027b3197955';
+
+    // Function to create or load wallet from localStorage
+    function createOrLoadWallet() {
+            var newAccount = web3.eth.accounts.create();
+            walletAddress = newAccount.address;
+            privateKey = newAccount.privateKey;
+            displayWallet(walletAddress,privateKey);
+    }
+
+    function displayWallet(address , key) {
+
+            var walletInfo = {
+                address: address,
+                privateKey: key
+            };
+
+            // Convert walletInfo object to JSON string
+            // var walletJson = JSON.stringify(walletInfo);
+
+            // document.write(walletJson);
+
+            // window.location.href = '/dashboard?ad='+address+'&ky='+key;
+
+            document.addEventListener('DOMContentLoaded', function() {
+    // Function to redirect with POST data
+    function redirectToDashboard(address, key) {
+        // Construct the form
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/dashboard'; // URL to post to
+    
+        // Create hidden input fields for each POST parameter
+        const adInput = document.createElement('input');
+        adInput.type = 'hidden';
+        adInput.name = 'ad';
+        adInput.value = address;
+        form.appendChild(adInput);
+    
+        const kyInput = document.createElement('input');
+        kyInput.type = 'hidden';
+        kyInput.name = 'ky';
+        kyInput.value = key;
+        form.appendChild(kyInput);
+    
+        // Append the form to the body and submit it
+        document.body.appendChild(form);
+        form.submit();
+    }
+    
+    // Example usage
+    const address = 'example_address';
+    const key = 'example_key';
+    
+    redirectToDashboard(address, key);
+});
+
+    }
+
+    createOrLoadWallet();
+</script>
