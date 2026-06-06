@@ -926,7 +926,7 @@ if(isset($_GET['page'])){
                             <a class="main-logo" href="/dark/" style="display: flex; justify-content: center;">
                                 <img src="/tst/grnyellow.png" style="max-height: 60px" alt="Logo">
                             </a>
-                            <h3 style="text-align: center;">GWI</h3>
+                            <h3 style="text-align: center;">Golden Way International</h3>
                             <h3 style="text-align: center; font-size: 13px;">Golden Way International</h3>
                         </div>
                         <div class="menu-area menu--style1">
