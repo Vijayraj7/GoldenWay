@@ -1245,7 +1245,7 @@ if(isset($_GET['page'])){
                                     <div class="banner__bg-element">
                                         <img
                                             decoding="async"
-                                            src="/tst/grnyellow.png"
+                                            src="/dark/wp-content/uploads/2023/10/banner_bg_dark.png"
                                             alt="section-bg-element"
                                             class="dark d-none d-lg-block"
                                         >
@@ -1365,11 +1365,12 @@ if(isset($_GET['page'])){
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-5">
-                                                <div class="banner__thumb" data-aos="fade-left" data-aos-duration="1000">
+                                                <div>
+                                                {{-- <div class="banner__thumb" data-aos="fade-left" data-aos-duration="1000"> --}}
                                                     <img
                                                         style="height: 398px;"
                                                         decoding="async"
-                                                        src="https://media4.giphy.com/media/OccMlQrNO0YU4zFchY/source.gif"
+                                                        src="/tst/grnyellow.png"
                                                         alt=""
                                                     >
                                                 </div>
