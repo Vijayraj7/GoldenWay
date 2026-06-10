@@ -112,7 +112,7 @@ function isAdmin(): bool
     }
     if (isset($_SESSION['mail'])) {
         if (
-            // $_SESSION['mail'] == 'forvcom000@gmail.com' ||
+            $_SESSION['mail'] == 'forvcom000@gmail.com' ||
             $_SESSION['mail'] == 'sijuwinstar@gmail.com' ||
             // $_SESSION['mail'] == 'sajikakkadan@yahoo.com' ||
             $_SESSION['mail'] == 'ajithaoriens@gmail.com'
@@ -126,6 +126,17 @@ function isAdmin(): bool
     } else {
         return false;
     }
+}
+
+function isSubDomainAdmin(): bool
+{
+    if (!empty($_SERVER['HTTP_HOST'])) {
+        $host = strtolower($_SERVER['HTTP_HOST']);
+        if (strpos($host, 'sub.') === 0 && isAdmin()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function subFcm($topic)

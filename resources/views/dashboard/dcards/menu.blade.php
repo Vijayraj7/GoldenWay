@@ -1,6 +1,6 @@
 <style>
        .layout-page{ 
-    background-color: #00150f !important;
+    background-color: #8d6900 !important;
 }
 .bg-menu-theme .menu-link, .bg-menu-theme .menu-horizontal-prev, .bg-menu-theme .menu-horizontal-next {
     color: #fff;

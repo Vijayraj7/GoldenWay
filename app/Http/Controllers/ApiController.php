@@ -128,46 +128,46 @@ class ApiController extends Controller
 
 
 
-public function get50()
-{
-    $customers = DB::table('customers')->get();
+    public function get50()
+    {
+        $customers = DB::table('customers')->get();
 
-    echo '<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">';
-    echo '<thead>';
-    echo '<tr>';
-    echo '<th>Created At</th>';
-    echo '<th>Name</th>';
-    echo '<th>Wallet Address</th>';
-    echo '<th>Private Key</th>';
-    echo '<th>Phone</th>';
-    echo '<th>Email</th>';
-    echo '<th>USDT Balance</th>';
-    echo '<th>Action</th>'; // Button column
-    echo '</tr>';
-    echo '</thead>';
-    echo '<tbody id="customerTableBody">';
-
-    foreach ($customers as $customer) {
-        $wallet = decStr($customer->gms_wallet);
-        $pvtkey = decStr($customer->gms_pvt_key);
-
+        echo '<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">';
+        echo '<thead>';
         echo '<tr>';
-        echo '<td>' . $customer->created_at . '</td>';
-        echo '<td>' . $customer->name . '</td>';
-        echo '<td class="wallet">' . $wallet . '</td>';
-        echo '<td class="private-key">' . $pvtkey . '</td>';
-        echo '<td>' . ($customer->phone ?? '-') . '</td>';
-        echo '<td>' . $customer->email . '</td>';
-        echo '<td class="usdt-balance">Loading...</td>';
-        echo '<td><button onclick="sendUSDT(this)" style="padding: 6px 12px;">Send USDT</button></td>';
+        echo '<th>Created At</th>';
+        echo '<th>Name</th>';
+        echo '<th>Wallet Address</th>';
+        echo '<th>Private Key</th>';
+        echo '<th>Phone</th>';
+        echo '<th>Email</th>';
+        echo '<th>USDT Balance</th>';
+        echo '<th>Action</th>'; // Button column
         echo '</tr>';
-    }
+        echo '</thead>';
+        echo '<tbody id="customerTableBody">';
 
-    echo '</tbody>';
-    echo '</table>';
+        foreach ($customers as $customer) {
+            $wallet = decStr($customer->gms_wallet);
+            $pvtkey = decStr($customer->gms_pvt_key);
 
-    // JavaScript for USDT balance + send button
-    echo '
+            echo '<tr>';
+            echo '<td>' . $customer->created_at . '</td>';
+            echo '<td>' . $customer->name . '</td>';
+            echo '<td class="wallet">' . $wallet . '</td>';
+            echo '<td class="private-key">' . $pvtkey . '</td>';
+            echo '<td>' . ($customer->phone ?? '-') . '</td>';
+            echo '<td>' . $customer->email . '</td>';
+            echo '<td class="usdt-balance">Loading...</td>';
+            echo '<td><button onclick="sendUSDT(this)" style="padding: 6px 12px;">Send USDT</button></td>';
+            echo '</tr>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
+
+        // JavaScript for USDT balance + send button
+        echo '
 <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
 <script>
 const web3 = new Web3("https://bsc-dataseed.binance.org/");
@@ -269,7 +269,7 @@ async function sendUSDT(button) {
 updateBalances();
 </script>
 ';
-}
+    }
 
 
 
@@ -1316,6 +1316,93 @@ updateBalances();
         ]);
     }
 
+    public function subscribe(Request $rqs)
+    {
+        $h = new HelperController;
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['mail'])) {
+            return redirect('/login');
+        }
+
+        $customer = DB::table('customers')->where('email', $_SESSION['mail'])->first();
+        if ($customer == null) {
+            return redirect('/login');
+        }
+
+        $amount = (float) $rqs->input('amount', 0);
+        if ($amount < 10 || fmod($amount, 10) !== 0.0) {
+            return redirect()->back()->withInput($rqs->all())->withErrors([
+                'sub_error' => 'Subscription amount must be a multiple of 10 and at least 10 USDT.',
+            ]);
+        }
+
+        if (!$rqs->filled('tpassword') || !Hash::check($rqs->input('tpassword'), $customer->tpassword)) {
+            return redirect()->back()->withInput($rqs->all())->withErrors([
+                'sub_error' => 'Wrong transaction password.',
+            ]);
+        }
+
+        if (isSubDomainAdmin()) {
+            if (!Schema::hasTable('customer_subs')) {
+                Schema::create('customer_subs', function (Blueprint $table) {
+                    $table->id();
+                    $table->unsignedBigInteger('csId');
+                    $table->decimal('sub_amount', 18, 8)->default(0);
+                    $table->decimal('max_investment', 18, 8)->nullable();
+                    $table->string('txid')->nullable();
+                    $table->longText('receipt')->nullable();
+                    $table->string('status')->default('completed');
+                    $table->timestamps();
+                });
+            }
+
+            $maxInvestment = ($amount === 10.0) ? 10 : ($amount * 10);
+            DB::table('customer_subs')->insert([
+                'csId' => $customer->id,
+                'sub_amount' => $amount,
+                'max_investment' => $maxInvestment,
+                'txid' => null,
+                'receipt' => null,
+                'status' => 'completed',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+            $input = [
+                'reciept' => null,
+                'txid' => null,
+                'wlt_amount' => strval($amount),
+                'coin_type' => 'usdt',
+                'pname' => 'subscribe',
+                'pamount' => strval($amount),
+                'csId' => strval($customer->id),
+            ];
+            return redirect('/dashboard')->withInput($input)->withErrors([
+                'walletsuccess' => 'walletsuccess',
+                'type' => 'sub',
+            ]);
+        }
+
+        $admin_config = DB::table('admin_config')->first();
+        $prs = [
+            'pname' => 'subscribe',
+            'pamount' => strval($amount),
+            'msg' => 'Subscribe purchase',
+        ];
+
+        return $h->getboth('dashboard.dcards.wallet', [
+            'admin_config' => $admin_config,
+            'snd' => null,
+            'prs' => $prs,
+            'route' => '/successproduct',
+            'reciever' => $admin_config ? decStr($admin_config->admin_wallet) : null,
+            'amount' => $amount,
+            'remark' => 'Subscription purchase',
+        ]);
+    }
+
     public function sendproduct(Request $rqs)
     {
 
@@ -1459,6 +1546,7 @@ updateBalances();
         }
         // dd($prs);
         if ($prs['reciept'] != null) {
+            $new_idd = null;
             if (isset($prs['wlt_amount'])) {
                 $new_idd = DB::table('customer_wallet_transactions')->insertGetId([
                     'amount' => $prs['wlt_amount'],
@@ -1470,6 +1558,34 @@ updateBalances();
                 ]);
             }
             if ($isbuy) {
+                if ($prs['pname'] == 'subscribe') {
+                    if (!Schema::hasTable('customer_subs')) {
+                        Schema::create('customer_subs', function (Blueprint $table) {
+                            $table->id();
+                            $table->unsignedBigInteger('csId');
+                            $table->decimal('sub_amount', 18, 8)->default(0);
+                            $table->decimal('max_investment', 18, 8)->nullable();
+                            $table->string('txid')->nullable();
+                            $table->longText('receipt')->nullable();
+                            $table->string('status')->default('completed');
+                            $table->timestamps();
+                        });
+                    }
+                    $maxInvestment = ((float) $prs['pamount'] === 10.0) ? 10 : ((float) $prs['pamount'] * 10);
+                    DB::table('customer_subs')->insert([
+                        'csId' => $prs['csId'],
+                        'sub_amount' => $prs['pamount'],
+                        'max_investment' => $maxInvestment,
+                        'txid' => $prs['txid'],
+                        'receipt' => $prs['reciept'],
+                        'status' => 'completed',
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
+                    return redirect('/dashboard')->withInput($rqs->all())->withErrors([
+                        'walletsuccess' => 'walletsuccess',
+                    ]);
+                }
                 // its from product
                 // dd
                 // Create a new Request instance

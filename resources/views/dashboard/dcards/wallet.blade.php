@@ -1117,14 +1117,8 @@
     @if ($buyproduct)
         @php
             $balannce =
-                DB::table('customer_transfers')
-                    ->where('csId', $v->id)
-                    ->get()
-                    ->sum('tAmount') +
-                DB::table('customer_transactions')
-                    ->where('csId', $v->id)
-                    ->get()
-                    ->sum('tAmount');
+                DB::table('customer_transfers')->where('csId', $v->id)->get()->sum('tAmount') +
+                DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount');
         @endphp
         @if ($prs['pname'] == 'reinvest' || $prs['pname'] == 'reinvest_compound' || $prs['pname'] == 'lott')
             @if ($amount <= $balannce)
@@ -1150,7 +1144,7 @@
                     });
                 </script>
             @endif
-        @elseif ($prs['pname'] == 'normal' || $prs['pname'] == 'compound')
+        @elseif ($prs['pname'] == 'normal' || $prs['pname'] == 'compound' || $prs['pname'] == 'subscribe')
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     function sleep(ms) {
@@ -1212,7 +1206,9 @@
       padding: 10px;">
                         <div class="page-body">
                             <div class="head">
-                                @if (old('reciept') != null)
+                                @if ($errors->first('type') == 'sub' && isSubDomainAdmin())
+                                    <?php $tsuccess = true; ?>
+                                @elseif (old('reciept') != null)
                                     <?php $tsuccess = true; ?>
                                 @else
                                     <?php $tsuccess = false; ?>
@@ -1220,15 +1216,21 @@
 
                                 @if ($tsuccess)
                                     <h3 style="margin-top:5px; font-size:14px; color: #000;">
-                                        @if (old('coin_type') == 'usdt')
-                                            USDT
+
+                                        @if ($errors->first('type') == 'sub' && isSubDomainAdmin())
+                                            Subscription Successful
                                         @else
-                                            BNB
+                                            @if (old('coin_type') == 'usdt')
+                                                USDT
+                                            @else
+                                                BNB
+                                            @endif
+                                            Transfered Successfully
                                         @endif
-                                        Transfered Successfully
+
                                     </h3>
                                 @else
-                                    <h3 style="margin-top:5px; font-size:14px; color: #ff0000;">
+                                    <h3 style="margin-top:5px; font-size:14px; color: blue;">
 
                                         @if (old('coin_type') == 'usdt')
                                             USDT

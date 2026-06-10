@@ -69,12 +69,12 @@ class LoginApiController extends Controller
         }
 
         $pttamnt = DB::table('customer_plans')->where('csId', $rfusr->id)->where('pstatus', '1')->get()->sum('pamount');
-        if ($pttamnt < 1) {
-            return redirect()->back()->withInput($rqs->all())->withErrors([
-                'referral' => 'Referral user not active',
-                // 'password' => 'Wrong password',
-            ]);
-        }
+        // if ($pttamnt < 1) {
+        //     return redirect()->back()->withInput($rqs->all())->withErrors([
+        //         'referral' => 'Referral user not active',
+        //         // 'password' => 'Wrong password',
+        //     ]);
+        // }
 
 
         $vpe = DB::table("customers")->where('phone', $rqd->phone)->first();
@@ -120,6 +120,27 @@ class LoginApiController extends Controller
                     'password' => $pas,
                 ]
             );
+
+            $dir = 'left';
+            if (isset($rqd->dir) && $rqd->dir === 'right') {
+                $dir = 'right';
+            }
+
+            $treeuser = $rfusr;
+            while ($treeuser !== null) {
+                $chk = DB::table('customers')->where('id', $treeuser->id)->first();
+                if ($chk === null) {
+                    break;
+                }
+                
+                $dirvalue = $dir === 'right' ? $chk->right : $chk->left;
+                if ($dirvalue === null) {
+                    DB::table('customers')->where('id', $treeuser->id)->update([$dir => $vvvid]);
+                    break;
+                } else {
+                    $treeuser = DB::table("customers")->where('id', $dirvalue)->first();
+                }
+            }
 
             // $credentials = $rqs->only('email', 'password');
             if (Auth::attempt(['email' => $inac->email, 'password' => $pas])) {
@@ -548,5 +569,4 @@ class LoginApiController extends Controller
             }
         }
     }
-
 }

@@ -143,6 +143,7 @@ Route::post('/buyproduct', 'App\Http\Controllers\ApiController@buyproduct');
 Route::post('/sendusdt', 'App\Http\Controllers\ApiController@sendusdt');
 Route::get('/sendproduct', 'App\Http\Controllers\ApiController@sendproduct');
 Route::post('/sendproduct', 'App\Http\Controllers\ApiController@sendproduct');
+Route::post('/subscribe', 'App\Http\Controllers\ApiController@subscribe');
 
 Route::post('/singletap', 'App\Http\Controllers\ApiController@singletap');
 Route::post('/getcusname', 'App\Http\Controllers\ApiController@getcusname');

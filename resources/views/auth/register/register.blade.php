@@ -93,7 +93,7 @@
     <!-- <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" /> -->
 </head>
 
-<body onload="initializeGoogleSignIn()" style="background-color: #ffdd76 !important;">
+<body onload="initializeGoogleSignIn()" style="background-color: #8d6900 !important;">
 
 
     <div class="modal fade" id="otpVerifyModel" style="z-index: 2000 !important;" tabindex="-1" aria-hidden="true">
@@ -206,15 +206,73 @@
     <section class="container">
 
         <style>
+            .page-row {
+                display: flex;
+                gap: 0px !important;
+                align-items: stretch;
+                justify-content: center;
+                flex-wrap: wrap;
+                max-width: 1100px;
+                margin: 0 auto;
+            }
+
+            .banner-column,
+            .form-column {
+                width: 100%;
+            }
+
+            .banner-column {
+                display: none;
+            }
+
+            .banner-column img {
+                width: 100%;
+                height: 100%;
+                min-height: 700px;
+                border-radius: 18px;
+                object-fit: cover;
+                display: block;
+            }
+
+            .form-column {
+                flex: 1 1 100%;
+            }
+
+            .form-card {
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 18px;
+                padding: 30px;
+                box-shadow: 0 18px 60px rgba(0, 0, 0, 0.16);
+                width: 100%;
+                box-sizing: border-box;
+            }
+
             @media (min-width: 992px) {
+                .page-row {
+                    gap: 40px;
+                }
+
+                .banner-column,
+                .form-column {
+                    width: calc(50% - 15px);
+                }
+
+                .banner-column {
+                    display: block;
+                }
+
+                .form-column {
+                    flex: 0 0 calc(50% - 15px);
+                }
+
                 .container {
-                    max-width: 660px;
+                    max-width: 1100px;
                 }
             }
 
             @media (min-width: 1200px) {
                 .container {
-                    max-width: 660px;
+                    max-width: 1100px;
                 }
             }
 
@@ -251,13 +309,23 @@
                 opacity: 1;
             }
         </style>
-        <div class="carousel-container">
+
+        <div class="page-row">
+            <div class="banner-column">
+                <img src="/images/web/banner_3.png" alt="Registration Banner">
+            </div>
+            <div class="form-column">
+                <div class="form-card">
+        {{-- <div class="carousel-container">
             <div class="image-carousel">
                 <!-- <img class="active" src="/bcks/androd1.jpeg" alt="Image 1"> -->
                 <!-- <img src="/bcks/ind152.jpg" alt="Image 1"> -->
-                <img class="active" src="/bcks/min10dashposter.png" alt="Image 2">
+
+                <!-- <img class="active" src="/bcks/min10dashposter.png" alt="Image 2">
                 <img src="/bcks/refdashposter2.png" alt="Image 2">
-                <img src="/bcks/mindashposter2.png" alt="Image 2">
+                <img src="/bcks/mindashposter2.png" alt="Image 2"> -->
+
+
                 <!-- <img src="/bcks/androd2.jpeg" alt="Image 2"> -->
                 <!-- <img src="/bcks/androd3.jpeg" alt="Image 3"> -->
                 <!-- <img src="/bcks/androd4.jpeg" alt="Image 1"> -->
@@ -272,7 +340,7 @@
                 <i class='bx bx-chevron-right'></i>
               </a>
             </div> -->
-        </div>
+        </div> --}}
 
         <script>
             const images = document.querySelectorAll('.image-carousel img');
@@ -300,10 +368,10 @@
         </a> -->
 
         <header>
-            <img src="/tst/grnyellow.png" alt srcset style="height:18px;">
-            GMS - Sign Up
+            <img src="/tst/grnyellow.png" alt srcset style="height:38px;">
+            Sign Up
         </header>
-        <h4 style="text-align: center; color: #8a8a8a;">Easily Make profit with our platform</h4>
+        <h4 style="text-align: center; color: #8a8a8a;">Golden Way International</h4>
         <form action="/register" method="post" id="r_form" class="form" onsubmit="return validateForm()">
             @csrf
 
@@ -557,12 +625,28 @@
             <input type="hidden" name="region" value="nil">
             <input type="hidden" name="city" value="nil">
             <input type="hidden" name="pincode" value="nil">
+            <input type="hidden" name="dir" value="{{ isset($_GET['dir']) ? $_GET['dir'] : old('dir') }}">
 
             <button type="submit">Sign up</button>
         </form>
+                </div>
+            </div>
+        </div>
     </section>
 
 
 </body>
 
 </html>
+
+        <style>
+            body{
+                font-size: 0.8rem !important;
+            }
+            .form :where(.input-box input, .select-box) {
+                height: 35px !important;
+            }
+            label{
+                margin-bottom: 2px !important;
+            }
+        </style>

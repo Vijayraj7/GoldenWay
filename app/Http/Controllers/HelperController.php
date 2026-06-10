@@ -492,9 +492,9 @@ async function decryptWithPassword(encryptedValue, password) {
                 }
             }
 
-            if(!isAdmin()){
-                return view('dashboard.dcards.error');
-            }
+            // if(!isAdmin()){
+            //     return view('dashboard.dcards.error');
+            // }
             return view($view, $dt);
         } else {
             return redirect('/login');
