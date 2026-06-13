@@ -1202,76 +1202,8 @@ if (count($plans) == 0) {
                         </div>
                         <script>
                             function onModalSilver() {
-                                var sil_amnt = document.getElementById('sil_amnt');
-                                var diam_amnt = document.getElementById('diam_amnt');
-                                var diam_container = document.getElementById('diam_container');
-                                var diam_amnt_container = document.getElementById('diam_amnt_container');
-                                var selmodal = document.getElementById('modalselct_trade');
-                                var seilver_title_text = document.getElementById('seilver_title_text');
-                                var modal_header = document.getElementById('modal_header');
-                                modal_header.style.backgroundColor = '#8d6900';
-                                seilver_title_text.innerText = 'Stake';
-                                // seilver_title_text.style.color = clr == "#e2e2e2" ? "#000": "#fff";
-                                // '','','','#''','','',''
-                                selmodal.innerText = 'normal';
-                                selmodal.value = 'normal';
-
-
-                                diam_amnt_container.style.display = "block";
-                                diam_container.style.display = "none";
-                                diam_amnt.value = null;
-                                diam_amnt.value = null;
                             }
-
-                            function onModalGold() {
-                                var sil_amnt = document.getElementById('sil_amnt');
-                                var diam_amnt = document.getElementById('diam_amnt');
-                                var diam_container = document.getElementById('diam_container');
-                                var diam_amnt_container = document.getElementById('diam_amnt_container');
-                                var selmodal = document.getElementById('modalselct_trade');
-                                var seilver_title_text = document.getElementById('seilver_title_text');
-                                var modal_header = document.getElementById('modal_header');
-                                modal_header.style.backgroundColor = '#f9a826ff';
-                                seilver_title_text.innerText = 'Gold Package';
-                                // seilver_title_text.style.color = clr == "#e2e2e2" ? "#000": "#fff";
-                                // '','','','#'
-                                selmodal.innerText = 'Compounding(6 months)';
-                                selmodal.value = 'compound';
-
-
-                                diam_amnt_container.style.display = "block";
-                                diam_container.style.display = "none";
-                                diam_amnt.value = null;
-                                sil_amnt.value = null;
-
-                                $(document).ready(function() {
-                                    $('#modalCenter').modal('show');
-                                });
-                            }
-
-                            function onModalDiamond() {
-                                var sil_amnt = document.getElementById('sil_amnt');
-                                var diam_amnt = document.getElementById('diam_amnt');
-                                var diam_container = document.getElementById('diam_container');
-                                var diam_amnt_container = document.getElementById('diam_amnt_container');
-                                var selmodal = document.getElementById('modalselct_trade');
-                                var seilver_title_text = document.getElementById('seilver_title_text');
-                                var modal_header = document.getElementById('modal_header');
-                                modal_header.style.backgroundColor = '#b200c2';
-                                seilver_title_text.innerText = 'Diamond Package';
-                                // seilver_title_text.style.color = clr == "#e2e2e2" ? "#000": "#fff";
-                                // '','','','#''','','',''
-                                selmodal.innerText = 'Normal';
-                                selmodal.value = 'normal';
-
-
-                                diam_amnt_container.style.display = "none";
-                                diam_container.style.display = "block";
-                                diam_amnt.value = "1000";
-                                sil_amnt.value = "1000";
-                                onDiamText('1000');
-                            }
-
+                            
                             document.addEventListener('submit', function(event) {
                                 var form = event.target;
                                 if (form && form.id === 'slform') {
@@ -1327,9 +1259,8 @@ if (count($plans) == 0) {
                             <div style="margin-bottom: 40px !important;" class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content" style="margin-top:50px;">
 
-                                    <div style="height: 70px; display:flex; align-items:center; padding-left:25px; background-color: #f9a826ff; border-radius:7px 7px 0px 0px;" id="modal_header" class="modal-header">
-                                        <h5 class="modal-title" style="color: #fff; text-transform: uppercase;" style="text-transform:uppercase;" id="seilver_title_text">Silver
-                                            Package</h5>
+                                    <div style="height: 70px; display:flex; align-items:center; padding-left:25px; background-color: #8d6900; border-radius:7px 7px 0px 0px;" id="modal_header" class="modal-header">
+                                        <h5 class="modal-title" style="color: #fff; text-transform: uppercase;" style="text-transform:uppercase;" id="seilver_title_text">Stake</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <?php
@@ -1338,28 +1269,6 @@ if (count($plans) == 0) {
                                             ?>
                                     <form action="/sendproduct" method="POST" id="slform" class="silform" enctype="multipart/form-data">
                                         @csrf
-
-
-
-                                        <!--   <input type="hidden"
-                                                    name="pamount"
-                                        <div class="lfcontainer">
-                                            <h4>1000</h4>
-                                            <p>1 Day - Resort Stay</p>
-                                        </div>
-                                        <div class="lfcontainer">
-                                            <h4>3000</h4>
-                                            <p>1 Day - Moonnar Stay</p>
-                                        </div>
-                                        <div class="lfcontainer">
-                                            <h4>5000</h4>
-                                            <p>2 Day Trip - <span>Kodaikanal</span></p>
-                                        </div>
-                                        <div class="lfcontainer">
-                                            <h4>5000</h4>
-                                            <p>3 Day Trip - <span>GOA</span> 3 Day 2 Night</p>
-                                        </div>
-                                                    value="500"> -->
 
                                         <input type="hidden" name="ptype" value="1">
                                         <input type="hidden" name="tuserid" value="0">
@@ -1430,9 +1339,6 @@ if (count($plans) == 0) {
                                                 background-color: rgb(10 109 23 / 70%);
                                             }
 
-                                            /* .dropdown-menu:hover{
-    background-color: var(--brand-color);
-} */
                                             .dropdown-menu a {
                                                 color: #fff !important;
                                             }
@@ -1443,24 +1349,6 @@ if (count($plans) == 0) {
                                         <div class="form-text" style="color: red;">{{ $message }}</div>
                                         @enderror
 
-                                        <!-- <div
-                                                style="cursor: pointer;"
-                                                    id="copyWallet"
-                                                    class="formrow row mb-3">
-                            <h5 style="color: #000 !important; margin-bottom: 0rem !important;">Deposit USDT</h5>
-                            <div style="width:100%; display:flex; justify-content: center; margin-bottom:20px;">
-                                            <img src="/tst/wlt.jpeg" style="height:200px;" alt="">
-                                            </div>
-                                                    <label
-                                                        class="col-sm-2 form-label"
-                                                        for="basic-icon-default-">Wallet (BEP 20)</label>
-                                                    <div class="col-sm-10">
-                                                        <p
-                                                            class="form-control waletext"
-                                                            id="basic-icon-default-phone"><i
-                                                                class="bx bx-copy"></i>{{ $adminconfig->wallet }}</p>
-                                                    </div>
-                                                </div> -->
                                         <script>
                                             document.getElementById('copyWallet').addEventListener('click', function() {
                                                 var url = "{{ $adminconfig->wallet }}";
@@ -1490,45 +1378,6 @@ if (count($plans) == 0) {
 
                                                 </select>
                                             </div>
-                                        </div>
-
-
-                                        <div id="diam_container" class="formrow row mb-3">
-                                            <label style="margin-top: 7px;" class="col-sm-2 form-label" for="basic-icon-default-message">Select Amount</label>
-                                            <div class="col-sm-10">
-
-
-                                                <select id="diam_amnt" onchange="onDiamText(this.value)" class="form-select" name="pamount">
-
-                                                    <option selected value="1000">1000 USDT</option>
-                                                    <option value="3000">3000 USDT</option>
-                                                    <option value="5000">5000 USDT</option>
-                                                    <option value="10000">10000 USDT</option>
-
-
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-10">
-                                                <div style="padding: 10px;;">
-                                                    <h5 style="margin-bottom: 0px !important; color: #b200c2; font-size: 14px;" id="diam_text">Hii</h5>
-                                                </div>
-                                            </div>
-                                            <script>
-                                                function onDiamText(val) {
-                                                    diamtxt = document.getElementById('diam_text');
-                                                    if (val == '1000') {
-                                                        diamtxt.innerText = "1 Day Resort Stay";
-                                                    } else if (val == '3000') {
-                                                        diamtxt.innerText = "1 Day Stay Moonnar";
-                                                    } else if (val == '5000') {
-                                                        diamtxt.innerText = "2 Day Trip - Kodaikanal";
-                                                    } else if (val == '10000') {
-                                                        diamtxt.innerText = "3 Day Trip - GOA 3 Day 2 Night";
-                                                    }
-                                                }
-                                                onDiamText(document.getElementById('diam_amnt').value);
-
-                                            </script>
                                         </div>
 
 
