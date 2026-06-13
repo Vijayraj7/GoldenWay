@@ -887,7 +887,7 @@ if (count($plans) == 0) {
                                                 </div>
                                                 <span class="balanc mb-1">Balance</span>
                                                 <h3 class="card-title h3-large">
-                                                    {{ number_format(DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount') + (Schema::hasTable('customer_poll_transactions') ? (float) DB::table('customer_poll_transactions')->where('csId', $v->id)->sum('tamount') : 0), 7) }}
+                                                    {{ number_format(DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount') , 7) }}
                                                     <span style="font-size: 14px; font-weight: 600; color: #f9a826;">USDT</span>
                                                 </h3>
                                             </div>
