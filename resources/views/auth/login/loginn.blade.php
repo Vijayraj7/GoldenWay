@@ -91,8 +91,7 @@
                                 @csrf
                                 <div class="mb-3">
                                     <label for="email" class="form-label">
-                                        Email
-                                        or Username
+                                        User ID
                                     </label>
                                     <input
                                         type="text"
@@ -100,13 +99,13 @@
                                         id="email"
                                         name="email"
                                         value="{{ old('email') }}"
-                                        placeholder="Enter your email or username"
+                                        placeholder="Enter your User ID"
                                         autofocus
                                     >
                                 </div>
                                 @error("email")
                                 <p style="color: red; margin-bottom:20px;">
-                                    email
+                                    user id
                                     not found
                                 </p>
                                 @enderror

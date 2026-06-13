@@ -82,17 +82,30 @@ function getlevusers($levn, $v)
 
 }
 
+function theUser()
+{
+    $theuser = null;
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
+    if (isset($_SESSION['id'])) {
+        $theuser = DB::table('customers')
+            ->where('id', $_SESSION['id'])
+            ->first();
+    }
+    return $theuser;
+}
+
 function checkadmin(): bool
 {
     session_start();
     if (isset($_SESSION['mail'])) {
         if (
-            // $_SESSION['mail'] == 'forvcom000@gmail.com' ||
-            $_SESSION['mail'] == 'sijuwinstar@gmail.com' ||
-            // $_SESSION['mail'] == 'sajikakkadan@yahoo.com' ||
-            $_SESSION['mail'] == 'ajithaoriens@gmail.com'
-            // $_SESSION['mail'] == 'mprasheed51@gmail.com'
-            // $_SESSION['mail'] == 'globalmarketstars@gmail.com'
+            $_SESSION['mail'] == 'GW874374' ||
+            $_SESSION['mail'] == 'GW395285' ||
+            $_SESSION['mail'] == 'GW644810' ||
+            $_SESSION['mail'] == 'GW243457' ||
+            $_SESSION['mail'] == 'GW839472'
         ) {
             return true;
         } else {
@@ -110,12 +123,14 @@ function isAdmin(): bool
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
     }
+    // dd($_SESSION['id']);
     if (isset($_SESSION['mail'])) {
         if (
-            $_SESSION['mail'] == 'forvcom000@gmail.com' ||
-            $_SESSION['mail'] == 'sijuwinstar@gmail.com' ||
-            // $_SESSION['mail'] == 'sajikakkadan@yahoo.com' ||
-            $_SESSION['mail'] == 'ajithaoriens@gmail.com'
+            $_SESSION['mail'] == 'GW874374' ||
+            $_SESSION['mail'] == 'GW395285' ||
+            $_SESSION['mail'] == 'GW644810' ||
+            $_SESSION['mail'] == 'GW243457' ||
+            $_SESSION['mail'] == 'GW839472'
             // $_SESSION['mail'] == 'mprasheed51@gmail.com'
             // $_SESSION['mail'] == 'globalmarketstars@gmail.com'
         ) {
@@ -127,12 +142,21 @@ function isAdmin(): bool
         return false;
     }
 }
-
+function balance2x($user_id)
+{
+    $stake_amount = DB::table('customer_plans')->where('csId', $user_id)->sum('pamount');
+    // if ($stake_amount < 1) {
+    //     $stake_amount = DB::table('customer_subs')->where('csId', $user_id)->sum('sub_amount');
+    // }
+    $total_amount = DB::table('customer_transactions')->where('csId', $user_id)->sum('tamount');
+    $balance = ($stake_amount * 2) - $total_amount;
+    return $balance;
+}
 function isSubDomainAdmin(): bool
 {
     if (!empty($_SERVER['HTTP_HOST'])) {
         $host = strtolower($_SERVER['HTTP_HOST']);
-        if (strpos($host, 'sub.') === 0 && isAdmin()) {
+        if (strpos($host, 'sub.') === 0) {
             return true;
         }
     }

@@ -1,20 +1,23 @@
 <style>
     .navbar {
-    background-color: #1e1e1e;
-    color: #fff;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    /* padding: 15px 20px; */
-    /* padding-left: 40px;
+        background-color: #1e1e1e;
+        color: #fff;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        /* padding: 15px 20px; */
+        /* padding-left: 40px;
     padding-right: 40px; */
-    max-height: 100px;
-    position: -webkit-sticky; /* For Safari */
-    position: sticky;
-    top: 0;
-    
-    z-index: 1200; /* Ensures the navbar stays on top of other content */
-  }
+        max-height: 100px;
+        position: -webkit-sticky;
+        /* For Safari */
+        position: sticky;
+        top: 0;
+
+        z-index: 1200;
+        /* Ensures the navbar stays on top of other content */
+    }
+
 </style>
 <nav style="border-radius: 0px !important; background-color: #6b6b6b !important; width: 100% !important; border: 0.1px solid #3c4b44; margin: 0px !important; box-shadow: none !important;" class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
@@ -28,8 +31,8 @@
             <div class="nav-item d-flex align-items-center" style="width: 100% !important;">
                 <div style="width: 100% !important;">
                     <h6 style="margin-bottom: 0.5rem !important; color: #afafaf; font-size: 12px; text-transform: uppercase;">
-                        <span style="color: white; margin-left: 8px;">Hi {{$v->name}}, we're beyond ecstatic to have you join us.</span>
-                    </h6> 
+                        <span style="color: white; margin-left: 8px;">Hi {{$v->name}}, We're excited to have you as part of our community</span>
+                    </h6>
                     <!-- <div class="progress" style="width: 80% !important;">
                         <div
                             class="progress-bar progress-bar-striped bg-success"
@@ -53,11 +56,12 @@
             </li> -->
             <style>
                 @media (max-width:800px) {
-                    .usrname{
+                    .usrname {
                         display: hidden !important;
                         color: transparent !important;
                     }
                 }
+
             </style>
             <div>
                 <span style="color: #fff;text-transform: uppercase;font-size:13px;" class="usrname d-block">{{ $v->name }}</span>
@@ -67,12 +71,7 @@
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img
-                            style="height: 40px !important; width: 40px !important;"
-                            src="{{ $v->img ?? '/assets/img/avatars/1.png' }}"
-                            alt
-                            class="w-px-40 h-auto rounded-circle"
-                        >
+                        <img style="height: 40px !important; width: 40px !important;" src="{{ $v->img ?? '/assets/img/avatars/1.png' }}" alt class="w-px-40 h-auto rounded-circle">
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -81,12 +80,7 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img
-                                            style="height: 40px !important; width: 40px !important;"
-                                            src="{{ $v->img ?? '/assets/img/avatars/1.png' }}"
-                                            alt
-                                            class="w-px-40 h-auto rounded-circle"
-                                        >
+                                        <img style="height: 40px !important; width: 40px !important;" src="{{ $v->img ?? '/assets/img/avatars/1.png' }}" alt class="w-px-40 h-auto rounded-circle">
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
@@ -114,6 +108,7 @@
                                     alert('Could not copy URL. Please try again.');
                                 });
                         });
+
                     </script>
                     <li>
                         <div class="dropdown-divider"></div>
@@ -161,6 +156,7 @@ $whatsappLink = "whatsapp://send?text=" . $text;
                                     alert('Could not copy URL. Please try again.');
                                 });
                         });
+
                     </script>
                     <!-- <li>
                         <a class="dropdown-item" href="#">
@@ -193,4 +189,3 @@ $whatsappLink = "whatsapp://send?text=" . $text;
         </ul>
     </div>
 </nav>
-

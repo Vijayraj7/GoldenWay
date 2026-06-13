@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Stake\StakeController;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\FcmController;
 use App\Http\Controllers\HelperController;
+use App\Http\Controllers\Income\BinaryIncomeController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
@@ -570,6 +572,11 @@ updateBalances();
     }
 
     public function cronjob()
+    {
+
+    }
+
+    public function cronjobx()
     {
 
         $plans = DB::table('customer_plans')->where('pstatus', '1')->get();
@@ -1323,14 +1330,15 @@ updateBalances();
             session_start();
         }
 
-        if (!isset($_SESSION['mail'])) {
+        if (!isset($_SESSION['id'])) {
             return redirect('/login');
         }
 
-        $customer = DB::table('customers')->where('email', $_SESSION['mail'])->first();
+        $customer = DB::table('customers')->where('id', $_SESSION['id'])->first();
         if ($customer == null) {
             return redirect('/login');
         }
+
 
         $amount = (float) $rqs->input('amount', 0);
         if ($amount < 10 || fmod($amount, 10) !== 0.0) {
@@ -1338,6 +1346,13 @@ updateBalances();
                 'sub_error' => 'Subscription amount must be a multiple of 10 and at least 10 USDT.',
             ]);
         }
+
+        if ($amount > 2500) {
+            return redirect()->back()->withInput($rqs->all())->withErrors([
+                'sub_error' => 'Subscription amount must be a maximum of 2500 USDT.',
+            ]);
+        }
+
 
         if (!$rqs->filled('tpassword') || !Hash::check($rqs->input('tpassword'), $customer->tpassword)) {
             return redirect()->back()->withInput($rqs->all())->withErrors([
@@ -1411,6 +1426,7 @@ updateBalances();
         $csId = $prs['csId'];
         // dd($prs);
         $musr = DB::table('customers')->where('id', $csId)->first();
+        $total_sub_amount = DB::table('customer_subs')->where('csId', $csId)->sum('sub_amount');
         if (
             isset($prs['pname'])
             // && isset($prs['pamount'])
@@ -1435,10 +1451,22 @@ updateBalances();
                     ]);
                 }
             } else {
-                if ($amnt < 100) {
-                    if ($amnt != 50) {
+                if ($amnt < 10) {
+                    return redirect()->back()->withInput($rqs->all())->withErrors([
+                        'image' => "Minimum USDT is 10",
+                    ]);
+                }
+                $max_invest = $total_sub_amount * 10;
+                if ($amnt > $max_invest) {
+                    return redirect()->back()->withInput($rqs->all())->withErrors([
+                        'image' => "Max USDT is " . $max_invest,
+                    ]);
+                }
+                if ($prs['pname'] == 'normal' || $prs['pname'] == 'compound') {
+                    $max_limit = DB::table('customer_subs')->where('csId', $csId)->sum('sub_amount') * 10;
+                    if ($amnt > $max_limit) {
                         return redirect()->back()->withInput($rqs->all())->withErrors([
-                            'image' => "Minimum USDT is 100",
+                            'image' => "Amount cannot exceed maximum limit of " . number_format($max_limit, 2) . " USDT.",
                         ]);
                     }
                 }
@@ -1668,318 +1696,57 @@ updateBalances();
             }
         }
     }
+    public function xxx(Request $request)
+    {
+        // if ($prs['pname'] == 'lott') {
+        //     $allots = json_decode($prs['lotc']);
+        //     // dd($prs);
+        //     for ($i = 0; $i < count($allots); $i++) {
+        //         $split_ar = explode("-", $allots[$i]);
+        //         $lotc_str = $split_ar[0];
+        //         $boxc_str = $split_ar[1];
+        //         // $lotc = (int) $lotc_str;
+        //         // $boxc = (int) $boxc_str;
+        //         $rs = $prs;
+        //         $rs['lotc'] = $lotc_str;
+        //         $rs['boxc'] = $boxc_str;
+        //         $rs['pamount'] = '10';
+        //         $new_id = $h->toTable2('customer_lots', $rs);
+        //     }
+        // }
+    }
 
     public function buyproduct(Request $rqs)
     {
         $h = new HelperController;
         $prs = json_decode(json_encode($rqs->input(), true), true);
         sleep(2);
-        if (isset($prs['id'])) {
-            if (checkadmin()) {
-                $imgg = null;
-                if ($rqs->hasFile('image') && $rqs->file('image')->isValid()) {
-                    if (isset($prs['id']) && isset($prs['aimg'])) {
-                        // $h->deleteFileByUrl($prs['aimg']);
-                    }
-                    $image = $rqs->file('image');
-                    $imageName = time() . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path('uploads'), $imageName);
-                    $url = asset('uploads/' . $imageName);
-                    $imgg = $url;
-                }
-                $plnn = DB::table('customer_plans')->where('id', $prs['id'])->first();
-                DB::table('customer_plans')
-                    ->where('id', $prs['id'])
-                    ->update([
-                        'pstatus' => '1',
-                        'aimg' => $imgg,
-                    ]);
-                if (isset($prs['val'])) {
-                    // dd($prs['val']);
-                    if ($prs['val'] == '3') {
-                        if ($plnn->pstatus == '0') {
-                            DB::table('customer_plans')
-                                ->where('id', $prs['id'])
-                                ->update([
-                                    'pstatus' => '3',
-                                ]);
-                        }
-                    }
-                }
-                if ($plnn->pname == "reinvest" || $plnn->pname == "reinvest_compound") {
-                    if ($plnn->pstatus == '0') {
-                        $amt = (float) $plnn->pamount;
-                        $twalletAmnt = DB::table('customer_transfers')->where('csId', $plnn->csId)->where('tStatus', '1')->get()->sum('tAmount');
 
-                        if ($amt > $twalletAmnt) {
-                            $tfwnm = $twalletAmnt * -1;
-                            if ($tfwnm != 0) {
-                                DB::table('customer_transfers')
-                                    ->updateOrInsert(
-                                        [
-                                            'planId' => $plnn->id,
-                                            'csId' => $plnn->csId,
-                                        ],
-                                        [
-                                            'tType' => $plnn->pname,
-                                            'tAmount' => strval($tfwnm),
-                                            'tStatus' => '1',
-                                            'wStatus' => '1',
-                                        ]
-                                    );
-                            }
-                            $btsnm = $amt - $twalletAmnt;
-                            $tsnm = $btsnm * -1;
-                            if ($tsnm != 0) {
-                                DB::table('customer_transactions')
-                                    ->updateOrInsert(
-                                        [
-                                            'planId' => $plnn->id,
-                                            'csId' => $plnn->csId,
-                                        ],
-                                        [
-                                            'tType' => $plnn->pname,
-                                            'tAmount' => strval($tsnm),
-                                            'tStatus' => '1',
-                                            'wStatus' => '1',
-                                        ]
-                                    );
-                            }
-                        } else {
-                            $nm = $amt * -1;
-                            DB::table('customer_transfers')
-                                ->updateOrInsert(
-                                    [
-                                        'planId' => $plnn->id,
-                                        'csId' => $plnn->csId,
-                                    ],
-                                    [
-                                        'tType' => $plnn->pname,
-                                        'tAmount' => strval($nm),
-                                        'tStatus' => '1',
-                                        'wStatus' => '1',
-                                    ]
-                                );
-                        }
-                    }
-                }
-                // $user = DB::table('customers')
-                //     ->where('id', $prs['csId'])->first();
-                // $plan = DB::table('customer_plans')
-                //     ->where('csId', $user->id)->first();
-                // if ($plan->pname == 'normal') {
-                //     DB::table('customer_transactions')
-                //         ->updateOrInsert(
-                //             ['wthId' => $plan->id],
-                //             [
-                //                 'csId' => $plan->csId,
-                //                 'tType' => 'refincome',
-                //                 'tAmount' => $plan->pamount,
-                //                 'tStatus' => '1',
-                //                 'wStatus' => '0',
-                //             ]
-                //         );
-                // }
-                $this->cronjob();
-                return redirect('/admin/product/requests');
-            }
-        }
-        // dd($prs);
         $amnt = (float) $prs['pamount'];
         $csId = $prs['csId'];
         $musr = DB::table('customers')->where('id', $csId)->first();
-        if (isset($prs['tpassword'])) {
-            if (!Hash::check($prs['tpassword'], $musr->tpassword)) {
-                // dd('no password');
-            } else {
-                unset($prs['tpassword']);
-            }
-        }
-        if ($prs['pname'] == 'reinvest' || $prs['pname'] == 'reinvest_compound' || $prs['pname'] == 'lott') {
-            $tAllincome = DB::table('customer_transactions')
-                ->where('csId', $csId)
-                ->get();
-            $totBalance = $tAllincome->sum('tAmount');
-            $twalletAmnt = DB::table('customer_transfers')->where('csId', $csId)->where('tStatus', '1')->get()->sum('tAmount');
-            $totBalance += $twalletAmnt;
-            if ($amnt > $totBalance) {
-                // dd('no enought balance');
-            }
-        }
-        // if ($prs['pname'] == 'normal' || $prs['pname'] == 'compound' || $prs['pname'] == 'reinvest_compound') {
-        if ($amnt < 50) {
-            // dd('no enough 50');
-        }
+
+        // $fc = new FcmController;
+        // $head = getPname($prs['pname']);
+        // $fc->sendFCMMessageToTopic('admin', getPname($head), "new $head");
+        // $uname = $musr->name;
+        // if ($amnt >= 1000) {
+        //     $fc->sendFCMMessageToTopic("all", "$uname Earned a New Milestone!", "$uname just achieved Diamond! You can achieve this too");
         // }
-
-        // $products = DB::table("customer_plans")->where('csId', $csId)->where('pstatus', '0')->get();
-        // if (count($products) > 0) {
-        //     dd('Already transaction pending');
-        // }
-
-        // if ($prs['pname'] == 'normal' || $prs['pname'] == 'compound') {
-        //     if ($rqs->hasFile('image') && $rqs->file('image')->isValid()) {
-        //         $image = $rqs->file('image');
-
-        //         // Check if image size exceeds 500MB (500 * 1024 * 1024 bytes)
-        //         $isize = ($image->getSize() / 1000000);
-        //         if ($isize > 1) {
-        //             return redirect()->back()->withInput($rqs->all())->withErrors([
-        //                 'image' => 'Image maximum size is 1MB',
-        //                 // 'password' => 'Wrong password',
-        //             ]);
-        //         }
-        //         // if (isset($prs['id']) && isset($prs['img'])) {
-        //         // $h->deleteFileByUrl($musr->img);
-        //         // }
-
-        //         $imageName = time() . '.' . $image->getClientOriginalExtension();
-        //         $image->move(public_path('uploads'), $imageName);
-        //         $url = asset('uploads/' . $imageName);
-        //         $prs['img'] = $url;
-        //     } else {
-        //         return redirect()->back()->withInput($rqs->all())->withErrors([
-        //             'image' => "Image is required",
-        //         ]);
-        //     }
-        // } else {
-        $prs['img'] = '';
-        // }
-
-        if (isset($prs['id'])) {
-            unset($prs['id']);
+        if ($prs['pname'] == 'normal') {
+            $prs['pstatus'] = '1';
         }
+        $new_id = $h->toTable2('customer_plans', $prs);
 
-        if ($prs['pstatus'] == '0') {
-            $fc = new FcmController;
-            $head = getPname($prs['pname']);
-            $fc->sendFCMMessageToTopic('admin', getPname($head), "new $head");
-            $uname = $musr->name;
-            if ($amnt >= 1000) {
-                $fc->sendFCMMessageToTopic("all", "$uname Earned a New Milestone!", "$uname just achieved Diamond! You can achieve this too");
-            }
-            if ($prs['pname'] == 'normal' || $prs['pname'] == 'compound' || $prs['pname'] == 'reinvest' || $prs['pname'] == 'reinvest_compound' || $prs['pname'] == 'lott') {
-                $prs['pstatus'] = '1';
-            }
-            // dd($prs['pname']);
-            if ($prs['pname'] == 'lott') {
-                $allots = json_decode($prs['lotc']);
-                // dd($prs);
-                for ($i = 0; $i < count($allots); $i++) {
-                    $split_ar = explode("-", $allots[$i]);
-                    $lotc_str = $split_ar[0];
-                    $boxc_str = $split_ar[1];
-                    // $lotc = (int) $lotc_str;
-                    // $boxc = (int) $boxc_str;
-                    $rs = $prs;
-                    $rs['lotc'] = $lotc_str;
-                    $rs['boxc'] = $boxc_str;
-                    $rs['pamount'] = '10';
-                    $new_id = $h->toTable2('customer_lots', $rs);
-                }
-            } else {
-                $new_id = $h->toTable2('customer_plans', $prs);
-            }
-            if ($prs['pname'] == 'reinvest' || $prs['pname'] == 'reinvest_compound' || $prs['pname'] == 'lott') {
-                $amn = (float) $prs['pamount'];
-                $wlt_amount = (float) $prs['wlt_amount'];
-                $amt = ($amn - $wlt_amount);
 
-                $twalletAmnt = DB::table('customer_transfers')->where('csId', $csId)->where('tStatus', '1')->get()->sum('tAmount');
+        $stakecontroller = new StakeController();
+        $stakecontroller->buy($new_id);
 
-                if ($prs['pname'] == 'lott') {
-                    $checkPlan = 'lottId';
-                } else {
-                    $checkPlan = 'planId';
-                }
-                if ($amt > $twalletAmnt) {
-                    $tfwnm = $twalletAmnt * -1;
-                    if ($tfwnm != 0) {
-                        DB::table('customer_transfers')
-                            ->updateOrInsert(
-                                [
-                                    $checkPlan => $new_id,
-                                ],
-                                [
-                                    'csId' => $csId,
-                                    'tType' => $prs['pname'],
-                                    'tAmount' => strval($tfwnm),
-                                    'tStatus' => '1',
-                                    'wStatus' => '1',
-                                ]
-                            );
-                    }
-                    $btsnm = $amt - $twalletAmnt;
-                    $tsnm = $btsnm * -1;
-                    if ($tsnm != 0) {
-                        DB::table('customer_transactions')
-                            ->updateOrInsert(
-                                [
-                                    $checkPlan => $new_id,
-                                ],
-                                [
-                                    'csId' => $csId,
-                                    'tType' => $prs['pname'],
-                                    'tAmount' => strval($tsnm),
-                                    'tStatus' => '1',
-                                    'wStatus' => '1',
-                                ]
-                            );
-                    }
-                } else {
-                    $nm = $amt * -1;
-                    DB::table('customer_transfers')
-                        ->updateOrInsert(
-                            [
-                                $checkPlan => $new_id,
-                            ],
-                            [
-                                'csId' => $csId,
-                                'tType' => $prs['pname'],
-                                'tAmount' => strval($nm),
-                                'tStatus' => '1',
-                                'wStatus' => '1',
-                            ]
-                        );
-                }
-            }
-            // if (false) {
-            //     DB::table('customer_plans')
-            //         ->insert(
-            //             [
-            //                 '_token' => $prs['_token'],
-            //                 // 'created_at' => Carbon::parse(date('Y-m-d H:i:s'))->subHours(4)->format('Y-m-d H:i:s'),
-            //                 'pname' => $prs['pname'],
-            //                 'pamount' => $prs['pamount'],
-            //                 'ptype' => '1',
-            //                 'pstatus' => '0',
-            //                 'csId' => $prs['csId'],
-            //                 'msg' => $prs['msg'],
-            //                 'img' => $prs['img'],
-            //                 'aimg' => null
-            //             ]
-            //         );
-            // }
-        }
+        sleep(3);
+        return redirect('/dashboard')->withInput($rqs->all())->withErrors([
+            'walletsuccess' => "Success",
+        ]);
 
-        $this->cronjob();
-        $this->quick_reward();
-
-        // if ($prs['pname'] == "normal" || $prs['pname'] == "compound") {
-        if (true) {
-            sleep(3);
-            if ($prs['pname'] == 'lott') {
-                return redirect('/dashboard/lott')->withInput($rqs->all())->withErrors([
-                    'success' => "Success",
-                ]);
-            } else {
-                return redirect('/dashboard/products/buy')->withInput($rqs->all())->withErrors([
-                    'success' => "Success",
-                ]);
-            }
-        } else {
-            // return redirect('/dashboard');
-        }
     }
 
     public function creditbuy(Request $rqs)
@@ -2146,3 +1913,4 @@ updateBalances();
         return redirect('/dashboard');
     }
 }
+

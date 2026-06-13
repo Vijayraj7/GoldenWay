@@ -441,14 +441,14 @@ ini_set('display_errors', 1);
                                                     </div>
                                                 </div>
                                                 @if ($withrawable > 0)
-                                                <div
+                                                {{-- <div
                                                     class="row">
                                                     <div class="col-sm-10">
                                                         <button type="button" onclick="window.location.href = '/dashboard/lott'" style="background-color: #d037dd; border-color: #d037dd;"
                                                             class="btn btn-primary">Purchase Bot</Button>
                                                             <h3 style="text-align: center; margin: 0px; padding: 0px;">or</h3>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <div
                                                     class="row">
                                                     <div class="col-sm-10">

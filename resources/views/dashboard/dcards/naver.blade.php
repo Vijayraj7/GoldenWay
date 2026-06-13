@@ -145,6 +145,7 @@ if (count($nplans) == 0) {
             font-size: 5px !important;
         }
     }
+
 </style>
 <nav id="nvcbr" class="navbar">
     <div style="display: flex;  width: 100%; justify-content: space-around; align-items: center;">
@@ -161,11 +162,10 @@ if (count($nplans) == 0) {
         </div>
 
         <div class="navmidcont">
-            <h5 class="navmid"
-                style="color: white !important; width: 100%; font-size: 20px; margin-bottom: 0rem !important;">
+            <h5 class="navmid" style="color: white !important; width: 100%; font-size: 20px; margin-bottom: 0rem !important;">
                 Hi <span style="font-size: 23px; margin-left: 5px; font-weight: 600;">{{ $v->name }}</span>
                 <!-- <span style="font-size: 14px; text-transform: uppercase;"> {{ $v->name }}</span> -->
-                , we're beyond ecstatic to have you join us.
+                , We're excited to have you as part of our community
             </h5>
         </div>
 
@@ -178,8 +178,7 @@ if (count($nplans) == 0) {
             <div class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online avatar-onliner">
-                        <img style="height: 100%; width: 100%; border-radius: 25px;"
-                            src="{{ $v->img ?? '/assets/img/avatars/1.png' }}" alt class="square-circle">
+                        <img style="height: 100%; width: 100%; border-radius: 25px;" src="/assets/img/avatars/1.png" alt class="square-circle">
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -188,17 +187,14 @@ if (count($nplans) == 0) {
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img style="height: 100%; width: 100%;"
-                                            src="{{ $v->img ?? '/assets/img/avatars/1.png' }}" alt
-                                            class="rounded-circle">
+                                        <img style="height: 100%; width: 100%;" src="/assets/img/avatars/1.png" alt class="rounded-circle">
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span style="color: black !important;text-transform: uppercase;font-size:13px;"
-                                        class="d-block">{{ $v->name }}</span>
+                                    <span style="color: black !important;text-transform: uppercase;font-size:13px;" class="d-block">{{ $v->name }}</span>
                                     <small style="color: #3d3c3c !important;" class="text-muted">
                                         Copy user id :
-                                        #{{ $v->id }}
+                                        {{ $v->uid }}
                                     </small>
                                 </div>
                             </div>
@@ -206,7 +202,7 @@ if (count($nplans) == 0) {
                     </li>
                     <script>
                         document.getElementById('copyidButton').addEventListener('click', function() {
-                            var url = "{{ $v->id }}";
+                            var url = "{{ $v->uid }}";
 
                             navigator.clipboard.writeText(url)
                                 .then(function() {
@@ -219,6 +215,7 @@ if (count($nplans) == 0) {
                                     alert('Could not copy URL. Please try again.');
                                 });
                         });
+
                     </script>
                     <li>
                         <div class="dropdown-divider"></div>
@@ -236,22 +233,22 @@ if (count($nplans) == 0) {
                         </a>
                     </li>
                     @if(DB::table('customer_plans')->where('csId',$v->id)->where('pstatus','1')->sum('pamount')>0)
-                        <li id="copyButton">
-                            <?php
+                    <li id="copyButton">
+                        <?php
                             // URL encode the parameter values
                             $text = urlencode('https://goldenway-international.com/register?ref=' . $v->id . '&name=' . $v->name);
                             
                             // Construct the WhatsApp message link
                             $whatsappLink = 'whatsapp://send?text=' . $text;
                             ?>
-                            <a class="dropdown-item" href="{{ $whatsappLink }}">
-                                <i style="color: black !important;" class="bx bx-copy me-2"></i>
-                                <span style="color: black !important;" class="align-middle">Share Referral Url</span>
-                                <h6 style="font-size: 9px;">
-                                    https://goldenway-international.com/register?ref={{ $v->id }}&name={{ $v->name }}
-                                </h6>
-                            </a>
-                        </li>
+                        <a class="dropdown-item" href="{{ $whatsappLink }}">
+                            <i style="color: black !important;" class="bx bx-copy me-2"></i>
+                            <span style="color: black !important;" class="align-middle">Share Referral Url</span>
+                            <h6 style="font-size: 9px;">
+                                https://goldenway-international.com/register?ref={{ $v->id }}&name={{ $v->name }}
+                            </h6>
+                        </a>
+                    </li>
                     @endif
                     <script>
                         document.getElementById('copyButton').addEventListener('click', function() {
@@ -268,6 +265,7 @@ if (count($nplans) == 0) {
                                     alert('Could not copy URL. Please try again.');
                                 });
                         });
+
                     </script>
                     <!-- <li>
                 <a class="dropdown-item" href="#">
@@ -315,14 +313,14 @@ if (count($nplans) == 0) {
 
             // Format the UAE date and time
             const options = {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true,
-                timeZone: 'Asia/Dubai' // Set the time zone explicitly to avoid daylight saving time changes
+                day: '2-digit'
+                , month: '2-digit'
+                , year: 'numeric'
+                , hour: '2-digit'
+                , minute: '2-digit'
+                , second: '2-digit'
+                , hour12: true
+                , timeZone: 'Asia/Dubai' // Set the time zone explicitly to avoid daylight saving time changes
             };
             const uaeDateTimeString = uaeTime.toLocaleString('en-US', options);
 
@@ -341,6 +339,7 @@ if (count($nplans) == 0) {
 
         // Display the date and time initially when the page loads
         displayUAEDateTime();
+
     </script>
 </nav>
 <style>
@@ -388,4 +387,5 @@ if (count($nplans) == 0) {
     .content {
         padding: 20px;
     }
+
 </style>

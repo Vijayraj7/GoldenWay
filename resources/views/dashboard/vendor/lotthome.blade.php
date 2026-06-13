@@ -1016,7 +1016,7 @@ $totalAmoun = getTotalAmountForLevel($referralId);
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="pb-1 mb-4" style="color: #fff !important">GMS Packages</h5>
+                            <h5 class="pb-1 mb-4" style="color: #fff !important">GWI Packages</h5>
                             <div class="row mb-5">
                                <style>
                                 .lfcontainer{

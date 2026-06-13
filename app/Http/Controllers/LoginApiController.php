@@ -45,7 +45,7 @@ class LoginApiController extends Controller
         $h = new HelperController;
         $rqd = json_decode(json_encode($rqs->all()));
         // dd($rqd);
-        $vef = DB::table("customers_inactive")->where('email', $rqd->email)->first();
+        // $vef = DB::table("customers_inactive")->where('email', $rqd->email)->first();
         $rfusr = DB::table("customers")->where('id', $rqd->referral)->first();
         // if ($rqd->email != $rqd->remail) {
         //     return redirect()->back()->withInput($rqs->all())->withErrors([
@@ -54,12 +54,12 @@ class LoginApiController extends Controller
         //     ]);
         // }
 
-        if ($rqd->password == $rqd->tpassword) {
-            return redirect()->back()->withInput($rqs->all())->withErrors([
-                'password' => 'password and transaction password cannot be same',
-                // 'password' => 'Wrong password',
-            ]);
-        }
+        // if ($rqd->password == $rqd->tpassword) {
+        //     return redirect()->back()->withInput($rqs->all())->withErrors([
+        //         'password' => 'password and transaction password cannot be same',
+        //         // 'password' => 'Wrong password',
+        //     ]);
+        // }
 
         if ($rfusr == null) {
             return redirect()->back()->withInput($rqs->all())->withErrors([
@@ -68,95 +68,99 @@ class LoginApiController extends Controller
             ]);
         }
 
-        $pttamnt = DB::table('customer_plans')->where('csId', $rfusr->id)->where('pstatus', '1')->get()->sum('pamount');
-        // if ($pttamnt < 1) {
+        $pttamnt = DB::table('customer_subs')->where('csId', $rfusr->id)->sum('sub_amount');
+        if ($pttamnt < 1) {
+            return redirect()->back()->withInput($rqs->all())->withErrors([
+                'referral' => 'Referral user not active',
+                // 'password' => 'Wrong password',
+            ]);
+        }
+
+
+        // $vpe = DB::table("customers")->where('phone', $rqd->phone)->first();
+        // if (strlen($rqd->phone) != 10) {
         //     return redirect()->back()->withInput($rqs->all())->withErrors([
-        //         'referral' => 'Referral user not active',
+        //         'phone' => 'phone number not 10 digit',
         //         // 'password' => 'Wrong password',
         //     ]);
         // }
+        // if ($vpe != null) {
+        //     return redirect()->back()->withInput($rqs->all())->withErrors([
+        //         'phone' => 'phone number already exists',
+        //         // 'password' => 'Wrong password',
+        //     ]);
+        // }
+        // $ve = DB::table("customers")->where('email', $rqd->email)->first();
+        // if ($ve != null) {
+        //     return redirect()->back()->withInput($rqs->all())->withErrors([
+        //         'email' => 'email already exists',
+        //         // 'password' => 'Wrong password',
+        //     ]);
+        // } else if ($vef != null) {
+        //     return redirect()->back()->withInput($rqs->all())->withErrors([
+        //         'email' => 'email already exists, activate to continue !',
+        //         // 'password' => 'Wrong password',
+        //     ]);
+        // } else {
+        $pas = $rqd->password;
+        $rqd->password = Hash::make($rqd->password);
+        $rqd->tpassword = Hash::make($rqd->tpassword);
+        $rqd->code = Str::random(6);
+        // $fid = $h->toTable("customers_inactive", $rqd);
+        // $inac = DB::table("customers_inactive")->where('id', $fid)->first();
+        // unset($inac->id);
+        // dd($inac);
+        $vvvid = $h->toTable("customers", $rqd);
 
+        $uid = 'GW' . rand(132745, 999999);
+        DB::table('customers')->where('id', $vvvid)->update(['uid' => $uid]);
 
-        $vpe = DB::table("customers")->where('phone', $rqd->phone)->first();
-        if (strlen($rqd->phone) != 10) {
-            return redirect()->back()->withInput($rqs->all())->withErrors([
-                'phone' => 'phone number not 10 digit',
-                // 'password' => 'Wrong password',
-            ]);
+        $nuser = User::firstOrCreate(
+            ['uid' => $uid],
+            [
+                'email' => $rqd->email,
+                'name' => $rqd->name,
+                'password' => $pas,
+            ]
+        );
+
+        $dir = 'left';
+        if (isset($rqd->dir) && $rqd->dir === 'right') {
+            $dir = 'right';
         }
-        if ($vpe != null) {
-            return redirect()->back()->withInput($rqs->all())->withErrors([
-                'phone' => 'phone number already exists',
-                // 'password' => 'Wrong password',
-            ]);
-        }
-        $ve = DB::table("customers")->where('email', $rqd->email)->first();
-        if ($ve != null) {
-            return redirect()->back()->withInput($rqs->all())->withErrors([
-                'email' => 'email already exists',
-                // 'password' => 'Wrong password',
-            ]);
-        } else if ($vef != null) {
-            return redirect()->back()->withInput($rqs->all())->withErrors([
-                'email' => 'email already exists, activate to continue !',
-                // 'password' => 'Wrong password',
-            ]);
-        } else {
-            $pas = $rqd->password;
-            $rqd->password = Hash::make($rqd->password);
-            $rqd->tpassword = Hash::make($rqd->tpassword);
-            $rqd->code = Str::random(6);
-            $fid = $h->toTable("customers_inactive", $rqd);
-            $inac = DB::table("customers_inactive")->where('id', $fid)->first();
-            unset($inac->id);
-            unset($inac->code);
-            // dd($inac);
-            $vvvid = $h->toTable("customers", $inac);
 
-            $nuser = User::firstOrCreate(
-                ['email' => $inac->email], // Condition to check if the user exists
-                [
-                    'name' => $inac->name,
-                    'password' => $pas,
-                ]
-            );
-
-            $dir = 'left';
-            if (isset($rqd->dir) && $rqd->dir === 'right') {
-                $dir = 'right';
+        $treeuser = $rfusr;
+        while ($treeuser !== null) {
+            $chk = DB::table('customers')->where('id', $treeuser->id)->first();
+            if ($chk === null) {
+                break;
             }
 
-            $treeuser = $rfusr;
-            while ($treeuser !== null) {
-                $chk = DB::table('customers')->where('id', $treeuser->id)->first();
-                if ($chk === null) {
-                    break;
-                }
-                
-                $dirvalue = $dir === 'right' ? $chk->right : $chk->left;
-                if ($dirvalue === null) {
-                    DB::table('customers')->where('id', $treeuser->id)->update([$dir => $vvvid]);
-                    break;
-                } else {
-                    $treeuser = DB::table("customers")->where('id', $dirvalue)->first();
-                }
-            }
-
-            // $credentials = $rqs->only('email', 'password');
-            if (Auth::attempt(['email' => $inac->email, 'password' => $pas])) {
-                $rqs->session()->regenerate();
-                session_start();
-                $_SESSION["mail"] = $inac->email;
-                return redirect('/dashboard');
+            $dirvalue = $dir === 'right' ? $chk->right : $chk->left;
+            if ($dirvalue === null) {
+                DB::table('customers')->where('id', $treeuser->id)->update([$dir => $vvvid]);
+                break;
             } else {
-                return redirect()->back()->withInput($rqs->only('email', 'password'))->withErrors([
-                    // 'email' => 'Wrong email',
-                    'password' => "Login Failed",
-                ]);
+                $treeuser = DB::table("customers")->where('id', $dirvalue)->first();
             }
-            // $h->sendMail($mail, $rqd->name, $fid, $h->encrypt($rqd->code));
-            // return redirect('/register/sent');
         }
+
+        // $credentials = $rqs->only('email', 'password');
+        if (Auth::attempt(['email' => $rqd->email, 'password' => $pas])) {
+            $rqs->session()->regenerate();
+            session_start();
+            $_SESSION["mail"] = $rqd->email;
+            $_SESSION["id"] = $vvvid;
+            return redirect('/dashboard');
+        } else {
+            return redirect()->back()->withInput($rqs->only('email', 'password'))->withErrors([
+                // 'email' => 'Wrong email',
+                'password' => "Login Failed",
+            ]);
+        }
+        // $h->sendMail($mail, $rqd->name, $fid, $h->encrypt($rqd->code));
+        // return redirect('/register/sent');
+        // }
     }
 
     public function activate($id, $code)
@@ -374,11 +378,11 @@ class LoginApiController extends Controller
         //     return redirect('/dashboard');
         // }
         $rqd = json_decode(json_encode($rqs->all()));
-        $ve = DB::table("customers")->where('email', $rqd->email)->first();
-        $vef = DB::table("customers_inactive")->where('email', $rqd->email)->first();
+        $ve = DB::table("customers")->where('uid', $rqd->email)->first();
+        // $vef = DB::table("customers_inactive")->where('uid', $rqd->email)->first();
         if ($ve == null) {
             return redirect()->back()->withInput($rqs->only('email', 'password'))->withErrors([
-                'email' => 'email not found',
+                'email' => 'uid not found',
                 // 'password' => 'Wrong password',
             ]);
         }
@@ -408,7 +412,7 @@ class LoginApiController extends Controller
                     'password' => "Account is blocked , You can try after 24 hours",
                 ]);
             } else {
-                DB::table("customers")->where('email', $rqd->email)->update(
+                DB::table("customers")->where('uid', $rqd->email)->update(
                     [
                         'last_login_time' => date('Y-m-d H:i:s'),
                         'last_login_attempt' => date('Y-m-d H:i:s'),
@@ -417,18 +421,20 @@ class LoginApiController extends Controller
                 );
                 // $validated = $rqs->validated();
                 $nuser = User::firstOrCreate(
-                    ['email' => $rqd->email], // Condition to check if the user exists
+                    ['uid' => $ve->uid], // Condition to check if the user exists
                     [
+                        'email' => $rqd->email,
                         'name' => $ve->name,
                         'password' => $rqd->password,
                     ]
                 );
 
-                $credentials = $rqs->only('email', 'password');
+                $credentials = ['uid' => $ve->uid, 'password' => $rqd->password];
                 if (Auth::attempt($credentials)) {
                     $rqs->session()->regenerate();
                     session_start();
                     $_SESSION["mail"] = $rqd->email;
+                    $_SESSION["id"] = $ve->id;
                     return redirect('dashboard');
                 } else {
                     return redirect()->back()->withInput($rqs->only('email', 'password'))->withErrors([

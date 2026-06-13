@@ -100,9 +100,9 @@ class HelperController
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
         }
-        if (isset($_SESSION['mail']) && Auth::check()) {
+        if (isset($_SESSION['id']) && Auth::check()) {
             $v = DB::table('customers')
-                ->where('email', $_SESSION['mail'])
+                ->where('id', $_SESSION['id'])
                 ->first();
             return $v->email;
         }
@@ -112,9 +112,9 @@ class HelperController
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
         }
-        if (isset($_SESSION['mail']) && Auth::check()) {
+        if (isset($_SESSION['id']) && Auth::check()) {
             $v = DB::table('customers')
-                ->where('email', $_SESSION['mail'])
+                ->where('id', $_SESSION['id'])
                 ->first();
 
             subFcm("c_$v->id");
@@ -247,18 +247,18 @@ async function decryptWithPassword(encryptedValue, password) {
             }
 
 
-            if ($_SESSION['mail'] == 'forvcom000@gmail.com' || isset($_SESSION['eemail'])) {
-                $_SESSION['eemail'] = 'forvcom000@gmail.com';
-                if (isset($_GET['mmil'])) {
-                    $_SESSION['mail'] = $_GET['mmil'];
-                }
-                $v = DB::table('customers')
-                    ->where('email', $_SESSION['mail'])
-                    ->first();
-                if ($v == null) {
-                    abort(404);
-                }
-            }
+            // if ($_SESSION['mail'] == 'forvcom000@gmail.com' || isset($_SESSION['eemail'])) {
+            //     $_SESSION['eemail'] = 'forvcom000@gmail.com';
+            //     if (isset($_GET['mmil'])) {
+            //         $_SESSION['mail'] = $_GET['mmil'];
+            //     }
+            //     $v = DB::table('customers')
+            //         ->where('email', $_SESSION['mail'])
+            //         ->first();
+            //     if ($v == null) {
+            //         abort(404);
+            //     }
+            // }
 
             if ($v == null) {
                 return redirect('login/vendor');
@@ -638,9 +638,9 @@ async function decryptWithPassword(encryptedValue, password) {
         $msg = wordwrap($msg, 70);
 
         // send email
-        $headers = 'From: GMS Registration <noreply@' . env('WEB_URL') . '>' . "\r\n" . 'Reply-To: noreply@' . env('WEB_URL') . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+        $headers = 'From: GWI Registration <noreply@' . env('WEB_URL') . '>' . "\r\n" . 'Reply-To: noreply@' . env('WEB_URL') . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
-        mail("$mail", 'Welcome to GMS Network!', $msg, $headers);
+        mail("$mail", 'Welcome to GWI Network!', $msg, $headers);
     }
 
     public function sendMailFormat($mail, $subject, $msg)
@@ -651,7 +651,7 @@ async function decryptWithPassword(encryptedValue, password) {
         $msg = wordwrap($msg, 70);
 
         // send email
-        $headers = 'From: GMS <noreply@' . env('WEB_URL') . '>' . "\r\n" . 'Reply-To: noreply@' . env('WEB_URL') . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+        $headers = 'From: GWI <noreply@' . env('WEB_URL') . '>' . "\r\n" . 'Reply-To: noreply@' . env('WEB_URL') . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
         mail("$mail", $subject, $msg, $headers);
     }
@@ -663,7 +663,7 @@ async function decryptWithPassword(encryptedValue, password) {
         // use wordwrap() if lines are longer than 70 characters
         $msg = wordwrap($msg, 70);
 
-        $this->sendMailFormat($mail, 'GMS Support', $msg);
+        $this->sendMailFormat($mail, 'GWI Support', $msg);
     }
 
     public function sendforgetMail($mail, $name, $id, $code)
@@ -673,7 +673,7 @@ async function decryptWithPassword(encryptedValue, password) {
 
         Dear $name,
 
-We received a request to reset your password for GMS account. To complete the process, please click on the link below:
+We received a request to reset your password for GWI account. To complete the process, please click on the link below:
 
 [Reset Password Link] : https://" . env('WEB_URL') . "/forget/$id/$code
 
@@ -685,9 +685,9 @@ Thank you,";
         $msg = wordwrap($msg, 70);
 
         // send email
-        $headers = 'From: GMS Registration <noreply@' . env('WEB_URL') . '>' . "\r\n" . 'Reply-To: noreply@' . env('WEB_URL') . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+        $headers = 'From: GWI Registration <noreply@' . env('WEB_URL') . '>' . "\r\n" . 'Reply-To: noreply@' . env('WEB_URL') . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
-        mail("$mail", 'GMS - Reset Your Password', $msg, $headers);
+        mail("$mail", 'GWI - Reset Your Password', $msg, $headers);
     }
 
     public function toTable($tname, $data)

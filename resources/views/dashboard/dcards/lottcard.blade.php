@@ -1,7 +1,7 @@
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <!-- Content -->
 <div class="container-xxl flex-grow-1">
-    <h5 class="pb-1 mb-4" style="color: #fff !important">GMS Bot Trade</h5>
+    <h5 class="pb-1 mb-4" style="color: #fff !important">GWI Bot Trade</h5>
     <div class="row">
         <style>
             .lotbox .card {
@@ -50,6 +50,7 @@
                 align-items: center;
                 width: 100%;
             }
+
         </style>
         <style>
             .lot_grid_container {
@@ -138,6 +139,7 @@
                 animation-iteration-count: infinite;
                 /* repeat indefinitely */
             }
+
         </style>
         <script>
             function applyShakeToRandomInGroup() {
@@ -166,6 +168,7 @@
 
             // Start applying shake effect
             applyShakeToRandomInGroup();
+
         </script>
         <script>
             var taped_boxes = [];
@@ -198,157 +201,140 @@
                     purchs_btn.style.display = 'none';
                 }
             }
+
         </script>
-        @for ($li = 0; $li < 2; $li++)
-            <div class="col-md-6 col-lg-6 mb-3 lotbox">
-                <div class="card h-100">
-                    <!-- <img class="card-img-top"
+        @for ($li = 0; $li < 2; $li++) <div class="col-md-6 col-lg-6 mb-3 lotbox">
+            <div class="card h-100">
+                <!-- <img class="card-img-top"
                 src="/bcks/silver.png"
                 alt="Card image cap" /> -->
-                    <div class="card-body">
-                        <div class="lfcontainer">
-                            <h4>Contract</h4>
-                            <p>50 weeks after slot filled</p>
-                        </div>
-                        <div class="lfcontainer">
-                            <h4>Purchase Amount</h4>
-                            <p>10 USDT</p>
-                        </div>
-                        <div class="lfcontainer">
-                            <h4>Weekly winners after slot filled</h4>
-                            <p>2</p>
-                        </div>
-                        {{-- <p class="card-text">
+                <div class="card-body">
+                    <div class="lfcontainer">
+                        <h4>Contract</h4>
+                        <p>50 weeks after slot filled</p>
+                    </div>
+                    <div class="lfcontainer">
+                        <h4>Purchase Amount</h4>
+                        <p>10 USDT</p>
+                    </div>
+                    <div class="lfcontainer">
+                        <h4>Weekly winners after slot filled</h4>
+                        <p>2</p>
+                    </div>
+                    {{-- <p class="card-text">
                   Some quick example text to build on the card title and
                   make up the bulk of the card's content.
                 </p> --}}
-                        <h5 class="lot_title">Bot {{ $li + 1 }}</h5>
-                        {{--  --}}
-@if(false)
-                        <div class="lfcontainer">
-                            <h4 style="display: flex; align-items: center;">
-                                <img src="https://pngimg.com/d/gift_PNG100325.png"
-                                    style="height: 20px; width: 20px; margin-right:15px;">
-                                UnPurchased Box
-                            </h4>
-                            <p></p>
-                        </div>
+                    <h5 class="lot_title">Bot {{ $li + 1 }}</h5>
+                    {{-- --}}
+                    @if(false)
+                    <div class="lfcontainer">
+                        <h4 style="display: flex; align-items: center;">
+                            <img src="https://pngimg.com/d/gift_PNG100325.png" style="height: 20px; width: 20px; margin-right:15px;">
+                            UnPurchased Box
+                        </h4>
+                        <p></p>
+                    </div>
 
-                        <div class="lfcontainer">
-                            <h4 style="display: flex; align-items: center;">
-                                <img src="https://static.vecteezy.com/system/resources/previews/008/852/068/original/realistic-3d-white-gift-box-with-green-glossy-ribbon-bow-isolated-on-transparent-background-3d-render-isometric-modern-holiday-surprise-box-realistic-icon-for-present-birthday-or-wedding-banners-png.png"
-                                    style="height: 20px; width: 20px; margin-right:15px;">
-                                Purchased Box
-                            </h4>
-                            <p></p>
-                        </div>
-                        <div class="lfcontainer">
-                            <h4 style="display: flex; align-items: center;">
-                                <div
-                                    style="padding: 3px; height: 20px; width: 20px; margin-right:15px; border-radius: 100%; border: 1px solid #fff;;">
-                                    <img style="width: 100%; height:100%;"
-                                        src="https://static.vecteezy.com/system/resources/previews/008/852/068/original/realistic-3d-white-gift-box-with-green-glossy-ribbon-bow-isolated-on-transparent-background-3d-render-isometric-modern-holiday-surprise-box-realistic-icon-for-present-birthday-or-wedding-banners-png.png"
-                                        alt="">
-                                </div>
-                                your Purchased Box
-                            </h4>
-                            <p></p>
-                        </div>
+                    <div class="lfcontainer">
+                        <h4 style="display: flex; align-items: center;">
+                            <img src="https://static.vecteezy.com/system/resources/previews/008/852/068/original/realistic-3d-white-gift-box-with-green-glossy-ribbon-bow-isolated-on-transparent-background-3d-render-isometric-modern-holiday-surprise-box-realistic-icon-for-present-birthday-or-wedding-banners-png.png" style="height: 20px; width: 20px; margin-right:15px;">
+                            Purchased Box
+                        </h4>
+                        <p></p>
+                    </div>
+                    <div class="lfcontainer">
+                        <h4 style="display: flex; align-items: center;">
+                            <div style="padding: 3px; height: 20px; width: 20px; margin-right:15px; border-radius: 100%; border: 1px solid #fff;;">
+                                <img style="width: 100%; height:100%;" src="https://static.vecteezy.com/system/resources/previews/008/852/068/original/realistic-3d-white-gift-box-with-green-glossy-ribbon-bow-isolated-on-transparent-background-3d-render-isometric-modern-holiday-surprise-box-realistic-icon-for-present-birthday-or-wedding-banners-png.png" alt="">
+                            </div>
+                            your Purchased Box
+                        </h4>
+                        <p></p>
+                    </div>
 
-                        <div class="lfcontainer">
-                            <h4 style="display: flex; align-items: center;">
-                                <img src="/bcks/goldbox1.png" style="height: 20px; width: 20px; margin-right:15px;">
-                                Winner Box
-                            </h4>
-                            <p></p>
-                        </div>
-@endif
-                        <!-- <a href="#"
+                    <div class="lfcontainer">
+                        <h4 style="display: flex; align-items: center;">
+                            <img src="/bcks/goldbox1.png" style="height: 20px; width: 20px; margin-right:15px;">
+                            Winner Box
+                        </h4>
+                        <p></p>
+                    </div>
+                    @endif
+                    <!-- <a href="#"
                   data-bs-toggle="modal"
                   data-bs-target="#modalCenter"
                   onclick="onModalSilver()"
                   class="btn btn-outline-primary deposit-btn">Lot {{ $li + 1 }}</a> -->
-                        <a class="btn btn-danger" href="#" data-bs-toggle="modal" onclick="onModalSilver()"
-                            data-bs-target="#modalCenter" id="lot_purchase_btn"
-                            style="display: block; width: 100%; margin-top: 10px;" href="#">Purchase</a>
+                    <a class="btn btn-danger" href="#" data-bs-toggle="modal" onclick="onModalSilver()" data-bs-target="#modalCenter" id="lot_purchase_btn" style="display: block; width: 100%; margin-top: 10px;" href="#">Purchase</a>
 
-                        @if ($li == 1)
-                            <div
-                                style="display: flex; margin-top:80px; margin-bottom:80px; align-items:center; justify-content:center;">
-                                Bot {{$li+1}}</div>
-                    </div>
+                    @if ($li == 1)
+                    <div style="display: flex; margin-top:80px; margin-bottom:80px; align-items:center; justify-content:center;">
+                        Bot {{$li+1}}</div>
                 </div>
-                @break
-    @endif
-</div>
-@if(false)
-<div style="width: 100%; display: flex; justify-content: center;">
+            </div>
+            @break
+            @endif
+    </div>
+    @if(false)
+    <div style="width: 100%; display: flex; justify-content: center;">
 
-    <!-- <lottie-player src="https://lottie.host/f525ca07-39db-4167-b81e-b42457d56bb3/SS8DXM4bRC.json" background="##FFFFFF" speed="1" style="width: 300px; height: 300px" loop autoplay direction="1" mode="normal"></lottie-player> -->
-    <div class="lot_grid_container">
-        @for ($i = 0; $i < 100; $i++)
-            @php
-                $lottwithbox = DB::table('customer_lots')
-                    ->where('lotc', strval($li + 1))
-                    ->where('boxc', strval($i + 1))
-                    ->first();
+        <!-- <lottie-player src="https://lottie.host/f525ca07-39db-4167-b81e-b42457d56bb3/SS8DXM4bRC.json" background="##FFFFFF" speed="1" style="width: 300px; height: 300px" loop autoplay direction="1" mode="normal"></lottie-player> -->
+        <div class="lot_grid_container">
+            @for ($i = 0; $i < 100; $i++) @php $lottwithbox=DB::table('customer_lots') ->where('lotc', strval($li + 1))
+                ->where('boxc', strval($i + 1))
+                ->first();
                 $is_winned = DB::table('customer_transactions')
-                    ->where('tType', 'lott_win')
-                    ->where('lotc', strval($li + 1))
-                    ->where('boxc', strval($i + 1))
-                    ->first();
+                ->where('tType', 'lott_win')
+                ->where('lotc', strval($li + 1))
+                ->where('boxc', strval($i + 1))
+                ->first();
                 $showuser = false;
                 if (isset($adm_card)) {
-                    if (isAdmin()) {
-                        if ($lottwithbox != null) {
-                            $showuser = true;
-                        }
-                    }
+                if (isAdmin()) {
+                if ($lottwithbox != null) {
+                $showuser = true;
+                }
+                }
                 }
                 if ($is_winned != null) {
-                    $showuser = true;
+                $showuser = true;
                 }
-            @endphp
-            <a
-                @if ($showuser) @php
-                     $win_user = DB::table('customers')->where('id',$lottwithbox->csId)->first();
-                     @endphp
-                     href="#"
-                     data-bs-toggle="modal"
-                     onclick="onlottUserClick('{{ $win_user->name }}','{{ isset($adm_card) ? (isAdmin() ? $win_user->id : 'null') : 'null' }}','{{ $lottwithbox->pamount }} USDT','Lott-{{ $lottwithbox->lotc }}-{{ $lottwithbox->boxc }}','{{ $lottwithbox->msg }}')"
-                     data-bs-target="#lottUserModal" @endif>
-                <div class="lot_box_container">
-                    <div class="lot_box">
-                        @if ($lottwithbox == null)
-                            <img class="lot_img"
-                                @if (!isset($adm_card)) onclick="on_add_box(this,'{{ $li + 1 }}','{{ $i + 1 }}')" @endif
-                                id="Lott-{{ $li + 1 }}-{{ $i + 1 }}"
-                                src="https://pngimg.com/d/gift_PNG100325.png" alt="">
-                        @else
+                @endphp
+                <a @if ($showuser) @php $win_user=DB::table('customers')->where('id',$lottwithbox->csId)->first();
+                    @endphp
+                    href="#"
+                    data-bs-toggle="modal"
+                    onclick="onlottUserClick('{{ $win_user->name }}','{{ isset($adm_card) ? (isAdmin() ? $win_user->id : 'null') : 'null' }}','{{ $lottwithbox->pamount }} USDT','Lott-{{ $lottwithbox->lotc }}-{{ $lottwithbox->boxc }}','{{ $lottwithbox->msg }}')"
+                    data-bs-target="#lottUserModal" @endif>
+                    <div class="lot_box_container">
+                        <div class="lot_box">
+                            @if ($lottwithbox == null)
+                            <img class="lot_img" @if (!isset($adm_card)) onclick="on_add_box(this,'{{ $li + 1 }}','{{ $i + 1 }}')" @endif id="Lott-{{ $li + 1 }}-{{ $i + 1 }}" src="https://pngimg.com/d/gift_PNG100325.png" alt="">
+                            @else
                             @php
-                                if ($is_winned != null) {
-                                    $l_img = '/bcks/goldbox1.png';
-                                } else {
-                                    $l_img =
-                                        'https://static.vecteezy.com/system/resources/previews/008/852/068/original/realistic-3d-white-gift-box-with-green-glossy-ribbon-bow-isolated-on-transparent-background-3d-render-isometric-modern-holiday-surprise-box-realistic-icon-for-present-birthday-or-wedding-banners-png.png';
-                                }
+                            if ($is_winned != null) {
+                            $l_img = '/bcks/goldbox1.png';
+                            } else {
+                            $l_img =
+                            'https://static.vecteezy.com/system/resources/previews/008/852/068/original/realistic-3d-white-gift-box-with-green-glossy-ribbon-bow-isolated-on-transparent-background-3d-render-isometric-modern-holiday-surprise-box-realistic-icon-for-present-birthday-or-wedding-banners-png.png';
+                            }
                             @endphp
                             @if ($lottwithbox->csId == $v->id)
-                                <div
-                                    style="padding: 3px; width: 100%; height: 100%; border-radius: 100%; border: 1px solid #fff;;">
-                                    <img class="lot_img lot_not" src="{{ $l_img }}" alt="">
-                                </div>
-                            @else
+                            <div style="padding: 3px; width: 100%; height: 100%; border-radius: 100%; border: 1px solid #fff;;">
                                 <img class="lot_img lot_not" src="{{ $l_img }}" alt="">
+                            </div>
+                            @else
+                            <img class="lot_img lot_not" src="{{ $l_img }}" alt="">
                             @endif
-                        @endif
+                            @endif
+                        </div>
                     </div>
-                </div>
-            </a>
-        @endfor
+                </a>
+                @endfor
+        </div>
     </div>
-</div>
-@endif
+    @endif
 </div>
 </div>
 @endfor
@@ -394,13 +380,15 @@
         diam_amnt.value = null;
         diam_amnt.value = null;
     }
-    function onslotcount(ei){
+
+    function onslotcount(ei) {
         var slotc = Number(ei.value);
         var pamountinp = document.getElementById('pamount_input');
         var pamount_text = document.getElementById('pamount_text');
         pamount_text.innerText = (slotc * 10).toString() + ' USDT';
         pamountinp.value = (slotc * 10).toString();
     }
+
 </script>
 
 @error('image')
@@ -416,89 +404,89 @@
             }
         }
     });
+
 </script>
 @enderror
 <!-- <div class="modal fade show" style="display: block; z-index:2000 !important;" id="modalCenter" tabindex="-1" aria-modal="true"> -->
 
 <style>
-@media (min-width: 576px) {
-    .modal-dialog {
-        max-width: 25rem;
+    @media (min-width: 576px) {
+        .modal-dialog {
+            max-width: 25rem;
+        }
+
+        .waletext {
+            font-size: 13px !important;
+        }
     }
 
-    .waletext {
-        font-size: 13px !important;
-    }
-}
-
-.form-label {
-    margin-top: 8px;
-}
-
-.formrow {
-    flex-direction: column;
-}
-
-.silform {
-    padding: 20px;
-}
-
-@media (min-width: 576px) {
-    .formrow .col-sm-2 {
-        flex: 0 0 auto;
-        width: auto !important;
+    .form-label {
+        margin-top: 8px;
     }
 
-    .formrow .col-sm-10 {
-        flex: 0 0 auto;
-        width: auto !important;
+    .formrow {
+        flex-direction: column;
     }
-}
 
-@media (max-width:700px) {
-    .waletext {
-        font-size: 10px !important;
+    .silform {
+        padding: 20px;
     }
-}
 
-@media (max-width: 576px) {
-    .modal-dialog {
-        margin: 1.75rem auto !important;
+    @media (min-width: 576px) {
+        .formrow .col-sm-2 {
+            flex: 0 0 auto;
+            width: auto !important;
+        }
+
+        .formrow .col-sm-10 {
+            flex: 0 0 auto;
+            width: auto !important;
+        }
     }
-}
 
-@media (max-width: 767.98px) {
-    .modal .modal-dialog:not(.modal-fullscreen) {
-        padding: 0 0rem !important;
-        padding-left: 0rem !important;
+    @media (max-width:700px) {
+        .waletext {
+            font-size: 10px !important;
+        }
     }
-}
 
-.dropdown-menu {
-    background-color: var(--secondary-color);
-}
+    @media (max-width: 576px) {
+        .modal-dialog {
+            margin: 1.75rem auto !important;
+        }
+    }
 
-.dropdown-item:hover,
-.dropdown-item:focus {
-    background-color: rgb(10 109 23 / 70%);
-}
+    @media (max-width: 767.98px) {
+        .modal .modal-dialog:not(.modal-fullscreen) {
+            padding: 0 0rem !important;
+            padding-left: 0rem !important;
+        }
+    }
 
-/* .dropdown-menu:hover{
+    .dropdown-menu {
+        background-color: var(--secondary-color);
+    }
+
+    .dropdown-item:hover,
+    .dropdown-item:focus {
+        background-color: rgb(10 109 23 / 70%);
+    }
+
+    /* .dropdown-menu:hover{
 background-color: var(--brand-color);
 } */
-.dropdown-menu a {
-    color: #fff !important;
-}
+    .dropdown-menu a {
+        color: #fff !important;
+    }
+
 </style>
 @if (true)
 <div class="modal fade" style="z-index: 2000 !important;" id="modalCenter" tabindex="-1" aria-hidden="true">
     <div style="margin-bottom: 40px !important;" class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="margin-top:50px;">
 
-            <div style="height: 70px; display:flex; align-items:center; padding-left:25px; background-color: #f9a826ff; border-radius:7px 7px 0px 0px;"
-                id="modal_header" class="modal-header">
-                <h5 class="modal-title" style="color: #fff; text-transform: uppercase;"
-                    style="text-transform:uppercase;" id="seilver_title_text">Silver Package</h5>
+            <div style="height: 70px; display:flex; align-items:center; padding-left:25px; background-color: #f9a826ff; border-radius:7px 7px 0px 0px;" id="modal_header" class="modal-header">
+                <h5 class="modal-title" style="color: #fff; text-transform: uppercase;" style="text-transform:uppercase;" id="seilver_title_text">Silver Package</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <?php
@@ -536,19 +524,19 @@ value="500"> -->
 
 
                 @php
-                    $totBalance =
-                        DB::table('customer_transfers')
-                            ->where('csId', $v->id)
-                            ->get()
-                            ->sum('tAmount') +
-                        DB::table('customer_transactions')
-                            ->where('csId', $v->id)
-                            ->get()
-                            ->sum('tAmount');
+                $totBalance =
+                DB::table('customer_transfers')
+                ->where('csId', $v->id)
+                ->get()
+                ->sum('tAmount') +
+                DB::table('customer_transactions')
+                ->where('csId', $v->id)
+                ->get()
+                ->sum('tAmount');
                 @endphp
 
                 @error('image')
-                    <div class="form-text" style="color: red;">{{ $message }}</div>
+                <div class="form-text" style="color: red;">{{ $message }}</div>
                 @enderror
 
 
@@ -556,8 +544,7 @@ value="500"> -->
                     <label class="col-sm-2 col-form-label hnot" for="basic-icon-default-fullname">Available
                         Amount</label>
                     <div class="col-sm-10 hnot">
-                        <p class="form-control" style="border: none !important;"
-                            id="basic-icon-default-fullname"><strong>
+                        <p class="form-control" style="border: none !important;" id="basic-icon-default-fullname"><strong>
                                 {{ $totBalance }} USDT
                             </strong></p>
                     </div>
@@ -568,8 +555,7 @@ value="500"> -->
                     <label class="col-sm-2 col-form-label hnot" for="basic-icon-default-fullname">Total
                         Amount</label>
                     <div class="col-sm-10 hnot">
-                        <p class="form-control" style="border: none !important;"
-                            id="basic-icon-default-fullname"><strong id="pamount_text">
+                        <p class="form-control" style="border: none !important;" id="basic-icon-default-fullname"><strong id="pamount_text">
                                 0 USDT</strong></p>
                     </div>
 
@@ -578,8 +564,7 @@ value="500"> -->
                 <div style="margin-top: 10px; display: none;" class="row mb-3">
                     <label class="col-sm-2 col-form-label hnot" for="basic-icon-default-fullname">Slots</label>
                     <div class="col-sm-10 hnot">
-                        <p class="form-control" style="border: none !important;"
-                            id="basic-icon-default-fullname"><strong id="slots_text">
+                        <p class="form-control" style="border: none !important;" id="basic-icon-default-fullname"><strong id="slots_text">
                                 10 USDT</strong></p>
                     </div>
 
@@ -599,10 +584,10 @@ value="500"> -->
                                 alert('Could not copy URL. Please try again.');
                             });
                     });
+
                 </script>
                 <div class="formrow row mb-3">
-                    <label style="margin-top: 7px;" class="col-sm-2 form-label"
-                        for="basic-icon-default-message">Type</label>
+                    <label style="margin-top: 7px;" class="col-sm-2 form-label" for="basic-icon-default-message">Type</label>
                     <div class="col-sm-10">
 
                         <select class="form-select" name="pname" id="slctplans">
@@ -619,29 +604,11 @@ value="500"> -->
 
 
                 <div id="diam_amnt_container" class="formrow row mb-3">
-                    <label
-                        style="margin-top: 7px;"
-                        class="col-sm-2 form-label"
-                        for="basic-icon-default-message">Total Slots</label>
+                    <label style="margin-top: 7px;" class="col-sm-2 form-label" for="basic-icon-default-message">Total Slots</label>
                     <div class="col-sm-10">
-                        <div
-                            class="input-group input-group-merge">
-                            <span
-                                id="basic-icon-default-message2"
-                                class="input-group-text"><i
-                                    class="bx bx-dollar"></i></span>
-                            <input
-                                type="text"
-                                name="slotcount"
-                                oninput="onslotcount(this)"
-                                value="{{old('slotcount')}}"
-                                id="slot_amnt"
-                                required
-                                aria-required="true"
-                                class="form-control phone-mask"
-                                placeholder="Total slots you want"
-                                aria-label="Total slots you want"
-                                aria-describedby="sil_amnt" />
+                        <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-message2" class="input-group-text"><i class="bx bx-dollar"></i></span>
+                            <input type="text" name="slotcount" oninput="onslotcount(this)" value="{{old('slotcount')}}" id="slot_amnt" required aria-required="true" class="form-control phone-mask" placeholder="Total slots you want" aria-label="Total slots you want" aria-describedby="sil_amnt" />
                         </div>
                     </div>
                 </div>
@@ -652,13 +619,9 @@ value="500"> -->
                     <div class="col-sm-10">
                         <div class="input-group input-group-merge">
                             <span id="basic-icon-default-message2" class="input-group-text">
-                                <img src="https://cdn-icons-png.freepik.com/512/10204/10204254.png"
-                                    style="height: 14px;">
+                                <img src="https://cdn-icons-png.freepik.com/512/10204/10204254.png" style="height: 14px;">
                             </span>
-                            <input type="text" name="tpassword" value="{{ old('tpassword') }}"
-                                id="basic-icon-default-message2" class="form-control phone-mask"
-                                placeholder="Transaction password" aria-label="Transaction password"
-                                aria-describedby="basic-icon-default-message2" />
+                            <input type="text" name="tpassword" value="{{ old('tpassword') }}" id="basic-icon-default-message2" class="form-control phone-mask" placeholder="Transaction password" aria-label="Transaction password" aria-describedby="basic-icon-default-message2" />
                         </div>
                     </div>
                 </div>
@@ -670,22 +633,16 @@ value="500"> -->
                         <div class="input-group input-group-merge">
                             <span id="basic-icon-default-message2" class="input-group-text">
                                 <!-- <i class="bx bx-comment"></i> -->
-                                <img src="https://cdn-icons-png.flaticon.com/512/2593/2593491.png"
-                                    style="height: 14px;">
+                                <img src="https://cdn-icons-png.flaticon.com/512/2593/2593491.png" style="height: 14px;">
                             </span>
-                            <input type="text" name="msg" value="{{ old('msg') ?? 'Thanks' }}"
-                                id="basic-icon-default-message2" class="form-control phone-mask"
-                                placeholder="Remark" aria-label="Remark"
-                                aria-describedby="basic-icon-default-message2" />
+                            <input type="text" name="msg" value="{{ old('msg') ?? 'Thanks' }}" id="basic-icon-default-message2" class="form-control phone-mask" placeholder="Remark" aria-label="Remark" aria-describedby="basic-icon-default-message2" />
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-end">
                     <div class="" style="display: flex; justify-content: end;">
-                        <button type="button" data-bs-dismiss="modal" aria-label="Close"
-                            class="btn btn-outline-secondary">Cancel</button>
-                        <button style="margin-left: 10px;" type="submit"
-                            class="btn btn-primary">Confirm</button>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-secondary">Cancel</button>
+                        <button style="margin-left: 10px;" type="submit" class="btn btn-primary">Confirm</button>
                     </div>
                 </div>
             </form>
@@ -712,19 +669,18 @@ value="500"> -->
         lu_slot_text.innerText = slotthis;
         lu_remark.innerText = lremark;
     }
+
 </script>
 <div class="modal fade" style="z-index: 2000 !important;" id="lottUserModal" tabindex="-1" aria-hidden="true">
-<div style="margin-bottom: 40px !important;" class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content" style="margin-top:50px;">
-        <div style="height: 70px; display:flex; align-items:center; padding-left:25px; background-color: #f9a826ff; border-radius:7px 7px 0px 0px;"
-            id="modal_header" class="modal-header">
-            <h5 class="modal-title" style="color: #fff; text-transform: uppercase;"
-                style="text-transform:uppercase;" id="seilver_title_text">User Detail</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+    <div style="margin-bottom: 40px !important;" class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="margin-top:50px;">
+            <div style="height: 70px; display:flex; align-items:center; padding-left:25px; background-color: #f9a826ff; border-radius:7px 7px 0px 0px;" id="modal_header" class="modal-header">
+                <h5 class="modal-title" style="color: #fff; text-transform: uppercase;" style="text-transform:uppercase;" id="seilver_title_text">User Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
 
-            </button>
-        </div>
-        <?php
+                </button>
+            </div>
+            <?php
         $total_transfer_amount = DB::table('customer_transfers')
             ->where('csId', $v->id)
             ->where('tStatus', '1')
@@ -736,63 +692,58 @@ value="500"> -->
             ->get()
             ->sum('tAmount');
         ?>
-        <form action="/sendproduct" method="POST" id="slform" class="silform"
-            enctype="multipart/form-data">
-            @csrf
-            <div style="margin-top: 30px;" class="row mb-3">
-                <label class="col-sm-2 col-form-label hnot" for="basic-icon-default-fullname">User Name</label>
-                <div class="col-sm-10 hnot">
-                    <p class="form-control" style="border: none !important;" id="basic-icon-default-fullname">
-                        <a id="lu_link" href=""><strong id="lu_user_name"> Saneesh </strong></a>
-                    </p>
-                </div>
-            </div>
-
-            <div style="margin-top: 10px;" class="row mb-3">
-                <label class="col-sm-2 col-form-label hnot" for="basic-icon-default-fullname">Purchased
-                    Amount</label>
-                <div class="col-sm-10 hnot">
-                    <p class="form-control" style="border: none !important;" id="basic-icon-default-fullname">
-                        <strong id="lu_pamount_text">10 USDT</strong>
-                    </p>
-                </div>
-            </div>
-
-            <div style="margin-top: 10px;" class="row mb-3">
-                <label class="col-sm-2 col-form-label hnot" for="basic-icon-default-fullname">Slot</label>
-                <div class="col-sm-10 hnot">
-                    <p class="form-control" style="border: none !important;" id="basic-icon-default-fullname">
-                        <strong id="lu_slot_text">Lott-1-23</strong>
-                    </p>
-                </div>
-            </div>
-
-            <div class="formrow row mb-3">
-                <label style="margin-top: 7px;" class="col-sm-2 form-label"
-                    for="basic-icon-default-message">Type</label>
-                <div class="col-sm-10">
-                    <select class="form-select" name="pname" id="slctplans">
-                        <option selected id="modalselct_trade" value="lott">Lott</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="formrow row mb-3">
-                <label class="col-sm-2 form-label" for="basic-icon-default-message">Remark</label>
-                <div class="col-sm-10">
-                    <div class="input-group input-group-merge">
-                        <span id="basic-icon-default-message2" class="input-group-text">
-                            <!-- <i class="bx bx-comment"></i> -->
-                            <img src="https://cdn-icons-png.flaticon.com/512/2593/2593491.png"
-                                style="height: 14px;">
-                        </span>
-                        <input type="text" name="msg" value="{{ old('msg') ?? 'Thanks' }}"
-                            id="lu_remark" class="form-control phone-mask" placeholder="Remark"
-                            aria-label="Remark" aria-describedby="lu_remark" />
+            <form action="/sendproduct" method="POST" id="slform" class="silform" enctype="multipart/form-data">
+                @csrf
+                <div style="margin-top: 30px;" class="row mb-3">
+                    <label class="col-sm-2 col-form-label hnot" for="basic-icon-default-fullname">User Name</label>
+                    <div class="col-sm-10 hnot">
+                        <p class="form-control" style="border: none !important;" id="basic-icon-default-fullname">
+                            <a id="lu_link" href=""><strong id="lu_user_name"> Saneesh </strong></a>
+                        </p>
                     </div>
                 </div>
-            </div>
-        </form>
+
+                <div style="margin-top: 10px;" class="row mb-3">
+                    <label class="col-sm-2 col-form-label hnot" for="basic-icon-default-fullname">Purchased
+                        Amount</label>
+                    <div class="col-sm-10 hnot">
+                        <p class="form-control" style="border: none !important;" id="basic-icon-default-fullname">
+                            <strong id="lu_pamount_text">10 USDT</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px;" class="row mb-3">
+                    <label class="col-sm-2 col-form-label hnot" for="basic-icon-default-fullname">Slot</label>
+                    <div class="col-sm-10 hnot">
+                        <p class="form-control" style="border: none !important;" id="basic-icon-default-fullname">
+                            <strong id="lu_slot_text">Lott-1-23</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="formrow row mb-3">
+                    <label style="margin-top: 7px;" class="col-sm-2 form-label" for="basic-icon-default-message">Type</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" name="pname" id="slctplans">
+                            <option selected id="modalselct_trade" value="lott">Lott</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="formrow row mb-3">
+                    <label class="col-sm-2 form-label" for="basic-icon-default-message">Remark</label>
+                    <div class="col-sm-10">
+                        <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-message2" class="input-group-text">
+                                <!-- <i class="bx bx-comment"></i> -->
+                                <img src="https://cdn-icons-png.flaticon.com/512/2593/2593491.png" style="height: 14px;">
+                            </span>
+                            <input type="text" name="msg" value="{{ old('msg') ?? 'Thanks' }}" id="lu_remark" class="form-control phone-mask" placeholder="Remark" aria-label="Remark" aria-describedby="lu_remark" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 </div>

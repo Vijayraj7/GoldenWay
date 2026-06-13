@@ -254,7 +254,7 @@ if (isset($_GET['prfid'])) {
   function sendEditProfileOTPEmail($recipientEmail, $otp)
   {
     // Website name
-    $websiteName = "GMS";
+    $websiteName = "GWI";
 
     // Subject of the email
     $subject = "One-Time Password (OTP) for Editing Your Profile on $websiteName";

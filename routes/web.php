@@ -92,6 +92,7 @@ Route::get('/dashboard/status/credit', 'App\Http\Controllers\DashBoardController
 Route::get('/dashboard/status/depositview/{id}', 'App\Http\Controllers\DashBoardController@depositviewstatus');
 Route::get('/dashboard/status/compound/{id}', 'App\Http\Controllers\DashBoardController@compoundstatus');
 Route::get('/dashboard/status/withdraw', 'App\Http\Controllers\DashBoardController@withdrawhistory');
+Route::get('/dashboard/autopoll/history', 'App\Http\Controllers\AutopollController@history');
 Route::get('/dashboard/status/transactions/withdraw', 'App\Http\Controllers\DashBoardController@withdrawtransactions');
 Route::get('/dashboard/status/transactions', 'App\Http\Controllers\DashBoardController@transactions');
 Route::get('/dashboard/products/reinvest', 'App\Http\Controllers\DashBoardController@reinvest');
@@ -124,7 +125,7 @@ Route::post('/verify/phone', 'App\Http\Controllers\LoginApiController@verifyphon
 
 
 
-Route::get('/cronjob', 'App\Http\Controllers\ApiController@cronjob');
+Route::get('/cronjob', 'App\Http\Controllers\CronJob\CronJobController@cronjob_x');
 Route::get('/myjob', 'App\Http\Controllers\ApiController@myjob');
 Route::post('/myjob', 'App\Http\Controllers\ApiController@myjob');
 Route::get('/sendnoty', 'App\Http\Controllers\ApiController@sendnoty');
@@ -144,6 +145,8 @@ Route::post('/sendusdt', 'App\Http\Controllers\ApiController@sendusdt');
 Route::get('/sendproduct', 'App\Http\Controllers\ApiController@sendproduct');
 Route::post('/sendproduct', 'App\Http\Controllers\ApiController@sendproduct');
 Route::post('/subscribe', 'App\Http\Controllers\ApiController@subscribe');
+Route::post('/autopoll', 'App\Http\Controllers\AutopollController@autopoll');
+Route::post('/successautopoll', 'App\Http\Controllers\AutopollController@successautopoll');
 
 Route::post('/singletap', 'App\Http\Controllers\ApiController@singletap');
 Route::post('/getcusname', 'App\Http\Controllers\ApiController@getcusname');
