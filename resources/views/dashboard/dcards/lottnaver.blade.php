@@ -146,7 +146,12 @@ if (count($nplans) == 0) {
         }
     }
 
+    /* Scroll white fade override to #8d6900 with low opacity */
+    .layout-navbar-fixed .layout-page:before {
+        background: rgba(141, 105, 0, 0.15) !important;
+    }
 </style>
+
 <nav id="nvcbr" class="navbar">
     <div style="display: flex;  width: 100%; justify-content: space-around; align-items: center;">
 

@@ -206,7 +206,7 @@ function updateURL(fromDate, toDate) {
                                                     $wths = DB::table('customer_withdraws')->where('created_at', 'like', $_GET['day'] . '%')->get();
                                                 }
                                             } else{
-                                                $wths = DB::table('customer_withdraws')->where('pname', 'allincome')->get();
+                                                $wths = DB::table('customer_withdraws')->whereIn('pname', ['allincome', 'pollincome'])->get();
                                             }
                                             ?>
                                             <?php $i = count($wths); ?>

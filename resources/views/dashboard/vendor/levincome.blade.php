@@ -256,7 +256,7 @@ for ($i = 0; $i < count($levusers); $i++) {
                                             </td>
                                                 <th>
                                                     <a href="/dashboard/profile?prfid={{$levuser->id}}">
-                                                    {{ $levuser->name }}
+                                                    {{ $levuser->uid }}
                                                     </a>
                                                     </th>
                                                 @if (false)

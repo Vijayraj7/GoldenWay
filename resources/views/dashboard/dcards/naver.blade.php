@@ -15,279 +15,347 @@ if (count($nplans) == 0) {
     }
 }
 ?>
+
 <style>
+    /* Sticky Premium Glassmorphic Header */
     #nvcbr {
-        height: 80px;
+        background: linear-gradient(135deg, rgba(7, 31, 23, 0.96), rgba(12, 40, 32, 0.96)) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border-bottom: 1px solid rgba(249, 168, 38, 0.16) !important;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4) !important;
+        position: sticky;
+        top: 0;
+        z-index: 1200;
+        width: 100%;
+        padding: 12px 24px !important;
+        transition: all 0.3s ease;
     }
 
-    .navpicon {
-        margin-right: 5px;
+    .nav-container {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1440px;
+        margin: 0 auto;
     }
 
-    @media (min-width:1200px) {
-        .avatar-onliner {
-            height: 45px;
-            width: 45px;
-        }
+    .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
 
-        .navmidcont {
-            /* width: 150px; */
-            margin-left: 40px;
+    .nav-logo {
+        height: 48px;
+        width: auto;
+        object-fit: contain;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .nav-logo:hover {
+        transform: scale(1.05);
+    }
+
+    .nav-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        margin: 0 24px;
+    }
+
+    .welcome-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .welcome-title {
+        color: #ffffff !important;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+
+    .welcome-title .username {
+        font-weight: 700;
+        font-size: 18px;
+        background: linear-gradient(90deg, #ffd700, #f9a826);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 2px 10px rgba(249, 168, 38, 0.2);
+    }
+
+    .welcome-subtitle {
+        color: rgba(255, 255, 255, 0.55) !important;
+        font-size: 11px;
+        font-weight: 400;
+        margin-top: 2px;
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .time-badge {
+        background: rgba(249, 168, 38, 0.08);
+        border: 1px solid rgba(249, 168, 38, 0.18);
+        border-radius: 30px;
+        padding: 6px 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .time-badge:hover {
+        background: rgba(249, 168, 38, 0.12);
+        border-color: rgba(249, 168, 38, 0.35);
+    }
+
+    .time-icon {
+        color: #f9a826;
+        font-size: 14px;
+    }
+
+    .time-text {
+        font-size: 11px;
+        color: #fff;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+
+    .avatar-onliner {
+        height: 42px;
+        width: 42px;
+        border: 2px solid rgba(249, 168, 38, 0.25);
+        border-radius: 50%;
+        padding: 2px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        background: rgba(7, 31, 23, 0.4);
+    }
+
+    .avatar-onliner:hover {
+        border-color: #ffd700;
+        box-shadow: 0 0 12px rgba(249, 168, 38, 0.4);
+        transform: scale(1.05);
+    }
+
+    .avatar-image {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    /* Premium Dropdown Styles */
+    .dropdown-menu-end {
+        background: linear-gradient(135deg, #071f17, #0c2820) !important;
+        border: 1px solid rgba(249, 168, 38, 0.2) !important;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6) !important;
+        border-radius: 14px !important;
+        padding: 8px 0 !important;
+        min-width: 220px !important;
+    }
+
+    .dropdown-user-header {
+        padding: 4px 0;
+    }
+
+    .dropdown-username {
+        color: #ffffff !important;
+        font-weight: 600;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+
+    .dropdown-uid {
+        color: rgba(255, 255, 255, 0.5) !important;
+        font-size: 10px;
+        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .dropdown-item {
+        color: rgba(255, 255, 255, 0.8) !important;
+        padding: 8px 16px !important;
+        transition: all 0.2s ease;
+        border-radius: 8px;
+        margin: 2px 8px;
+        width: calc(100% - 16px);
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+    }
+
+    .dropdown-item i {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.6) !important;
+        transition: color 0.2s ease;
+    }
+
+    .dropdown-item:hover {
+        background: rgba(249, 168, 38, 0.12) !important;
+        color: #ffd700 !important;
+        transform: translateX(4px);
+    }
+
+    .dropdown-item:hover i {
+        color: #ffd700 !important;
+    }
+
+    .dropdown-divider {
+        border-top: 1px solid rgba(249, 168, 38, 0.12) !important;
+        margin: 8px 0 !important;
+    }
+
+    .logout-item:hover {
+        background: rgba(239, 68, 68, 0.12) !important;
+        color: #ef4444 !important;
+    }
+
+    .logout-item:hover i {
+        color: #ef4444 !important;
+    }
+
+    /* Mobile Responsive Styling */
+    @media (max-width: 991px) {
+        .welcome-subtitle {
+            display: none;
         }
     }
 
-    @media (max-width:1200px) {
-        .navimgcontainer {
-            width: auto !important;
-        }
-
-        .avatar-onliner {
-            height: 50px;
-            width: 50px;
-        }
-
-        .navmid {
-            /* width: 30%; */
-            font-size: 14px !important;
-        }
-    }
-
-    @media (max-width:800px) {
+    @media (max-width: 768px) {
         #nvcbr {
-            /* display: none !important; */
+            padding: 10px 16px !important;
+        }
+
+        .nav-logo {
+            height: 40px;
         }
 
         .avatar-onliner {
-            height: 40px;
-            width: 40px;
+            height: 38px;
+            width: 38px;
         }
 
-        .navmidcont {
-            width: 180px;
+        .welcome-title {
+            font-size: 13px;
         }
 
-        .app-brand-link img {
-            /* height: 40px; */
+        .welcome-title .username {
+            font-size: 14px;
         }
 
-        .navmid span {
-            font-size: 14px !important;
-        }
-
-        .navmid {
-            width: 30%;
-            font-size: 13px !important;
-        }
-
-        .layout-menu-fixed body:not(.modal-open) .layout-content-navbar .layout-menu,
-        .layout-menu-fixed-offcanvas body:not(.modal-open) .layout-content-navbar .layout-menu {
-            z-index: 1680;
+        .time-badge {
+            padding: 4px 10px;
         }
     }
 
-    @media (max-width:600px) {
-        .navpicon {
-            flex-direction: column-reverse;
-        }
-
-        .avatar-onliner {
-            height: 40px;
-            width: 40px;
-        }
-
-        .navmid span {
-            font-size: 14px !important;
-        }
-
-        .navmid {
-            width: 30%;
-            font-size: 12px !important;
-        }
-
-        #time {
-            /* display: none; */
-            font-size: 8px !important;
-        }
+    /* Scroll white fade override to #8d6900 with low opacity */
+    .layout-navbar-fixed .layout-page:before {
+        background: rgba(141, 105, 0, 0.15) !important;
     }
 
-    @media (max-width:500px) {
-        #nvcbr {
-            /* display: none !important; */
-        }
-
-        .avatar-onliner {
-            height: 40px;
-            width: 40px;
-        }
-
-        .navmidcont {
-            width: 150px;
-        }
-
-        .app-brand-link img {
-            height: 50px;
-        }
-
-        .navmid {
-            width: 30%;
-            font-size: 9px !important;
-        }
-
-        #time {
-            /* display: none; */
-            font-size: 7px !important;
-        }
-    }
-
-    @media (max-width:400px) {
-        #time {
-            /* display: none; */
-            font-size: 5px !important;
-        }
+    .bg-menu-theme .menu-inner-shadow {
+        background: linear-gradient(rgba(141, 105, 0, 0.31) 41%, rgba(141, 105, 0, 0.11) 95%, rgba(141, 105, 0, 0.05)) !important;
     }
 
 </style>
+
+
 <nav id="nvcbr" class="navbar">
-    <div style="display: flex;  width: 100%; justify-content: space-around; align-items: center;">
-
-        <div style="margin-left: 15px;" class="layout-menu-toggle navbar-nav align-items-xl-center me-xl-0 d-xl-none">
-            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                <i class="bx bx-menu bx-sm"></i>
-            </a>
-        </div>
-        <div style="display: flex; justify-content: center; align-items: center;" class="navimgcontainer app-brand demo">
-            <a href="/" class="app-brand-link">
-                <img style="padding: 10px;" src="/tst/grnyellow.png" alt srcset height="65px">
-            </a>
-        </div>
-
-        <div class="navmidcont">
-            <h5 class="navmid" style="color: white !important; width: 100%; font-size: 20px; margin-bottom: 0rem !important;">
-                Hi <span style="font-size: 23px; margin-left: 5px; font-weight: 600;">{{ $v->name }}</span>
-                <!-- <span style="font-size: 14px; text-transform: uppercase;"> {{ $v->name }}</span> -->
-                , We're excited to have you as part of our community
-            </h5>
-        </div>
-
-        <div class="navpicon" style="display: flex; align-items: center;">
-
-            <div style="margin-top: 0px !important;">
-                <!-- <a href="#">{{ date('d, M, Y', strtotime($v->created_at)) }}</a> -->
-                <div style="font-size: 10px;" id="time">{{ date('Y-m-d H:i:s') }}</div>
+    <div class="nav-container">
+        <!-- Left Section: Mobile Menu Toggle & Brand Logo -->
+        <div class="nav-left">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-xl-0 d-xl-none">
+                <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                    <i class="bx bx-menu bx-sm" style="color: #ffd700;"></i>
+                </a>
             </div>
+            <a href="/" class="app-brand-link">
+                <img src="/tst/grnyellow.png" alt="GoldenWay Logo" class="nav-logo">
+            </a>
+        </div>
+
+        <!-- Center Section: Welcome message (Desktop and tablet) -->
+        <div class="nav-center d-none d-md-flex">
+            <div class="welcome-box">
+                <span class="welcome-title">Hi <span class="username">{{ $v->name }}</span>,</span>
+                <span class="welcome-subtitle">We're excited to have you as part of our community</span>
+            </div>
+        </div>
+
+        <!-- Right Section: Time & Dropdown Menu -->
+        <div class="nav-right">
+            <!-- Time display badge -->
+            <div class="time-badge d-none d-sm-flex" id="time-badge">
+                <i class="bx bx-time-five time-icon"></i>
+                <span id="time" class="time-text">{{ date('Y-m-d H:i:s') }}</span>
+            </div>
+
+            <!-- Profile dropdown -->
             <div class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online avatar-onliner">
-                        <img style="height: 100%; width: 100%; border-radius: 25px;" src="/assets/img/avatars/1.png" alt class="square-circle">
+                        <img src="/assets/img/avatars/1.png" alt="avatar" class="avatar-image">
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li id="copyidButton">
-                        <a class="dropdown-item" href="#">
-                            <div class="d-flex">
+                    <li id="copyidButton" class="dropdown-user-header">
+                        <a class="dropdown-item" href="javascript:void(0);">
+                            <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img style="height: 100%; width: 100%;" src="/assets/img/avatars/1.png" alt class="rounded-circle">
+                                        <img style="height: 100%; width: 100%;" src="/assets/img/avatars/1.png" alt="user avatar" class="rounded-circle">
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span style="color: black !important;text-transform: uppercase;font-size:13px;" class="d-block">{{ $v->name }}</span>
-                                    <small style="color: #3d3c3c !important;" class="text-muted">
-                                        Copy user id :
-                                        {{ $v->uid }}
+                                    <span class="dropdown-username d-block">{{ $v->name }}</span>
+                                    <small class="dropdown-uid">
+                                        Copy ID: #{{ $v->uid }}
+                                        <i class="bx bx-copy ms-1" style="color: #ffd700; font-size: 12px;"></i>
                                     </small>
                                 </div>
                             </div>
                         </a>
                     </li>
-                    <script>
-                        document.getElementById('copyidButton').addEventListener('click', function() {
-                            var url = "{{ $v->uid }}";
-
-                            navigator.clipboard.writeText(url)
-                                .then(function() {
-                                    // Inform the user that the URL has been copied
-                                    alert('User Id copied to clipboard: #' + url);
-                                })
-                                .catch(function(error) {
-                                    // Handle errors
-                                    console.error('Could not copy URL: ', error);
-                                    alert('Could not copy URL. Please try again.');
-                                });
-                        });
-
-                    </script>
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
                         <a class="dropdown-item" href="/dashboard/profile">
-                            <i class="bx bx-user me-2" style="color: black !important;"></i>
-                            <span style="color: black !important;" class="align-middle">Profile</span>
+                            <i class="bx bx-user me-2"></i>
+                            <span class="align-middle">Profile</span>
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="/dashboard/profile/edit">
-                            <i class="bx bx-edit me-2" style="color: black !important;"></i>
-                            <span style="color: black !important;" class="align-middle">Edit Profile</span>
+                            <i class="bx bx-edit me-2"></i>
+                            <span class="align-middle">Edit Profile</span>
                         </a>
                     </li>
                     @if(DB::table('customer_plans')->where('csId',$v->id)->where('pstatus','1')->sum('pamount')>0)
-                    <li id="copyButton">
-                        <?php
-                            // URL encode the parameter values
-                            $text = urlencode('https://goldenway-international.com/register?ref=' . $v->id . '&name=' . $v->name);
-                            
-                            // Construct the WhatsApp message link
-                            $whatsappLink = 'whatsapp://send?text=' . $text;
-                            ?>
-                        <a class="dropdown-item" href="{{ $whatsappLink }}">
-                            <i style="color: black !important;" class="bx bx-copy me-2"></i>
-                            <span style="color: black !important;" class="align-middle">Share Referral Url</span>
-                            <h6 style="font-size: 9px;">
-                                https://goldenway-international.com/register?ref={{ $v->id }}&name={{ $v->name }}
-                            </h6>
+                    <li>
+                        <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#referralDirectionModalNavbar">
+                            <i class="bx bx-share-alt me-2"></i>
+                            <span class="align-middle">Share Referral Url</span>
                         </a>
                     </li>
                     @endif
-                    <script>
-                        document.getElementById('copyButton').addEventListener('click', function() {
-                            var url = "https://goldenway-international.com/register?ref={{ $v->id }}&name={{ $v->name }}";
-
-                            navigator.clipboard.writeText(url)
-                                .then(function() {
-                                    // Inform the user that the URL has been copied
-                                    alert('URL copied to clipboard: ' + url);
-                                })
-                                .catch(function(error) {
-                                    // Handle errors
-                                    console.error('Could not copy URL: ', error);
-                                    alert('Could not copy URL. Please try again.');
-                                });
-                        });
-
-                    </script>
-                    <!-- <li>
-                <a class="dropdown-item" href="#">
-                    <i class="bx bx-cog me-2"></i>
-                    <span class="align-middle">Settings</span>
-                </a>
-            </li> -->
-                    <!-- <li>
-                <a class="dropdown-item" href="#">
-                    <span class="d-flex align-items-center align-middle">
-                        <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                        <span class="flex-grow-1 align-middle">Billing</span>
-                        <span
-                            class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                    </span>
-                </a>
-            </li> -->
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="/logout">
+                        <a class="dropdown-item logout-item" href="/logout">
                             <i class="bx bx-power-off me-2"></i>
                             <span class="align-middle">Log Out</span>
                         </a>
@@ -296,96 +364,86 @@ if (count($nplans) == 0) {
             </div>
         </div>
     </div>
+</nav>
 
-    <!-- TradingView Widget BEGIN -->
+<!-- Referral Direction Modal Navbar -->
+<div class="modal fade" id="referralDirectionModalNavbar" tabindex="-1" aria-hidden="true" style="z-index:2050;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="padding: 1.5rem; background-color: #111; color: #fff; border-radius: 15px; border: 1px solid rgba(249, 168, 38, 0.2);">
+            <div class="modal-header" style="border-bottom:none;">
+                <h5 class="modal-title" style="color: #fff; font-weight: 600;">Select Referral Direction</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p style="color: rgba(255, 255, 255, 0.8);">Choose which side to send your referral link:</p>
+            </div>
+            <div class="modal-footer" style="border-top:none;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 8px;">Close</button>
+                <button type="button" class="btn btn-primary" style="background-color: #8d6900; border-color: #8d6900; border-radius: 8px;" onclick="shareReferralWithDirectionNavbar('left', '{{ $v->id }}', '{{ $v->name }}')">Left Team</button>
+                <button type="button" class="btn btn-success" style="background-color: #8d6900; border-color: #8d6900; border-radius: 8px;" onclick="shareReferralWithDirectionNavbar('right', '{{ $v->id }}', '{{ $v->name }}')">Right Team</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- TradingView Widget END -->
-    <script>
-        function displayUAEDateTime() {
-            // Get the current date and time in UTC
-            const currentDate = new Date();
+<script>
+    // Copy User ID to Clipboard listener
+    document.getElementById('copyidButton').addEventListener('click', function(e) {
+        e.preventDefault();
+        var uid = "{{ $v->uid }}";
+        navigator.clipboard.writeText(uid)
+            .then(function() {
+                alert('User ID copied to clipboard: #' + uid);
+            })
+            .catch(function(error) {
+                console.error('Could not copy User ID: ', error);
+            });
+    });
 
-            // UAE is UTC+4
-            const utcOffset = 4;
+    // Share Referral Link with Direction handler
+    function shareReferralWithDirectionNavbar(direction, userId, userName) {
+        var url = "https://" + window.location.host + "/register?ref=" + userId + "&dir=" + direction + "&name=" + userName;
 
-            // Calculate the UTC time with the UTC offset for UAE
-            const uaeTime = new Date(currentDate.getTime());
+        navigator.clipboard.writeText(url)
+            .then(function() {
+                alert('Referral link copied to clipboard!');
+                var modalEl = document.getElementById('referralDirectionModalNavbar');
+                var modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                modal.hide();
+            })
+            .catch(function(error) {
+                console.error('Could not copy URL: ', error);
+                alert('Could not copy URL. Please try again.');
+            });
+    }
 
-            // Format the UAE date and time
-            const options = {
-                day: '2-digit'
-                , month: '2-digit'
-                , year: 'numeric'
-                , hour: '2-digit'
-                , minute: '2-digit'
-                , second: '2-digit'
-                , hour12: true
-                , timeZone: 'Asia/Dubai' // Set the time zone explicitly to avoid daylight saving time changes
-            };
-            const uaeDateTimeString = uaeTime.toLocaleString('en-US', options);
+    // Display Real-time UAE Time
+    function displayUAEDateTime() {
+        const currentDate = new Date();
+        const options = {
+            day: '2-digit'
+            , month: '2-digit'
+            , year: 'numeric'
+            , hour: '2-digit'
+            , minute: '2-digit'
+            , second: '2-digit'
+            , hour12: true
+            , timeZone: 'Asia/Dubai'
+        };
+        const uaeDateTimeString = currentDate.toLocaleString('en-US', options);
 
-            // Rearrange date elements
-            const [date, time] = uaeDateTimeString.split(', '); // Splitting date and time
-            const [month, day, year] = date.split('/'); // Splitting date components
-            const formattedDate = `${day}/${month}/${year}`; // Reordering date components
+        const [date, time] = uaeDateTimeString.split(', ');
+        const [month, day, year] = date.split('/');
+        const formattedDate = `${day}/${month}/${year}`;
 
-            // Display the UAE date and time
-            const datetimeElement = document.getElementById('time');
+        const datetimeElement = document.getElementById('time');
+        if (datetimeElement) {
             datetimeElement.textContent = `${formattedDate}, ${time} | UAE`;
         }
-
-        // Update the date and time every second
-        setInterval(displayUAEDateTime, 1000);
-
-        // Display the date and time initially when the page loads
-        displayUAEDateTime();
-
-    </script>
-</nav>
-<style>
-    .navbar {
-        background-color: #1e1e1e;
-        color: #fff;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        /* padding: 15px 20px; */
-        /* padding-left: 40px;
-    padding-right: 40px; */
-        max-height: 100px;
-        position: -webkit-sticky;
-        /* For Safari */
-        position: sticky;
-        top: 0;
-        z-index: 1200;
-        /* Ensures the navbar stays on top of other content */
     }
 
-    .navbar .logo {
-        font-size: 24px;
-        font-weight: bold;
-        color: #fff;
-        text-decoration: none;
-    }
+    // Update time every second
+    setInterval(displayUAEDateTime, 1000);
+    displayUAEDateTime();
 
-    .nav-links {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .nav-links li {
-        display: inline;
-        margin-right: 20px;
-    }
-
-    .nav-links li a {
-        color: #fff;
-        text-decoration: none;
-    }
-
-    .content {
-        padding: 20px;
-    }
-
-</style>
+</script>

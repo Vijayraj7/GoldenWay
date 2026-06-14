@@ -6,6 +6,8 @@ if (!function_exists('getPname')) {
         switch ($parameter) {
             case 'normal':
                 return "Silver";
+            case 'pollincome':
+                return "Auto Poll Withdraw";
             case 'allincome':
                 return "Withdraw";
             case 'transfer':

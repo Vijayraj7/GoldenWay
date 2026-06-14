@@ -94,6 +94,44 @@ if ($refintid < $myintid) {
                         @endphp
 
                         @if ($refuser)
+                        @php
+                        // Fetch downline stats efficiently
+                        $customersMap = DB::table('customers')->select('id', 'left', 'right')->get()->keyBy('id');
+                        
+                        if (!function_exists('getDownlineIds')) {
+                            function getDownlineIds($startId, $customersMap) {
+                                if (!$startId || !isset($customersMap[$startId])) {
+                                    return [];
+                                }
+                                $ids = [];
+                                $queue = [$startId];
+                                while (!empty($queue)) {
+                                    $currId = array_shift($queue);
+                                    $ids[] = $currId;
+                                    $curr = $customersMap[$currId] ?? null;
+                                    if ($curr) {
+                                        if ($curr->left && isset($customersMap[$curr->left])) {
+                                            $queue[] = $curr->left;
+                                        }
+                                        if ($curr->right && isset($customersMap[$curr->right])) {
+                                            $queue[] = $curr->right;
+                                        }
+                                    }
+                                }
+                                return $ids;
+                            }
+                        }
+
+                        $leftIds = getDownlineIds($refuser->left, $customersMap);
+                        $leftCount = count($leftIds);
+                        $leftSub = $leftCount > 0 ? DB::table('customer_subs')->whereIn('csId', $leftIds)->sum('sub_amount') : 0;
+                        $leftStake = $leftCount > 0 ? DB::table('customer_plans')->whereIn('csId', $leftIds)->sum('pamount') : 0;
+
+                        $rightIds = getDownlineIds($refuser->right, $customersMap);
+                        $rightCount = count($rightIds);
+                        $rightSub = $rightCount > 0 ? DB::table('customer_subs')->whereIn('csId', $rightIds)->sum('sub_amount') : 0;
+                        $rightStake = $rightCount > 0 ? DB::table('customer_plans')->whereIn('csId', $rightIds)->sum('pamount') : 0;
+                        @endphp
                         <!-- Control Panel -->
                         <div class="tree-control-panel mb-4">
                             <div class="control-left">
@@ -120,17 +158,66 @@ if ($refintid < $myintid) {
                             </div>
                         </div>
 
-                        <!-- Legend and Zoom Utility Panel -->
-                        <div class="tree-utility-panel mb-4">
-                            <div class="legend-container">
-                                <div class="legend-item"><span class="legend-dot active-dot"></span> Active (Plan > 0)</div>
-                                <div class="legend-item"><span class="legend-dot inactive-dot"></span> Inactive (Plan = 0)</div>
-                                <div class="legend-item"><span class="legend-dot vacant-dot"></span> Vacant Slot</div>
+                        <!-- Downline Team Stats Widgets -->
+                        <div class="row g-4 mb-4">
+                            <!-- Left Team Stats Card -->
+                            <div class="col-md-6">
+                                <div class="team-stats-card left-team-card">
+                                    <div class="team-stats-header">
+                                        <div class="stats-icon-wrapper left-icon-bg">
+                                            <i class="bx bx-group"></i>
+                                        </div>
+                                        <div class="stats-title-area">
+                                            <h5 class="stats-heading">Left Team Downline</h5>
+                                            <span class="badge badge-left-team">{{ number_format($leftCount) }} Members</span>
+                                        </div>
+                                    </div>
+                                    <div class="team-stats-body mt-3">
+                                        <div class="stats-metric-row">
+                                            <span class="metric-label">Total Sub Amount</span>
+                                            <span class="metric-value">{{ number_format($leftSub, 2) }} USDT</span>
+                                        </div>
+                                        <div class="stats-metric-row mt-2">
+                                            <span class="metric-label">Total Stake Amount</span>
+                                            <span class="metric-value-accent">{{ number_format($leftStake, 2) }} USDT</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="zoom-controls">
-                                <button class="btn btn-sm btn-zoom" onclick="zoomTree(1.1)" title="Zoom In"><i class="bx bx-zoom-in"></i></button>
-                                <button class="btn btn-sm btn-zoom" onclick="zoomTree(0.9)" title="Zoom Out"><i class="bx bx-zoom-out"></i></button>
-                                <button class="btn btn-sm btn-zoom" onclick="resetZoom()" title="Reset Zoom"><i class="bx bx-refresh"></i></button>
+
+                            <!-- Right Team Stats Card -->
+                            <div class="col-md-6">
+                                <div class="team-stats-card right-team-card">
+                                    <div class="team-stats-header">
+                                        <div class="stats-icon-wrapper right-icon-bg">
+                                            <i class="bx bx-group"></i>
+                                        </div>
+                                        <div class="stats-title-area">
+                                            <h5 class="stats-heading">Right Team Downline</h5>
+                                            <span class="badge badge-right-team">{{ number_format($rightCount) }} Members</span>
+                                        </div>
+                                    </div>
+                                    <div class="team-stats-body mt-3">
+                                        <div class="stats-metric-row">
+                                            <span class="metric-label">Total Sub Amount</span>
+                                            <span class="metric-value">{{ number_format($rightSub, 2) }} USDT</span>
+                                        </div>
+                                        <div class="stats-metric-row mt-2">
+                                            <span class="metric-label">Total Stake Amount</span>
+                                            <span class="metric-value-accent">{{ number_format($rightStake, 2) }} USDT</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tree UI Controls Header -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="text-white mb-0" style="font-weight: 600; font-size: 15px; letter-spacing: 0.5px;">Referral Tree View</h5>
+                            <div class="tree-zoom-dock">
+                                <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(1.1)" title="Zoom In"><i class="bx bx-zoom-in"></i></button>
+                                <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(0.9)" title="Zoom Out"><i class="bx bx-zoom-out"></i></button>
+                                <button class="btn btn-sm btn-zoom-dock" onclick="resetZoom()" title="Reset Zoom"><i class="bx bx-refresh"></i></button>
                             </div>
                         </div>
 
@@ -232,6 +319,18 @@ if ($refintid < $myintid) {
                                     @endphp
                             </div>
                         </div>
+
+
+                        <!-- Legend and Zoom Utility Panel -->
+                        <div class="tree-utility-panel mb-4" style="margin-top: 20px;">
+                            <div class="legend-container">
+                                <div class="legend-item"><span class="legend-dot active-dot"></span> Active</div>
+                                <div class="legend-item"><span class="legend-dot inactive-dot"></span> Inactive</div>
+                                <div class="legend-item"><span class="legend-dot vacant-dot"></span> Vacant Slot</div>
+                            </div>
+                        </div>
+
+
                         @else
                         <!-- Not Found / Security warning -->
                         <div class="card bg-dark text-white border-warning p-5 text-center my-5 animate__animated animate__fadeIn" style="border-radius: 16px;">
@@ -248,6 +347,169 @@ if ($refintid < $myintid) {
 
                         <style>
                             /* Beautiful CSS Styles for the MLM Binary Referral Tree */
+                            /* Tree Zoom Dock Above Viewport */
+                            .tree-zoom-dock {
+                                display: flex !important;
+                                flex-direction: row !important;
+                                gap: 8px !important;
+                                background: rgba(18, 18, 30, 0.8) !important;
+                                border: 1px solid rgba(255, 215, 0, 0.25) !important;
+                                border-radius: 10px !important;
+                                padding: 6px 10px !important;
+                                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+                                backdrop-filter: blur(8px) !important;
+                                -webkit-backdrop-filter: blur(8px) !important;
+                            }
+
+                            .btn-zoom-dock {
+                                background: rgba(255, 255, 255, 0.08) !important;
+                                border: 1px solid rgba(255, 215, 0, 0.15) !important;
+                                color: #fff !important;
+                                width: 32px;
+                                height: 32px;
+                                border-radius: 6px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                transition: all 0.2s ease;
+                            }
+
+                            .btn-zoom-dock:hover {
+                                background: #ffd700 !important;
+                                color: #000 !important;
+                                transform: scale(1.05);
+                            }
+
+                            @media (max-width: 768px) {
+                                .tree-zoom-dock {
+                                    gap: 6px !important;
+                                    padding: 4px 8px !important;
+                                    border-radius: 8px !important;
+                                }
+                                .btn-zoom-dock {
+                                    width: 36px !important;
+                                    height: 36px !important;
+                                }
+                            }
+
+                            /* Team Stats Widgets Styling */
+                            .team-stats-card {
+                                background: rgba(18, 18, 30, 0.75) !important;
+                                backdrop-filter: blur(12px) !important;
+                                -webkit-backdrop-filter: blur(12px) !important;
+                                border: 1px solid rgba(255, 215, 0, 0.2) !important;
+                                border-radius: 16px !important;
+                                padding: 1.5rem !important;
+                                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+                                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+                            }
+
+                            .team-stats-card:hover {
+                                transform: translateY(-3px) !important;
+                                border-color: rgba(255, 215, 0, 0.4) !important;
+                                box-shadow: 0 12px 40px rgba(255, 215, 0, 0.1), 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+                            }
+
+                            .left-team-card {
+                                border-left: 4px solid #3b82f6 !important;
+                            }
+
+                            .right-team-card {
+                                border-left: 4px solid #10b981 !important;
+                            }
+
+                            .team-stats-header {
+                                display: flex !important;
+                                align-items: center !important;
+                                gap: 1rem !important;
+                            }
+
+                            .stats-icon-wrapper {
+                                width: 45px !important;
+                                height: 45px !important;
+                                border-radius: 10px !important;
+                                display: flex !important;
+                                align-items: center !important;
+                                justify-content: center !important;
+                                font-size: 1.5rem !important;
+                            }
+
+                            .left-icon-bg {
+                                background: rgba(59, 130, 246, 0.15) !important;
+                                color: #3b82f6 !important;
+                                border: 1px solid rgba(59, 130, 246, 0.25) !important;
+                            }
+
+                            .right-icon-bg {
+                                background: rgba(16, 185, 129, 0.15) !important;
+                                color: #10b981 !important;
+                                border: 1px solid rgba(16, 185, 129, 0.25) !important;
+                            }
+
+                            .stats-title-area {
+                                display: flex !important;
+                                flex-direction: column !important;
+                            }
+
+                            .stats-heading {
+                                font-size: 1.1rem !important;
+                                font-weight: 600 !important;
+                                color: #fff !important;
+                                margin: 0 !important;
+                            }
+
+                            .badge-left-team {
+                                background: rgba(59, 130, 246, 0.2) !important;
+                                color: #60a5fa !important;
+                                border: 1px solid rgba(59, 130, 246, 0.3) !important;
+                                padding: 0.25rem 0.5rem !important;
+                                font-size: 0.75rem !important;
+                                border-radius: 6px !important;
+                                align-self: flex-start !important;
+                                margin-top: 0.25rem !important;
+                            }
+
+                            .badge-right-team {
+                                background: rgba(16, 185, 129, 0.2) !important;
+                                color: #34d399 !important;
+                                border: 1px solid rgba(16, 185, 129, 0.3) !important;
+                                padding: 0.25rem 0.5rem !important;
+                                font-size: 0.75rem !important;
+                                border-radius: 6px !important;
+                                align-self: flex-start !important;
+                                margin-top: 0.25rem !important;
+                            }
+
+                            .stats-metric-row {
+                                display: flex !important;
+                                justify-content: space-between !important;
+                                align-items: center !important;
+                                border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+                                padding-bottom: 0.5rem !important;
+                            }
+
+                            .stats-metric-row:last-child {
+                                border-bottom: none !important;
+                                padding-bottom: 0 !important;
+                            }
+
+                            .metric-label {
+                                color: rgba(255, 255, 255, 0.6) !important;
+                                font-size: 0.9rem !important;
+                            }
+
+                            .metric-value {
+                                color: #fff !important;
+                                font-weight: 600 !important;
+                                font-size: 0.95rem !important;
+                            }
+
+                            .metric-value-accent {
+                                color: #ffd700 !important;
+                                font-weight: 700 !important;
+                                font-size: 0.95rem !important;
+                            }
+
                             .tree-control-panel {
                                 display: flex;
                                 justify-content: space-between;
@@ -358,29 +620,7 @@ if ($refintid < $myintid) {
                                 background-color: rgba(255, 215, 0, 0.1);
                             }
 
-                            .zoom-controls {
-                                display: flex;
-                                gap: 0.5rem;
-                            }
 
-                            .btn-zoom {
-                                background: rgba(255, 255, 255, 0.08);
-                                border: 1px solid rgba(255, 215, 0, 0.15);
-                                color: #fff;
-                                width: 32px;
-                                height: 32px;
-                                border-radius: 6px;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                transition: all 0.2s ease;
-                            }
-
-                            .btn-zoom:hover {
-                                background: #ffd700;
-                                color: #000;
-                                transform: scale(1.05);
-                            }
 
                             /* Viewport layout */
                             .tree-viewport {

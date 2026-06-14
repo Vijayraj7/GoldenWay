@@ -330,7 +330,7 @@ class="card" style="position: relative;">
                                             if(isset($_GET['wthid'])){
                                                 $withdraws = DB::table('customer_withdraws')->where('id', $_GET['wthid'])->get();
                                             }else{
-                                                $withdraws = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname','allincome')->get();
+                                                $withdraws = DB::table('customer_withdraws')->where('csId', $v->id)->whereIn('pname', ['allincome', 'pollincome'])->get();
                                             }
                                             $i = 0;
                                             ?>

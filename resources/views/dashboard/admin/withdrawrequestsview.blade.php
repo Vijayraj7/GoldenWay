@@ -238,7 +238,7 @@ ini_set('display_errors', 1);
                                                         <strong>{{ date('d, M, Y h:i a', strtotime($withdraw->created_at)) }}</strong></p>
                                                     </div>
                                                 </div>
-                                                @if($withdraw->pname == 'allincome')
+                                                @if($withdraw->pname == 'allincome' || $withdraw->pname == 'pollincome')
                                                  <div id="copyWallet"
                                                     class="row mb-3">
                                                     <label
@@ -334,7 +334,7 @@ ini_set('display_errors', 1);
                                                     </div>
                                                 </div>
 
-                                                @if($withdraw->pname == 'allincome')
+                                                @if($withdraw->pname == 'allincome' || $withdraw->pname == 'pollincome')
                                                 @if($withdraw->atxid == null)
 
                                                 @if($withdraw->status == '0')

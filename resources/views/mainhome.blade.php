@@ -923,85 +923,107 @@ if (isset($_GET['page'])) {
             }
         }
 
-        .member-login-btn {
-            /* background-color: #f9a826ff !important;
-                border-color: #f9a826ff !important; */
-            box-shadow: 0px 4px 20px 4px #00D094;
-            animation: blnking 2s ease-in-out infinite;
-            /* color: white !important; */
+        /* Gold metallic text gradient */
+        .banner-title span,
+        .secondary-gold-text {
+            background: linear-gradient(135deg, #FFE082, #FFB300, #FF8F00) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            font-weight: 700 !important;
         }
 
+        /* Member Login button with premium gold glow */
         .member-login-btn {
-            /* transform: translateX(-10px); */
-            animation: blinking 2s ease-in-out infinite;
-            box-shadow: 0px 4px 40px 4px #00D094;
-        }
-
-        @keyframes blinking {
-            0% {
-                /* transform: translateX(-10px); */
-                box-shadow: 0px 1px 10px 1px #00D094;
-            }
-
-            50% {
-                /* transform: translateX(10px); */
-                box-shadow: 0px 1px 40px 1px #00D094;
-            }
-
-            100% {
-                /* transform: translateX(-10px); */
-                box-shadow: 0px 1px 10px 1px #00D094;
-            }
+            animation: gold-glow 2s ease-in-out infinite !important;
+            border: 1px solid rgba(212, 175, 55, 0.4) !important;
+            background: rgba(212, 175, 55, 0.1) !important;
+            color: #FFE082 !important;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2) !important;
+            transition: all 0.3s ease !important;
         }
 
         .member-login-btn:hover {
-            background-color: #00D094 !important;
-            border-color: #00D094 !important;
+            background: rgba(212, 175, 55, 0.3) !important;
+            border-color: rgba(212, 175, 55, 0.8) !important;
+            color: #fff !important;
         }
 
+        @keyframes gold-glow {
+            0% {
+                box-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            }
+
+            100% {
+                box-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
+            }
+        }
+
+        /* Gold Action Buttons overrides */
+        .trk-btn.trk-btn--primary,
+        .trk-btn.trk-btn--border.trk-btn--primary,
         .get-started-btn {
-            background-color: #f9a826ff !important;
-            border-color: #f9a826ff !important;
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B38728 100%) !important;
+            border: none !important;
+            border-color: transparent !important;
+            color: #0d0e12 !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+            border-radius: 30px !important;
         }
 
+        .trk-btn.trk-btn--primary:hover,
+        .trk-btn.trk-btn--border.trk-btn--primary:hover,
         .get-started-btn:hover {
-            /* background-color: #00D094 !important; */
-            /* border-color: #00D094 !important; */
+            background: linear-gradient(135deg, #FFE082 0%, #FFC107 50%, #FF8F00 100%) !important;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5) !important;
+            transform: translateY(-2px) !important;
+            color: #0d0e12 !important;
         }
 
         .watch-video-btn {
-            background-color: #00D094 !important;
+            background: rgba(255, 255, 255, 0.1) !important;
             color: #fff !important;
-            border-color: transparent !important;
-            /* border-color: #f9a826ff !important;
-                color: #f9a826ff !important;
-                border-color: #f9a826ff !important; */
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 30px !important;
+            transition: all 0.3s ease !important;
         }
 
         .watch-video-btn:hover {
-            background-color: #00D094 !important;
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
             color: #fff !important;
         }
 
         .watch-svg svg g path {
-            /* fill: #f9a826ff; */
             stroke: #fff !important;
         }
 
         .watch-svg svg rect {
-            /* fill: #f9a826ff;S */
             stroke: #fff !important;
         }
 
-        .banner-title span {
-            color: #f9a826ff !important;
+        /* Glassmorphic Section Cards with subtle gold border & glow */
+        .sectioncards {
+            background: rgba(15, 18, 26, 0.85) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(212, 175, 55, 0.2) !important;
+            padding: 30px !important;
+            border-radius: 16px !important;
+            margin: 40px auto !important;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
         }
 
-        .sectioncards {
-            background-color: #1c2e2a9c !important;
-            padding: 20px !important;
-            border-radius: 10px !important;
-            margin: 50px auto !important;
+        .sectioncards:hover {
+            transform: translateY(-5px) !important;
+            border-color: rgba(212, 175, 55, 0.55) !important;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15), 0 12px 40px rgba(0, 0, 0, 0.6) !important;
         }
 
         @media (max-width: 1024px) and (min-width: 768px) {
@@ -1022,12 +1044,440 @@ if (isset($_GET['page'])) {
             }
         }
 
+        /* Sticky nav fixed header */
+        .stticky-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 24px;
+            color: #fff !important;
+            background: rgba(18, 18, 20, 0.95) !important;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            z-index: 100;
+            height: auto !important;
+            opacity: 1 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        /* About Us Cards Grid and Gold Card styles */
+        .aboutus-cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            padding: 20px 0 40px 0;
+            width: 100%;
+        }
+
+        .aboutus-gold-card {
+            background: rgba(15, 18, 26, 0.8) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border-radius: 16px !important;
+            overflow: hidden !important;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        .card-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .card-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .aboutus-gold-card:hover .card-image-wrapper img {
+            transform: scale(1.1);
+        }
+
+        .card-image-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
+            transform: skewX(-25deg);
+            transition: none;
+        }
+
+        .aboutus-gold-card:hover .card-image-wrapper::after {
+            animation: card-shine 0.8s ease;
+        }
+
+        @keyframes card-shine {
+            100% {
+                left: 125%;
+            }
+        }
+
+        .card-content-wrapper {
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .card-content-wrapper h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .card-content-wrapper p {
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Metallic Colors & Themes */
+        /* Platinum */
+        .card-theme-platinum {
+            border: 1px solid rgba(224, 224, 224, 0.2) !important;
+        }
+
+        .card-theme-platinum:hover {
+            transform: translateY(-8px) !important;
+            border-color: rgba(255, 255, 255, 0.8) !important;
+            box-shadow: 0 20px 40px rgba(224, 224, 224, 0.2), 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .card-theme-platinum .card-content-wrapper h3 {
+            background: linear-gradient(135deg, #FFFFFF, #B0BEC5) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        .card-theme-platinum .card-image-wrapper {
+            border-bottom: 1px solid rgba(224, 224, 224, 0.15) !important;
+        }
+
+        /* Rose Gold */
+        .card-theme-rosegold {
+            border: 1px solid rgba(236, 178, 163, 0.2) !important;
+        }
+
+        .card-theme-rosegold:hover {
+            transform: translateY(-8px) !important;
+            border-color: rgba(236, 178, 163, 0.8) !important;
+            box-shadow: 0 20px 40px rgba(236, 178, 163, 0.2), 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .card-theme-rosegold .card-content-wrapper h3 {
+            background: linear-gradient(135deg, #FFEBE6, #ECB2A3) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        .card-theme-rosegold .card-image-wrapper {
+            border-bottom: 1px solid rgba(236, 178, 163, 0.15) !important;
+        }
+
+        /* Titanium */
+        .card-theme-titanium {
+            border: 1px solid rgba(144, 164, 174, 0.25) !important;
+        }
+
+        .card-theme-titanium:hover {
+            transform: translateY(-8px) !important;
+            border-color: rgba(144, 164, 174, 0.8) !important;
+            box-shadow: 0 20px 40px rgba(144, 164, 174, 0.25), 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .card-theme-titanium .card-content-wrapper h3 {
+            background: linear-gradient(135deg, #CFD8DC, #78909C) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        .card-theme-titanium .card-image-wrapper {
+            border-bottom: 1px solid rgba(144, 164, 174, 0.15) !important;
+        }
+
+        /* Imperial Gold */
+        .card-theme-gold {
+            border: 1px solid rgba(212, 175, 55, 0.2) !important;
+        }
+
+        .card-theme-gold:hover {
+            transform: translateY(-8px) !important;
+            border-color: rgba(212, 175, 55, 0.8) !important;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2), 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .card-theme-gold .card-content-wrapper h3 {
+            background: linear-gradient(135deg, #FFE082, #FFB300) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        .card-theme-gold .card-image-wrapper {
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
+        }
+
+        /* Responsive Grid & Spans on Desktop */
+        @media (min-width: 768px) {
+            .aboutus-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .grid-col-span-2 {
+                grid-column: span 2 !important;
+                flex-direction: row !important;
+            }
+
+            .grid-col-span-2 .card-image-wrapper {
+                width: 42% !important;
+                height: auto !important;
+                min-height: 100% !important;
+                border-bottom: none !important;
+                position: relative !important;
+            }
+
+            .grid-col-span-2 .card-image-wrapper img {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+            }
+
+            .grid-col-span-2 .card-content-wrapper {
+                width: 58% !important;
+                justify-content: center !important;
+            }
+
+            .grid-row-span-2 {
+                grid-row: span 2 !important;
+            }
+
+            .grid-row-span-2 .card-image-wrapper {
+                height: 280px !important;
+            }
+
+            /* Adjust borders for wide cards in horizontal flex mode */
+            .grid-col-span-2.card-theme-platinum .card-image-wrapper {
+                border-right: 1px solid rgba(224, 224, 224, 0.15) !important;
+            }
+
+            .grid-col-span-2.card-theme-rosegold .card-image-wrapper {
+                border-right: 1px solid rgba(236, 178, 163, 0.15) !important;
+            }
+
+            .grid-col-span-2.card-theme-titanium .card-image-wrapper {
+                border-right: 1px solid rgba(144, 164, 174, 0.15) !important;
+            }
+
+            .grid-col-span-2.card-theme-gold .card-image-wrapper {
+                border-right: 1px solid rgba(212, 175, 55, 0.15) !important;
+            }
+        }
+
+        /* Homepage Side-by-Side Sections Grid */
+        .homepage-sections-grid-container {
+            width: 100%;
+        }
+
+        @media (min-width: 992px) {
+            .homepage-sections-grid-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 40px;
+                max-width: 960px;
+                margin: 0 auto;
+                padding: 0 15px;
+                align-items: stretch;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .homepage-sections-grid-container {
+                max-width: 1140px;
+            }
+        }
+
+        .homepage-sections-grid-container {
+            max-width: 100% !important;
+            padding-left: 5% !important;
+            padding-right: 5% !important;
+        }
+
+        @media (min-width: 992px) {
+            .homepage-sections-grid-container>.stticky {
+                margin-bottom: 0 !important;
+            }
+
+            .homepage-sections-grid-container .e-con-inner {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                height: 100% !important;
+                padding: 40px 30px !important;
+            }
+
+            .homepage-sections-grid-container .e-con-inner .e-child {
+                width: 100% !important;
+                margin-top: 25px !important;
+            }
+
+            .homepage-sections-grid-container .e-con-inner .e-child:first-child {
+                margin-top: 0 !important;
+            }
+
+            .homepage-sections-grid-container .about__thumb {
+                padding-right: 0 !important;
+                margin-bottom: 0 !important;
+            }
+
+            .homepage-sections-grid-container .about__thumb-image img {
+                width: 100% !important;
+                height: 240px !important;
+                object-fit: cover !important;
+                border-radius: 12px !important;
+            }
+
+            /* Only containers with .grid-last-span-2 will have their last child span 2 columns */
+            .homepage-sections-grid-container.grid-last-span-2>*:last-child {
+                grid-column: span 2 !important;
+            }
+        }
+
+        /* Contact and Support Section Premium Overrides */
+        .contact-main-card {
+            background: linear-gradient(135deg, rgba(20, 22, 28, 0.95) 0%, rgba(10, 11, 15, 0.98) 100%) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(212, 175, 55, 0.25) !important;
+            border-radius: 24px !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.05) !important;
+            padding: 40px !important;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+        }
+
+        .contact-main-card:hover {
+            border-color: rgba(212, 175, 55, 0.6) !important;
+            box-shadow: 0 25px 60px rgba(212, 175, 55, 0.12), 0 20px 50px rgba(0, 0, 0, 0.9) !important;
+            transform: translateY(-3px) !important;
+        }
+
+        .contact-form-panel {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            border-radius: 16px !important;
+            padding: 35px !important;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.02), 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+            transition: border-color 0.3s ease !important;
+        }
+
+        .contact-form-panel:hover {
+            border-color: rgba(212, 175, 55, 0.2) !important;
+        }
+
+        /* Form controls styling */
+        .contact-form-input {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: #ffffff !important;
+            border-radius: 10px !important;
+            padding: 14px 20px !important;
+            font-size: 15px !important;
+            transition: all 0.3s ease !important;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+            width: 100% !important;
+        }
+
+        .contact-form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4) !important;
+        }
+
+        .contact-form-input:focus {
+            border-color: #f9a826ff !important;
+            background: rgba(255, 255, 255, 0.06) !important;
+            box-shadow: 0 0 15px rgba(249, 168, 38, 0.25), inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+            outline: none !important;
+        }
+
+        /* Submit Button styling */
+        .contact-submit-btn {
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B38728 100%) !important;
+            border: none !important;
+            color: #0d0e12 !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.5px !important;
+            padding: 14px 30px !important;
+            border-radius: 10px !important;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3) !important;
+            cursor: pointer !important;
+            white-space: nowrap !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        .contact-submit-btn:hover {
+            background: linear-gradient(135deg, #FFE082 0%, #FFC107 50%, #FF8F00 100%) !important;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5), 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .contact-submit-btn:active {
+            transform: translateY(0) !important;
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3) !important;
+        }
+
+        /* Responsive form container layout */
+        .contact-main-card .cta-form__inner {
+            display: flex !important;
+            gap: 15px !important;
+            flex-wrap: nowrap !important;
+            width: 100% !important;
+        }
+
+        @media (max-width: 575px) {
+            .contact-main-card .cta-form__inner {
+                flex-direction: column !important;
+                align-items: stretch !important;
+            }
+            .contact-main-card .cta-form__inner .contact-submit-btn {
+                margin-top: 10px !important;
+            }
+        }
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
 
     <!-- main-area -->
-    <main class="main-area fix" style="background-color: #8d6900 !important;">
+    <main class="main-area fix" style="background: radial-gradient(ellipse at top, #1e1810 0%, #0a0b0f 80%) !important;">
         <div data-elementor-type="wp-page" data-elementor-id="67" class="elementor elementor-67">
 
             <!-- banner -->
@@ -1339,735 +1789,516 @@ if (isset($_GET['page'])) {
 
             </style>
 
-            <!-- About-Us -->
-            @if ($page == 'all' || $page == 'aboutus')
-            <div class="stticky">
-                <div class="stticky-text">About US</div>
-                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="about-us" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            @if ($page == 'all')
+            <div class="homepage-sections-grid-container">
+                @endif
+
+                <!-- About-Us -->
+                @if ($page == 'all' || $page == 'aboutus')
+                <div class="stticky">
+                    <div class="stticky-text">About US</div>
+                    <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="about-us" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                        <div class="e-con-inner sectioncards sec-top-img">
+                            <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                            ABOUT
+                                            <span style="color: var(--secondary-color);">US</span>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                    <style>
+                                        .about-p span {
+                                            color: #fff;
+                                        }
+
+                                    </style>
+                                    <div class="elementor-widget-container">
+                                        <p class="elementor-heading-title elementor-size-default about-p">
+                                            “GoldenWay Investment (GWI) is a leading institutional digital asset staking and algorithmic yield generation ecosystem. We leverage state-of-the-art high-frequency trading (HFT) infrastructure, quantitative modeling, and smart contract structures to deliver consistent, risk-adjusted returns for our global partners.
+                                            <br>
+                                            <br>
+                                            Our platform integrates machine learning analysis with automated arbitrage bots that capitalize on structural price inefficiencies across global cryptocurrency and foreign exchange spot/derivative markets. By combining technical innovation with strict risk mitigation frameworks, we empower our users to compound their capital with confidence.”
+                                        </p>
+
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                    <div class="elementor-widget-container">
+                                        @if ($page == 'all')
+                                        <a href="/?page=aboutus" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
+                                            More
+                                        </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" style="margin-top: 30px;" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                    <div class="elementor-widget-container">
+                                        <script>
+                                            jQuery(document).ready(function($) {
+
+                                                AOS.init();
+
+                                            });
+
+                                        </script>
+                                        <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                            <div class="about__thumb-inner">
+                                                <div class="about__thumb-image floating-content">
+                                                    <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop" alt="GWI Advisory">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
+                @if ($page == 'aboutus')
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                    <div class="e-con-inner" style="max-width: 1200px; margin: 0 auto; padding: 20px 0;">
+                        <div class="aboutus-cards-grid">
+
+                            <!-- Card 1 -->
+                            <div class="aboutus-gold-card grid-col-span-2 card-theme-platinum" data-aos="fade-up" data-aos-duration="600">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=600&auto=format&fit=crop" alt="Strategic Execution Blueprint">
+                                </div>
+                                <div class="card-content-wrapper">
+                                    <h3>Strategic Execution Blueprint</h3>
+                                    <p>"Success in the markets begins with a robust, rule-based roadmap. We help you define custom entry, exit, and risk-management parameters, backtested against decades of historical data to ensure absolute statistical viability."</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="aboutus-gold-card grid-row-span-2 card-theme-rosegold" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=600&auto=format&fit=crop" alt="Professional Capital Management">
+                                </div>
+                                <div class="card-content-wrapper">
+                                    <h3>Professional Capital Management</h3>
+                                    <p>"We view trading as a high-performance corporate operation. By organizing your portfolios with meticulous risk assessments, cost audits, and performance tracking, we maximize long-term enterprise sustainability."</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="aboutus-gold-card card-theme-titanium" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=600&auto=format&fit=crop" alt="AI & Machine Learning Advantage">
+                                </div>
+                                <div class="card-content-wrapper">
+                                    <h3>AI & Machine Learning Advantage</h3>
+                                    <p>"Gain an edge over retail traders by harnessing the power of advanced algorithmic bots. GWI analyzes complex market streams across Forex and crypto in real-time, executing trades at high-velocity speed."</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 4 -->
+                            <div class="aboutus-gold-card card-theme-gold" data-aos="fade-up" data-aos-duration="600">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=600&auto=format&fit=crop" alt="Fortified Asset Security">
+                                </div>
+                                <div class="card-content-wrapper">
+                                    <h3>Fortified Asset Security</h3>
+                                    <p>"Capital preservation is our highest priority. Through dynamic stop-loss automation and algorithmic hedging strategies, we insulate your investments from sudden, high-volatility market movements."</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 5 -->
+                            <div class="aboutus-gold-card grid-col-span-2 card-theme-rosegold" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=crop" alt="Adaptive Market Intelligence">
+                                </div>
+                                <div class="card-content-wrapper">
+                                    <h3>Adaptive Market Intelligence</h3>
+                                    <p>"Financial landscapes evolve dynamically. Our academy keeps you updated with advanced market structures, macroeconomic insights, and new decentralized technologies so you are always ahead of the curve."</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 6 -->
+                            <div class="aboutus-gold-card card-theme-platinum" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=600&auto=format&fit=crop" alt="Expert Peer Accountability">
+                                </div>
+                                <div class="card-content-wrapper">
+                                    <h3>Expert Peer Accountability</h3>
+                                    <p>"Uncontrolled emotions are the leading cause of trading losses. GWI provides a collaborative community and expert mentoring, keeping your trading activities transparent, disciplined, and rule-bound."</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 7 -->
+                            <div class="aboutus-gold-card card-theme-titanium" data-aos="fade-up" data-aos-duration="600">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=600&auto=format&fit=crop" alt="High-Discipline Simulation">
+                                </div>
+                                <div class="card-content-wrapper">
+                                    <h3>High-Discipline Simulation</h3>
+                                    <p>"Master your psychology using our zero-risk trading simulators. Practice consistent risk allocation and refine your strategy until execution becomes an automated, emotionless habit."</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 8 -->
+                            <div class="aboutus-gold-card grid-col-span-2 card-theme-gold" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=600&auto=format&fit=crop" alt="Comprehensive Trade Ledger">
+                                </div>
+                                <div class="card-content-wrapper">
+                                    <h3>Comprehensive Trade Ledger</h3>
+                                    <p>"Every order holds a lesson. Our detailed automated journal tracks win rates, drawdowns, and execution errors, giving you the precise data needed to continuously optimize your trading performance."</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
+                <!-- Mission -->
+                @if ($page == 'all' || $page == 'ourmission')
+                <div class="stticky">
+                    <div class="stticky-text">Our Mission</div>
+                    <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-mission" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                        <div class="e-con-inner sectioncards">
+                            <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                    <div class="elementor-widget-container">
+                                        <script>
+                                            jQuery(document).ready(function($) {
+
+                                                AOS.init();
+
+                                            });
+
+                                        </script>
+                                        <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                            <div class="about__thumb-inner">
+                                                <div class="about__thumb-image floating-content">
+                                                    <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop" alt="Our Mission">
+                                                    <div class="floating-content__top-left">
+                                                        <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                    </div>
+                                                    <div class="floating-content__bottom-right">
+                                                        <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <h2 class="elementor-heading-title elementor-size-default">
+                                            Our
+                                            <span style="color: var(--secondary-color);">Mission</span>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <p class="elementor-heading-title elementor-size-default">
+                                            "Our mission is to democratize institutional-grade digital asset staking and high-performance algorithmic yield strategies. We are committed to providing transparent, highly secure financial infrastructure, real-time market-neutral execution, and robust cryptographic security frameworks that enable investors worldwide to grow their wealth. By bridging the gap between traditional quantitative finance and decentralized ecosystems, we work to cultivate long-term financial freedom and stable passive earnings for partners across the globe."
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                    <div class="elementor-widget-container">
+                                        <!-- <a
+                                        href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                <script></script>
+
+                <!-- Vision -->
+                @if ($page == 'all' || $page == 'ourmission')
+                <div class="stticky">
+                    <div class="stticky-text">Our Vision</div>
+                    <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                        <div class="e-con-inner sectioncards">
+                            <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                            Our
+                                            <span style="color: var(--secondary-color);">Vision</span>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <p class="elementor-heading-title elementor-size-default">
+                                            “Our vision is to build the world's most secure, reliable, and technologically advanced decentralized staking ecosystem, bridging the gap between traditional asset management and Web3 yield optimization to foster sustainable wealth generation. We aim to establish a borderless, permissionless financial framework where retail and institutional participants can seamlessly access premium algorithmic trading systems, advanced liquidity verification networks, and automated risk-management engines to navigate the digital asset economy with absolute ease.”
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                    <div class="elementor-widget-container">
+                                        <!--  <a
+                                       href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        style="background-color: #f9a826ff;"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                    <div class="elementor-widget-container">
+                                        <script>
+                                            jQuery(document).ready(function($) {
+
+                                                AOS.init();
+
+                                            });
+
+                                        </script>
+                                        <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                            <div class="about__thumb-inner">
+                                                <div class="about__thumb-image floating-content">
+                                                    <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=600&auto=format&fit=crop" alt="Our Vision">
+                                                    <div class="floating-content__top-left">
+                                                        <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                    </div>
+                                                    <div class="floating-content__bottom-right">
+                                                        <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                <!-- values -->
+                @if ($page == 'all' || $page == 'ourmission')
+                <div class="stticky">
+                    <div class="stticky-text">Our Values</div>
+                    <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                        <div class="e-con-inner sectioncards">
+                            <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                    <div class="elementor-widget-container">
+                                        <script>
+                                            jQuery(document).ready(function($) {
+
+                                                AOS.init();
+
+                                            });
+
+                                        </script>
+                                        <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                            <div class="about__thumb-inner">
+                                                <div class="about__thumb-image floating-content">
+                                                    <img decoding="async" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=600&auto=format&fit=crop" alt="Our Values">
+                                                    <div class="floating-content__top-left">
+                                                        <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                    </div>
+                                                    <div class="floating-content__bottom-right">
+                                                        <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <h2 class="elementor-heading-title elementor-size-default">
+                                            Our
+                                            <span style="color: var(--secondary-color);">Values</span>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <p class="elementor-heading-title elementor-size-default">
+                                            "We are guided by three core pillars: mathematical precision, complete transparency, and technological innovation. We prioritize the security of our stakeholders' capital, maintain robust operational integrity, and continuously push the boundaries of algorithmic execution. By upholding absolute compliance, executing comprehensive audits, and focusing on reliable cross-chain protocol validation, we maintain a trusted, stable, and highly performant platform that protects user assets while maximizing yield consistency across market cycles."
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                    <div class="elementor-widget-container">
+                                        <!-- <a
+                                        href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                <!-- Our Projects -->
+                @if ($page == 'all' || $page == 'ourmission')
+                <div class="stticky">
+                    <div class="stticky-text">Our Projects</div>
+                    <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                        <div class="e-con-inner sectioncards card-img-top">
+                            <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                            Our
+                                            <span style="color: var(--secondary-color);">Projects</span>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <p class="elementor-heading-title elementor-size-default">
+                                            “We develop and operate a suite of high-performance decentralized financial products, from algorithmic yield aggregators and tokenized asset programs to validator node scaling systems. By designing custom smart contracts, quantitative cross-exchange liquidity routers, and institutional staking pools, our team continuously builds real-world applications that solve capital inefficiency. We aim to expand our software suite to cover multi-chain liquid derivatives and automated delta-neutral vaults, offering diverse options for global participants.”
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                    <div class="elementor-widget-container">
+                                        <a href="/?page=ourproject" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
+                                            View All
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                    <div class="elementor-widget-container">
+                                        <script>
+                                            jQuery(document).ready(function($) {
+
+                                                AOS.init();
+
+                                            });
+
+                                        </script>
+                                        <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                            <div class="about__thumb-inner">
+                                                <div class="about__thumb-image floating-content">
+                                                    <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Our Projects">
+                                                    <div class="floating-content__top-left">
+                                                        <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                    </div>
+                                                    <div class="floating-content__bottom-right">
+                                                        <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
+                <style>
+                    .about-p span {
+                        color: #fff !important;
+                        font-weight: 600;
+                    }
+
+                </style>
+
+                @if ($page == 'ourproject')
+                <!-- GWI -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
                     <div class="e-con-inner sectioncards sec-top-img">
                         <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                        ABOUT
-                                        <span style="color: var(--secondary-color);">US</span>
+                                        1
+                                        <span style="color: var(--secondary-color);">GWI</span>
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                                <style>
-                                    .about-p span {
-                                        color: #fff;
-                                    }
-
-                                </style>
                                 <div class="elementor-widget-container">
-                                    <p class="elementor-heading-title elementor-size-default about-p">
-                                        “GWI is an Artificial Intelligence Robot that analyzes market Direction such
-                                        as Forex, cryptocurrencies and Volatility Index market. It also predicts
-                                        future trades by using market killer trading strategy with the idea of price
-                                        action.
+                                    <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
+                                        The GWI ecosystem is positioned at the intersection of quantitative finance and blockchain infrastructure. We continuously expand our capabilities to capitalize on emerging market dynamics.
                                         <br>
                                         <br>
-                                        Artificial intelligence is a machines that are programmed to think like
-                                        humans and mimic their actions. With the use of AI-Trading-Bot, we have been
-                                        able to minimize loses in the Forex / Cryptocurrencies market and we have
-                                        also extends AI Trading-Bot to trade on both spot and future trade.
-                                        AI-Trading-Bot has been programmed in such a way that, it can place trade
-                                        and generate profits when markets are bad by trading on the futures market.
-                                    </p>
-
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                                <div class="elementor-widget-container">
-                                    @if ($page == 'all')
-                                    <a href="/?page=aboutus" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
-                                        More
-                                    </a>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" style="margin-top: 30px;" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                <div class="elementor-widget-container">
-                                    <script>
-                                        jQuery(document).ready(function($) {
-
-                                            AOS.init();
-
-                                        });
-
-                                    </script>
-                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                        <div class="about__thumb-inner">
-                                            <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://www.shutterstock.com/image-photo/business-people-reviewing-data-on-600nw-2215199777.jpg" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-
-            @if ($page == 'aboutus')
-            <!-- Develop a Trading Plan -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://a.c-dn.net/b/2AEsF4/GettyImages-1158166358.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Develop a Trading Plan</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    "A well-defined trading plan should outline your entry, exit, and money
-                                    management strategies. It’s essential to backtest your trading plan using
-                                    historical data to ensure its viability before applying it to real trades."
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                        href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Treat Trading as a Business -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Treat Trading as a Business</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    "Approach trading seriously and understand that it involves expenses, losses,
-                                    taxes, and risks. By treating it as a business, you can create a structured
-                                    approach to maximize your potential."
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                    href="/dark/about-us/"
-                                    target="_self"
-                                    rel="nofollow"
-                                    class="trk-btn trk-btn--border trk-btn--primary"
-                                >
-                                    More
-                                </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://i.ytimg.com/vi/kwlUGQL_GsM/maxresdefault.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>10 Years</h3>
-                                                    <p>Consulting Experience</p>
-                                                </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>25K+</h3>
-                                                    <p>Satisfied Customers</p>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Leverage Technology -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://imageio.forbes.com/specials-images/imageserve/645d24b32b28e7e90acb5cb8/Big-Data-Technology-for-Business-Concept-/960x0.jpg?format=jpg&width=960" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>10 Years</h3>
-                                                    <p>Consulting Experience</p>
-                                                </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>25K+</h3>
-                                                    <p>Satisfied Customers</p>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Leverage Technology</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    "Utilize charting platforms, market updates, and trading simulators to enhance
-                                    your trading decisions. AI and machine learning software can also help identify
-                                    trading opportunities."
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                    href="/dark/about-us/"
-                                    target="_self"
-                                    rel="nofollow"
-                                    class="trk-btn trk-btn--border trk-btn--primary"
-                                >
-                                    More
-                                </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Protect Your Capital -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Protect Your Capital</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    "Avoid unnecessary risks and do everything you can to preserve your trading
-                                    business. Remember, protecting your capital doesn’t mean avoiding losses, but
-                                    rather managing them effectively."
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                    href="/dark/about-us/"
-                                    target="_self"
-                                    rel="nofollow"
-                                    class="trk-btn trk-btn--border trk-btn--primary"
-                                >
-                                    More
-                                </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://media.istockphoto.com/id/1217218959/photo/money-protecting-concept-saving-symbol-close-up-of-a-human-hand-protecting-pink-piggy-bank.jpg?s=612x612&w=0&k=20&c=wcJbVduzmww4l4t83ADpEzC5gLB_hOQKpjPrMw3_sQM=" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>10 Years</h3>
-                                                    <p>Consulting Experience</p>
-                                                </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>25K+</h3>
-                                                    <p>Satisfied Customers</p>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Continuous Learning -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://blog.vantagecircle.com/content/images/2019/09/Continuous-Learning.png" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>10 Years</h3>
-                                                    <p>Consulting Experience</p>
-                                                </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>25K+</h3>
-                                                    <p>Satisfied Customers</p>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Continuous Learning</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    "The markets are always changing, so it’s crucial to become a student of the
-                                    markets. Continuous education and staying updated with market trends are vital
-                                    for success."
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                    href="/dark/about-us/"
-                                    target="_self"
-                                    rel="nofollow"
-                                    class="trk-btn trk-btn--border trk-btn--primary"
-                                >
-                                    More
-                                </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Get Help and Accountability -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Get Help and Accountability</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    "Having a mentor or a trading referee can help you stay disciplined and
-                                    accountable for your trading decisions. This can minimize mistakes and keep you
-                                    on track with your strategy."
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                    href="/dark/about-us/"
-                                    target="_self"
-                                    rel="nofollow"
-                                    class="trk-btn trk-btn--border trk-btn--primary"
-                                >
-                                    More
-                                </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://cdn.shopify.com/s/files/1/1752/1735/files/Workplace_With_High_Psychological_Safety.jpg?v=1686350446" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>10 Years</h3>
-                                                    <p>Consulting Experience</p>
-                                                </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>25K+</h3>
-                                                    <p>Satisfied Customers</p>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Practice and Discipline -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://t3.ftcdn.net/jpg/04/74/58/30/360_F_474583030_lncLJfiuZYbrr4kaSRpIPXFSDLC0QI1s.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>10 Years</h3>
-                                                    <p>Consulting Experience</p>
-                                                </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>25K+</h3>
-                                                    <p>Satisfied Customers</p>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Practice and Discipline</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    "Regular practice and maintaining discipline are key to improving your trading.
-                                    This includes following your trading plan consistently and avoiding emotional
-                                    decisions."
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                    href="/dark/about-us/"
-                                    target="_self"
-                                    rel="nofollow"
-                                    class="trk-btn trk-btn--border trk-btn--primary"
-                                >
-                                    More
-                                </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Record Your Trades -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Record Your Trades</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    "Keeping a detailed record of all your trades can help you analyze your
-                                    performance and make informed adjustments to your strategy.”
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                    href="/dark/about-us/"
-                                    target="_self"
-                                    rel="nofollow"
-                                    class="trk-btn trk-btn--border trk-btn--primary"
-                                >
-                                    More
-                                </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://static.vecteezy.com/system/resources/previews/030/709/118/non_2x/worker-is-analyzing-stock-charts-generative-ai-free-photo.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>10 Years</h3>
-                                                    <p>Consulting Experience</p>
-                                                </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>25K+</h3>
-                                                    <p>Satisfied Customers</p>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-
-            <!-- Mission -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">Our Mission</div>
-                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-mission" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                    <div class="e-con-inner sectioncards">
-                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                <div class="elementor-widget-container">
-                                    <script>
-                                        jQuery(document).ready(function($) {
-
-                                            AOS.init();
-
-                                        });
-
-                                    </script>
-                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                        <div class="about__thumb-inner">
-                                            <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://boms.co.in/UploadedFiles/AboutPage/2099ed0a96b44ee9aebe57fc21e44743.jpg" alt="">
-                                                <div class="floating-content__top-left">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                                </div>
-                                                <div class="floating-content__bottom-right">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                                <div class="elementor-widget-container">
-                                    <h2 class="elementor-heading-title elementor-size-default">
-                                        Our
-                                        <span style="color: var(--secondary-color);">Mission</span>
-                                    </h2>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                                <div class="elementor-widget-container">
-                                    <p class="elementor-heading-title elementor-size-default">
-                                        "Our mission is to empower individuals by providing innovative staking
-                                        solutions, reliable market data, and personalized guidance to help them
-                                        navigate the market and achieve their financial goals."
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                                <div class="elementor-widget-container">
-                                    <!-- <a
-                                        href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-            <script></script>
-
-            <!-- Vision -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">Our Vision</div>
-                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                    <div class="e-con-inner sectioncards">
-                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                                <div class="elementor-widget-container">
-                                    <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                        Our
-                                        <span style="color: var(--secondary-color);">Vision</span>
-                                    </h2>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                                <div class="elementor-widget-container">
-                                    <p class="elementor-heading-title elementor-size-default">
-                                        “Our vision is to empower investors by providing a transparent, efficient,
-                                        and user-friendly supportive platform, enabling them to make informed
-                                        decisions and achieve financial growth with confidence.”
+                                        <br>
+                                        <span>(a) Institutional-Grade Staking:</span> We provide secure, high-yield staking pools built on institutional validator nodes across major proof-of-stake blockchains, ensuring maximum security and uptime.
+                                        <br>
+                                        <br>
+                                        <span>(b) Cross-Chain Yield Optimizers:</span> Our automated algorithms dynamically scan multi-chain yield opportunities, reallocating assets across protocols to capture the highest risk-adjusted staking rewards.
+                                        <br>
+                                        <br>
+                                        <span>(c) Liquidity Provisioning:</span> GWI serves as a major liquidity provider on automated market makers (AMMs) and decentralized exchanges, earning swap fees that boost overall user dividends.
+                                        <br>
+                                        <br>
+                                        <span>(d) Advanced Arbitrage Infrastructure:</span> Our proprietary bots monitor cross-exchange price discrepancies, executing statistical arbitrage trades in milliseconds to lock in market-neutral profits.
+                                        <br>
+                                        <br>
+                                        <span>(e) Decentralized Governance:</span> We are transitionting to a decentralized autonomous organization (DAO) model, allowing GWI token holders to vote on key protocol parameters and reserve allocations.
+                                        <br>
+                                        <br>
+                                        <span>(f) Long-term Strategic Reserves:</span> GWI maintains a diversified treasury of top-tier digital assets and gold-backed tokens to back our staking pools and insulate investors from tail-risk events.
+                                        <br>
+                                        <br>
+                                        While the digital asset market is highly dynamic, GWI's multi-layered strategy ensures sustainable capital compounding throughout all market cycles.
                                     </p>
                                 </div>
                             </div>
@@ -2099,7 +2330,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://t3.ftcdn.net/jpg/01/37/90/78/360_F_137907818_LNzsqtQT7OAZ98BuA3T4TKiEbEOY543G.jpg" alt="">
+                                                <img decoding="async" style="height: 298px; margin-top: 70px;" src="/tst/grnyellow.png" alt="">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -2120,13 +2351,99 @@ if (isset($_GET['page'])) {
                         </div>
                     </div>
                 </div>
-            </div>
-            @endif
 
-            <!-- values -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">Our Values</div>
+                <!-- GWI 2 -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                    <div class="e-con-inner sectioncards sec-top-img">
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
+
+                                            AOS.init();
+
+                                        });
+
+                                    </script>
+                                    <style>
+                                        @media (max-width:1200px) {
+                                            .gmss-img-thumb {
+                                                display: none;
+                                            }
+                                        }
+
+                                    </style>
+                                    <div class="about__thumb pe-lg-5 gmss-img-thumb" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=600&auto=format&fit=crop" alt="Plan">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
+                                        GWI supports a curated selection of highly liquid digital assets, allowing investors to stake their preferred tokens and earn daily compounding rewards:
+                                        <br>
+                                        <br>
+                                        <span> Bitcoin Staking (BTC): </span> Earn passive yield on Bitcoin through our wrapped asset staking pools and market-neutral futures hedging strategies.
+                                        <br>
+                                        <br>
+                                        <span> Ethereum Staking (ETH): </span> Participate in direct validator-node staking on the Ethereum network, backed by GWI's automated MEV-boosted reward extraction.
+                                        <br>
+                                        <br>
+                                        <span> Stablecoin Pools (USDT/USDC): </span> Secure stable, high-yield staking dividends pegged to the US Dollar, shielded from cryptocurrency market volatility.
+                                        <br>
+                                        <br>
+                                        <span> BNB Chain Staking (BNB): </span> Leverage high-capacity validator staking on the BNB chain to capitalize on high transaction fee volumes.
+                                        <br>
+                                        <br>
+                                        <span> High-Speed Staking (SOL): </span> Earn premium rewards by participating in Solana validator clusters, optimized for low-latency network inflation yield.
+                                        <br>
+                                        <br>
+                                        <span> Gold-Backed Assets (PAXG): </span> Stake tokenized physical gold to hedge against inflation while earning additional yield through GWI's quantitative trading strategies.
+                                        <br>
+                                        <br>
+                                        <span> Multi-Chain Staking (ADA/DOT): </span> Diversify your staking portfolio across robust, decentralized network validation nodes with GWI's automated yield compounding.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                <div class="elementor-widget-container">
+                                    <!--  <a
+                                       href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        style="background-color: #f9a826ff;"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- BMS -->
                 <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
                     <div class="e-con-inner sectioncards">
                         <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
@@ -2143,7 +2460,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" src="https://www.bluleadz.com/hubfs/Blog_pics/company-core-values-graphic-1.jpeg" alt="">
+                                                <img decoding="async" src="https://images.unsplash.com/photo-1579621970795-87faff2f9050?q=80&w=600&auto=format&fit=crop" alt="Billionaire Mindset Program">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -2166,17 +2483,18 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title elementor-size-default">
-                                        Our
-                                        <span style="color: var(--secondary-color);">Values</span>
+                                        2
+                                        <span style="color: var(--secondary-color);">Billionare Mindset Program</span>
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <p class="elementor-heading-title elementor-size-default">
-                                        "At AI Trading, we embrace integrity, and innovation. We prioritize client
-                                        satisfaction, foster a collaborative environment. We strive for excellence,
-                                        adapt to change, and drive long-term value creation for our stakeholders."
+                                        Motivation training is a program that takes place inside an organization aiming
+                                        to increase and maintain an employee's motivation levels, dedication, and desire
+                                        to reach professional goals and successfully contribute to the company's
+                                        success.
                                     </p>
                                 </div>
                             </div>
@@ -2195,37 +2513,32 @@ if (isset($_GET['page'])) {
                         </div>
                     </div>
                 </div>
-            </div>
-            @endif
 
-            <!-- Our Projects -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">Our Projects</div>
+
+                <!-- Web3.0 Technology -->
                 <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                    <div class="e-con-inner sectioncards card-img-top">
+                    <div class="e-con-inner sectioncards sec-top-img">
                         <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                        Our
-                                        <span style="color: var(--secondary-color);">Projects</span>
+                                        3
+                                        <span style="color: var(--secondary-color);">Web3.0 </span>
+                                        Technology
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
-                                    <p class="elementor-heading-title elementor-size-default">
-                                        “Our vision is to empower investors by providing a transparent, efficient,
-                                        and user-friendly supportive platform, enabling them to make informed
-                                        decisions and achieve financial growth with confidence.”
+                                    <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
+                                        GWI leverages Web3.0 technologies to build decentralized, trustless, and permissionless financial interfaces. By utilizing smart contract automation, decentralized storage, and cryptographic wallets, we return ownership of assets, data, and yield back to the individual.
                                     </p>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
                                 <div class="elementor-widget-container">
-                                    <a href="/?page=ourproject" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
-                                        View All
+                                    <a href="/?page=web3" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
+                                        More
                                     </a>
                                 </div>
                             </div>
@@ -2244,7 +2557,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://thumbs.dreamstime.com/b/projects-concept-black-chalkboard-d-rendering-handwritten-top-view-office-desk-lot-business-office-supplies-79906734.jpg" alt="">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=600&auto=format&fit=crop" alt="Web3.0">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -2265,1100 +2578,107 @@ if (isset($_GET['page'])) {
                         </div>
                     </div>
                 </div>
-            </div>
-            @endif
 
 
-            <style>
-                .about-p span {
-                    color: #fff !important;
-                    font-weight: 600;
-                }
-
-            </style>
-
-            @if ($page == 'ourproject')
-            <!-- GWI -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards sec-top-img">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    1
-                                    <span style="color: var(--secondary-color);">GWI</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
-                                    The future of cryptocurrency trading and growth appears to be a mix of
-                                    challenges and opportunities. Here are some insights based on recent analyses
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <span>(a)Market Recovery:</span> After a tough year in 2022, where the crypto
-                                    market lost over $2 trillion in value, there is a cautious optimism that the
-                                    market will recover. The technology behind cryptocurrencies, such as blockchain
-                                    and cryptography, is expected to continue being integral to the modern economic
-                                    toolkit.
-                                    <br>
-                                    <br>
-                                    <span>(b)Mainstream Adoption:</span> There has been a significant surge in the
-                                    mainstream acceptance of cryptocurrencies. With more financial institutions
-                                    embracing digital assets, 2024 could see a boom in mass adoption as regulatory
-                                    clarity improves and traditional investors enter the market.
-                                    <br>
-                                    <br>
-                                    <span>(c)Central Bank Digital Currencies</span> (CBDCs): Many countries are
-                                    exploring or developing their own CBDCs, which could lead to a paradigm shift in
-                                    how governments perceive and utilize digital currencies. While not decentralized
-                                    like cryptocurrencies, CBDCs indicate a rising acceptance of digital assets.
-                                    <br>
-                                    <br>
-                                    <span>(d)Interoperability: Focus on blockchain</span> interoperability will
-                                    likely increase, with cross-chain solutions facilitating seamless communication
-                                    and asset transfer between different blockchain networks.
-                                    <br>
-                                    <br>
-                                    <span>(e)Market Growth:</span> The global cryptocurrency market is projected to
-                                    grow significantly, with estimates suggesting it could hit $51.5 billion by 2024
-                                    and continue expanding at a compound annual growth rate (CAGR) of 8.62%
-                                    <br>
-                                    <br>
-                                    <span>(f)Long-term Outlook:</span> Looking further ahead, the cryptocurrency
-                                    market could more than triple by 2030, driven by technological innovation, the
-                                    rise of stablecoins, the expansion of decentralized finance (DeFi), and a
-                                    greater emphasis on sustainable mining practices.
-                                    These trends suggest that while the cryptocurrency market faces volatility and
-                                    regulatory challenges, its underlying technologies and the shift towards digital
-                                    assets could lead to promising growth in the future. However, it’s important to
-                                    approach cryptocurrency trading with caution due to its inherent risks and
-                                    volatility.
-                                    <br>
-                                    <br>
-                                    <br>
-
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!--  <a
-                                       href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        style="background-color: #f9a826ff;"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px; margin-top: 70px;" src="/tst/grnyellow.png" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- GWI 2 -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards sec-top-img">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <style>
-                                    @media (max-width:1200px) {
-                                        .gmss-img-thumb {
-                                            display: none;
-                                        }
-                                    }
-
-                                </style>
-                                <div class="about__thumb pe-lg-5 gmss-img-thumb" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="/tst/grnyellow.png" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
-
-                                    I believe you meant “crypto”! Cryptocurrency, often referred to as “crypto,” is
-                                    a digital or virtual currency that uses cryptography for security. Here are some
-                                    key points about cryptocurrencies:
-                                    <br>
-                                    <br>
-                                    <span> Bitcoin (BTC): </span> Bitcoin is the first and most well-known
-                                    cryptocurrency. It operates on a decentralized network called the blockchain and
-                                    is used for peer-to-peer transactions without the need for intermediaries like
-                                    banks or governments.
-                                    <br>
-                                    <br>
-                                    <span> Ethereum (ETH): </span> Ethereum is a platform that enables developers to
-                                    create decentralized applications (DApps) using smart contracts. It introduced
-                                    the concept of programmable money and has its native cryptocurrency called Ether
-                                    (ETH).
-                                    <br>
-                                    <br>
-                                    <span> Tether (USDT): </span> Tether is a stablecoin pegged to the value of a
-                                    fiat currency (usually the US dollar). It provides stability by maintaining a
-                                    1:1 ratio with the underlying currency.
-                                    <br>
-                                    <br>
-                                    <span> BNB (Binance Coin): </span> BNB is the native cryptocurrency of the
-                                    Binance exchange. It’s used for trading fee discounts, participating in token
-                                    sales, and other purposes within the Binance ecosystem.
-                                    <br>
-                                    <br>
-                                    <span> Solana (SOL): </span> Solana is a high-performance blockchain known for
-                                    its fast transaction speeds and low fees. It aims to support decentralized
-                                    applications and DeFi projects.
-                                    <br>
-                                    <br>
-                                    <span> Dogecoin (DOGE): </span> Originally created as a joke, Dogecoin gained
-                                    popularity and became a legitimate cryptocurrency. It features the Shiba Inu dog
-                                    as its logo and has a strong community following.
-                                    <br>
-                                    <br>
-                                    <span> Cardano (ADA): </span> Cardano is a blockchain platform that focuses on
-                                    scalability, security, and sustainability. It aims to provide a more balanced
-                                    and efficient ecosystem for DApps and smart contracts.
-
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!--  <a
-                                       href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        style="background-color: #f9a826ff;"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- BMS -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" src="https://i.ytimg.com/vi/q3NWnc3uwRg/sddefault.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    2
-                                    <span style="color: var(--secondary-color);">Billionare Mindset Program</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default">
-                                    Motivation training is a program that takes place inside an organization aiming
-                                    to increase and maintain an employee's motivation levels, dedication, and desire
-                                    to reach professional goals and successfully contribute to the company's
-                                    success.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                        href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Web3.0 Technology -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards sec-top-img">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    3
-                                    <span style="color: var(--secondary-color);">Web3.0 </span>
-                                    Technology
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
-                                    "Web3 (also known as Web 3.0) is an idea for a new iteration of the World Wide
-                                    Web that incorporates several key concepts."
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <a href="/?page=web3" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
-                                    More
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmVV8XJmtYF5DtYBDvLpXMuvcafugRN9qqBQ&usqp=CAU" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Financial Mangement -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStzgckoJzalRJeHCjdehFJFinxAtBhZwoiPddmzCva9Y5R0WhFBhYGSYatFfurD9NmTb4&usqp=CAU" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    4
-                                    <span style="color: var(--secondary-color);">Financial Mangement</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    Financial management is a critical aspect of business operations. Let’s explore
-                                    what it entails,
-                                    its significance, and the core functions involved:
-                                    Nature and Scope of Financial Management
-
-                                    Financial management involves planning, controlling, and administering a firm’s
-                                    financial
-                                    resources.
-
-                                    It ensures the efficient utilization of funds and effective decision-making
-                                    related to finance.
-                                    Financial management is integral to general management and influences the
-                                    allocation of
-                                    resources.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                        href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--  Sales Training -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    5
-                                    <span style="color: var(--secondary-color);">Sales</span>
-                                    Training
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default">
-                                    Sales training is the process of improving seller skills, knowledge, and
-                                    attributes to drive behavioral change and maximize sales success. It’s about
-                                    empowering salespeople to sell more effectively by developing both soft skills
-                                    (like understanding customer needs and maintaining relationships) and hard
-                                    skills (such as presenting products and closing deals).
-                                    Effective sales training should be viewed as a change management initiative.
-                                    It’s not just about learning theory; it’s about mastering proven techniques and
-                                    personalizing your own style of selling and communication
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!--  <a
-                                       href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        style="background-color: #f9a826ff;"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://assets.mailshake.com/wp-content/uploads/2022/11/30175700/sales-training-program-hero.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Business Support -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://freshrecruitment.com/wp-content/uploads/2019/02/2.-Los-Vergadertafel-van-boven.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    6
-                                    <span style="color: var(--secondary-color);">Business</span>
-                                    Support
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default">
-                                    "Business support encompasses various services and resources designed to assist
-                                    businesses in their
-                                    day-to-day operations, growth, and success.
-                                    A Business Support Manager plays a crucial role in organizations.
-                                    Responsibilities include overseeing financial management, coordinating
-                                    resources, ensuring efficient
-                                    operations, and supporting business growth.
-                                    Remember that seeking and utilizing business support can enhance efficiency,
-                                    address challenges, and
-                                    contribute to overall success. Whether it’s technical support, policy guidance,
-                                    or managerial assistance,
-                                    leveraging available resources is essential!"
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                        href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- WEB DESINING -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    7
-                                    <span style="color: var(--secondary-color);">WEB</span>
-                                    DESINING
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default">
-                                    “Web design is the process of planning, conceptualizing, and arranging content
-                                    for websites. It
-                                    encompasses various elements, including color schemes, typography, layout, and
-                                    overall functionality.”
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!--  <a
-                                       href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        style="background-color: #f9a826ff;"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2022/01/104228210.jpg?auto=format&q=60&fit=max&w=930" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Future technology of metaverse -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://i.ytimg.com/vi/OD8jADtNzTY/mqdefault.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title elementor-size-default">
-                                    8
-                                    <span style="color: var(--secondary-color);">Future technology of</span>
-                                    metaverse
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default">
-                                    "The metaverse refers to the convergence of physical and virtual space accessed
-                                    through computers and enabled by immersive technologies such as virtual reality,
-                                    augmented reality and mixed reality."
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                        href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-
-
-            @if ($page == 'web3')
-            <!-- Decentralization -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards sec-top-img">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    1
-                                    <span style="color: var(--secondary-color);">Decentralization</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
-                                    Unlike the current Web, which is often dominated by large technology companies,
-                                    Web3 aims to be built, operated, and owned by its users. It puts power in the
-                                    hands of individuals rather than corporations.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                       href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        style="background-color: #f9a826ff;"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://res.cloudinary.com/practicaldev/image/fetch/s--imNQ96gr--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/1o1g6r3rci5qtnnu4rql.png" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Blockchain Technologies -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards sec-top-img">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://bsmedia.business-standard.com/_media/bs/img/about-page/thumb/464_464/1611107541.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    2
-                                    <span style="color: var(--secondary-color);">Blockchain Technologies</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
-                                    Web3 leverages blockchain technology, which provides a decentralized and secure
-                                    way to manage data and transactions. Blockchains enable trust without relying on
-                                    intermediaries, making them a fundamental part of Web3.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                       href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        style="background-color: #f9a826ff;"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Token-Based Economics -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards sec-top-img">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    3
-                                    <span style="color: var(--secondary-color);">Token-Based Economics</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
-                                    Web3 introduces the concept of tokens, which represent ownership or value within
-                                    the ecosystem. These tokens can be used for various purposes, such as
-                                    governance, access to services, or even as digital assets (e.g., non-fungible
-                                    tokens or NFTs).
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                       href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        style="background-color: #f9a826ff;"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://www.jumpstartmag.com/wp-content/uploads/2022/03/What-Is-It-and-Why-Is-It-Crucial-for-Crypto-Businesses.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Ownership and Empowerment -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards sec-top-img">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://media.licdn.com/dms/image/C4E12AQHP_06vhRoxFA/article-cover_image-shrink_720_1280/0/1520873079268?e=2147483647&v=beta&t=RgGXqQ9fbviPvuP-ZQ-XRVNnni85pt1MtqVYREPRCJs" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    4
-                                    <span style="color: var(--secondary-color);">Ownership and Empowerment</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
-                                    Web3 seeks to give users more control over their data and digital assets. It
-                                    aims to create an internet where individuals not only participate but also own
-                                    and benefit from their contributions.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                       href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        style="background-color: #f9a826ff;"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-
-            <!-- Our IncomePlans -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">Income Plans</div>
-                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                <!-- Financial Mangement -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
                     <div class="e-con-inner sectioncards">
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
+
+                                            AOS.init();
+
+                                        });
+
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop" alt="Financial Management">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
-                                    <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                        Income
-                                        <span style="color: var(--secondary-color);">Plan</span>
+                                    <h2 class="elementor-heading-title elementor-size-default">
+                                        4
+                                        <span style="color: var(--secondary-color);">Financial Management</span>
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <p class="elementor-heading-title elementor-size-default about-p">
-                                        "Discover Just Income Plan: Simplifying your path to financial prosperity
-                                        through seamless income generation strategies, tailored for modern earners
-                                        seeking stability and growth."
-                                        <br>
-                                        <br>
-                                        There are 5 types of income
-                                        <br>
-                                        <br>
-                                        <span>1. Staking Profit</span>
-                                        <br>
-                                        <span>2. Referral Income</span>
-                                        <br>
-                                        <span>3. Level Divident</span>
-                                        <br>
-                                        <span>4. Compounding</span>
-                                        <br>
-                                        <span>5. Reward System</span>
+                                        GWI provides institutional-grade risk management and treasury services. Our capital protection models utilize dynamic stop-loss adjustments, multi-sig asset custody, and real-time ledger audits to ensure total security and maximum utilization of reserve assets.
                                     </p>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
                                 <div class="elementor-widget-container">
-                                    <a href="/?page=incomeplan" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
-                                        View All
-                                    </a>
+                                    <!-- <a
+                                        href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  Sales Training -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                    <div class="e-con-inner sectioncards">
+                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                        5
+                                        <span style="color: var(--secondary-color);">Strategic Leadership</span>
+                                        &amp; Network Growth
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <p class="elementor-heading-title elementor-size-default">
+                                        We empower our global network partners with advanced communication models, client relation strategies, and financial ecosystem knowledge. Our structured training programs cultivate high-performing leadership, enabling promoters to scale their staking networks and compound team building bonuses.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                <div class="elementor-widget-container">
+                                    <!--  <a
+                                       href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        style="background-color: #f9a826ff;"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
                                 </div>
                             </div>
                         </div>
@@ -3376,7 +2696,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="/bcks/incom.jpeg" alt="">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=600&auto=format&fit=crop" alt="Sales">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -3397,6 +2717,578 @@ if (isset($_GET['page'])) {
                         </div>
                     </div>
                 </div>
+
+                <!-- Business Support -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                    <div class="e-con-inner sectioncards">
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
+
+                                            AOS.init();
+
+                                        });
+
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop" alt="Business Support">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title elementor-size-default">
+                                        6
+                                        <span style="color: var(--secondary-color);">24/7 Institutional</span>
+                                        Partner Support
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <p class="elementor-heading-title elementor-size-default">
+                                        GWI provides comprehensive technical and operational support to all network participants. From dedicated client relationship managers to round-the-clock developer support, we ensure your staking experience is seamless, secure, and continuously optimized.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                <div class="elementor-widget-container">
+                                    <!-- <a
+                                        href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- WEB DESINING -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                    <div class="e-con-inner sectioncards">
+                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                        7
+                                        <span style="color: var(--secondary-color);">Intuitive Web3</span>
+                                        Interface &amp; DApps
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <p class="elementor-heading-title elementor-size-default">
+                                        Our decentralized applications are engineered for friction-free navigation. GWI's customer interfaces provide real-time yield tracking, detailed wallet logs, and instant deposit/withdrawal processing, prioritizing ease-of-use and user security.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                <div class="elementor-widget-container">
+                                    <!--  <a
+                                       href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        style="background-color: #f9a826ff;"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
+
+                                            AOS.init();
+
+                                        });
+
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=600&auto=format&fit=crop" alt="Web Development">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Future technology of metaverse -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                    <div class="e-con-inner sectioncards">
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
+
+                                            AOS.init();
+
+                                        });
+
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=600&auto=format&fit=crop" alt="Future Technology">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title elementor-size-default">
+                                        8
+                                        <span style="color: var(--secondary-color);">AI-Powered</span>
+                                        Predictive Modeling
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <p class="elementor-heading-title elementor-size-default">
+                                        We integrate state-of-the-art predictive analytics to forecast market directions. By processing millions of historical data points, sentiment metrics, and liquidity flows, GWI's neural network engines identify high-probability yield opportunities before they manifest in the market.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                <div class="elementor-widget-container">
+                                    <!-- <a
+                                        href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
+
+                @if ($page == 'web3')
+                <!-- Decentralization -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                    <div class="e-con-inner sectioncards sec-top-img">
+                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                        1
+                                        <span style="color: var(--secondary-color);">Decentralization</span>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
+                                        Decentralization lies at the core of GWI's architecture. By removing centralized intermediaries and relying on smart contract code, we eliminate single points of failure, reduce transaction fees, and ensure censorship-resistant yield generation for all stakers.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                <div class="elementor-widget-container">
+                                    <!-- <a
+                                       href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        style="background-color: #f9a826ff;"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
+
+                                            AOS.init();
+
+                                        });
+
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1621504450181-5d3868e9df74?q=80&w=600&auto=format&fit=crop" alt="Decentralization">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blockchain Technologies -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                    <div class="e-con-inner sectioncards sec-top-img">
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
+
+                                            AOS.init();
+
+                                        });
+
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1622630998477-20aa696ecb05?q=80&w=600&auto=format&fit=crop" alt="Blockchain Technologies">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                        2
+                                        <span style="color: var(--secondary-color);">Blockchain Technologies</span>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
+                                        GWI operates validator nodes across multiple leading Layer-1 and Layer-2 blockchains. This direct consensus-level participation secures network integrity and captures validator inflation yield directly for our staking pools.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                <div class="elementor-widget-container">
+                                    <!-- <a
+                                       href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        style="background-color: #f9a826ff;"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Token-Based Economics -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                    <div class="e-con-inner sectioncards sec-top-img">
+                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                        3
+                                        <span style="color: var(--secondary-color);">Token-Based Economics</span>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
+                                        GWI's tokenomics are engineered to incentivize long-term participation and yield compounding. Through structured buyback-and-burn mechanics and validator-revenue sharing, our native utility token creates sustained alignment between the protocol and investors.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                <div class="elementor-widget-container">
+                                    <!-- <a
+                                       href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        style="background-color: #f9a826ff;"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
+
+                                            AOS.init();
+
+                                        });
+
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?q=80&w=600&auto=format&fit=crop" alt="Token Economics">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ownership and Empowerment -->
+                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                    <div class="e-con-inner sectioncards sec-top-img">
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
+
+                                            AOS.init();
+
+                                        });
+
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop" alt="Ownership and Empowerment">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                        4
+                                        <span style="color: var(--secondary-color);">Ownership and Empowerment</span>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <p class="elementor-heading-title elementor-size-small about-p" style="font-size: 13px;">
+                                        We believe in sovereign capital control. GWI's staking smart contracts guarantee that users retain ultimate ownership of their staked assets, with transparent reward distribution logs verified in real-time on-chain.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                <div class="elementor-widget-container">
+                                    <!-- <a
+                                       href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        style="background-color: #f9a826ff;"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+
+                <!-- Our IncomePlans -->
+                @if ($page == 'all' || $page == 'ourmission')
+                <div class="stticky">
+                    <div class="stticky-text">Income Plans</div>
+                    <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                        <div class="e-con-inner sectioncards">
+                            <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                            Income
+                                            <span style="color: var(--secondary-color);">Plan</span>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                    <div class="elementor-widget-container">
+                                        <p class="elementor-heading-title elementor-size-default about-p">
+                                            "Discover our comprehensive Income Plan, meticulously designed to simplify your path to long-term financial prosperity. We offer a structured and highly reward-based system tailored for modern earners seeking stable, predictable, and scalable wealth generation. Our ecosystem provides diverse avenues to participate and earn, empowering community members to optimize their digital asset portfolios while securing the validation network. There are 5 distinct types of income:
+                                            <br>
+                                            <br>
+                                            <span>1. Staking Profit</span>
+                                            <br>
+                                            <span>2. Referral Income</span>
+                                            <br>
+                                            <span>3. Level Income</span>
+                                            <br>
+                                            <span>4. Auto Pool Income</span>
+                                            <br>
+                                            <span>5. Team Building Bonus</span>"
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                    <div class="elementor-widget-container">
+                                        <a href="/?page=incomeplan" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
+                                            View All
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                    <div class="elementor-widget-container">
+                                        <script>
+                                            jQuery(document).ready(function($) {
+
+                                                AOS.init();
+
+                                            });
+
+                                        </script>
+                                        <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                            <div class="about__thumb-inner">
+                                                <div class="about__thumb-image floating-content">
+                                                    <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=600&auto=format&fit=crop" alt="Plan">
+                                                    <div class="floating-content__top-left">
+                                                        <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                                    </div>
+                                                    <div class="floating-content__bottom-right">
+                                                        <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if ($page == 'all')
             </div>
             @endif
 
@@ -3410,7 +3302,7 @@ if (isset($_GET['page'])) {
                             <div class="elementor-widget-container">
                                 <h2 class="elementor-heading-title banner-title elementor-size-default">
                                     Staking
-                                    <span style="color: var(--secondary-color);">Profit</span>
+                                    <span style="color: var(--secondary-color);">Yields</span>
                                 </h2>
                             </div>
                         </div>
@@ -3419,9 +3311,9 @@ if (isset($_GET['page'])) {
                                 <p class="elementor-heading-title elementor-size-default about-p">
                                     <br>
                                     <br>
-                                    <span>15% Profit for every months</span>
+                                    <span>15% Monthly Staking Yield (Paid Daily)</span>
                                     <br>
-                                    <span>Duration 15 Months</span>
+                                    <span>Staking Period: 15 Months</span>
                                 </p>
                             </div>
                         </div>
@@ -3453,7 +3345,7 @@ if (isset($_GET['page'])) {
                                 <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                     <div class="about__thumb-inner">
                                         <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://img.freepik.com/premium-photo/man-stacking-coins-with-graph-profit_220873-9177.jpg" alt="">
+                                            <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=600&auto=format&fit=crop" alt="Staking Profit">
                                             <div class="floating-content__top-left">
                                                 <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -3492,7 +3384,7 @@ if (isset($_GET['page'])) {
                                 <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                     <div class="about__thumb-inner">
                                         <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://growmudra.com/assets/images/direct-referral.jpg" alt="">
+                                            <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1579621970795-87faff2f9050?q=80&w=600&auto=format&fit=crop" alt="Referral Income">
                                             <div class="floating-content__top-left">
                                                 <!-- <div class="floating-content__item">
                                                     <h3>10 Years</h3>
@@ -3515,8 +3407,8 @@ if (isset($_GET['page'])) {
                         <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                             <div class="elementor-widget-container">
                                 <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    Referral
-                                    <span style="color: var(--secondary-color);">income</span>
+                                    Direct
+                                    <span style="color: var(--secondary-color);">Affiliate Reward</span>
                                 </h2>
                             </div>
                         </div>
@@ -3525,7 +3417,7 @@ if (isset($_GET['page'])) {
                                 <p class="elementor-heading-title elementor-size-default about-p">
                                     <br>
                                     <br>
-                                    <span>Direct Referral 10%</span>
+                                    <span>Earn 10% Direct Referral Commission instantly on all sponsored staking volumes.</span>
                                     <br>
                                 </p>
                             </div>
@@ -3565,18 +3457,15 @@ if (isset($_GET['page'])) {
                                 <p class="elementor-heading-title elementor-size-default about-p">
                                     <br>
                                     <br>
-                                    1. <span>Staker - </span><span style="color: #f9a826ff !important;">Minimum
-                                        100 USDT</span>
+                                    1. <span>Gold Staker - </span><span style="color: #f9a826ff !important;">Minimum 100 USDT Stake</span>
                                     <br>
-                                    2. <span>Promoter - </span><span style="color: #f9a826ff !important;">Minimum
-                                        10 Direct Stakers</span>
+                                    2. <span>Global Promoter - </span><span style="color: #f9a826ff !important;">Minimum 10 Direct Active Stakers</span>
                                     <br>
-                                    3. <span>Executive Promoter - </span><span style="color: #f9a826ff !important;">Direct 2 Promoters</span>
+                                    3. <span>Executive Director - </span><span style="color: #f9a826ff !important;">Maintain 2 Active Global Promoters</span>
                                     <br>
-                                    4. <span>Manager - </span><span style="color: #f9a826ff !important;">Direct 2
-                                        Executive Promoters</span>
+                                    4. <span>Elite Manager - </span><span style="color: #f9a826ff !important;">Maintain 2 Active Executive Directors</span>
                                     <br>
-                                    5. <span>Diamond Achievers - </span><span style="color: #f9a826ff !important;">Direct 2 Managers</span>
+                                    5. <span>Diamond President - </span><span style="color: #f9a826ff !important;">Maintain 2 Active Elite Managers</span>
                                     <br>
                                 </p>
                             </div>
@@ -3607,21 +3496,19 @@ if (isset($_GET['page'])) {
 
                                 </script>
                                 <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://media.istockphoto.com/id/1134790777/vector/men-in-business-suits-are-holding-gold-coins.jpg?s=612x612&w=0&k=20&c=FCUXTppin13kiLtLlulfh-r19WTHFpJMbzfzD5tHknQ=" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
+                                    <div class="about__thumb-image floating-content">
+                                        <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1579621970795-87faff2f9050?q=80&w=600&auto=format&fit=crop" alt="Staker Achievers">
+                                        <div class="floating-content__top-left">
+                                            <!-- <div class="floating-content__item">
                                                 <h3>10 Years</h3>
                                                 <p>Consulting Experience</p>
                                             </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
+                                        </div>
+                                        <div class="floating-content__bottom-right">
+                                            <!-- <div class="floating-content__item">
                                                 <h3>25K+</h3>
                                                 <p>Satisfied Customers</p>
                                             </div> -->
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -3630,66 +3517,63 @@ if (isset($_GET['page'])) {
                     </div>
                 </div>
             </div>
+        </div>
 
 
-            <!-- Level Income -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    Level
-                                    <span style="color: var(--secondary-color);">Dividend</span>
-                                </h2>
-                            </div>
+        <!-- Level Income -->
+        <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner sectioncards">
+                <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                Generational
+                                <span style="color: var(--secondary-color);">Yield Dividends</span>
+                            </h2>
                         </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    <br>
-                                    <br>
-                                    1. <span>First Level - 10%</span>
-                                    <br>
-                                    2. <span>Second Level - 5%</span>
-                                    <br>
-                                    3. <span>Third Level - 5%</span>
-                                    <br>
-                                    4. <span>Fourth Level - 5%</span>
-                                    <br>
-                                    5. <span>Fifth Level - 5%</span>
-                                    <br>
+                    </div>
+                    <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <p class="elementor-heading-title elementor-size-default about-p">
+                                <br>
+                                <br>
+                                1. <span>First Level - 10%</span>
+                                <br>
+                                2. <span>Second Level - 5%</span>
+                                <br>
+                                3. <span>Third Level - 5%</span>
+                                <br>
+                                4. <span>Fourth Level - 5%</span>
+                                <br>
+                                5. <span>Fifth Level - 5%</span>
+                                <br>
 
-                                    <span style="color: #f9a826ff !important;">For Executive Promoters (Direct 2
-                                        Promoters)</span>
-                                    <br>
-                                    6. <span>Sixth Level - 5%</span>
-                                    <br>
-                                    7. <span>Seventh Level - 5%</span>
-                                    <br>
+                                <span style="color: #f9a826ff !important;">Unlocked for Executive Directors (2 Direct Global Promoters)</span>
+                                <br>
+                                6. <span>Sixth Level - 5%</span>
+                                <br>
+                                7. <span>Seventh Level - 5%</span>
+                                <br>
 
-                                    <span style="color: #f9a826ff !important;">For Managers (Direct 2 Executive
-                                        Promoters)</span>
-                                    <br>
-                                    8. <span>Eighth Level - 5%</span>
-                                    <br>
-                                    9. <span>Ninth Level - 5%</span>
-                                    <br>
+                                <span style="color: #f9a826ff !important;">Unlocked for Elite Managers (2 Direct Executive Directors)</span>
+                                <br>
+                                8. <span>Eighth Level - 5%</span>
+                                <br>
+                                9. <span>Ninth Level - 5%</span>
+                                <br>
 
-                                    <span style="color: #f9a826ff !important;">For Diamond Achievers (Direct 2
-                                        Managers)</span>
-                                    <br>
-                                    10. <span>Tenth Level - 5%</span>
-                                    <br>
-                                    11. <span>Eleventh Level - 5%</span>
-                                    <br>
-
-                                </p>
-                            </div>
+                                <span style="color: #f9a826ff !important;">Unlocked for Diamond Presidents (2 Direct Elite Managers)</span>
+                                <br>
+                                10. <span>Tenth Level - 5%</span>
+                                <br>
+                                11. <span>Eleventh Level - 5%</span>
+                                <br>
+                            </p>
                         </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
+                    </div>
+                    <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                        <div class="elementor-widget-container">
+                            <!-- <a
                                    href="/?page=ourproject"
                                     target="_self"
                                     rel="nofollow"
@@ -3698,985 +3582,11 @@ if (isset($_GET['page'])) {
                                 >
                                     View All
                                 </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://media.istockphoto.com/id/1134790777/vector/men-in-business-suits-are-holding-gold-coins.jpg?s=612x612&w=0&k=20&c=FCUXTppin13kiLtLlulfh-r19WTHFpJMbzfzD5tHknQ=" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>10 Years</h3>
-                                                    <p>Consulting Experience</p>
-                                                </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>25K+</h3>
-                                                    <p>Satisfied Customers</p>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-            <!-- Compounding -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://t4.ftcdn.net/jpg/05/06/35/17/360_F_506351785_sXsz26SnnJ4MhhxYIIUnnJTEBvP8o7ki.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>10 Years</h3>
-                                                    <p>Consulting Experience</p>
-                                                </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                    <h3>25K+</h3>
-                                                    <p>Satisfied Customers</p>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Compounding</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    <br>
-                                    <br>
-                                    <span>Compounding 6 Months</span>
-                                    <br>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                                   href="/?page=ourproject"
-                                    target="_self"
-                                    rel="nofollow"
-                                    style="background-color: #f9a826ff; border-color: #f9a826ff;"
-                                    class="trk-btn trk-btn--border trk-btn--primary"
-                                >
-                                    View All
-                                </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Reward System -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    Reward
-                                    <span style="color: var(--secondary-color);">System</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    <br>
-                                    1. <span>10,000 USDT</span>
-                                    <br>
-                                    2. <span>1,00,000 USDT</span>
-                                    <br>
-                                    3. <span>10,00,000 USDT</span>
-                                    <br>
-                                    4. <span>25,00,000 USDT</span>
-                                    <br>
-                                    5. <span>50,00,000 USDT</span>
-                                    <br>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <a href="/?page=reward" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
-                                    View All
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://www.achievers.com/wp-content/uploads/2021/11/Engage-Blog-Employee-Rewards-Recognition-3.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                                <h3>10 Years</h3>
-                                                <p>Consulting Experience</p>
-                                            </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                                <h3>25K+</h3>
-                                                <p>Satisfied Customers</p>
-                                            </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-
-
-            @if ($page == 'reward')
-            <!-- GOA -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    GOA
-                                    <span style="color: var(--secondary-color);">TRIP</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    <br>
-                                    <span>Join Date to 30 Days</span>
-                                    <br>
-                                    <br>
-                                    <span>10,000 USDT Direct Referral</span>
-                                    <br>
-                                    <br>
-                                    <span>3 Days and 2 Nights</span>
-                                    <br>
-                                    <br>
-                                    <span>Direct Referral Only</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                              href="/?page=ourproject"
-                               target="_self"
-                               rel="nofollow"
-                               style="background-color: #f9a826ff; border-color: #f9a826ff;"
-                               class="trk-btn trk-btn--border trk-btn--primary"
-                           >
-                               View All
-                           </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://t3.ftcdn.net/jpg/01/40/51/56/360_F_140515612_0MMpqpsIvs6xno5YXmPVy9FUmZ4uLnFB.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>10 Years</h3>
-                                               <p>Consulting Experience</p>
-                                           </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>25K+</h3>
-                                               <p>Satisfied Customers</p>
-                                           </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- DUBAI -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbiE9erZ7MLrJjIohDjDX-PZeNn9QRVdWHUQ&usqp=CAU" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>10 Years</h3>
-                                               <p>Consulting Experience</p>
-                                           </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>25K+</h3>
-                                               <p>Satisfied Customers</p>
-                                           </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    DUBAI
-                                    <span style="color: var(--secondary-color);">TRIP</span>
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    <br>
-                                    <br>
-                                    <span>1,00,000 USDT</span>
-                                    <br>
-                                    <br>
-                                    <span>4 Days and 3 Nights</span>
-                                    <br>
-                                    <br>
-                                    <span>5 Level Only</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                              href="/?page=ourproject"
-                               target="_self"
-                               rel="nofollow"
-                               style="background-color: #f9a826ff; border-color: #f9a826ff;"
-                               class="trk-btn trk-btn--border trk-btn--primary"
-                           >
-                               View All
-                           </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Swift -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Mid-Segment</span> Car
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    <br>
-                                    <br>
-                                    <span>10,00,000 USDT</span>
-                                    <br>
-                                    <br>
-                                    <span>7000 USDT Worth</span>
-                                    <br>
-                                    <br>
-                                    <span>10 Level Only</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                              href="/?page=ourproject"
-                               target="_self"
-                               rel="nofollow"
-                               style="background-color: #f9a826ff; border-color: #f9a826ff;"
-                               class="trk-btn trk-btn--border trk-btn--primary"
-                           >
-                               View All
-                           </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://wallpapercave.com/wp/wp4224057.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>10 Years</h3>
-                                               <p>Consulting Experience</p>
-                                           </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>25K+</h3>
-                                               <p>Satisfied Customers</p>
-                                           </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- volkswagen or Honda Elevate -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 198px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuQEdJ0JOvcgj9xCkvD7rbo8SINs2PsgrZA9_MzQbHf8fiu3YwpD2r_4qeLSZqQBuAZ5g&usqp=CAU" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>10 Years</h3>
-                                               <p>Consulting Experience</p>
-                                           </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>25K+</h3>
-                                               <p>Satisfied Customers</p>
-                                           </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 198px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40zrxjlGi9LmAwrOVwnJMHsjQbYT5QZViqA&usqp=CAU" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>10 Years</h3>
-                                               <p>Consulting Experience</p>
-                                           </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>25K+</h3>
-                                               <p>Satisfied Customers</p>
-                                           </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Premium</span>
-                                    Car
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    <br>
-                                    <br>
-                                    <span>25,00,000 USDT</span>
-                                    <br>
-                                    <br>
-                                    <span>15000 USDT Worth</span>
-                                    <br>
-                                    <br>
-                                    <span>10 Level Only</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                              href="/?page=ourproject"
-                               target="_self"
-                               rel="nofollow"
-                               style="background-color: #f9a826ff; border-color: #f9a826ff;"
-                               class="trk-btn trk-btn--border trk-btn--primary"
-                           >
-                               View All
-                           </a> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- BENZ -->
-            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                    <span style="color: var(--secondary-color);">Luxuary</span>
-                                    Car
-                                </h2>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                            <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default about-p">
-                                    <br>
-                                    <br>
-                                    <span>50,00,000 USDT</span>
-                                    <br>
-                                    <br>
-                                    <span>50000 USDT Worth</span>
-                                    <br>
-                                    <br>
-                                    <span>10 Level Only</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                            <div class="elementor-widget-container">
-                                <!-- <a
-                              href="/?page=ourproject"
-                               target="_self"
-                               rel="nofollow"
-                               style="background-color: #f9a826ff; border-color: #f9a826ff;"
-                               class="trk-btn trk-btn--border trk-btn--primary"
-                           >
-                               View All
-                           </a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                            <div class="elementor-widget-container">
-                                <script>
-                                    jQuery(document).ready(function($) {
-
-                                        AOS.init();
-
-                                    });
-
-                                </script>
-                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                    <div class="about__thumb-inner">
-                                        <div class="about__thumb-image floating-content">
-                                            <img decoding="async" style="height: 298px;" src="https://imgcdn.oto.com/large/gallery/exterior/25/2196/mercedes-benz-cla-class-front-side-view-470179.jpg" alt="">
-                                            <div class="floating-content__top-left">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>10 Years</h3>
-                                               <p>Consulting Experience</p>
-                                           </div> -->
-                                            </div>
-                                            <div class="floating-content__bottom-right">
-                                                <!-- <div class="floating-content__item">
-                                               <h3>25K+</h3>
-                                               <p>Satisfied Customers</p>
-                                           </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-
-
-            <!-- GWI Academy -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">GWI Academy</div>
-                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="gms-academy" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                    <div class="e-con-inner sectioncards">
-                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                                <div class="elementor-widget-container">
-                                    <h2 class="elementor-heading-title banner-title elementor-size-default">
-                                        Courses in
-                                        <span style="color: var(--secondary-color);">education</span>
-                                        and
-                                        <span style="color: var(--secondary-color);">teaching</span>
-                                    </h2>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                                <style>
-                                    .gms-acdmy-p span {
-                                        color: #fff;
-                                        font-size: 18px !important;
-                                        font-weight: 700 !important;
-                                    }
-
-                                </style>
-                                <div class="elementor-widget-container gms-acdmy-p">
-                                    <p>
-                                        “GWI offers a variety of courses for learners interested in the field.
-                                        Education courses that meet your needs can depend on what kind of career you
-                                        plan to pursue and the type of degree you seek.
-                                        Sample topics of education courses include:
-                                    </p>
-                                    <span class="elementor-heading-title banner-title elementor-size-default">
-                                        Introduction to Education
-                                    </span>
-                                    <p>
-                                        A comprehensive overview of education’s history, philosophy, and sociology
-                                        that can examine education’s social and cultural foundations, as well as the
-                                        roles of learners, teachers, and schools.
-                                        Educational Psychology: an exploration of how students learn and develop
-                                        cognitively, emotionally, and socially.
-                                    </p>
-
-                                    <span class="elementor-heading-title banner-title elementor-size-default">
-                                        Curriculum and Instruction
-                                    </span>
-                                    <p>
-                                        The fundamentals of designing, implementing, and evaluating educational
-                                        curricula, with topics related to planning, instructional strategies,
-                                        materials selection, diversity issues, assessment methods, and technology
-                                        integration.
-                                    </p>
-
-                                    <span class="elementor-heading-title banner-title elementor-size-default">
-                                        Educational Technology
-                                    </span>
-                                    <p>
-                                        An introduction to the use of technology for teaching and learning,
-                                        including emerging technologies, teaching with technology, digital media
-                                        literacy, online learning tools, and security and privacy issues.
-                                    </p>
-
-                                    <span class="elementor-heading-title banner-title elementor-size-default">
-                                        Special Education
-                                    </span>
-                                    <p>
-                                        Topics related to special education including identifying learners with
-                                        special needs, developing Individualized Education Plans (IEPs),
-                                        collaboration with families, laws and regulations governing special
-                                        education services, and effective instructional strategies.
-                                    </p>
-
-                                    <span class="elementor-heading-title banner-title elementor-size-default">
-                                        Early childhood Education
-                                    </span>
-                                    <p>
-                                        An indepth look into the development of children from birth to age eight,
-                                        covering educational techniques used to foster learning.
-                                    </p>
-
-                                    <span class="elementor-heading-title banner-title elementor-size-default">
-                                        Jobs in Education
-                                    </span>
-                                    <p>
-                                        Education is a broad field with many exciting career paths. Whether you want
-                                        to pursue a career inside or outside of the classroom, many different
-                                        options are available.
-                                        Inside the classroom, teachers and professors provide instruction and
-                                        prepare materials for their students. They are also involved in assessment,
-                                        evaluation, and curriculum planning. As a teacher, you can focus on a
-                                        specific subject, such as math, history, science, or language arts. You
-                                        could also specialize in early childhood education or become a special
-                                        education teacher.
-                                        There are also many jobs for professionals outside the classroom, such as a
-                                        school administrator, where you will be tasked with managing the operations
-                                        of an educational institution which can involve hiring faculty, developing
-                                        policies, and overseeing budgets. You can pursue a career as a consultant,
-                                        advising organizations on educational topics; typical job activities include
-                                        evaluating programs, creating reports, and suggesting potential
-                                        improvements. And, you can work as a curriculum writer, crafting the
-                                        material taught in the classroom, or an instructional designer, assessing
-                                        existing training practices and developing online learning programs.”
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                                <div class="elementor-widget-container">
-                                    <!--  <a
-                                       href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        style="background-color: #f9a826ff;"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-            <style>
-                @media (min-width: 768px) {
-                    .elementor-67 .elementor-element.elementor-element-f496e11 {
-                        --width: 75%;
-                    }
-                }
-
-                @media (max-width: 768px) {
-                    .elementor-67 .elementor-element.elementor-element-f496e11 {
-                        --width: 92%;
-                    }
-                }
-
-            </style>
-
-            <!-- academy images -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">GWI Academy</div>
-                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                    <div class="e-con-inner">
-                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                <div class="elementor-widget-container">
-                                    <script>
-                                        jQuery(document).ready(function($) {
-
-                                            AOS.init();
-
-                                        });
-
-                                    </script>
-                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                        <div class="about__thumb-inner">
-                                            <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 200px; width:100%;" src="https://www.investopedia.com/thmb/DF1cjkhi9_6nNTGtux9PJ3P4d8c=/2121x1414/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1162966574-75a6582a8c5148b48b26282017ea71da.jpg" alt="">
-                                                <div class="floating-content__top-left">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                                </div>
-                                                <div class="floating-content__bottom-right">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                <div class="elementor-widget-container">
-                                    <script>
-                                        jQuery(document).ready(function($) {
-
-                                            AOS.init();
-
-                                        });
-
-                                    </script>
-                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                        <div class="about__thumb-inner">
-                                            <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 200px; width:100%;" src="https://www.brameshtechanalysis.com/wp-content/uploads/2021/01/education.jpg" alt="">
-                                                <div class="floating-content__top-left">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                                </div>
-                                                <div class="floating-content__bottom-right">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                <div class="elementor-widget-container">
-                                    <script>
-                                        jQuery(document).ready(function($) {
-
-                                            AOS.init();
-
-                                        });
-
-                                    </script>
-                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                        <div class="about__thumb-inner">
-                                            <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 200px; width:100%;" src="https://a.c-dn.net/b/0lKPqO/Trading_Discipline.jpg" alt="">
-                                                <div class="floating-content__top-left">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                                </div>
-                                                <div class="floating-content__bottom-right">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-            <!-- academy images -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">GWI Academy</div>
-                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                    <div class="e-con-inner">
-                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                <div class="elementor-widget-container">
-                                    <script>
-                                        jQuery(document).ready(function($) {
-
-                                            AOS.init();
-
-                                        });
-
-                                    </script>
-                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                        <div class="about__thumb-inner">
-                                            <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 200px; width:100%;" src="https://qph.cf2.quoracdn.net/main-qimg-6dfcdfb4f43cd94589e53df0c56e2328-pjlq" alt="">
-                                                <div class="floating-content__top-left">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                                </div>
-                                                <div class="floating-content__bottom-right">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                <div class="elementor-widget-container">
-                                    <script>
-                                        jQuery(document).ready(function($) {
-
-                                            AOS.init();
-
-                                        });
-
-                                    </script>
-                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                        <div class="about__thumb-inner">
-                                            <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 200px; width:100%;" src="https://insightssuccess.com/wp-content/uploads/2022/08/Forex-Trading-Education-Can-you-really-make-it-alone-1.jpg" alt="">
-                                                <div class="floating-content__top-left">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                                </div>
-                                                <div class="floating-content__bottom-right">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                <div class="elementor-widget-container">
-                                    <script>
-                                        jQuery(document).ready(function($) {
-
-                                            AOS.init();
-
-                                        });
-
-                                    </script>
-                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                        <div class="about__thumb-inner">
-                                            <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 200px; width:100%;" src="https://mastertrader.com/wp-content/uploads/2020/03/trades1.jpg" alt="">
-                                                <div class="floating-content__top-left">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                                </div>
-                                                <div class="floating-content__bottom-right">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-
-
-            <!-- benefits -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">Benefits</div>
-                <div class="elementor-element elementor-element-c1c4aaf e-con-full e-flex e-con e-parent" data-id="c1c4aaf" id="the-benefits" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}" data-core-v316-plus="true">
-                    <div class="elementor-element elementor-element-94c7ebe elementor-widget elementor-widget-offer-tab" data-id="94c7ebe" data-element_type="widget" data-widget_type="offer-tab.default">
+                <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
                         <div class="elementor-widget-container">
                             <script>
                                 jQuery(document).ready(function($) {
@@ -4686,60 +3596,1005 @@ if (isset($_GET['page'])) {
                                 });
 
                             </script>
-                            <section class="feature feature--style1 padding-bottom padding-top bg-color">
-                                <div class="container">
-                                    <div class="feature__wrapper">
-                                        <div class="row g-5 align-items-center justify-content-between">
-                                            <div class="col-md-6 col-lg-5">
-                                                <div class="feature__content" data-aos="fade-right" data-aos-duration="800">
-                                                    <div class="feature__content-inner">
-                                                        <div class="section-header">
-                                                            <h2 class="mb-15 mt-minus-5">
-                                                                <span style="color: var(--secondary-color)">benefits</span>
-                                                                We offer
-                                                            </h2>
-                                                            <p class="mb-0">Unlock the full potential of our
-                                                                product with our amazing features and top-notch.</p>
-                                                        </div>
-                                                        <div class="feature__nav">
-                                                            <div class="nav nav--feature flex-column nav-pills" id="feat-pills-tab" role="tablist" aria-orientation="vertical">
-                                                                <div class="nav-link active" id="tg-tab-0" data-bs-toggle="pill" data-bs-target="#tg-id-0" role="tab" aria-controls="tg-id-0" aria-selected="true">
-                                                                    <div class="feature__item">
-                                                                        <div class="feature__item-inner">
-                                                                            <div class="feature__item-content">
-                                                                                <h6>Make profit by staking in our
-                                                                                    company</h6>
-                                                                            </div>
+                            <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                <div class="about__thumb-image floating-content">
+                                    <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1579621970795-87faff2f9050?q=80&w=600&auto=format&fit=crop" alt="Referral Dividend">
+                                    <div class="floating-content__top-left">
+                                        <!-- <div class="floating-content__item">
+                                                    <h3>10 Years</h3>
+                                                    <p>Consulting Experience</p>
+                                                </div> -->
+                                    </div>
+                                    <div class="floating-content__bottom-right">
+                                        <!-- <div class="floating-content__item">
+                                                    <h3>25K+</h3>
+                                                    <p>Satisfied Customers</p>
+                                                </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+        <!-- Compounding -->
+        <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner sectioncards">
+                <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                        <div class="elementor-widget-container">
+                            <script>
+                                jQuery(document).ready(function($) {
+
+                                    AOS.init();
+
+                                });
+
+                            </script>
+                            <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                <div class="about__thumb-image floating-content">
+                                    <img decoding="async" style="height: 298px;" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" alt="Compounding Achievers">
+                                    <div class="floating-content__top-left">
+                                        <!-- <div class="floating-content__item">
+                                                    <h3>10 Years</h3>
+                                                    <p>Consulting Experience</p>
+                                                </div> -->
+                                    </div>
+                                    <div class="floating-content__bottom-right">
+                                        <!-- <div class="floating-content__item">
+                                                    <h3>25K+</h3>
+                                                    <p>Satisfied Customers</p>
+                                                </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                    <div class="elementor-widget-container">
+                        <h2 class="elementor-heading-title banner-title elementor-size-default">
+                            Staking
+                            <span style="color: var(--secondary-color);">Compounding</span>
+                        </h2>
+                    </div>
+                </div>
+                <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                    <div class="elementor-widget-container">
+                        <p class="elementor-heading-title elementor-size-default about-p">
+                            <br>
+                            <br>
+                            <span>Accelerated Compounding Model: 6-Month Auto-Reinvestment Cycle to maximize annual percentage yields (APY).</span>
+                            <br>
+                        </p>
+                    </div>
+                </div>
+                <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                    <div class="elementor-widget-container">
+                        <!-- <a
+                                   href="/?page=ourproject"
+                                    target="_self"
+                                    rel="nofollow"
+                                    style="background-color: #f9a826ff; border-color: #f9a826ff;"
+                                    class="trk-btn trk-btn--border trk-btn--primary"
+                                >
+                                    View All
+                                </a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+        <!-- Reward System -->
+        <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner sectioncards">
+                <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                Reward
+                                <span style="color: var(--secondary-color);">System</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <p class="elementor-heading-title elementor-size-default about-p">
+                                <br>
+                                1. <span>Goa Luxury Retreat (10k USDT Direct Volume)</span>
+                                <br>
+                                2. <span>Dubai VIP Gala (100k USDT 5-Level Volume)</span>
+                                <br>
+                                3. <span>Mid-Segment Executive Sedan (1M USDT 10-Level Volume)</span>
+                                <br>
+                                4. <span>Premium Luxury SUV (2.5M USDT 10-Level Volume)</span>
+                                <br>
+                                5. <span>Ultra-Luxury Mercedes-AMG (5M USDT 10-Level Volume)</span>
+                                <br>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                        <div class="elementor-widget-container">
+                            <a href="/?page=reward" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
+                                View All
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                        <div class="elementor-widget-container">
+                            <script>
+                                jQuery(document).ready(function($) {
+
+                                    AOS.init();
+
+                                });
+
+                            </script>
+                            <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                <div class="about__thumb-inner">
+                                    <div class="about__thumb-image floating-content">
+                                        <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1578269174936-2709b5a19aea?auto=format&fit=crop&w=600&q=80" alt="Reward System">
+                                        <div class="floating-content__top-left">
+                                            <!-- <div class="floating-content__item">
+                                                <h3>10 Years</h3>
+                                                <p>Consulting Experience</p>
+                                            </div> -->
+                                        </div>
+                                        <div class="floating-content__bottom-right">
+                                            <!-- <div class="floating-content__item">
+                                                <h3>25K+</h3>
+                                                <p>Satisfied Customers</p>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+
+
+        @if ($page == 'reward')
+        <!-- GOA -->
+        <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner sectioncards">
+                <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                GOA LUXURY
+                                <span style="color: var(--secondary-color);">RETREAT</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <p class="elementor-heading-title elementor-size-default about-p">
+                                <br>
+                                <span>Qualification Window: Within 30 days of registration</span>
+                                <br>
+                                <br>
+                                <span>Target: 10,000 USDT in Direct Referral Volume</span>
+                                <br>
+                                <br>
+                                <span>Reward: Fully-sponsored 3 Days / 2 Nights VIP Goa Experience</span>
+                                <br>
+                                <br>
+                                <span>Structure: Direct sales volume only</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                        <div class="elementor-widget-container">
+                            <!-- <a
+                              href="/?page=ourproject"
+                               target="_self"
+                               rel="nofollow"
+                               style="background-color: #f9a826ff; border-color: #f9a826ff;"
+                               class="trk-btn trk-btn--border trk-btn--primary"
+                           >
+                               View All
+                           </a> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                        <div class="elementor-widget-container">
+                            <script>
+                                jQuery(document).ready(function($) {
+
+                                    AOS.init();
+
+                                });
+
+                            </script>
+                            <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                <div class="about__thumb-inner">
+                                    <div class="about__thumb-image floating-content">
+                                        <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Goa Trip">
+                                        <div class="floating-content__top-left">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>10 Years</h3>
+                                               <p>Consulting Experience</p>
+                                           </div> -->
+                                        </div>
+                                        <div class="floating-content__bottom-right">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>25K+</h3>
+                                               <p>Satisfied Customers</p>
+                                           </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DUBAI -->
+        <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner sectioncards">
+                <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                        <div class="elementor-widget-container">
+                            <script>
+                                jQuery(document).ready(function($) {
+
+                                    AOS.init();
+
+                                });
+
+                            </script>
+                            <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                <div class="about__thumb-inner">
+                                    <div class="about__thumb-image floating-content">
+                                        <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80" alt="Dubai Trip">
+                                        <div class="floating-content__top-left">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>10 Years</h3>
+                                               <p>Consulting Experience</p>
+                                           </div> -->
+                                        </div>
+                                        <div class="floating-content__bottom-right">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>25K+</h3>
+                                               <p>Satisfied Customers</p>
+                                           </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                DUBAI ELITE
+                                <span style="color: var(--secondary-color);">VIP GALA</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <p class="elementor-heading-title elementor-size-default about-p">
+                                <br>
+                                <br>
+                                <span>Target: 100,000 USDT in Cumulative Sales Volume</span>
+                                <br>
+                                <br>
+                                <span>Reward: All-inclusive 4 Days / 3 Nights Luxury Dubai Tour & Annual VIP Gala</span>
+                                <br>
+                                <br>
+                                <span>Structure: Calculated across 5 referral levels</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                        <div class="elementor-widget-container">
+                            <!-- <a
+                              href="/?page=ourproject"
+                               target="_self"
+                               rel="nofollow"
+                               style="background-color: #f9a826ff; border-color: #f9a826ff;"
+                               class="trk-btn trk-btn--border trk-btn--primary"
+                           >
+                               View All
+                           </a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Swift -->
+        <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner sectioncards">
+                <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                MID-SEGMENT
+                                <span style="color: var(--secondary-color);">EXECUTIVE SEDAN</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <p class="elementor-heading-title elementor-size-default about-p">
+                                <br>
+                                <br>
+                                <span>Target: 1,000,000 USDT in Cumulative Sales Volume</span>
+                                <br>
+                                <br>
+                                <span>Reward: Executive Class Sedan (Valued at 7,000 USDT)</span>
+                                <br>
+                                <br>
+                                <span>Structure: Calculated across 10 referral levels</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                        <div class="elementor-widget-container">
+                            <!-- <a
+                              href="/?page=ourproject"
+                               target="_self"
+                               rel="nofollow"
+                               style="background-color: #f9a826ff; border-color: #f9a826ff;"
+                               class="trk-btn trk-btn--border trk-btn--primary"
+                           >
+                               View All
+                           </a> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                        <div class="elementor-widget-container">
+                            <script>
+                                jQuery(document).ready(function($) {
+
+                                    AOS.init();
+
+                                });
+
+                            </script>
+                            <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                <div class="about__thumb-inner">
+                                    <div class="about__thumb-image floating-content">
+                                        <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80" alt="Mid-Segment Car">
+                                        <div class="floating-content__top-left">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>10 Years</h3>
+                                               <p>Consulting Experience</p>
+                                           </div> -->
+                                        </div>
+                                        <div class="floating-content__bottom-right">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>25K+</h3>
+                                               <p>Satisfied Customers</p>
+                                           </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- volkswagen or Honda Elevate -->
+        <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner sectioncards">
+                <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                        <div class="elementor-widget-container">
+                            <script>
+                                jQuery(document).ready(function($) {
+
+                                    AOS.init();
+
+                                });
+
+                            </script>
+                            <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                <div class="about__thumb-inner">
+                                    <div class="about__thumb-image floating-content">
+                                        <img decoding="async" style="height: 198px; object-fit: cover;" src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80" alt="Premium Car 1">
+                                        <div class="floating-content__top-left">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>10 Years</h3>
+                                               <p>Consulting Experience</p>
+                                           </div> -->
+                                        </div>
+                                        <div class="floating-content__bottom-right">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>25K+</h3>
+                                               <p>Satisfied Customers</p>
+                                           </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                        <div class="elementor-widget-container">
+                            <script>
+                                jQuery(document).ready(function($) {
+
+                                    AOS.init();
+
+                                });
+
+                            </script>
+                            <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                <div class="about__thumb-inner">
+                                    <div class="about__thumb-image floating-content">
+                                        <img decoding="async" style="height: 198px; object-fit: cover;" src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=600&q=80" alt="Premium Car 2">
+                                        <div class="floating-content__top-left">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>10 Years</h3>
+                                               <p>Consulting Experience</p>
+                                           </div> -->
+                                        </div>
+                                        <div class="floating-content__bottom-right">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>25K+</h3>
+                                               <p>Satisfied Customers</p>
+                                           </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                PREMIUM LUXURY
+                                <span style="color: var(--secondary-color);">SUV</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <p class="elementor-heading-title elementor-size-default about-p">
+                                <br>
+                                <br>
+                                <span>Target: 2,500,000 USDT in Cumulative Sales Volume</span>
+                                <br>
+                                <br>
+                                <span>Reward: Luxury Class SUV (Valued at 15,000 USDT)</span>
+                                <br>
+                                <br>
+                                <span>Structure: Calculated across 10 referral levels</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                        <div class="elementor-widget-container">
+                            <!-- <a
+                              href="/?page=ourproject"
+                               target="_self"
+                               rel="nofollow"
+                               style="background-color: #f9a826ff; border-color: #f9a826ff;"
+                               class="trk-btn trk-btn--border trk-btn--primary"
+                           >
+                               View All
+                           </a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- BENZ -->
+        <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-vision" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner sectioncards">
+                <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                ULTRA-LUXURY
+                                <span style="color: var(--secondary-color);">MERCEDES-AMG</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                        <div class="elementor-widget-container">
+                            <p class="elementor-heading-title elementor-size-default about-p">
+                                <br>
+                                <br>
+                                <span>Target: 5,000,000 USDT in Cumulative Sales Volume</span>
+                                <br>
+                                <br>
+                                <span>Reward: High-Performance Supercar / Mercedes-AMG (Valued at 50,000 USDT)</span>
+                                <br>
+                                <br>
+                                <span>Structure: Calculated across 10 referral levels</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                        <div class="elementor-widget-container">
+                            <!-- <a
+                              href="/?page=ourproject"
+                               target="_self"
+                               rel="nofollow"
+                               style="background-color: #f9a826ff; border-color: #f9a826ff;"
+                               class="trk-btn trk-btn--border trk-btn--primary"
+                           >
+                               View All
+                           </a> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                    <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                        <div class="elementor-widget-container">
+                            <script>
+                                jQuery(document).ready(function($) {
+
+                                    AOS.init();
+
+                                });
+
+                            </script>
+                            <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                <div class="about__thumb-inner">
+                                    <div class="about__thumb-image floating-content">
+                                        <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=600&q=80" alt="Luxury Car">
+                                        <div class="floating-content__top-left">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>10 Years</h3>
+                                               <p>Consulting Experience</p>
+                                           </div> -->
+                                        </div>
+                                        <div class="floating-content__bottom-right">
+                                            <!-- <div class="floating-content__item">
+                                               <h3>25K+</h3>
+                                               <p>Satisfied Customers</p>
+                                           </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+
+
+        <!-- GWI Academy -->
+        @if ($page == 'ourmission')
+        <div class="stticky">
+            <div class="stticky-text">GWI Academy</div>
+            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="gms-academy" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                <div class="e-con-inner sectioncards">
+                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                            <div class="elementor-widget-container">
+                                <h2 class="elementor-heading-title banner-title elementor-size-default">
+                                    Curriculum in
+                                    <span style="color: var(--secondary-color);">Quantitative Finance</span>
+                                    and
+                                    <span style="color: var(--secondary-color);">DeFi Staking</span>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                            <style>
+                                .gms-acdmy-p span {
+                                    color: #fff;
+                                    font-size: 18px !important;
+                                    font-weight: 700 !important;
+                                }
+
+                            </style>
+                            <div class="elementor-widget-container gms-acdmy-p">
+                                <p>
+                                    GWI Academy offers a specialized curriculum designed for digital asset managers, high-frequency traders, and decentralized protocol validators. Our courses cover state-of-the-art blockchain technology and quantitative financial strategies, equipping stakers with the knowledge needed to thrive in Web3. Core modules include:
+                                </p>
+                                <span class="elementor-heading-title banner-title elementor-size-default">
+                                    Introduction to Decentralized Staking
+                                </span>
+                                <p>
+                                    An in-depth exploration of Proof-of-Stake (PoS) consensus algorithms, liquidity validation, node operations, and the economic mechanisms that safeguard multi-chain protocols. Learn how validator networks verify blocks and secure yields.
+                                </p>
+
+                                <span class="elementor-heading-title banner-title elementor-size-default">
+                                    Quantitative Arbitrage & Algorithmic Trading
+                                </span>
+                                <p>
+                                    Understand the fundamentals of mathematical modeling in financial markets, high-frequency trading (HFT) infrastructure, triangular cross-exchange arbitrage, and the integration of machine learning pipelines for real-time market sentiment detection.
+                                </p>
+
+                                <span class="elementor-heading-title banner-title elementor-size-default">
+                                    Smart Contract Auditing & Security Protocols
+                                </span>
+                                <p>
+                                    Study vulnerability detection, formal verification techniques, and defensive programming for decentralized applications (DApps). Analyze historic protocol exploits to master security best practices in Solidity and Rust.
+                                </p>
+
+                                <span class="elementor-heading-title banner-title elementor-size-default">
+                                    Advanced Tokenomics & Digital Asset Valuation
+                                </span>
+                                <p>
+                                    Analyze supply-demand dynamics, inflation/deflation schedules, liquid staking derivatives (LSDs), yield optimization vaults, and governance framework designs that determine the utility and long-term valuation of crypto assets.
+                                </p>
+
+                                <span class="elementor-heading-title banner-title elementor-size-default">
+                                    Risk Management & Hedging Strategies
+                                </span>
+                                <p>
+                                    Master capital preservation techniques under high market volatility. Learn to execute automated delta-neutral strategies, leverage derivatives contracts (futures & options), and configure multi-tier collateral management dashboards.
+                                </p>
+
+                                <span class="elementor-heading-title banner-title elementor-size-default">
+                                    Careers in Decentralized Finance (DeFi)
+                                </span>
+                                <p>
+                                    Decentralized Finance is a rapidly expanding sector with high demand for technical and analytical talent. GWI Academy bridges the gap between traditional banking and distributed systems, preparing you for leadership roles in the digital economy.
+                                    Whether you aim to become a Smart Contract Engineer, a Quantitative Analyst, or a Protocol Architect, our hands-on labs provide the practical experience required. Our graduates occupy positions in major validator pools, audit firms, and algorithmic hedge funds globally. We also offer tailored consulting training for partners managing large private validator nodes, ensuring seamless operations, institutional compliance, and optimized execution pipelines.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                            <div class="elementor-widget-container">
+                                <!--  <a
+                                       href="/dark/about-us/"
+                                        target="_self"
+                                        rel="nofollow"
+                                        style="background-color: #f9a826ff;"
+                                        class="trk-btn trk-btn--border trk-btn--primary"
+                                    >
+                                        More
+                                    </a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        <style>
+            @media (min-width: 768px) {
+                .elementor-67 .elementor-element.elementor-element-f496e11 {
+                    --width: 75%;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .elementor-67 .elementor-element.elementor-element-f496e11 {
+                    --width: 92%;
+                }
+            }
+
+        </style>
+
+        <!-- academy images -->
+        @if ($page == 'ourmission')
+        <div class="stticky">
+            <div class="stticky-text">GWI Academy</div>
+            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                <div class="e-con-inner">
+                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                            <div class="elementor-widget-container">
+                                <script>
+                                    jQuery(document).ready(function($) {
+
+                                        AOS.init();
+
+                                    });
+
+                                </script>
+                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                    <div class="about__thumb-inner">
+                                        <div class="about__thumb-image floating-content">
+                                            <img decoding="async" style="height: 200px; width:100%; object-fit: cover;" src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=600&q=80" alt="Academy 1">
+                                            <div class="floating-content__top-left">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                            </div>
+                                            <div class="floating-content__bottom-right">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                            <div class="elementor-widget-container">
+                                <script>
+                                    jQuery(document).ready(function($) {
+
+                                        AOS.init();
+
+                                    });
+
+                                </script>
+                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                    <div class="about__thumb-inner">
+                                        <div class="about__thumb-image floating-content">
+                                            <img decoding="async" style="height: 200px; width:100%; object-fit: cover;" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80" alt="Academy 2">
+                                            <div class="floating-content__top-left">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                            </div>
+                                            <div class="floating-content__bottom-right">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                            <div class="elementor-widget-container">
+                                <script>
+                                    jQuery(document).ready(function($) {
+
+                                        AOS.init();
+
+                                    });
+
+                                </script>
+                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                    <div class="about__thumb-inner">
+                                        <div class="about__thumb-image floating-content">
+                                            <img decoding="async" style="height: 200px; width:100%; object-fit: cover;" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=600&q=80" alt="Academy 3">
+                                            <div class="floating-content__top-left">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                            </div>
+                                            <div class="floating-content__bottom-right">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        <!-- academy images -->
+        @if ($page == 'ourmission')
+        <div class="stticky">
+            <div class="stticky-text">GWI Academy</div>
+            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="our-values" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                <div class="e-con-inner">
+                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                            <div class="elementor-widget-container">
+                                <script>
+                                    jQuery(document).ready(function($) {
+
+                                        AOS.init();
+
+                                    });
+
+                                </script>
+                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                    <div class="about__thumb-inner">
+                                        <div class="about__thumb-image floating-content">
+                                            <img decoding="async" style="height: 200px; width:100%; object-fit: cover;" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Academy 4">
+                                            <div class="floating-content__top-left">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                            </div>
+                                            <div class="floating-content__bottom-right">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                            <div class="elementor-widget-container">
+                                <script>
+                                    jQuery(document).ready(function($) {
+
+                                        AOS.init();
+
+                                    });
+
+                                </script>
+                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                    <div class="about__thumb-inner">
+                                        <div class="about__thumb-image floating-content">
+                                            <img decoding="async" style="height: 200px; width:100%; object-fit: cover;" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80" alt="Academy 5">
+                                            <div class="floating-content__top-left">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                            </div>
+                                            <div class="floating-content__bottom-right">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                            <div class="elementor-widget-container">
+                                <script>
+                                    jQuery(document).ready(function($) {
+
+                                        AOS.init();
+
+                                    });
+
+                                </script>
+                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                    <div class="about__thumb-inner">
+                                        <div class="about__thumb-image floating-content">
+                                            <img decoding="async" style="height: 200px; width:100%; object-fit: cover;" src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80" alt="Academy 6">
+                                            <div class="floating-content__top-left">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>10 Years</h3>
+                                                        <p>Consulting Experience</p>
+                                                    </div> -->
+                                            </div>
+                                            <div class="floating-content__bottom-right">
+                                                <!-- <div class="floating-content__item">
+                                                        <h3>25K+</h3>
+                                                        <p>Satisfied Customers</p>
+                                                    </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+
+        <!-- benefits -->
+        @if ($page == 'all' || $page == 'ourmission')
+        <div class="stticky">
+            <div class="stticky-text">Benefits</div>
+            <div class="elementor-element elementor-element-c1c4aaf e-con-full e-flex e-con e-parent" data-id="c1c4aaf" id="the-benefits" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}" data-core-v316-plus="true">
+                <div class="elementor-element elementor-element-94c7ebe elementor-widget elementor-widget-offer-tab" data-id="94c7ebe" data-element_type="widget" data-widget_type="offer-tab.default">
+                    <div class="elementor-widget-container">
+                        <script>
+                            jQuery(document).ready(function($) {
+
+                                AOS.init();
+
+                            });
+
+                        </script>
+                        <section class="feature feature--style1 padding-bottom padding-top bg-color">
+                            <div class="container">
+                                <div class="feature__wrapper">
+                                    <div class="row g-5 align-items-center justify-content-between">
+                                        <div class="col-md-6 col-lg-5">
+                                            <div class="feature__content" data-aos="fade-right" data-aos-duration="800">
+                                                <div class="feature__content-inner">
+                                                    <div class="section-header">
+                                                        <h2 class="mb-15 mt-minus-5">
+                                                            <span style="color: var(--secondary-color)">Five</span>
+                                                            Incomes We Offer
+                                                        </h2>
+                                                        <p class="mb-0">Maximize your financial growth with our five specialized, high-yield income streams designed to reward active staking, references, and network building.</p>
+                                                    </div>
+                                                    <div class="feature__nav">
+                                                        <div class="nav nav--feature flex-column nav-pills" id="feat-pills-tab" role="tablist" aria-orientation="vertical">
+                                                            <div class="nav-link active" id="tg-tab-0" data-bs-toggle="pill" data-bs-target="#tg-id-0" role="tab" aria-controls="tg-id-0" aria-selected="true">
+                                                                <div class="feature__item">
+                                                                    <div class="feature__item-inner">
+                                                                        <div class="feature__item-content">
+                                                                            <h6>Stake Income (0.5% Daily)</h6>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="nav-link " id="tg-tab-1" data-bs-toggle="pill" data-bs-target="#tg-id-1" role="tab" aria-controls="tg-id-1" aria-selected="true">
-                                                                    <div class="feature__item">
-                                                                        <div class="feature__item-inner">
-                                                                            <div class="feature__item-content">
-                                                                                <h6>Make profit by staking in our
-                                                                                    company</h6>
-                                                                            </div>
+                                                            </div>
+                                                            <div class="nav-link" id="tg-tab-1" data-bs-toggle="pill" data-bs-target="#tg-id-1" role="tab" aria-controls="tg-id-1" aria-selected="false">
+                                                                <div class="feature__item">
+                                                                    <div class="feature__item-inner">
+                                                                        <div class="feature__item-content">
+                                                                            <h6>Referral Income (5%)</h6>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="nav-link " id="tg-tab-2" data-bs-toggle="pill" data-bs-target="#tg-id-2" role="tab" aria-controls="tg-id-2" aria-selected="true">
-                                                                    <div class="feature__item">
-                                                                        <div class="feature__item-inner">
-                                                                            <div class="feature__item-content">
-                                                                                <h6>Mobile payment is more flexible
-                                                                                    and easy for all stakers</h6>
-                                                                            </div>
+                                                            </div>
+                                                            <div class="nav-link" id="tg-tab-2" data-bs-toggle="pill" data-bs-target="#tg-id-2" role="tab" aria-controls="tg-id-2" aria-selected="false">
+                                                                <div class="feature__item">
+                                                                    <div class="feature__item-inner">
+                                                                        <div class="feature__item-content">
+                                                                            <h6>Level Income (1%)</h6>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="nav-link " id="tg-tab-3" data-bs-toggle="pill" data-bs-target="#tg-id-3" role="tab" aria-controls="tg-id-3" aria-selected="true">
-                                                                    <div class="feature__item">
-                                                                        <div class="feature__item-inner">
-                                                                            <div class="feature__item-content">
-                                                                                <h6>all transaction is kept free for
-                                                                                    the member of pro traders</h6>
-                                                                            </div>
+                                                            </div>
+                                                            <div class="nav-link" id="tg-tab-3" data-bs-toggle="pill" data-bs-target="#tg-id-3" role="tab" aria-controls="tg-id-3" aria-selected="false">
+                                                                <div class="feature__item">
+                                                                    <div class="feature__item-inner">
+                                                                        <div class="feature__item-content">
+                                                                            <h6>Auto Pool Income (3x)</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="nav-link" id="tg-tab-4" data-bs-toggle="pill" data-bs-target="#tg-id-4" role="tab" aria-controls="tg-id-4" aria-selected="false">
+                                                                <div class="feature__item">
+                                                                    <div class="feature__item-inner">
+                                                                        <div class="feature__item-content">
+                                                                            <h6>Team Building Bonus (1%)</h6>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -4748,75 +4603,62 @@ if (isset($_GET['page'])) {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-lg-6">
-                                                <div class="feature__thumb pt-5 pt-md-0" data-aos="fade-left" data-aos-duration="800">
-                                                    <div class="feature__thumb-inner">
-                                                        <div class="tab-content" id="feat-pills-tabContent">
-                                                            <div class="tab-pane fade " id="tg-id-0" role="tabpanel" aria-labelledby="tg-tab-0" tabindex="0">
-                                                                <div class="feature__image floating-content">
-                                                                    <img decoding="async" src="/wp-content/uploads/2023/10/features01.png" alt="Feature image">
-                                                                    <div class="floating-content__top-right floating-content__top-right--style2" data-aos="fade-left" data-aos-duration="1000">
-                                                                        <div class="floating-content__item floating-content__item--style2 text-center">
-                                                                            <img decoding="async" src="/wp-content/uploads/2023/10/percent01.png" width="80" alt="Feature image">
-                                                                            <p class="style2">Monthly profit</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- <div class="floating-content__bottom-left floating-content__bottom-left--style2" data-aos="fade-left" data-aos-duration="1000">
-                                                                        <div class="floating-content__item floating-content__item--style3  d-flex align-items-center">
-                                                                            <h3 class="style2">10M</h3>
-                                                                            <p class="ms-3 style2">Available for loan</p> -->
-                                                                    <!-- </div> -->
-                                                                    <!-- </div> -->
-                                                                </div>
-                                                            </div>
-                                                            <div class="tab-pane fade show active" id="tg-id-1" role="tabpanel" aria-labelledby="tg-tab-1" tabindex="0">
-                                                                <div class="feature__image floating-content">
-                                                                    <img decoding="async" src="https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?cs=srgb&dl=pexels-divinetechygirl-1181406.jpg&fm=jpg" alt="Feature image">
-                                                                    <div class="floating-content__top-right floating-content__top-right--style2" data-aos="fade-left" data-aos-duration="1000">
-                                                                        <div class="floating-content__item floating-content__item--style2 text-center">
-                                                                            <img decoding="async" src="/wp-content/uploads/2023/10/percent01.png" width="80" alt="Feature image">
-                                                                            <p class="style2">Monthly Profit</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="floating-content__bottom-left floating-content__bottom-left--style2" data-aos="fade-left" data-aos-duration="1000">
-                                                                        <!-- <div class="floating-content__item floating-content__item--style3  d-flex align-items-center">
-                                                                            <h3 class="style2">18M</h3>
-                                                                            <p class="ms-3 style2">Available for loan</p> -->
-                                                                        <!-- </div> -->
+                                        </div>
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="feature__thumb pt-5 pt-md-0" data-aos="fade-left" data-aos-duration="800">
+                                                <div class="feature__thumb-inner">
+                                                    <div class="tab-content" id="feat-pills-tabContent">
+                                                        <div class="tab-pane fade show active" id="tg-id-0" role="tabpanel" aria-labelledby="tg-tab-0" tabindex="0">
+                                                            <div class="feature__image floating-content">
+                                                                <img decoding="async" style="object-fit: cover;" src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&w=600&q=80" alt="Stake Income">
+                                                                <div class="floating-content__top-right floating-content__top-right--style2" data-aos="fade-left" data-aos-duration="1000">
+                                                                    <div class="floating-content__item floating-content__item--style2 text-center">
+                                                                        <h3 class="style2" style="color: var(--secondary-color) !important; font-size: 24px;">0.5%</h3>
+                                                                        <p class="style2">Daily Yield</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="tab-pane fade " id="tg-id-2" role="tabpanel" aria-labelledby="tg-tab-2" tabindex="0">
-                                                                <div class="feature__image floating-content">
-                                                                    <img decoding="async" src="/wp-content/uploads/2023/10/features01.png" alt="Feature image">
-                                                                    <div class="floating-content__top-right floating-content__top-right--style2" data-aos="fade-left" data-aos-duration="1000">
-                                                                        <div class="floating-content__item floating-content__item--style2 text-center">
-                                                                            <img decoding="async" src="/wp-content/uploads/2023/10/percent03.png" width="80" alt="Feature image">
-                                                                            <p class="style2">Monthly Profit</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="floating-content__bottom-left floating-content__bottom-left--style2" data-aos="fade-left" data-aos-duration="1000">
-                                                                        <!-- <div class="floating-content__item floating-content__item--style3  d-flex align-items-center">
-                                                                            <h3 class="style2">30M</h3>
-                                                                            <p class="ms-3 style2">Available for loan</p> -->
-                                                                        <!-- </div> -->
+                                                        </div>
+                                                        <div class="tab-pane fade" id="tg-id-1" role="tabpanel" aria-labelledby="tg-tab-1" tabindex="0">
+                                                            <div class="feature__image floating-content">
+                                                                <img decoding="async" style="object-fit: cover;" src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?auto=format&fit=crop&w=600&q=80" alt="Referral Income">
+                                                                <div class="floating-content__top-right floating-content__top-right--style2" data-aos="fade-left" data-aos-duration="1000">
+                                                                    <div class="floating-content__item floating-content__item--style2 text-center">
+                                                                        <h3 class="style2" style="color: var(--secondary-color) !important; font-size: 24px;">5%</h3>
+                                                                        <p class="style2">Direct Referral</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="tab-pane fade " id="tg-id-3" role="tabpanel" aria-labelledby="tg-tab-3" tabindex="0">
-                                                                <div class="feature__image floating-content">
-                                                                    <img decoding="async" src="/wp-content/uploads/2023/10/features02.png" alt="Feature image">
-                                                                    <div class="floating-content__top-right floating-content__top-right--style2" data-aos="fade-left" data-aos-duration="1000">
-                                                                        <div class="floating-content__item floating-content__item--style2 text-center">
-                                                                            <img decoding="async" src="/wp-content/uploads/2023/10/percent04.png" width="80" alt="Feature image">
-                                                                            <p class="style2">Monthly Profit</p>
-                                                                        </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="tg-id-2" role="tabpanel" aria-labelledby="tg-tab-2" tabindex="0">
+                                                            <div class="feature__image floating-content">
+                                                                <img decoding="async" style="object-fit: cover;" src="https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&w=600&q=80" alt="Level Income">
+                                                                <div class="floating-content__top-right floating-content__top-right--style2" data-aos="fade-left" data-aos-duration="1000">
+                                                                    <div class="floating-content__item floating-content__item--style2 text-center">
+                                                                        <h3 class="style2" style="color: var(--secondary-color) !important; font-size: 24px;">1%</h3>
+                                                                        <p class="style2">Level Reward</p>
                                                                     </div>
-                                                                    <div class="floating-content__bottom-left floating-content__bottom-left--style2" data-aos="fade-left" data-aos-duration="1000">
-                                                                        <!-- <div class="floating-content__item floating-content__item--style3  d-flex align-items-center">
-                                                                            <h3 class="style2">28M</h3>
-                                                                            <p class="ms-3 style2">Available for loan</p> -->
-                                                                        <!-- </div> -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="tg-id-3" role="tabpanel" aria-labelledby="tg-tab-3" tabindex="0">
+                                                            <div class="feature__image floating-content">
+                                                                <img decoding="async" style="object-fit: cover;" src="https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=600&q=80" alt="Auto Pool Income">
+                                                                <div class="floating-content__top-right floating-content__top-right--style2" data-aos="fade-left" data-aos-duration="1000">
+                                                                    <div class="floating-content__item floating-content__item--style2 text-center">
+                                                                        <h3 class="style2" style="color: var(--secondary-color) !important; font-size: 24px;">Auto</h3>
+                                                                        <p class="style2">Pool System</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="tg-id-4" role="tabpanel" aria-labelledby="tg-tab-4" tabindex="0">
+                                                            <div class="feature__image floating-content">
+                                                                <img decoding="async" style="object-fit: cover;" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Team Building Bonus">
+                                                                <div class="floating-content__top-right floating-content__top-right--style2" data-aos="fade-left" data-aos-duration="1000">
+                                                                    <div class="floating-content__item floating-content__item--style2 text-center">
+                                                                        <h3 class="style2" style="color: var(--secondary-color) !important; font-size: 24px;">Bonus</h3>
+                                                                        <p class="style2">Team Builder</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -4827,19 +4669,24 @@ if (isset($_GET['page'])) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="feature__shape">
-                                    <span class="feature__shape-item feature__shape-item--1">
-                                        <img decoding="async" src="/wp-content/uploads/2023/10/features_shape.png" width="70" alt="shape-icon">
-                                    </span>
-                                    <span class="feature__shape-item feature__shape-item--2">
-                                        <span></span>
-                                    </span>
-                                </div>
-                            </section>
-                        </div>
+                            </div>
+                            <div class="feature__shape">
+                                <span class="feature__shape-item feature__shape-item--1">
+                                    <img decoding="async" src="/wp-content/uploads/2023/10/features_shape.png" width="70" alt="shape-icon">
+                                </span>
+                                <span class="feature__shape-item feature__shape-item--2">
+                                    <span></span>
+                                </span>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
+        </div>
+        @endif
+
+        @if ($page == 'all')
+        <div class="homepage-sections-grid-container grid-last-span-2">
             @endif
 
             <!-- Market Analysis -->
@@ -4862,7 +4709,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" src="https://cdn.pixabay.com/photo/2020/07/08/04/12/work-5382501_640.jpg" alt="">
+                                                <img decoding="async" style="object-fit: cover; height: 298px;" src="https://images.unsplash.com/photo-1605792657660-596af9009e82?auto=format&fit=crop&w=600&q=80" alt="Market Analysis">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -4885,16 +4732,15 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title elementor-size-default">
-                                        Market
-                                        <span style="color: var(--secondary-color);">Analysis</span>
+                                        Real-Time
+                                        <span style="color: var(--secondary-color);">Market Analysis</span>
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <p class="elementor-heading-title elementor-size-default">
-                                        "Stock market analysis: Volatile trends, tech dominance, heightened investor
-                                        caution."
+                                        “Our proprietary algorithms continuously process order book depths, liquidation events, and global macroeconomic trends to execute high-probability trades with absolute precision. By integrating institutional data feeds, real-time sentiment analysis, and order flow tracking, GWI detects market shifts before they manifest in price swings. This continuous monitoring enables us to hedge exposure dynamically, safeguard digital assets, and execute directionally aligned strategies across major trading venues.”
                                     </p>
                                 </div>
                             </div>
@@ -4926,16 +4772,15 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title elementor-size-default">
-                                        Staking
-                                        <span style="color: var(--secondary-color);">Plans</span>
+                                        Diversified
+                                        <span style="color: var(--secondary-color);">Staking Plans</span>
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <p class="elementor-heading-title elementor-size-default">
-                                        “Get staking plans and ideas to grow passive income and get a settled
-                                        returns”
+                                        “Choose from a curated selection of highly structured staking plans tailored to your unique liquidity requirements, maximizing long-term validator yields while minimizing operational risk. GWI offers flexible lock-up periods, tiered reward ratios, and direct access to top-tier validation pools. Our automated reward compounding and validator health tracking ensure your staked assets operate at maximum efficiency, generating stable passive income throughout all market conditions.”
                                     </p>
                                 </div>
                             </div>
@@ -4966,7 +4811,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img style="height: 298px;" decoding="async" src="https://www.maxlifeinsurance.com/content/dam/corporate/images/Monthly_Investment_Plan-1.png" alt="">
+                                                <img style="height: 298px; object-fit: cover;" decoding="async" src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80" alt="Staking Plans">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -5010,7 +4855,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://th.bing.com/th/id/OIG3.zWdt6pmysxQ9BiINgbKb?w=270&h=270&c=6&r=0&o=5&dpr=1.5&pid=ImgGn" alt="">
+                                                <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80" alt="Growth Testing">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -5033,16 +4878,15 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title elementor-size-default">
-                                        Growth
-                                        <span style="color: var(--secondary-color);">Testing</span>
+                                        Predictive
+                                        <span style="color: var(--secondary-color);">Growth Modeling</span>
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <p class="elementor-heading-title elementor-size-default">
-                                        "Involves evaluating potential stakings for long-term growth and
-                                        profitability."
+                                        “We apply advanced mathematical modeling and exhaustive historical backtesting to optimize staking variables, ensuring robust network stability and sustained yield metrics. Our quantitative researchers continuously run Monte Carlo simulations and stress-test liquid staking protocols under extreme market volatility. This predictive growth validation ensures that our capital allocation strategies remain resilient, protecting validator weights and compounding yields with statistical certainty.”
                                     </p>
                                 </div>
                             </div>
@@ -5074,7 +4918,7 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title elementor-size-default">
-                                        The
+                                        Asset
                                         <span style="color: var(--secondary-color);">Management</span>
                                     </h2>
                                 </div>
@@ -5082,8 +4926,7 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <p class="elementor-heading-title elementor-size-default">
-                                        “The process of effectively managing finances, including budgeting, saving,
-                                        investing.”
+                                        “Our comprehensive asset management framework utilizes automated risk parameter adjustments, dynamic hedging strategies, and multi-signature cold-storage treasury systems. We separate operational validator capital from reserve funds, enforcing strict capital-preservation rules across the ecosystem. Through audited smart contract execution and collaborative oversight with leading custodian networks, GWI provides institutional-grade transparency and absolute security for all digital asset allocations.”
                                     </p>
                                 </div>
                             </div>
@@ -5114,7 +4957,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://th.bing.com/th/id/OIG2.osRu_HeoJCNZzQDZqWAM?w=270&h=270&c=6&r=0&o=5&dpr=1.5&pid=ImgGn" alt="">
+                                                <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Management">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -5158,7 +5001,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://www.bing.com/th?id=OIP.Jsk8bZckCJymbr4U_jf2bAHaD5&w=220&h=110&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2" alt="">
+                                                <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="AI Trading">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -5181,25 +5024,15 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title elementor-size-default">
-                                        AI
-                                        <span style="color: var(--secondary-color);">Trading</span>
+                                        AI-Powered
+                                        <span style="color: var(--secondary-color);">Arbitrage Engine</span>
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <p class="elementor-heading-title elementor-size-default">
-                                        "AI Trade is an Artificial Intelligence Robot that analyzes market Direction
-                                        such as Forex, cryptocurrencies and Volatility Index market. It also
-                                        predicts future trades by using market killer trading strategy with the idea
-                                        of price action.
-
-                                        Artificial intelligence is a machines that are programmed to think like
-                                        humans and mimic their actions. With the use of AI Trading-Bot, we have been
-                                        able to minimize loses in the Forex / Cryptocurrencies market and we have
-                                        also extends AI Trading-Bot to trade on both spot and future trade. AI
-                                        -Trading-Bot has been programmed in such a way that, it can place trade and
-                                        generate profits when markets are bad by trading on the futures market."
+                                        "GWI's proprietary AI engine continuously scans cross-exchange order books, spot-futures spreads, and liquidity pools to execute automated market-making and triangular arbitrage strategies. By running advanced neural networks that analyze price action dynamics in real-time, our system minimizes drawdown risks and capitalizes on micro-second price discrepancies. The system operates 24/7 across multiple blockchain protocols and high-liquidity centralized exchanges, ensuring consistent yield generation regardless of overall market direction."
                                     </p>
                                 </div>
                             </div>
@@ -5221,172 +5054,104 @@ if (isset($_GET['page'])) {
             </div>
             @endif
 
-            <!-- TRADING TYPES -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">TRADING TYPES</div>
-                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="arbitrage-bot" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                    <div class="e-con-inner sectioncards sec-top-img">
-                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" style="width: 85%;" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                                <div class="elementor-widget-container">
-                                    <h2 class="elementor-heading-title elementor-size-default">
-                                        <span style="color: var(--secondary-color);">TRADING</span>
-                                        TYPES
-                                    </h2>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                                <div class="elementor-widget-container trade-p">
-                                    <style>
-                                        .trade-p span {
-                                            color: #fff;
-                                            font-size: 18px;
-                                            font-weight: 700;
-                                        }
+            @if ($page == 'all')
+        </div>
+        @endif
 
-                                    </style>
-                                    <p class="elementor-heading-title elementor-size-default trade-p">
-                                        Cryptocurrency trading has evolved into a diverse field with various
-                                        strategies that traders use to capitalize on the market’s volatility. Here
-                                        are some of the different
-                                        <br>
-                                        Types of crypto trading:
-                                        <br>
-                                        <br>
-                                        <div style="display: flex; flex-direction: row;">
-                                            <img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2XSVewtS5iuPbsVb_ile28xRphgfiDMZ1GQ&usqp=CAU">
-                                            <div class="trade-p">
-                                                <span>ARBITRAGE BOT</span>
-                                                <br> A reliable strategy designed for low risk investor. Trade and
-                                                profit from a differences across Forex prices between markets.
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div style="display: flex; flex-direction: row;">
-                                            <img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px;" src="https://bullsonwallstreet.com/wp-content/uploads/2019/01/Day-Trading-Definition.png">
-                                            <div class="trade-p">
-                                                <span>Day Trading:</span><br> Involves executing multiple trades within
-                                                a single day to take advantage of short-term price movements
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div style="display: flex; flex-direction: row;">
-                                            <img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkOwkQYBo0Kzo9sDDsD8f-jfw8F7bUWqBMHBpfW95xRyJ1AcoOOMrSCnZvqHCxxZwGOv8&usqp=CAU">
-                                            <div class="trade-p">
-                                                <span>Swing Trading:</span><br> Targets longer-term volatility, holding
-                                                trades for several days or weeks to capture market trends.
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div style="display: flex; flex-direction: row;">
-                                            <img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCqB6f_gkIlbBXP_JSFI4EdnpLNU7rMJKDZxEwOc2_OfuCA7faCiOXyyf0qyJWZRDKbb8&usqp=CAU">
-                                            <div class="trade-p">
-                                                <span>Trend Following:</span><br> Traders identify directional patterns
-                                                and trends in the market to make their trades.
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div style="display: flex; flex-direction: row;">
-                                            <img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdAWtC24oruR5bkhyns1r5UC5JaUEez6qFc3KxTwAI0S5PLoblaE06E2KFN58cR6z1GhI&usqp=CAU">
-                                            <div class="trade-p">
-                                                <span>Spot Trading:</span><br> Direct exchange of coins at current
-                                                market prices, focusing on short-term transactions.
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div style="display: flex; flex-direction: row;">
-                                            <img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px;" src="https://miro.medium.com/v2/resize:fit:945/1*8sCfHdRPgSJxUK_YyfRZGQ.jpeg">
-                                            <div class="trade-p">
-                                                <span>Futures & Options Trading:</span><br> Involves derivatives
-                                                contracts, allowing traders to speculate on future prices of
-                                                cryptocurrencies.
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div style="display: flex; flex-direction: row;">
-                                            <img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px;" src="https://miro.medium.com/v2/resize:fit:800/1*CiLXCqRqleD2GnFakvltBQ.png">
-                                            <div class="trade-p">
-                                                <span>Margin Trading:</span> <br> Trading with borrowed money to
-                                                increase potential returns, which also increases potential risk.
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div style="display: flex; flex-direction: row;">
-                                            <img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px;" src="https://realtrading.com/wp-content/uploads/2021/07/range-trading.png">
-                                            <div class="trade-p">
-                                                <span>Range Trading:</span> <br> Traders use support and resistance
-                                                levels to buy low and sell high within a specific range.
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <div style="display: flex; flex-direction: row;">
-                                            <img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px;" src="https://online.hbs.edu/Style%20Library/api/resize.aspx?imgpath=/PublishingImages/blog/posts/arbitrage.jpg&w=1200&h=630">
-                                            <div class="trade-p">
-                                                <span>Arbitrage Trading:</span> <br> Exploits price differences across
-                                                different exchanges or markets to make a profit.
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        Each type of trading requires different skills and strategies, and the level of
-                                        risk varies. Traders should choose a style that aligns with their staking goals,
-                                        risk tolerance, and the amount of time they can dedicate to monitoring the
-                                        markets.
-
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                                <div class="elementor-widget-container">
-                                    <!-- <a
-                                        href="/dark/about-us/"
-                                        target="_self"
-                                        rel="nofollow"
-                                        class="trk-btn trk-btn--border trk-btn--primary"
-                                    >
-                                        More
-                                    </a> -->
-                                </div>
+        <!-- TRADING TYPES -->
+        @if ($page == 'ourmission')
+        <div class="stticky">
+            <div class="stticky-text">TRADING TYPES</div>
+            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="arbitrage-bot" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                <div class="e-con-inner sectioncards sec-top-img">
+                    <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" style="width: 85%;" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                        <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                            <div class="elementor-widget-container">
+                                <h2 class="elementor-heading-title elementor-size-default">
+                                    <span style="color: var(--secondary-color);">TRADING</span>
+                                    TYPES
+                                </h2>
                             </div>
                         </div>
-                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                <div class="elementor-widget-container">
-                                    <script>
-                                        jQuery(document).ready(function($) {
+                        <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                            <div class="elementor-widget-container trade-p">
+                                <style>
+                                    .trade-p span {
+                                        color: #fff;
+                                        font-size: 18px;
+                                        font-weight: 700;
+                                    }
+
+                                </style>
+
+                                <p class="elementor-heading-title elementor-size-default trade-p">Modern digital asset markets employ a variety of execution methodologies. Our system deploys diversified quantitative strategies to ensure maximum capital efficiency: <br>Execution Methodologies: <br><br>
+                                    <div style="display: flex; flex-direction: row;"><img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px; object-fit: cover;" src="https://images.unsplash.com/photo-1621761191319-c6fb62004040?auto=format&fit=crop&w=150&q=80">
+                                        <div class="trade-p"><span>ARBITRAGE BOT</span><br>Exploits price inefficiencies for identical assets across multiple decentralized and centralized platforms with minimal risk exposure. </div>
+                                    </div><br><br>
+                                    <div style="display: flex; flex-direction: row;"><img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px; object-fit: cover;" src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=150&q=80">
+                                        <div class="trade-p"><span>Day Trading:</span><br>Algorithmic execution of intraday positions to capitalize on short-term price swings and volatility spikes. </div>
+                                    </div><br><br>
+                                    <div style="display: flex; flex-direction: row;"><img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px; object-fit: cover;" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=150&q=80">
+                                        <div class="trade-p"><span>Swing Trading:</span><br>Captures medium-term market momentum,
+                                            holding validator node weights over multi-day trends. </div>
+                                    </div><br><br>
+                                    <div style="display: flex; flex-direction: row;"><img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px; object-fit: cover;" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=150&q=80">
+                                        <div class="trade-p"><span>Trend Following:</span><br>Utilizes advanced moving averages and mathematical indicators to trace macro market trends and execute directionally aligned trades. </div>
+                                    </div><br><br>
+                                    <div style="display: flex; flex-direction: row;"><img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px; object-fit: cover;" src="https://images.unsplash.com/photo-1622630998477-20aa696ecb05?auto=format&fit=crop&w=150&q=80">
+                                        <div class="trade-p"><span>Spot Trading:</span><br>Direct acquisition and exchange of underlying layer-1 and layer-2 digital assets at real-time market value. </div>
+                                    </div><br><br>
+                                    <div style="display: flex; flex-direction: row;"><img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px; object-fit: cover;" src="https://images.unsplash.com/photo-1537989370866-91b7e2518222?auto=format&fit=crop&w=150&q=80">
+                                        <div class="trade-p"><span>Futures & Options Trading:</span><br>Deploys derivative contracts to hedge staking positions,
+                                            leveraging options and futures for delta-neutral yield optimization. </div>
+                                    </div><br><br>
+                                    <div style="display: flex; flex-direction: row;"><img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px; object-fit: cover;" src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=150&q=80">
+                                        <div class="trade-p"><span>Margin Trading:</span><br>Utilizes institutional leverage to maximize capital performance while employing strict real-time liquidation protections. </div>
+                                    </div><br><br>
+                                    <div style="display: flex; flex-direction: row;"><img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px; object-fit: cover;" src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=150&q=80">
+                                        <div class="trade-p"><span>Range Trading:</span><br>Executes mean-reversion algorithms between verified support and resistance boundaries in sideways markets. </div>
+                                    </div><br><br>
+                                    <div style="display: flex; flex-direction: row;"><img style="height: 100px; width: 100px; margin-right: 13px; border-radius: 10px; object-fit: cover;" src="https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&w=150&q=80">
+                                        <div class="trade-p"><span>Arbitrage Trading:</span><br>Secures cross-protocol price differences,
+                                            utilizing instant flash-loan mechanisms for capital-efficient execution. </div>
+                                    </div><br><br>Each strategy is automatically allocated capital based on machine-learned volatility models,
+                                    maximizing risk-adjusted returns (Sharpe Ratio) across the entire staking ecosystem.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                            <div class="elementor-widget-container">
+                                <a href="/dark/about-us/" target="_self" rel="nofollow" class="trk-btn trk-btn--border trk-btn--primary">More </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                        <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                            <div class="elementor-widget-container">
+                                <script>
+                                    jQuery(document).ready(function($) {
 
                                             AOS.init();
 
-                                        });
+                                        }
 
-                                    </script>
-                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                        <div class="about__thumb-inner">
-                                            <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://th.bing.com/th/id/OIG4.kZqaf_ne5bO2cG.7dNja?w=270&h=270&c=6&r=0&o=5&dpr=1.5&pid=ImgGn" alt="">
-                                                <div class="floating-content__top-left">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>10 Years</h3>
-                                                        <p>Consulting Experience</p>
-                                                    </div> -->
-                                                </div>
-                                                <div class="floating-content__bottom-right">
-                                                    <!-- <div class="floating-content__item">
-                                                        <h3>25K+</h3>
-                                                        <p>Satisfied Customers</p>
-                                                    </div> -->
-                                                </div>
-                                            </div>
+                                    );
+
+                                </script>
+                                <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                    <div class="about__thumb-inner">
+                                        <div class="about__thumb-image floating-content"><img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=600&q=80" alt="Trading Types">
+                                            <div class="floating-content__top-left">
+                                                < !-- <div class="floating-content__item">
+                                                    <h3>10 Years</h3>
+                                                    <p>Consulting Experience</p>
+                                            </div>-->
                                         </div>
+                                        <div class="floating-content__bottom-right">
+                                            < !-- <div class="floating-content__item">
+                                                <h3>25K+</h3>
+                                                <p>Satisfied Customers</p>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -5394,142 +5159,136 @@ if (isset($_GET['page'])) {
                     </div>
                 </div>
             </div>
-            @endif
-
-            <!-- ROAD MAP -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="elementor-element elementor-element-5482bb2 bg-color e-flex e-con-boxed e-con e-parent" data-id="5482bb2" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner">
-                    <div class="elementor-element elementor-element-a229896 elementor-widget__width-inherit elementor-absolute h-100 elementor-widget elementor-widget-bg-shapes" data-id="a229896" data-element_type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;}" data-widget_type="bg-shapes.default">
-                        <div class="elementor-widget-container">
-
-
-                            <div class="roadmap--style1">
-                                <span class="roadmap__shape-item roadmap__shape-item--1">
-                                    <span></span>
-                                </span>
-                            </div>
-
-
-                        </div>
+        </div>
+        @endif
+        @if ($page=='all'|| $page=='ourmission') <div class="elementor-element elementor-element-5482bb2 bg-color e-flex e-con-boxed e-con e-parent" data-id="5482bb2" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner">
+                <div class="elementor-element elementor-element-a229896 elementor-widget__width-inherit elementor-absolute h-100 elementor-widget elementor-widget-bg-shapes" data-id="a229896" data-element_type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;}" data-widget_type="bg-shapes.default">
+                    <div class="elementor-widget-container">
+                        <div class="roadmap--style1"><span class="roadmap__shape-item roadmap__shape-item--1"><span></span></span></div>
                     </div>
-                    <div class="elementor-element elementor-element-8a1b9ae elementor-widget__width-auto elementor-absolute upAndDown_animation elementor-widget elementor-widget-image" data-id="8a1b9ae" data-element_type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;}" data-widget_type="image.default">
-                        <div class="elementor-widget-container">
-                            <style>
-                                /*! elementor - v3.16.0 - 09-10-2023 */
+                </div>
+                <div class="elementor-element elementor-element-8a1b9ae elementor-widget__width-auto elementor-absolute upAndDown_animation elementor-widget elementor-widget-image" data-id="8a1b9ae" data-element_type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;}" data-widget_type="image.default">
+                    <div class="elementor-widget-container">
+                        <style>
+                            /*! elementor - v3.16.0 - 09-10-2023 */
 
-                                .elementor-widget-image {
-                                    text-align: center
+                            .elementor-widget-image {
+                                text-align: center
+                            }
+
+                            .elementor-widget-image a {
+                                display: inline-block
+                            }
+
+                            .elementor-widget-image a img[src$=".svg"] {
+                                width: 48px
+                            }
+
+                            .elementor-widget-image img {
+                                vertical-align: middle;
+                                display: inline-block
+                            }
+
+                            @media (min-width: 768px) {
+                                .roadmap--style1 .roadmap__wrapper:after {
+                                    height: 10% !important;
                                 }
+                            }
 
-                                .elementor-widget-image a {
-                                    display: inline-block
-                                }
-
-                                .elementor-widget-image a img[src$=".svg"] {
-                                    width: 48px
-                                }
-
-                                .elementor-widget-image img {
-                                    vertical-align: middle;
-                                    display: inline-block
-                                }
-
-                                @media (min-width: 768px) {
-                                    .roadmap--style1 .roadmap__wrapper:after {
-                                        height: 10% !important;
-                                    }
-                                }
-
-                            </style> <img decoding="async" width="106" height="106" src="https://bitrader.thetork.com/dark/wp-content/uploads/2023/10/shape01.png" class="attachment-full size-full wp-image-238" alt="" />
-                        </div>
+                        </style> <img decoding="async" width="106" height="106" src="https://bitrader.thetork.com/dark/wp-content/uploads/2023/10/shape01.png" class="attachment-full size-full wp-image-238" alt="" />
                     </div>
-                    <div class="elementor-element elementor-element-0caae5d e-flex e-con-boxed e-con e-child" data-id="0caae5d" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}">
-                        <div class="e-con-inner sectioncards">
-                            <div class="elementor-element elementor-element-6f737e6 elementor-widget elementor-widget-tg-heading" data-id="6f737e6" data-element_type="widget" data-widget_type="tg-heading.default">
-                                <div class="elementor-widget-container">
+                </div>
+                <div class="elementor-element elementor-element-0caae5d e-flex e-con-boxed e-con e-child" data-id="0caae5d" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}">
+                    <div class="e-con-inner sectioncards">
+                        <div class="elementor-element elementor-element-6f737e6 elementor-widget elementor-widget-tg-heading" data-id="6f737e6" data-element_type="widget" data-widget_type="tg-heading.default">
+                            <div class="elementor-widget-container">
 
-                                    <div class="section-title">
-                                        <h2 class="title">The <span>Roadmap</span></h2>
-                                    </div>
+                                <div class="section-title">
+                                    <h2 class="title">Our <span>Projects</span></h2>
+                                </div>
 
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-c258034 elementor-widget elementor-widget-heading" data-id="c258034" data-element_type="widget" data-widget_type="heading.default">
-                                <div class="elementor-widget-container">
-                                    <p class="elementor-heading-title elementor-size-default">The roadmap shows
-                                        the path ahead, helps teams plan, and guides the delivery of the product.
-                                    </p>
-                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="elementor-element elementor-element-3473502 elementor-widget elementor-widget-genix-roadmap" data-id="3473502" data-element_type="widget" data-widget_type="genix-roadmap.default">
-                        <div class="elementor-widget-container">
-
-                            <script>
-                                jQuery(document).ready(function($) {
-
-                                    AOS.init();
-
-                                });
-
-                            </script>
-
-
-                            <div class="roadmap--style1">
-                                <div class="roadmap__wrapper">
-                                    <div class="row gy-4 gy-md-0 gx-5">
-                                        <div class="col-md-6 offset-md-6">
-                                            <div class="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
-                                                <div class="roadmap__item-inner">
-                                                    <div class="roadmap__item-content">
-                                                        <div class="roadmap__item-header">
-                                                            <h3>Website launching</h3>
-                                                            <span>Q2</span>
-                                                        </div>
-                                                        <p>Website launching and first level leaders meet in india.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 ">
-                                            <div class="roadmap__item roadmap__item--style2 ms-auto me-md-4 aos-init aos-animate" data-aos="fade-right" data-aos-duration="800">
-                                                <div class="roadmap__item-inner">
-                                                    <div class="roadmap__item-content">
-                                                        <div class="roadmap__item-header">
-                                                            <h3>International launching</h3>
-                                                            <span>Q3</span>
-                                                        </div>
-                                                        <p>Second leaders meet and international launching at dubai.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 offset-md-6">
-                                            <div class="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
-                                                <div class="roadmap__item-inner">
-                                                    <div class="roadmap__item-content">
-                                                        <div class="roadmap__item-header">
-                                                            <h3>Financial ecosystem</h3>
-                                                            <span>Q4</span>
-                                                        </div>
-                                                        <p>Thrive card launching</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="elementor-element elementor-element-c258034 elementor-widget elementor-widget-heading" data-id="c258034" data-element_type="widget" data-widget_type="heading.default">
+                            <div class="elementor-widget-container">
+                                <p class="elementor-heading-title elementor-size-default">The roadmap shows
+                                    the path ahead, helps teams plan, and guides the delivery of the product.
+                                </p>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
+                <div class="elementor-element elementor-element-3473502 elementor-widget elementor-widget-genix-roadmap" data-id="3473502" data-element_type="widget" data-widget_type="genix-roadmap.default">
+                    <div class="elementor-widget-container">
+
+                        <script>
+                            jQuery(document).ready(function($) {
+
+                                AOS.init();
+
+                            });
+
+                        </script>
+
+
+                        <div class="roadmap--style1">
+                            <div class="roadmap__wrapper">
+                                <div class="row gy-4 gy-md-0 gx-5">
+                                    <div class="col-md-6 offset-md-6">
+                                        <div class="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
+                                            <div class="roadmap__item-inner">
+                                                <div class="roadmap__item-content">
+                                                    <div class="roadmap__item-header">
+                                                        <h3>Website launching</h3>
+                                                        <span>Q2</span>
+                                                    </div>
+                                                    <p>Website launching and first level leaders meet in india.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <div class="roadmap__item roadmap__item--style2 ms-auto me-md-4 aos-init aos-animate" data-aos="fade-right" data-aos-duration="800">
+                                            <div class="roadmap__item-inner">
+                                                <div class="roadmap__item-content">
+                                                    <div class="roadmap__item-header">
+                                                        <h3>International launching</h3>
+                                                        <span>Q3</span>
+                                                    </div>
+                                                    <p>Second leaders meet and international launching at dubai.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 offset-md-6">
+                                        <div class="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
+                                            <div class="roadmap__item-inner">
+                                                <div class="roadmap__item-content">
+                                                    <div class="roadmap__item-header">
+                                                        <h3>Financial ecosystem</h3>
+                                                        <span>Q4</span>
+                                                    </div>
+                                                    <p>Thrive card launching</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
             </div>
+        </div>
+        @endif
+
+        @if ($page == 'all')
+        <div class="homepage-sections-grid-container grid-last-span-2">
             @endif
 
             <!-- INVEST RISK FREE -->
@@ -5552,7 +5311,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://assets.entrepreneur.com/content/3x2/2000/20170130170703-GettyImages-539953664.jpeg" alt="">
+                                                <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80" alt="Risk Free">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -5575,18 +5334,15 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title elementor-size-default">
-                                        Stake
-                                        <span style="color: var(--secondary-color);">RISK FREE</span>
+                                        Mitigated
+                                        <span style="color: var(--secondary-color);">Risk Execution</span>
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <p class="elementor-heading-title elementor-size-default">
-                                        "Arbitrage is a risk-free trading strategy that allows investors to make a
-                                        profit with no exposure. Our system makes sure that it detects price
-                                        discrepancies only and takes advantage of the minimal amount of time to make
-                                        profit"
+                                        "Through delta-neutral positioning, multi-signature custody systems, and automated hedging protocols, GWI minimizes operational exposure. Our advanced algorithms exploit micro-second price disparities under strict risk-mitigation parameters to secure steady yields. By maintaining collateralized liquidity vaults and real-time drawdown protections, we ensure that capital remains shielded from volatility spikes, delivering a secure and highly reliable investment environment for our global partners."
                                     </p>
                                 </div>
                             </div>
@@ -5618,18 +5374,15 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title elementor-size-default">
-                                        LOW
-                                        <span style="color: var(--secondary-color);">LATENCY EXECUTION</span>
+                                        LOW-LATENCY
+                                        <span style="color: var(--secondary-color);">PROTOCOL EXECUTION</span>
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <p class="elementor-heading-title elementor-size-default">
-                                        “Our Triangular Arbitrage is a High Frequency Trading business. Running a
-                                        crypto Arbitrage bot on low latency and high throughput system gives you the
-                                        real edge on the market. Our infrastructure was built to satisfy the highest
-                                        requirements of institutional traders on GWI.”
+                                        "Our high-frequency validation nodes are co-located near major digital asset exchange matching servers and blockchain RPC endpoints. Running custom Rust-based arbitrage engines on a high-throughput network ensures we capture price discrepancies ahead of retail market participants, maintaining GWI's competitive edge. By minimizing routing hops and optimizing network packages, we execute transactions at microsecond speeds to capture fleeting arbitrage windows across multiple decentralized protocols."
                                     </p>
                                 </div>
                             </div>
@@ -5660,7 +5413,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://tse4.mm.bing.net/th/id/OIG2.NvpNTopHdTz7rH.vFfK3?pid=ImgGn" alt="">
+                                                <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=600&q=80" alt="Low Latency">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -5704,7 +5457,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px;" src="https://res.cloudinary.com/dqpnh8iui/image/upload/v1712908322/header_2f95753b8f.svg" alt="">
+                                                <img decoding="async" style="height: 298px; object-fit: cover;" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" alt="Quant Team">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -5727,17 +5480,15 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <h2 class="elementor-heading-title elementor-size-default">
-                                        DEDICATED
-                                        <span style="color: var(--secondary-color);">QUANT TEAM</span>
+                                        INSTITUTIONAL
+                                        <span style="color: var(--secondary-color);">QUANT & BLOCKCHAIN TEAM</span>
                                     </h2>
                                 </div>
                             </div>
                             <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
                                 <div class="elementor-widget-container">
                                     <p class="elementor-heading-title elementor-size-default">
-                                        "Let our team of quant developers continuously work on our proprietary
-                                        algorithms. They have vast experience in implementing market making bots and
-                                        algorithms for staking banks, brokerage firms, exchanges, and hedge funds."
+                                        "Our dedicated research team comprises veteran quantitative developers, cryptography researchers, and smart contract engineers. With decades of combined experience designing algorithmic trading systems for traditional hedge funds and validating decentralized Web3 protocols, they continuously refine our algorithmic models and validator infrastructure. This deep technical expertise allows us to identify institutional opportunities, audit security vulnerabilities, and build robust software pipelines that keep GWI at the industry forefront."
                                     </p>
                                 </div>
                             </div>
@@ -5759,77 +5510,81 @@ if (isset($_GET['page'])) {
             </div>
             @endif
 
-            <!-- GWI EVENTS 2024 -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <div class="stticky">
-                <div class="stticky-text">GWI EVENTS</div>
-                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="low-latency" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                    <div class="e-con-inner">
-                    </div>
+            @if ($page == 'all')
+        </div>
+        @endif
+
+        <!-- GWI EVENTS 2024 -->
+        @if ($page == 'all' || $page == 'ourmission')
+        <div class="stticky">
+            <div class="stticky-text">GWI EVENTS</div>
+            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="low-latency" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                <div class="e-con-inner">
                 </div>
             </div>
-            @endif
+        </div>
+        @endif
 
-            <!-- GWI EVENT images -->
-            @if ($page == 'all' || $page == 'ourmission')
-            <style>
-                .about__thumb-image::after {
-                    position: absolute;
-                    content: none !important;
-                    display: none !important;
-                }
+        <!-- GWI EVENT images -->
+        @if ($page == 'all' || $page == 'ourmission')
+        <style>
+            .about__thumb-image::after {
+                position: absolute;
+                content: none !important;
+                display: none !important;
+            }
 
-                .evnt_imgs .about__thumb-image.floating-content {
-                    display: flex;
-                    justify-content: center;
-                }
+            .evnt_imgs .about__thumb-image.floating-content {
+                display: flex;
+                justify-content: center;
+            }
 
-                .elementor-67 .elementor-element.elementor-element-3d03e0f {
-                    --width: 100% !important;
-                }
+            .elementor-67 .elementor-element.elementor-element-3d03e0f {
+                --width: 100% !important;
+            }
 
+            .evnt_imgs {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-gap: 30px;
+            }
+
+            @media (min-width: 768px) {
                 .evnt_imgs {
-                    width: 100%;
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
+                    grid-template-columns: repeat(2, 1fr);
                     grid-gap: 50px;
                 }
+            }
 
-                @media (max-width:800px) {
-                    .evnt_imgs {
-                        grid-template-columns: repeat(2, 1fr);
-                        grid-gap: 20px;
-                    }
-                }
-
-            </style>
-            <div class="stticky">
-                <div class="stticky-text">GWI EVENTS</div>
-                <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="low-latency" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                    <div class="e-con-inner sectioncards" style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
-                        <div>
-                            <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" style="
+        </style>
+        <div class="stticky">
+            <div class="stticky-text">GWI EVENTS</div>
+            <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="low-latency" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+                <div class="e-con-inner sectioncards" style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
+                    <div>
+                        <div class="elementor-element elementor-element-f496e11 e-con-full e-flex e-con e-child" data-id="f496e11" style="
                     width: 100%;
                 " data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                                <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
-                                    <div class="elementor-widget-container">
-                                        <h2 class="elementor-heading-title elementor-size-default">
-                                            GWI EVENTS
-                                            <span style="color: var(--secondary-color);">2024</span>
+                            <div class="elementor-element elementor-element-2a404d7 elementor-widget elementor-widget-heading" data-id="2a404d7" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <h2 class="elementor-heading-title elementor-size-default">
+                                        GWI EVENTS
+                                        <span style="color: var(--secondary-color);">2026</span>
 
-                                        </h2>
-                                    </div>
+                                    </h2>
                                 </div>
-                                <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
-                                    <div class="elementor-widget-container">
-                                        <p class="elementor-heading-title elementor-size-default">
-                                            <!-- “Our Triangular Arbitrage is a High Frequency Trading business. Running a crypto Arbitrage bot on low latency and high throughput system gives you the real edge on the market. Our infrastructure was built to satisfy the highest requirements of institutional traders on GWI.” -->
-                                        </p>
-                                    </div>
+                            </div>
+                            <div class="elementor-element elementor-element-77c0134 elementor-widget elementor-widget-heading" data-id="77c0134" data-element_type="widget" data-widget_type="heading.default">
+                                <div class="elementor-widget-container">
+                                    <p class="elementor-heading-title elementor-size-default">
+                                        Highlighting our active participation in global Web3 conferences, validator node workshops, and exclusive elite partner summits.
+                                    </p>
                                 </div>
-                                <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
-                                    <div class="elementor-widget-container">
-                                        <!-- <a
+                            </div>
+                            <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                <div class="elementor-widget-container">
+                                    <!-- <a
                                 href="/dark/about-us/"
                                 target="_self"
                                 rel="nofollow"
@@ -5837,137 +5592,136 @@ if (isset($_GET['page'])) {
                             >
                                 More
                             </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="evnt_imgs">
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
+
+                                            AOS.init();
+
+                                        });
+
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 180px; object-fit: cover;" src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80" alt="Event 1">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
+                                                <h3>10 Years</h3>
+                                                <p>Consulting Experience</p>
+                                            </div> -->
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
+                                                <h3>25K+</h3>
+                                                <p>Satisfied Customers</p>
+                                            </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="evnt_imgs">
-                            <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                                <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                    <div class="elementor-widget-container">
-                                        <script>
-                                            jQuery(document).ready(function($) {
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
 
-                                                AOS.init();
+                                            AOS.init();
 
-                                            });
+                                        });
 
-                                        </script>
-                                        <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                            <div class="about__thumb-inner">
-                                                <div class="about__thumb-image floating-content">
-                                                    <img decoding="async" style="height: 180px;" src="https://img.lovepik.com/photo/48013/9721.jpg_wh860.jpg" alt="">
-                                                    <div class="floating-content__top-left">
-                                                        <!-- <div class="floating-content__item">
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 180px; object-fit: cover;" src="https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?auto=format&fit=crop&w=600&q=80" alt="Event 2">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
                                                 <h3>10 Years</h3>
                                                 <p>Consulting Experience</p>
                                             </div> -->
-                                                    </div>
-                                                    <div class="floating-content__bottom-right">
-                                                        <!-- <div class="floating-content__item">
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
                                                 <h3>25K+</h3>
                                                 <p>Satisfied Customers</p>
                                             </div> -->
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                                <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                    <div class="elementor-widget-container">
-                                        <script>
-                                            jQuery(document).ready(function($) {
+                        </div>
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
 
-                                                AOS.init();
+                                            AOS.init();
 
-                                            });
+                                        });
 
-                                        </script>
-                                        <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                            <div class="about__thumb-inner">
-                                                <div class="about__thumb-image floating-content">
-                                                    <img decoding="async" style="height: 180px;" src="https://cdn.vectorstock.com/i/500p/64/54/travel-destination-poster-vector-51116454.jpg" alt="">
-                                                    <div class="floating-content__top-left">
-                                                        <!-- <div class="floating-content__item">
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 180px; object-fit: cover;" src="https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?auto=format&fit=crop&w=600&q=80" alt="Event 3">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
                                                 <h3>10 Years</h3>
                                                 <p>Consulting Experience</p>
                                             </div> -->
-                                                    </div>
-                                                    <div class="floating-content__bottom-right">
-                                                        <!-- <div class="floating-content__item">
+                                                </div>
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
                                                 <h3>25K+</h3>
                                                 <p>Satisfied Customers</p>
                                             </div> -->
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                                <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                    <div class="elementor-widget-container">
-                                        <script>
-                                            jQuery(document).ready(function($) {
+                        </div>
+                        <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                            <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
+                                <div class="elementor-widget-container">
+                                    <script>
+                                        jQuery(document).ready(function($) {
 
-                                                AOS.init();
+                                            AOS.init();
 
-                                            });
+                                        });
 
-                                        </script>
-                                        <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                            <div class="about__thumb-inner">
-                                                <div class="about__thumb-image floating-content">
-                                                    <img decoding="async" style="height: 180px;" src="https://wallpapers.com/images/featured/dubai-z03qow0d0d3yuumg.jpg" alt="">
-                                                    <div class="floating-content__top-left">
-                                                        <!-- <div class="floating-content__item">
+                                    </script>
+                                    <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
+                                        <div class="about__thumb-inner">
+                                            <div class="about__thumb-image floating-content">
+                                                <img decoding="async" style="height: 180px; object-fit: cover;" src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=600&q=80" alt="Event 4">
+                                                <div class="floating-content__top-left">
+                                                    <!-- <div class="floating-content__item">
                                                 <h3>10 Years</h3>
                                                 <p>Consulting Experience</p>
                                             </div> -->
-                                                    </div>
-                                                    <div class="floating-content__bottom-right">
-                                                        <!-- <div class="floating-content__item">
-                                                <h3>25K+</h3>
-                                                <p>Satisfied Customers</p>
-                                            </div> -->
-                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                                <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
-                                    <div class="elementor-widget-container">
-                                        <script>
-                                            jQuery(document).ready(function($) {
-
-                                                AOS.init();
-
-                                            });
-
-                                        </script>
-                                        <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
-                                            <div class="about__thumb-inner">
-                                                <div class="about__thumb-image floating-content">
-                                                    <img decoding="async" style="height: 180px;" src="https://th.bing.com/th/id/OIG4..Qlc06SeBrXOISLCqBq_?w=270&h=270&c=6&r=0&o=5&dpr=2&pid=ImgGn" alt="">
-                                                    <div class="floating-content__top-left">
-                                                        <!-- <div class="floating-content__item">
-                                                <h3>10 Years</h3>
-                                                <p>Consulting Experience</p>
-                                            </div> -->
-                                                    </div>
-                                                    <div class="floating-content__bottom-right">
-                                                        <!-- <div class="floating-content__item">
+                                                <div class="floating-content__bottom-right">
+                                                    <!-- <div class="floating-content__item">
                                                 <h3>25K+</h3>
                                                 <p>Satisfied Customers</p>
                                             </div> -->
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -5978,87 +5732,88 @@ if (isset($_GET['page'])) {
                     </div>
                 </div>
             </div>
-            @endif
+        </div>
+        @endif
 
-            <!-- Sbscrib -->
-            @if ($page == 'all')
-            <div class="elementor-element elementor-element-cca183d bg-color e-flex e-con-boxed e-con e-parent" data-id="cca183d" id="contact_us" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner">
-                    <div class="elementor-element elementor-element-a3cd40c e-flex e-con-boxed e-con e-child" data-id="a3cd40c" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;content_width&quot;:&quot;boxed&quot;}">
-                        <div class="e-con-inner">
-                            <div style="background-color: #00D094 !important;" class="elementor-element elementor-element-e8c8591 e-con-full e-flex e-con e-child" data-id="e8c8591" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;background_background&quot;:&quot;classic&quot;}">
-                                <div /dark/wp-content/uploads/2023/10/cta_shape1.png class="elementor-element elementor-element-403e394 e-con-full e-flex e-con e-child" data-id="403e394" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                                    <div class="elementor-element elementor-element-17f2b1b cta__thumb elementor-widget elementor-widget-image" data-id="17f2b1b" data-element_type="widget" data-widget_type="image.default">
-                                        <div class="elementor-widget-container">
-                                            <img loading="lazy" decoding="async" width="244" height="235" src="https://cdni.iconscout.com/illustration/premium/thumb/man-working-on-laptop-5560594-4634155.png?f=webp" class="attachment-full size-full wp-image-312" alt="">
-                                        </div>
+        <!-- Sbscrib -->
+        @if ($page == 'all')
+        <div class="elementor-element elementor-element-cca183d bg-color e-flex e-con-boxed e-con e-parent" data-id="cca183d" id="contact_us" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner">
+                <div class="elementor-element elementor-element-a3cd40c e-flex e-con-boxed e-con e-child" data-id="a3cd40c" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;content_width&quot;:&quot;boxed&quot;}">
+                    <div class="e-con-inner">
+                        <div class="elementor-element elementor-element-e8c8591 e-con-full e-flex e-con e-child contact-main-card" data-id="e8c8591" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;background_background&quot;:&quot;classic&quot;}">
+                            <div class="elementor-element elementor-element-403e394 e-con-full e-flex e-con e-child" data-id="403e394" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-17f2b1b cta__thumb elementor-widget elementor-widget-image" data-id="17f2b1b" data-element_type="widget" data-widget_type="image.default">
+                                    <div class="elementor-widget-container">
+                                        <img loading="lazy" decoding="async" width="244" height="235" style="object-fit: cover; border-radius: 12px;" src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=600&q=80" class="attachment-full size-full wp-image-312" alt="Contact Us">
                                     </div>
                                 </div>
-                                <div class="elementor-element elementor-element-02dff66 e-flex e-con-boxed e-con e-child" data-id="02dff66" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}">
-                                    <div class="e-con-inner">
-                                        <div class="elementor-element elementor-element-34cb115 elementor-widget elementor-widget-tg-heading" data-id="34cb115" data-element_type="widget" data-widget_type="tg-heading.default">
-                                            <div class="elementor-widget-container">
-                                                <div class="section-title">
-                                                    <h2 class="title">
-                                                        <span style="color: var(--secondary-color)">Contact</span>
-                                                        Us
-                                                    </h2>
-                                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-02dff66 e-flex e-con-boxed e-con e-child" data-id="02dff66" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}">
+                                <div class="e-con-inner contact-form-panel">
+                                    <div class="elementor-element elementor-element-34cb115 elementor-widget elementor-widget-tg-heading" data-id="34cb115" data-element_type="widget" data-widget_type="tg-heading.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="section-title">
+                                                <h2 class="title">
+                                                    <span style="color: var(--secondary-color)">Contact</span>
+                                                    Us
+                                                </h2>
                                             </div>
                                         </div>
-                                        <div class="elementor-element elementor-element-dad813c elementor-widget elementor-widget-heading" data-id="dad813c" data-element_type="widget" data-widget_type="heading.default">
-                                            <div class="elementor-widget-container">
-                                                <p class="elementor-heading-title elementor-size-default">Hey! Are
-                                                    you tired of missing out on our updates? Contact us , we will
-                                                    contact you in 24hr</p>
-                                            </div>
+                                    </div>
+                                    <div class="elementor-element elementor-element-dad813c elementor-widget elementor-widget-heading" data-id="dad813c" data-element_type="widget" data-widget_type="heading.default">
+                                        <div class="elementor-widget-container">
+                                            <p class="elementor-heading-title elementor-size-default">Hey! Are
+                                                you tired of missing out on our updates? Contact us , we will
+                                                contact you in 24hr</p>
                                         </div>
-                                        <div class="elementor-element elementor-element-50c820d text-center elementor-widget elementor-widget-shortcode" data-id="50c820d" data-element_type="widget" data-widget_type="shortcode.default">
-                                            <div class="elementor-widget-container">
-                                                <div class="elementor-shortcode">
-                                                    <script>
-                                                        (function() {
-                                                            window.mc4wp = window.mc4wp || {
-                                                                listeners: []
-                                                                , forms: {
-                                                                    on: function(evt, cb) {
-                                                                        window.mc4wp.listeners.push({
-                                                                            event: evt
-                                                                            , callback: cb
-                                                                        });
-                                                                    }
+                                    </div>
+                                    <div class="elementor-element elementor-element-50c820d text-center elementor-widget elementor-widget-shortcode" data-id="50c820d" data-element_type="widget" data-widget_type="shortcode.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-shortcode">
+                                                <script>
+                                                    (function() {
+                                                        window.mc4wp = window.mc4wp || {
+                                                            listeners: []
+                                                            , forms: {
+                                                                on: function(evt, cb) {
+                                                                    window.mc4wp.listeners.push({
+                                                                        event: evt
+                                                                        , callback: cb
+                                                                    });
                                                                 }
                                                             }
-                                                        })();
+                                                        }
+                                                    })();
 
-                                                    </script>
-                                                    <!-- Mailchimp for WordPress v4.9.9 - https://wordpress.org/plugins/mailchimp-for-wp/ -->
-                                                    <form id="mc4wp-form-1" class="mc4wp-form mc4wp-form-329" method="post" data-id="329" data-name="Newsletter Form">
-                                                        <div class="mc4wp-form-fields">
-                                                            <div class="cta-form cta-form--style2 form-subscribe">
-                                                                <div class="cta-form__inner d-sm-flex align-items-center">
-                                                                    <input type="email" class="form-control form-control--style2 mb-3 mb-sm-0" name="EMAIL" placeholder="Email Address" required>
-                                                                    <button class="trk-btn  trk-btn--large trk-btn--secondary2" style="background-color: var(--secondary-color) !important; border-color: var(--secondary-color) !important;" type="submit">Submit</button>
-                                                                </div>
+                                                </script>
+                                                <!-- Mailchimp for WordPress v4.9.9 - https://wordpress.org/plugins/mailchimp-for-wp/ -->
+                                                <form id="mc4wp-form-1" class="mc4wp-form mc4wp-form-329" method="post" data-id="329" data-name="Newsletter Form">
+                                                    <div class="mc4wp-form-fields">
+                                                        <div class="cta-form cta-form--style2 form-subscribe">
+                                                            <div class="cta-form__inner d-sm-flex align-items-center">
+                                                                <input type="email" class="form-control form-control--style2 mb-3 mb-sm-0 contact-form-input" name="EMAIL" placeholder="Email Address" required>
+                                                                <button class="contact-submit-btn" type="submit">Submit</button>
                                                             </div>
                                                         </div>
-                                                        <label style="display: none !important;">
-                                                            Leave this field empty if you're human:
-                                                            <input type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off">
-                                                        </label>
-                                                        <input type="hidden" name="_mc4wp_timestamp" value="1714408147">
-                                                        <input type="hidden" name="_mc4wp_form_id" value="329">
-                                                        <input type="hidden" name="_mc4wp_form_element_id" value="mc4wp-form-1">
-                                                        <div class="mc4wp-response"></div>
-                                                    </form>
-                                                    <!-- / Mailchimp for WordPress Plugin -->
-                                                </div>
+                                                    </div>
+                                                    <label style="display: none !important;">
+                                                        Leave this field empty if you're human:
+                                                        <input type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off">
+                                                    </label>
+                                                    <input type="hidden" name="_mc4wp_timestamp" value="1714408147">
+                                                    <input type="hidden" name="_mc4wp_form_id" value="329">
+                                                    <input type="hidden" name="_mc4wp_form_element_id" value="mc4wp-form-1">
+                                                    <div class="mc4wp-response"></div>
+                                                </form>
+                                                <!-- / Mailchimp for WordPress Plugin -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div
+                        </div>
+                        <!-- <div
                                     class="elementor-element elementor-element-3db5055 elementor-widget__width-auto elementor-absolute bit_rotate_animation elementor-widget elementor-widget-image"
                                     data-id="3db5055"
                                     data-element_type="widget"
@@ -6077,44 +5832,44 @@ if (isset($_GET['page'])) {
                                         >
                                     </div>
                                 </div> -->
-                            <div class="elementor-element elementor-element-617ebb8 elementor-widget__width-auto elementor-absolute upAndDown_animation elementor-widget elementor-widget-image" data-id="617ebb8" data-element_type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;}" data-widget_type="image.default">
-                                <div class="elementor-widget-container">
-                                    <img decoding="async" width="106" height="106" src="/dark/wp-content/uploads/2023/10/shape01.png" class="attachment-full size-full wp-image-238" alt="">
-                                </div>
+                        <div class="elementor-element elementor-element-617ebb8 elementor-widget__width-auto elementor-absolute upAndDown_animation elementor-widget elementor-widget-image" data-id="617ebb8" data-element_type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;}" data-widget_type="image.default">
+                            <div class="elementor-widget-container">
+                                <img decoding="async" width="106" height="106" src="/dark/wp-content/uploads/2023/10/shape01.png" class="attachment-full size-full wp-image-238" alt="">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            @endif
+        </div>
+        @endif
 
-            <!-- Support -->
-            @if ($page == 'support')
-            <div class="elementor-element elementor-element-cca183d bg-color e-flex e-con-boxed e-con e-parent" data-id="cca183d" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
-                <div class="e-con-inner sectioncards">
-                    <div class="elementor-element elementor-element-a3cd40c e-flex e-con-boxed e-con e-child" data-id="a3cd40c" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;content_width&quot;:&quot;boxed&quot;}">
-                        <div class="e-con-inner sectioncards">
-                            <div style="background-color: #00D094 !important;" class="elementor-element elementor-element-e8c8591 e-con-full e-flex e-con e-child" data-id="e8c8591" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;background_background&quot;:&quot;classic&quot;}">
-                                <div class="elementor-element elementor-element-403e394 e-con-full e-flex e-con e-child" data-id="403e394" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
-                                    <div class="elementor-element elementor-element-17f2b1b cta__thumb elementor-widget elementor-widget-image" data-id="17f2b1b" data-element_type="widget" data-widget_type="image.default">
-                                        <div class="elementor-widget-container">
-                                            <img loading="lazy" decoding="async" width="244" height="235" src="https://www.ebeamsinfotech.com/wp-content/uploads/2020/07/ebeamsinfotech-web-support.png" class="attachment-full size-full wp-image-312" alt="">
-                                        </div>
+        <!-- Support -->
+        @if ($page == 'support')
+        <div class="elementor-element elementor-element-cca183d bg-color e-flex e-con-boxed e-con e-parent" data-id="cca183d" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
+            <div class="e-con-inner">
+                <div class="elementor-element elementor-element-a3cd40c e-flex e-con-boxed e-con e-child" data-id="a3cd40c" data-element_type="container" data-settings="{&quot;background_background&quot;:&quot;classic&quot;,&quot;content_width&quot;:&quot;boxed&quot;}">
+                    <div class="e-con-inner">
+                        <div class="elementor-element elementor-element-e8c8591 e-con-full e-flex e-con e-child contact-main-card" data-id="e8c8591" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;,&quot;background_background&quot;:&quot;classic&quot;}">
+                            <div class="elementor-element elementor-element-403e394 e-con-full e-flex e-con e-child" data-id="403e394" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
+                                <div class="elementor-element elementor-element-17f2b1b cta__thumb elementor-widget elementor-widget-image" data-id="17f2b1b" data-element_type="widget" data-widget_type="image.default">
+                                    <div class="elementor-widget-container">
+                                        <img loading="lazy" decoding="async" width="244" height="235" style="object-fit: cover; border-radius: 12px;" src="https://images.unsplash.com/photo-1521791136368-1a8ac2755a85?auto=format&fit=crop&w=600&q=80" class="attachment-full size-full wp-image-312" alt="Support">
                                     </div>
                                 </div>
-                                <div class="elementor-element elementor-element-02dff66 e-flex e-con-boxed e-con e-child" data-id="02dff66" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}">
-                                    <div class="e-con-inner sectioncards">
-                                        <div class="elementor-element elementor-element-34cb115 elementor-widget elementor-widget-tg-heading" data-id="34cb115" data-element_type="widget" data-widget_type="tg-heading.default">
-                                            <div class="elementor-widget-container">
-                                                <div class="section-title">
-                                                    <h2 class="title">
-                                                        <span style="color: var(--secondary-color)"></span>
-                                                        Support
-                                                    </h2>
-                                                </div>
+                            </div>
+                            <div class="elementor-element elementor-element-02dff66 e-flex e-con-boxed e-con e-child" data-id="02dff66" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}">
+                                <div class="e-con-inner contact-form-panel">
+                                    <div class="elementor-element elementor-element-34cb115 elementor-widget elementor-widget-tg-heading" data-id="34cb115" data-element_type="widget" data-widget_type="tg-heading.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="section-title">
+                                                <h2 class="title">
+                                                    <span style="color: var(--secondary-color)"></span>
+                                                    Support
+                                                </h2>
                                             </div>
                                         </div>
-                                        <!-- <div
+                                    </div>
+                                    <!-- <div
                                                 class="elementor-element elementor-element-dad813c elementor-widget elementor-widget-heading"
                                                 data-id="dad813c"
                                                 data-element_type="widget"
@@ -6124,50 +5879,50 @@ if (isset($_GET['page'])) {
                                                     <p class="elementor-heading-title elementor-size-default">Hey! Are you tired of missing out on our updates? Subscribe to our news now and stay in the loop!</p>
                                                 </div>
                                             </div> -->
-                                        <div class="elementor-element elementor-element-50c820d text-center elementor-widget elementor-widget-shortcode" data-id="50c820d" data-element_type="widget" data-widget_type="shortcode.default">
-                                            <div class="elementor-widget-container">
-                                                <div class="elementor-shortcode">
-                                                    <script>
-                                                        (function() {
-                                                            window.mc4wp = window.mc4wp || {
-                                                                listeners: []
-                                                                , forms: {
-                                                                    on: function(evt, cb) {
-                                                                        window.mc4wp.listeners.push({
-                                                                            event: evt
-                                                                            , callback: cb
-                                                                        });
-                                                                    }
+                                    <div class="elementor-element elementor-element-50c820d text-center elementor-widget elementor-widget-shortcode" data-id="50c820d" data-element_type="widget" data-widget_type="shortcode.default">
+                                        <div class="elementor-widget-container">
+                                            <div class="elementor-shortcode">
+                                                <script>
+                                                    (function() {
+                                                        window.mc4wp = window.mc4wp || {
+                                                            listeners: []
+                                                            , forms: {
+                                                                on: function(evt, cb) {
+                                                                    window.mc4wp.listeners.push({
+                                                                        event: evt
+                                                                        , callback: cb
+                                                                    });
                                                                 }
                                                             }
-                                                        })();
+                                                        }
+                                                    })();
 
-                                                    </script>
-                                                    <!-- Mailchimp for WordPress v4.9.9 - https://wordpress.org/plugins/mailchimp-for-wp/ -->
-                                                    <form id="mc4wp-form-1" class="mc4wp-form mc4wp-form-329" method="post" action="/main/support">
-                                                        <div class="mc4wp-form-fields">
-                                                            <div class="cta-form cta-form--style2 form-subscribe">
-                                                                <div class="cta-form__inner d-sm-flex align-items-center">
-                                                                    <input type="text" class="form-control form-control--style2 mb-3 mb-sm-0" name="subject" style="margin-bottom: 20px !important;" placeholder="Subject" required>
-                                                                </div>
-                                                                <div class="cta-form__inner d-sm-flex align-items-center">
-                                                                    <textarea type="text" class="form-control form-control--style2 mb-3 mb-sm-0" name="comment" style="height: 100px; margin-bottom: 20px !important;" placeholder="Comments" required></textarea>
-                                                                </div>
-                                                                <div class="cta-form__inner d-sm-flex align-items-center">
-                                                                    <button class="trk-btn  trk-btn--small trk-btn--secondary2" style="background-color: var(--secondary-color) !important; border-color: var(--secondary-color) !important;" type="submit">Submit</button>
-                                                                </div>
+                                                </script>
+                                                <!-- Mailchimp for WordPress v4.9.9 - https://wordpress.org/plugins/mailchimp-for-wp/ -->
+                                                <form id="mc4wp-form-1" class="mc4wp-form mc4wp-form-329" method="post" action="/main/support">
+                                                    <div class="mc4wp-form-fields">
+                                                        <div class="cta-form cta-form--style2 form-subscribe">
+                                                            <div class="cta-form__inner d-sm-flex align-items-center">
+                                                                <input type="text" class="form-control form-control--style2 mb-3 mb-sm-0 contact-form-input" name="subject" style="margin-bottom: 20px !important;" placeholder="Subject" required>
+                                                            </div>
+                                                            <div class="cta-form__inner d-sm-flex align-items-center">
+                                                                <textarea class="form-control form-control--style2 mb-3 mb-sm-0 contact-form-input" name="comment" style="height: 100px; margin-bottom: 20px !important;" placeholder="Comments" required></textarea>
+                                                            </div>
+                                                            <div class="cta-form__inner d-sm-flex align-items-center">
+                                                                <button class="contact-submit-btn" type="submit">Submit</button>
                                                             </div>
                                                         </div>
-                                                        <div class="mc4wp-response"></div>
-                                                    </form>
-                                                    <!-- / Mailchimp for WordPress Plugin -->
-                                                </div>
+                                                    </div>
+                                                    <div class="mc4wp-response"></div>
+                                                </form>
+                                                <!-- / Mailchimp for WordPress Plugin -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div
+                        </div>
+                        <!-- <div
                                     class="elementor-element elementor-element-3db5055 elementor-widget__width-auto elementor-absolute bit_rotate_animation elementor-widget elementor-widget-image"
                                     data-id="3db5055"
                                     data-element_type="widget"
@@ -6186,16 +5941,16 @@ if (isset($_GET['page'])) {
                                         >
                                     </div>
                                 </div> -->
-                            <div class="elementor-element elementor-element-617ebb8 elementor-widget__width-auto elementor-absolute upAndDown_animation elementor-widget elementor-widget-image" data-id="617ebb8" data-element_type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;}" data-widget_type="image.default">
-                                <div class="elementor-widget-container">
-                                    <img decoding="async" width="106" height="106" src="/dark/wp-content/uploads/2023/10/shape01.png" class="attachment-full size-full wp-image-238" alt="">
-                                </div>
+                        <div class="elementor-element elementor-element-617ebb8 elementor-widget__width-auto elementor-absolute upAndDown_animation elementor-widget elementor-widget-image" data-id="617ebb8" data-element_type="widget" data-settings="{&quot;_position&quot;:&quot;absolute&quot;}" data-widget_type="image.default">
+                            <div class="elementor-widget-container">
+                                <img decoding="async" width="106" height="106" src="/dark/wp-content/uploads/2023/10/shape01.png" class="attachment-full size-full wp-image-238" alt="">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            @endif
+        </div>
+        @endif
 
 
 
@@ -6278,7 +6033,7 @@ if (isset($_GET['page'])) {
                                         start trading.
                                         <br>
                                         <br>
-                                        globalmarketstars@gmail.com
+                                        gwiadmin@gmail.com
                                     </p>
                                 </div>
                                 <div style="display: none;">
@@ -6393,7 +6148,7 @@ if (isset($_GET['page'])) {
                             <div class="elementor-element elementor-element-39c3f15 e-con-full e-flex e-con e-child" data-id="39c3f15" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
                                 <div class="elementor-element elementor-element-c35f4f8 elementor-widget elementor-widget-heading" data-id="c35f4f8" data-element_type="widget" data-widget_type="heading.default">
                                     <div class="elementor-widget-container">
-                                        <p class="elementor-heading-title elementor-size-default">© 2024 All Rights
+                                        <p class="elementor-heading-title elementor-size-default">© 2026 All Rights
                                             Reserved</p>
                                     </div>
                                 </div>

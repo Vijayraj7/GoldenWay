@@ -101,6 +101,7 @@ if (count($plans) == 0) {
     @include('dashboard.dcards.naver', ['r' => 'dashboard'])
     @include('dashboard.dcards.new')
     @include('dashboard.dcards.autopoll')
+    @include('dashboard.dcards.autopollwithdraw')
     <!-- TradingView Widget BEGIN -->
 
     <!-- Layout wrapper -->
@@ -577,7 +578,16 @@ if (count($plans) == 0) {
                                             box-shadow: 0 8px 26px 0 rgba(0, 0, 0, 0.3) !important;
                                             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
                                             position: relative;
-                                            overflow: hidden;
+                                            z-index: 1;
+                                        }
+
+                                        .premium-card:hover,
+                                        .premium-card:focus-within {
+                                            z-index: 100 !important;
+                                        }
+
+                                        .premium-card .dropdown-menu {
+                                            z-index: 1060 !important;
                                         }
 
                                         .premium-card::before {
@@ -591,6 +601,7 @@ if (count($plans) == 0) {
                                             pointer-events: none;
                                             transition: opacity 0.4s ease;
                                             opacity: 0;
+                                            border-radius: inherit;
                                         }
 
                                         .premium-card:hover {
@@ -685,6 +696,14 @@ if (count($plans) == 0) {
                                         <!-- Subscription Card 1 -->
                                         <div class="card premium-card">
                                             <div class="card-body">
+                                                @php
+                                                $sub_amount = (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount');
+                                                $total_sub_earned = (float) DB::table('customer_transactions')->where('csId', $v->id)->sum('tAmount');
+                                                $total_sub_earned = max(0.0, $total_sub_earned);
+                                                $max_sub_cap = 2 * $sub_amount;
+                                                $sub_progress_percentage = $max_sub_cap > 0 ? min(100, ($total_sub_earned / $max_sub_cap) * 100) : 0;
+                                                $is_2x_complete = ($max_sub_cap > 0 && $total_sub_earned >= $max_sub_cap);
+                                                @endphp
                                                 <div style="flex-direction: column;" class="card-title d-flex align-items-center justify-content-around">
                                                     <div style="display: flex; align-items: center; gap: 8px;">
                                                         <div class="wlt">
@@ -693,9 +712,16 @@ if (count($plans) == 0) {
                                                         <div>
                                                             <span class="crd-title" style="display: block;">Your Subscription</span>
                                                             <h3 class="card-title h3-large">
-                                                                {{ number_format(DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount'), 2) }}
+                                                                {{ number_format($sub_amount, 2) }}
                                                                 <span style="font-size: 14px; font-weight: 600; color: #f9a826 !important; padding-left: 2px;">USDT</span>
                                                             </h3>
+                                                            @if($is_2x_complete)
+                                                            <div style="margin-top: 4px;">
+                                                                <span style="font-size: 10px; font-weight: 700; color: #3b82f6; padding: 2px 8px; border-radius: 12px; background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); display: inline-flex; align-items: center; gap: 4px;">
+                                                                    <i class="bx bxs-check-shield" style="font-size: 12px;"></i> 2X Complete
+                                                                </span>
+                                                            </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     @php
@@ -724,15 +750,31 @@ if (count($plans) == 0) {
                                                     </div>
                                                     @endif
                                                 </div>
-                                                <div style="border-bottom: none !important; padding-bottom: 0px !important; margin-bottom: 0px !important;" class="card-title d-flex align-items-center justify-content-around">
+                                                <div style="border-bottom: none !important; padding-bottom: 0px !important; margin-bottom: 0px !important; flex-direction: column; align-items: center !important; gap: 4px;" class="card-title d-flex justify-content-center">
                                                     <div style="display: flex; align-items: center; gap: 6px;">
                                                         <span class="crd-title" style="font-size: 12px !important; color: rgba(255,255,255,0.6) !important;">Maximum Stake -</span>
                                                         <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #fff !important; font-size: 14px !important;">
-                                                            {{ number_format(DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') * 10, 2) }}
+                                                            {{ number_format($sub_amount * 10, 2) }}
                                                             <span style="color: #f9a826; font-weight: 600;">USDT</span>
                                                         </h6>
                                                     </div>
                                                 </div>
+
+                                                <!-- 2X Cap Progress Linear Design -->
+                                                <div class="w-100" style="margin-top: 15px; margin-bottom: 5px; padding: 0 15px;">
+                                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 11px; color: rgba(255,255,255,0.7);">
+                                                        <span>2X Limit Progress</span>
+                                                        <span style="font-weight: 700; color: #ffd700;">{{ number_format($sub_progress_percentage, 1) }}%</span>
+                                                    </div>
+                                                    <div style="width: 100%; height: 10px; background-color: #222; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
+                                                        <div style="width: {{ $sub_progress_percentage }}%; height: 100%; background: linear-gradient(90deg, #00D094, #ffd700, #f9a826, #ef4444) no-repeat; background-size: {{ $sub_progress_percentage > 0 ? (100 / $sub_progress_percentage) * 100 : 100 }}% 100%; border-radius: 10px; transition: width 0.5s ease-in-out;"></div>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 10px; color: rgba(255,255,255,0.5);">
+                                                        <span>Earned: {{ number_format($total_sub_earned, 2) }} U</span>
+                                                        <span>Limit: {{ number_format($max_sub_cap, 2) }} U</span>
+                                                    </div>
+                                                </div>
+
                                                 <div style="border-bottom: none !important; padding-top: 15px !important; margin-top: 15px !important; margin-bottom: 0px !important; gap: 10px;" class="card-title d-flex align-items-center justify-content-center">
                                                     <button type="button" onclick="openSubscribeModal()" style="flex: 1;" class="btn premium-btn">
                                                         Add Subscription
@@ -747,6 +789,15 @@ if (count($plans) == 0) {
                                         <!-- Subscription Card 2 -->
                                         <div class="card premium-card">
                                             <div class="card-body">
+                                                @php
+                                                $total_poll_amount = Schema::hasTable('customer_autopolls') ? (float) DB::table('customer_autopolls')->where('csId', $v->id)->where('status', 'completed')->sum('poll_amount') : 0.0;
+                                                $total_poll_earned = Schema::hasTable('customer_poll_transactions') ? (float) DB::table('customer_poll_transactions')->where('csId', $v->id)->where('tType', 'pollincome')->where('tamount', '>', 0)->sum('tamount') : 0.0;
+                                                $total_poll_withdrawn = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname', 'pollincome')->where('status', '1')->sum('amount');
+                                                $total_poll_pending = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname', 'pollincome')->where('status', '0')->sum('amount');
+                                                $is_3x_complete = ($total_poll_amount > 0 && $total_poll_earned >= 3 * $total_poll_amount);
+                                                $max_cap = 3 * $total_poll_amount;
+                                                $progress_percentage = $max_cap > 0 ? min(100, ($total_poll_earned / $max_cap) * 100) : 0;
+                                                @endphp
                                                 <div style="flex-direction: column;" class="card-title d-flex align-items-center justify-content-around">
                                                     <div style="display: flex; align-items: center; gap: 8px;">
                                                         <div class="wlt">
@@ -755,8 +806,15 @@ if (count($plans) == 0) {
                                                         <div>
                                                             <span class="crd-title" style="display: block;">Auto Poll</span>
                                                             <h3 class="card-title h3-large">
-                                                                {{ Schema::hasTable('customer_autopolls') ? number_format(DB::table('customer_autopolls')->where('csId', $v->id)->where('status', 'completed')->sum('poll_amount'), 2) : '0.00' }} <span style="font-size: 14px; font-weight: 600; color: #f9a826 !important; padding-left: 2px;">USDT</span>
+                                                                {{ number_format($total_poll_amount, 2) }} <span style="font-size: 14px; font-weight: 600; color: #f9a826 !important; padding-left: 2px;">USDT</span>
                                                             </h3>
+                                                            @if($is_3x_complete)
+                                                            <div style="margin-top: 4px;">
+                                                                <span style="font-size: 10px; font-weight: 700; color: #00D094; padding: 2px 8px; border-radius: 12px; background-color: rgba(0, 208, 148, 0.1); border: 1px solid rgba(0, 208, 148, 0.3); display: inline-flex; align-items: center; gap: 4px;">
+                                                                    <i class="bx bxs-check-shield" style="font-size: 12px;"></i> 3X Complete
+                                                                </span>
+                                                            </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                     @if ($totplanafterdiamond >= 1000 && false)
@@ -776,21 +834,54 @@ if (count($plans) == 0) {
                                                     </div>
                                                     @endif
                                                 </div>
-                                                <div style="border-bottom: none !important; padding-bottom: 0px !important; margin-bottom: 0px !important;" class="card-title d-flex align-items-center justify-content-around">
+                                                <div style="border-bottom: none !important; padding-bottom: 0px !important; margin-bottom: 0px !important; flex-direction: column; align-items: center !important; gap: 4px;" class="card-title d-flex justify-content-center">
                                                     <div style="display: flex; align-items: center; gap: 6px;">
                                                         <span class="crd-title" style="font-size: 12px !important; color: rgba(255,255,255,0.6) !important;">You Got -</span>
                                                         <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #fff !important; font-size: 14px !important;">
-                                                            {{ Schema::hasTable('customer_poll_transactions') ? number_format(DB::table('customer_poll_transactions')->where('csId', $v->id)->where('tType', 'pollincome')->sum('tamount'), 2) : '0.00' }} <span style="color: #f9a826; font-weight: 600;">USDT</span>
+                                                            {{ number_format($total_poll_earned, 2) }} <span style="color: #f9a826; font-weight: 600;">USDT</span>
                                                         </h6>
                                                     </div>
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <span class="crd-title" style="font-size: 12px !important; color: rgba(255,255,255,0.6) !important;">Withdrawn -</span>
+                                                        <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #00D094 !important; font-size: 14px !important;">
+                                                            {{ number_format($total_poll_withdrawn, 2) }} <span style="color: #f9a826; font-weight: 600;">USDT</span>
+                                                        </h6>
+                                                    </div>
+                                                    @if($total_poll_pending > 0)
+                                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                                        <span class="crd-title" style="font-size: 12px !important; color: rgba(255,255,255,0.6) !important;">Pending -</span>
+                                                        <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #f9a826 !important; font-size: 14px !important;">
+                                                            {{ number_format($total_poll_pending, 2) }} <span style="color: #f9a826; font-weight: 600;">USDT</span>
+                                                        </h6>
+                                                    </div>
+                                                    @endif
                                                 </div>
+
+                                                <!-- 3X Cap Progress Linear Design -->
+                                                <div class="w-100" style="margin-top: 15px; margin-bottom: 5px; padding: 0 15px;">
+                                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 11px; color: rgba(255,255,255,0.7);">
+                                                        <span>3X Limit Progress</span>
+                                                        <span style="font-weight: 700; color: #f9a826;">{{ number_format($progress_percentage, 1) }}%</span>
+                                                    </div>
+                                                    <div style="width: 100%; height: 10px; background-color: #222; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
+                                                        <div style="width: {{ $progress_percentage }}%; height: 100%; background: linear-gradient(90deg, #00D094, #ffd700, #f9a826, #ef4444) no-repeat; background-size: {{ $progress_percentage > 0 ? (100 / $progress_percentage) * 100 : 100 }}% 100%; border-radius: 10px; transition: width 0.5s ease-in-out;"></div>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 10px; color: rgba(255,255,255,0.5);">
+                                                        <span>Earned: {{ number_format($total_poll_earned, 2) }} U</span>
+                                                        <span>Limit: {{ number_format($max_cap, 2) }} U</span>
+                                                    </div>
+                                                </div>
+
                                                 <div style="border-bottom: none !important; padding-top: 15px !important; margin-top: 15px !important; margin-bottom: 0px !important; gap: 10px; display: flex; width: 100%;" class="card-title d-flex align-items-center justify-content-center">
                                                     <button type="button" onclick="openAutopollModal()" style="flex: 1; padding: 10px;" class="btn premium-btn">
                                                         Add Auto Poll
                                                     </button>
-                                                    <a href="/dashboard/autopoll/history" style="flex: 1; padding: 10px;" class="btn premium-btn text-center d-flex align-items-center justify-content-center text-white">
+                                                    <button type="button" onclick="openAutopollWithdrawModal()" style="flex: 1; padding: 10px;" class="btn premium-btn">
+                                                        Withdraw
+                                                    </button>
+                                                    {{-- <a href="/dashboard/autopoll/history" style="flex: 1; padding: 10px;" class="btn premium-btn text-center d-flex align-items-center justify-content-center text-white">
                                                         History
-                                                    </a>
+                                                    </a> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -825,7 +916,7 @@ if (count($plans) == 0) {
                                                 </h3>
                                                 <small class="text-success fw-semibold d-flex align-items-center gap-1">
                                                     <i class="bx bx-up-arrow-alt" style="font-size: 16px;"></i>
-                                                    <span>+{{ $admin_profit }}%</span>
+                                                    <span>+0.5%</span>
                                                 </small>
                                             </div>
                                         </div>
@@ -878,9 +969,9 @@ if (count($plans) == 0) {
                                                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOptWithdraw" style="background-color: #0c2820; border: 1px solid rgba(249, 168, 38, 0.25);">
                                                             <a class="dropdown-item text-white" href="/dashboard/status/withdraw">Withdrawal History</a>
                                                             <a class="dropdown-item text-white" href="/dashboard/status/transactions">Credit History</a>
-                                                            <a class="dropdown-item text-white" href="/dashboard/lott">Purchase Bot</a>
+                                                            {{-- <a class="dropdown-item text-white" href="/dashboard/lott">Purchase Bot</a> --}}
                                                             <a class="dropdown-item text-white" href="/dashboard/withdraw/all">Withdraw</a>
-                                                            <a class="dropdown-item text-white" href="/dashboard/products/reinvest">Restake</a>
+                                                            {{-- <a class="dropdown-item text-white" href="/dashboard/products/reinvest">Restake</a> --}}
                                                             <a class="dropdown-item text-white" href="/dashboard/withdraw/trnsfr">Transfer</a>
                                                         </div>
                                                     </div>
@@ -954,7 +1045,7 @@ if (count($plans) == 0) {
                                                 </h3>
                                                 <small class="text-success fw-semibold d-flex align-items-center gap-1">
                                                     <i class="bx bx-up-arrow-alt" style="font-size: 16px;"></i>
-                                                    <span>10%</span>
+                                                    <span>5%</span>
                                                 </small>
                                             </div>
                                         </div>
@@ -984,7 +1075,7 @@ if (count($plans) == 0) {
                                                 </h3>
                                                 <small class="text-success fw-semibold d-flex align-items-center gap-1">
                                                     <i class="bx bx-up-arrow-alt" style="font-size: 16px;"></i>
-                                                    <span>+{{ $admin_profit }}%</span>
+                                                    <span>+1%</span>
                                                 </small>
                                             </div>
                                         </div>
@@ -1026,6 +1117,42 @@ if (count($plans) == 0) {
                                                 }
                                                 $referralId = $v->id;
                                                 $dtotalAmoun = getdTotalAmountForLevel($referralId);
+
+                                                // Fetch downline left/right stats efficiently
+                                                $customersMap = DB::table('customers')->select('id', 'left', 'right')->get()->keyBy('id');
+                                                if (!function_exists('getDownlineIdsForDashboard')) {
+                                                    function getDownlineIdsForDashboard($startId, $customersMap) {
+                                                        if (!$startId || !isset($customersMap[$startId])) {
+                                                            return [];
+                                                        }
+                                                        $ids = [];
+                                                        $queue = [$startId];
+                                                        while (!empty($queue)) {
+                                                            $currId = array_shift($queue);
+                                                            $ids[] = $currId;
+                                                            $curr = $customersMap[$currId] ?? null;
+                                                            if ($curr) {
+                                                                if ($curr->left && isset($customersMap[$curr->left])) {
+                                                                    $queue[] = $curr->left;
+                                                                }
+                                                                if ($curr->right && isset($customersMap[$curr->right])) {
+                                                                    $queue[] = $curr->right;
+                                                                }
+                                                            }
+                                                        }
+                                                        return $ids;
+                                                    }
+                                                }
+                                                $mainUser = $customersMap[$v->id] ?? null;
+                                                $leftIds = $mainUser ? getDownlineIdsForDashboard($mainUser->left, $customersMap) : [];
+                                                $leftCount = count($leftIds);
+                                                $leftSub = $leftCount > 0 ? DB::table('customer_subs')->whereIn('csId', $leftIds)->sum('sub_amount') : 0;
+                                                $leftStake = $leftCount > 0 ? DB::table('customer_plans')->whereIn('csId', $leftIds)->sum('pamount') : 0;
+
+                                                $rightIds = $mainUser ? getDownlineIdsForDashboard($mainUser->right, $customersMap) : [];
+                                                $rightCount = count($rightIds);
+                                                $rightSub = $rightCount > 0 ? DB::table('customer_subs')->whereIn('csId', $rightIds)->sum('sub_amount') : 0;
+                                                $rightStake = $rightCount > 0 ? DB::table('customer_plans')->whereIn('csId', $rightIds)->sum('pamount') : 0;
                                                 ?>
                                                 <span class="balanc mb-1">Total</span>
                                                 <h3 class="card-title h3-large">
@@ -1034,6 +1161,7 @@ if (count($plans) == 0) {
                                                 </h3>
                                             </div>
                                         </div>
+
 
                                         <!-- Card 8: Total Community Volume -->
                                         <div class="card premium-card">
@@ -1081,6 +1209,83 @@ if (count($plans) == 0) {
                                                 </h3>
                                             </div>
                                         </div>
+
+                                        <!-- Card 7b: Left Team Downline Volume -->
+                                        <div class="card premium-card" style="border-left: 4px solid #3b82f6 !important;">
+                                            <div class="card-body">
+                                                <div class="card-title d-flex align-items-center justify-content-between">
+                                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                                        <div class="wlt" style="background: rgba(59, 130, 246, 0.1); padding: 5px; border-radius: 6px; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px;">
+                                                            <img src="/assets/img/icons/unicons/chart.png" alt="left team" class="rounded" style="filter: hue-rotate(140deg); width: 22px; height: 22px;">
+                                                        </div>
+                                                        <span class="crd-title">Left Team Volume</span>
+                                                    </div>
+                                                    <div class="dropdown">
+                                                        <button class="btn p-0 text-white" type="button" id="cardOptLeftVol" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="bx bx-dots-vertical-rounded" style="font-size: 20px;"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOptLeftVol" style="background-color: #0c2820; border: 1px solid rgba(249, 168, 38, 0.25);">
+                                                            <a class="dropdown-item text-white" href="/dashboard/reftree/{{ $v->id }}">View Tree</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <div class="mb-2">
+                                                        <span class="balanc mb-1" style="font-size: 11px;">Stake Volume</span>
+                                                        <h3 class="card-title h3-large" style="font-size: 1.5rem !important;">
+                                                            {{ number_format($leftStake, 2) }}
+                                                            <span style="font-size: 13px; font-weight: 600; color: #f9a826;">USDT</span>
+                                                        </h3>
+                                                    </div>
+                                                    <div>
+                                                        <span class="balanc mb-1" style="font-size: 11px;">Sub Volume</span>
+                                                        <h3 class="card-title h3-large" style="font-size: 1.5rem !important;">
+                                                            {{ number_format($leftSub, 2) }}
+                                                            <span style="font-size: 13px; font-weight: 600; color: #ffd700;">USDT</span>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card 7c: Right Team Downline Volume -->
+                                        <div class="card premium-card" style="border-left: 4px solid #10b981 !important;">
+                                            <div class="card-body">
+                                                <div class="card-title d-flex align-items-center justify-content-between">
+                                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                                        <div class="wlt" style="background: rgba(16, 185, 129, 0.1); padding: 5px; border-radius: 6px; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px;">
+                                                            <img src="/assets/img/icons/unicons/chart.png" alt="right team" class="rounded" style="filter: hue-rotate(60deg); width: 22px; height: 22px;">
+                                                        </div>
+                                                        <span class="crd-title">Right Team Volume</span>
+                                                    </div>
+                                                    <div class="dropdown">
+                                                        <button class="btn p-0 text-white" type="button" id="cardOptRightVol" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="bx bx-dots-vertical-rounded" style="font-size: 20px;"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOptRightVol" style="background-color: #0c2820; border: 1px solid rgba(249, 168, 38, 0.25);">
+                                                            <a class="dropdown-item text-white" href="/dashboard/reftree/{{ $v->id }}">View Tree</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <div class="mb-2">
+                                                        <span class="balanc mb-1" style="font-size: 11px;">Stake Volume</span>
+                                                        <h3 class="card-title h3-large" style="font-size: 1.5rem !important;">
+                                                            {{ number_format($rightStake, 2) }}
+                                                            <span style="font-size: 13px; font-weight: 600; color: #f9a826;">USDT</span>
+                                                        </h3>
+                                                    </div>
+                                                    <div>
+                                                        <span class="balanc mb-1" style="font-size: 11px;">Sub Volume</span>
+                                                        <h3 class="card-title h3-large" style="font-size: 1.5rem !important;">
+                                                            {{ number_format($rightSub, 2) }}
+                                                            <span style="font-size: 13px; font-weight: 600; color: #ffd700;">USDT</span>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -1201,9 +1406,8 @@ if (count($plans) == 0) {
                             </div>
                         </div>
                         <script>
-                            function onModalSilver() {
-                            }
-                            
+                            function onModalSilver() {}
+
                             document.addEventListener('submit', function(event) {
                                 var form = event.target;
                                 if (form && form.id === 'slform') {

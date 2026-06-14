@@ -1135,36 +1135,59 @@ updateBalances();
                 } else {
 
                     if ($sts == '1') {
-                        if ($wth->pname == 'allincome') {
-                            if (isset($prs['atxid'])) {
-                                if (strlen($prs['atxid']) < 5) {
+                        if ($wth->pname == 'pollincome') {
+                            if (!Schema::hasColumn('customer_poll_transactions', 'wthId')) {
+                                Schema::table('customer_poll_transactions', function ($table) {
+                                    $table->unsignedBigInteger('wthId')->nullable();
+                                });
+                            }
+                            DB::table('customer_poll_transactions')
+                                ->updateOrInsert(
+                                    [
+                                        'wthId' => $prs['id'],
+                                        'csId' => $wth->csId,
+                                    ],
+                                    [
+                                        'tamount' => strval($nm),
+                                        'tStatus' => '1',
+                                        'wStatus' => '1',
+                                        'tType' => 'pollincome',
+                                        'created_at' => date('Y-m-d H:i:s'),
+                                        'updated_at' => date('Y-m-d H:i:s')
+                                    ]
+                                );
+                        } else {
+                            if ($wth->pname == 'allincome') {
+                                if (isset($prs['atxid'])) {
+                                    if (strlen($prs['atxid']) < 5) {
+                                        return redirect()->back()->withInput($rqs->all())->withErrors([
+                                            'image' => 'TxId is Required',
+                                            // 'password' => 'Wrong password',
+                                        ]);
+                                    }
+                                } else {
                                     return redirect()->back()->withInput($rqs->all())->withErrors([
-                                        'image' => 'TxId is Required',
+                                        'image' => 'TxId Required',
                                         // 'password' => 'Wrong password',
                                     ]);
                                 }
-                            } else {
-                                return redirect()->back()->withInput($rqs->all())->withErrors([
-                                    'image' => 'TxId Required',
-                                    // 'password' => 'Wrong password',
-                                ]);
                             }
+                            DB::table('customer_transactions')
+                                ->updateOrInsert(
+                                    [
+                                        'wthId' => $prs['id'],
+                                        'csId' => $wth->csId,
+                                    ],
+                                    [
+                                        'tType' => $wth->pname,
+                                        'tAmount' => strval($nm),
+                                        'tStatus' => '1',
+                                        'wStatus' => '1',
+                                    ]
+                                );
                         }
-                        DB::table('customer_transactions')
-                            ->updateOrInsert(
-                                [
-                                    'wthId' => $prs['id'],
-                                    'csId' => $wth->csId,
-                                ],
-                                [
-                                    'tType' => $wth->pname,
-                                    'tAmount' => strval($nm),
-                                    'tStatus' => '1',
-                                    'wStatus' => '1',
-                                ]
-                            );
 
-                        if ($wth->pname == 'allincome') {
+                        if ($wth->pname == 'allincome' || $wth->pname == 'pollincome') {
                             if (isset($prs['atxid'])) {
                                 DB::table('customer_withdraws')
                                     ->where('id', $wth->id)->update(
@@ -1274,6 +1297,16 @@ updateBalances();
             } else {
                 $maxmnt = $totBalance + DB::table('customer_transfers')->where('csId', $usid)->get()->sum('tAmount');
             }
+        } else if ($prs['pname'] == 'pollincome') {
+            $total_poll_income = Schema::hasTable('customer_poll_transactions') ? (float) DB::table('customer_poll_transactions')->where('csId', $usid)->where('tType', 'pollincome')->where('tamount', '>', 0)->sum('tamount') : 0.0;
+            $total_withdrawn_poll = DB::table('customer_withdraws')
+                ->where('csId', $usid)
+                ->where('pname', 'pollincome')
+                ->whereIn('status', ['0', '1'])
+                ->sum('amount');
+            $available_gross = $total_poll_income - $total_withdrawn_poll;
+            if ($available_gross < 0) { $available_gross = 0; }
+            $maxmnt = $available_gross;
         } else {
         }
 
@@ -1289,7 +1322,11 @@ updateBalances();
                 'image' => "Already reinvest pending",
             ]);
         }
-        $withdrws = DB::table("customer_withdraws")->where('csId', $prs['csId'])->where('status', '0')->get();
+        $withdrws = DB::table("customer_withdraws")
+            ->where('csId', $prs['csId'])
+            ->where('status', '0')
+            ->where('pname', '!=', 'pollincome')
+            ->get();
         if (count($withdrws) > 0) {
             return redirect()->back()->withInput($rqs->all())->withErrors([
                 'image' => "Already withdrawal pending",

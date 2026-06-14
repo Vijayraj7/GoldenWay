@@ -244,10 +244,11 @@ class AutopollController extends Controller
 
             $maxIncomeLimit = $totalPollSum * 3.0;
 
-            // Calculate total pollincome received so far
+            // Calculate total pollincome received so far (gross)
             $currentPollIncome = (float) DB::table('customer_poll_transactions')
                 ->where('csId', $recipientId)
                 ->where('tType', 'pollincome')
+                ->where('tamount', '>', 0)
                 ->sum('tamount');
 
             $headroom = $maxIncomeLimit - $currentPollIncome;
