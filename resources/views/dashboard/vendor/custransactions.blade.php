@@ -378,99 +378,99 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
                             </div>
 
                             <!-- Income Stream Cards Grid -->
-                            <div class="row mb-4">
-                                 <!-- Referral Income Card -->
-                                 <div class="col-12 col-sm-6 col-lg-3 mb-4 mb-lg-0">
-                                     <div class="card income-stream-card" style="background: linear-gradient(135deg, rgba(25, 20, 10, 0.95) 0%, rgba(10, 10, 5, 0.98) 100%) !important; border-left: 4px solid #f9a826 !important; border-top: 1px solid rgba(249, 168, 38, 0.15); border-right: 1px solid rgba(249, 168, 38, 0.15); border-bottom: 1px solid rgba(249, 168, 38, 0.15); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                                         <div class="d-flex justify-content-between align-items-start">
-                                             <div>
-                                                 <span style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px;">Referral Income</span>
-                                                 <h3 class="mt-2 mb-1" style="font-weight: 800; color: #fff; font-size: 20px;">
-                                                     {{ number_format($total_ref_income, 2) }}
-                                                     <span style="font-size: 11px; font-weight: 500; color: #f9a826;">USDT</span>
-                                                 </h3>
-                                             </div>
-                                             <div style="background: rgba(249,168,38,0.1); border-radius: 8px; padding: 6px; color: #f9a826;">
-                                                 <i class="bx bx-user-plus" style="font-size: 20px;"></i>
-                                             </div>
-                                         </div>
-                                         <div class="mt-3">
-                                             <a href="/dashboard/refincome" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(249, 168, 38, 0.15) !important; border: 1px solid rgba(249, 168, 38, 0.3) !important; color: #f9a826 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
-                                                 <i class="bx bx-history"></i> History
-                                             </a>
-                                         </div>
-                                     </div>
-                                 </div>
+                             <div class="row mb-4">
+                                  <!-- Referral Income Card -->
+                                  <div class="col-12 col-sm-6 col-lg-3 mb-4 mb-lg-0">
+                                      <div class="card income-stream-card" style="background: linear-gradient(135deg, rgba(25, 20, 10, 0.95) 0%, rgba(10, 10, 5, 0.98) 100%) !important; border-left: 4px solid #f9a826 !important; border-top: 1px solid rgba(249, 168, 38, 0.15); border-right: 1px solid rgba(249, 168, 38, 0.15); border-bottom: 1px solid rgba(249, 168, 38, 0.15); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                                          <div class="d-flex justify-content-between align-items-start">
+                                              <div>
+                                                  <span style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px;">Referral Income</span>
+                                                  <h3 class="mt-2 mb-1" style="font-weight: 800; color: #fff; font-size: 20px;">
+                                                      {{ number_format($total_ref_income, 2) }}
+                                                      <span style="font-size: 11px; font-weight: 500; color: #f9a826;">USDT</span>
+                                                  </h3>
+                                              </div>
+                                              <div style="background: rgba(249,168,38,0.1); border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(249, 168, 38, 0.2);">
+                                                  <img src="/tst/grnyellow.png" alt="icon" style="height: 22px; width: 22px; object-fit: contain;">
+                                              </div>
+                                          </div>
+                                          <div class="mt-3">
+                                              <a href="/dashboard/refincome" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(249, 168, 38, 0.15) !important; border: 1px solid rgba(249, 168, 38, 0.3) !important; color: #f9a826 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
+                                                  <i class="bx bx-history"></i> History
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
 
-                                 <!-- Level Income Card -->
-                                 <div class="col-12 col-sm-6 col-lg-3 mb-4 mb-lg-0">
-                                     <div class="card income-stream-card" style="background: linear-gradient(135deg, rgba(10, 20, 30, 0.95) 0%, rgba(5, 10, 15, 0.98) 100%) !important; border-left: 4px solid #3b82f6 !important; border-top: 1px solid rgba(59, 130, 246, 0.15); border-right: 1px solid rgba(59, 130, 246, 0.15); border-bottom: 1px solid rgba(59, 130, 246, 0.15); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                                         <div class="d-flex justify-content-between align-items-start">
-                                             <div>
-                                                 <span style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px;">Level Income</span>
-                                                 <h3 class="mt-2 mb-1" style="font-weight: 800; color: #fff; font-size: 20px;">
-                                                     {{ number_format($total_lev_income, 2) }}
-                                                     <span style="font-size: 11px; font-weight: 500; color: #3b82f6;">USDT</span>
-                                                 </h3>
-                                             </div>
-                                             <div style="background: rgba(59,130,246,0.1); border-radius: 8px; padding: 6px; color: #3b82f6;">
-                                                 <i class="bx bx-git-merge" style="font-size: 20px;"></i>
-                                             </div>
-                                         </div>
-                                         <div class="mt-3">
-                                             <a href="/dashboard/levincome/1" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(59, 130, 246, 0.15) !important; border: 1px solid rgba(59, 130, 246, 0.3) !important; color: #3b82f6 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
-                                                 <i class="bx bx-history"></i> History
-                                             </a>
-                                         </div>
-                                     </div>
-                                 </div>
+                                  <!-- Level Income Card -->
+                                  <div class="col-12 col-sm-6 col-lg-3 mb-4 mb-lg-0">
+                                      <div class="card income-stream-card" style="background: linear-gradient(135deg, rgba(10, 20, 30, 0.95) 0%, rgba(5, 10, 15, 0.98) 100%) !important; border-left: 4px solid #3b82f6 !important; border-top: 1px solid rgba(59, 130, 246, 0.15); border-right: 1px solid rgba(59, 130, 246, 0.15); border-bottom: 1px solid rgba(59, 130, 246, 0.15); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                                          <div class="d-flex justify-content-between align-items-start">
+                                              <div>
+                                                  <span style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px;">Level Income</span>
+                                                  <h3 class="mt-2 mb-1" style="font-weight: 800; color: #fff; font-size: 20px;">
+                                                      {{ number_format($total_lev_income, 2) }}
+                                                      <span style="font-size: 11px; font-weight: 500; color: #3b82f6;">USDT</span>
+                                                  </h3>
+                                              </div>
+                                              <div style="background: rgba(59,130,246,0.1); border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(59, 130, 246, 0.2);">
+                                                  <img src="/tst/grnyellow.png" alt="icon" style="height: 22px; width: 22px; object-fit: contain;">
+                                              </div>
+                                          </div>
+                                          <div class="mt-3">
+                                              <a href="/dashboard/levincome/1" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(59, 130, 246, 0.15) !important; border: 1px solid rgba(59, 130, 246, 0.3) !important; color: #3b82f6 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
+                                                  <i class="bx bx-history"></i> History
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
 
-                                 <!-- Stake Income Card -->
-                                 <div class="col-12 col-sm-6 col-lg-3 mb-4 mb-sm-0">
-                                     <div class="card income-stream-card" style="background: linear-gradient(135deg, rgba(20, 10, 30, 0.95) 0%, rgba(10, 5, 15, 0.98) 100%) !important; border-left: 4px solid #a855f7 !important; border-top: 1px solid rgba(168, 85, 247, 0.15); border-right: 1px solid rgba(168, 85, 247, 0.15); border-bottom: 1px solid rgba(168, 85, 247, 0.15); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                                         <div class="d-flex justify-content-between align-items-start">
-                                             <div>
-                                                 <span style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px;">Stake Income</span>
-                                                 <h3 class="mt-2 mb-1" style="font-weight: 800; color: #fff; font-size: 20px;">
-                                                     {{ number_format($total_stake_income, 2) }}
-                                                     <span style="font-size: 11px; font-weight: 500; color: #a855f7;">USDT</span>
-                                                 </h3>
-                                             </div>
-                                             <div style="background: rgba(168,85,247,0.1); border-radius: 8px; padding: 6px; color: #a855f7;">
-                                                 <i class="bx bx-dollar-circle" style="font-size: 20px;"></i>
-                                             </div>
-                                         </div>
-                                         <div class="mt-3">
-                                             <a href="/dashboard/status/deposit" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(168, 85, 247, 0.15) !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #a855f7 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
-                                                 <i class="bx bx-history"></i> History
-                                             </a>
-                                         </div>
-                                     </div>
-                                 </div>
+                                  <!-- Stake Income Card -->
+                                  <div class="col-12 col-sm-6 col-lg-3 mb-4 mb-sm-0">
+                                      <div class="card income-stream-card" style="background: linear-gradient(135deg, rgba(20, 10, 30, 0.95) 0%, rgba(10, 5, 15, 0.98) 100%) !important; border-left: 4px solid #a855f7 !important; border-top: 1px solid rgba(168, 85, 247, 0.15); border-right: 1px solid rgba(168, 85, 247, 0.15); border-bottom: 1px solid rgba(168, 85, 247, 0.15); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                                          <div class="d-flex justify-content-between align-items-start">
+                                              <div>
+                                                  <span style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px;">Stake Income</span>
+                                                  <h3 class="mt-2 mb-1" style="font-weight: 800; color: #fff; font-size: 20px;">
+                                                      {{ number_format($total_stake_income, 2) }}
+                                                      <span style="font-size: 11px; font-weight: 500; color: #a855f7;">USDT</span>
+                                                  </h3>
+                                              </div>
+                                              <div style="background: rgba(168,85,247,0.1); border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(168, 85, 247, 0.2);">
+                                                  <img src="/tst/grnyellow.png" alt="icon" style="height: 22px; width: 22px; object-fit: contain;">
+                                              </div>
+                                          </div>
+                                          <div class="mt-3">
+                                              <a href="/dashboard/status/deposit" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(168, 85, 247, 0.15) !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #a855f7 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
+                                                  <i class="bx bx-history"></i> History
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
 
-                                 <!-- Subscription Income Card -->
-                                 <div class="col-12 col-sm-6 col-lg-3">
-                                     <div class="card income-stream-card" style="background: linear-gradient(135deg, rgba(10, 25, 20, 0.95) 0%, rgba(5, 10, 10, 0.98) 100%) !important; border-left: 4px solid #00D094 !important; border-top: 1px solid rgba(0, 208, 148, 0.15); border-right: 1px solid rgba(0, 208, 148, 0.15); border-bottom: 1px solid rgba(0, 208, 148, 0.15); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                                         <div class="d-flex justify-content-between align-items-start">
-                                             <div>
-                                                 <span style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px;">Subscription Income</span>
-                                                 <h3 class="mt-2 mb-1" style="font-weight: 800; color: #fff; font-size: 20px;">
-                                                     {{ number_format($total_sub_income, 2) }}
-                                                     <span style="font-size: 11px; font-weight: 500; color: #00D094;">USDT</span>
-                                                 </h3>
-                                             </div>
-                                             <div style="background: rgba(0,208,148,0.1); border-radius: 8px; padding: 6px; color: #00D094;">
-                                                 <i class="bx bx-check-shield" style="font-size: 20px;"></i>
-                                             </div>
-                                         </div>
-                                         <div class="mt-3">
-                                             <a href="/dashboard/status/transactions?type=sub_income" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(0, 208, 148, 0.15) !important; border: 1px solid rgba(0, 208, 148, 0.3) !important; color: #00D094 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
-                                                 <i class="bx bx-history"></i> History
-                                             </a>
-                                         </div>
-                                     </div>
-                                 </div>
-                            </div>
+                                  <!-- Subscription Income Card -->
+                                  <div class="col-12 col-sm-6 col-lg-3">
+                                      <div class="card income-stream-card" style="background: linear-gradient(135deg, rgba(10, 25, 20, 0.95) 0%, rgba(5, 10, 10, 0.98) 100%) !important; border-left: 4px solid #00D094 !important; border-top: 1px solid rgba(0, 208, 148, 0.15); border-right: 1px solid rgba(0, 208, 148, 0.15); border-bottom: 1px solid rgba(0, 208, 148, 0.15); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.4); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                                          <div class="d-flex justify-content-between align-items-start">
+                                              <div>
+                                                  <span style="font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.5px;">Subscription Income</span>
+                                                  <h3 class="mt-2 mb-1" style="font-weight: 800; color: #fff; font-size: 20px;">
+                                                      {{ number_format($total_sub_income, 2) }}
+                                                      <span style="font-size: 11px; font-weight: 500; color: #00D094;">USDT</span>
+                                                  </h3>
+                                              </div>
+                                              <div style="background: rgba(0,208,148,0.1); border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0, 208, 148, 0.2);">
+                                                  <img src="/tst/grnyellow.png" alt="icon" style="height: 22px; width: 22px; object-fit: contain;">
+                                              </div>
+                                          </div>
+                                          <div class="mt-3">
+                                              <a href="/dashboard/status/transactions?type=sub_income" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(0, 208, 148, 0.15) !important; border: 1px solid rgba(0, 208, 148, 0.3) !important; color: #00D094 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
+                                                  <i class="bx bx-history"></i> History
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
+                             </div>
 
                             <!-- Transactions Table -->
                             <div class="card premium-card" style="background: linear-gradient(135deg, rgba(20, 22, 28, 0.95) 0%, rgba(10, 11, 15, 0.98) 100%) !important; border: 1px solid rgba(249, 168, 38, 0.18) !important; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden;">

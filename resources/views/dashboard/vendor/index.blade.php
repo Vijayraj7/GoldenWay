@@ -845,7 +845,7 @@ if (count($plans) == 0) {
                                                             <div style="flex-direction: column;" class="card-title d-flex align-items-center justify-content-around">
                                                                 <div style="display: flex; align-items: center; gap: 8px;">
                                                                     <div class="wlt">
-                                                                        <img style="border-radius: 100px;" src="https://icones.pro/wp-content/uploads/2021/05/symbole-de-l-homme-vert.png" alt="chart success" class="rounded">
+                                                                        <img style="border-radius: 100px;" src="/tst/grnyellow.png" alt="chart success" class="rounded">
                                                                     </div>
                                                                     <div>
                                                                         <span class="crd-title" style="display: block;">Your Subscription</span>
@@ -985,7 +985,7 @@ if (count($plans) == 0) {
                                                             <div style="flex-direction: column;" class="card-title d-flex align-items-center justify-content-around">
                                                                 <div style="display: flex; align-items: center; gap: 8px;">
                                                                     <div class="wlt">
-                                                                        <img style="border-radius: 100px;" src="https://icones.pro/wp-content/uploads/2021/05/symbole-de-l-homme-vert.png" alt="chart success" class="rounded">
+                                                                        <img style="border-radius: 100px;" src="/tst/grnyellow.png" alt="chart success" class="rounded">
                                                                     </div>
                                                                     <div>
                                                                         <span class="crd-title" style="display: block;">Auto Poll</span>
@@ -1149,7 +1149,7 @@ if (count($plans) == 0) {
                                                 <div class="card-title d-flex align-items-center justify-content-between">
                                                     <div style="display: flex; align-items: center; gap: 8px;">
                                                         <div class="wlt">
-                                                            <img src="/assets/img/icons/unicons/chart-success.png" alt="chart success" class="rounded">
+                                                            <img src="/tst/grnyellow.png" alt="chart success" class="rounded">
                                                         </div>
                                                         <span class="crd-title">Daily Profit</span>
                                                     </div>
@@ -1181,7 +1181,7 @@ if (count($plans) == 0) {
                                                 <div class="card-title d-flex align-items-center justify-content-between">
                                                     <div style="display: flex; align-items: center; gap: 8px;">
                                                         <div class="wlt">
-                                                            <img src="/assets/img/icons/unicons/cc-warning.png" alt="chart success" class="rounded">
+                                                            <img src="/tst/grnyellow.png" alt="chart success" class="rounded">
                                                         </div>
                                                         <span class="crd-title">Withdraw</span>
                                                     </div>
@@ -1258,7 +1258,7 @@ if (count($plans) == 0) {
                                                 <div class="card-title d-flex align-items-center justify-content-between">
                                                     <div style="display: flex; align-items: center; gap: 8px;">
                                                         <div class="wlt">
-                                                            <img src="/assets/img/icons/unicons/chart-success.png" alt="chart success" class="rounded">
+                                                            <img src="/tst/grnyellow.png" alt="chart success" class="rounded">
                                                         </div>
                                                         <span class="crd-title">Total Referral Income</span>
                                                     </div>
@@ -1288,7 +1288,7 @@ if (count($plans) == 0) {
                                                 <div class="card-title d-flex align-items-center justify-content-between">
                                                     <div style="display: flex; align-items: center; gap: 8px;">
                                                         <div class="wlt">
-                                                            <img src="/assets/img/icons/unicons/chart-success.png" alt="chart success" class="rounded">
+                                                            <img src="/tst/grnyellow.png" alt="chart success" class="rounded">
                                                         </div>
                                                         <span class="crd-title">Total Level Income</span>
                                                     </div>
@@ -1319,7 +1319,7 @@ if (count($plans) == 0) {
                                                 <div class="card-title d-flex align-items-center justify-content-between">
                                                     <div style="display: flex; align-items: center; gap: 8px;">
                                                         <div class="wlt">
-                                                            <img src="/assets/img/icons/unicons/chart.png" alt="chart success" class="rounded">
+                                                            <img src="/tst/grnyellow.png" alt="chart success" class="rounded">
                                                         </div>
                                                         <span class="crd-title">Direct community volume</span>
                                                     </div>
@@ -1418,7 +1418,7 @@ if (count($plans) == 0) {
                                                 <div class="card-title d-flex align-items-center justify-content-between">
                                                     <div style="display: flex; align-items: center; gap: 8px;">
                                                         <div class="wlt">
-                                                            <img src="/assets/img/icons/unicons/chart.png" alt="chart success" class="rounded">
+                                                            <img src="/tst/grnyellow.png" alt="chart success" class="rounded">
                                                         </div>
                                                         <span class="crd-title">Total Community volume</span>
                                                     </div>

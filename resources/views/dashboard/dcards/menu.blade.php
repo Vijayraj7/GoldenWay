@@ -181,11 +181,11 @@
     <!-- Brand / Profile Section -->
     <div class="sidebar-profile-section">
         <!-- Logo -->
-        <a href="/" style="margin-bottom: 15px; display: block;">
+        {{-- <a href="/" style="margin-bottom: 15px; display: block;">
             <img src="/tst/grnyellow.png" alt="Logo" height="36px" style="filter: drop-shadow(0 0 8px rgba(249, 168, 38, 0.2));">
-        </a>
+        </a> --}}
         <div class="sidebar-avatar-wrapper">
-            <img src="{{ $v->img ? $v->img . '?t=' . time() : '/images/icons/p1.jpeg' }}" alt="User Avatar">
+            <img src="{{ $v->img ? $v->img . '?t=' . time() : '/images/logo/goldenway.png' }}" alt="User Avatar">
         </div>
         <div class="sidebar-user-name">{{ $v->name }}</div>
         <div class="sidebar-user-meta">Member since {{ date('M Y', strtotime($v->created_at)) }}</div>

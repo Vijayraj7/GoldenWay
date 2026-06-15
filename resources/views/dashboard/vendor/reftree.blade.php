@@ -176,7 +176,7 @@ if ($refintid < $myintid) {
                                                 <i class="bx bx-group"></i>
                                             </div>
                                             <div class="stats-title-area">
-                                                <h5 class="stats-heading">Left Team Downline</h5>
+                                                <h5 class="stats-heading">Left Team Community</h5>
                                                 <span class="badge badge-left-team">{{ number_format($leftCount) }}
                                                     Members</span>
                                             </div>
@@ -203,7 +203,7 @@ if ($refintid < $myintid) {
                                                 <i class="bx bx-group"></i>
                                             </div>
                                             <div class="stats-title-area">
-                                                <h5 class="stats-heading">Right Team Downline</h5>
+                                                <h5 class="stats-heading">Right Team Community</h5>
                                                 <span class="badge badge-right-team">{{ number_format($rightCount) }}
                                                     Members</span>
                                             </div>
@@ -288,7 +288,7 @@ if ($refintid < $myintid) {
 
                                                 // Avatar picture with status halo
                                                 echo ' <div class="avatar-wrapper ' . $avatarBorder . '">';
-                                                echo ' <img src="/images/icons/profile.webp" alt="Avatar" />';
+                                                echo ' <img src="/tst/grnyellow.png" alt="Avatar" />';
                                                 echo ' <span class="status-indicator ' . $statusClass . '"></span>';
                                                 echo ' </div>';
 
@@ -432,7 +432,7 @@ if ($refintid < $myintid) {
                             }
 
                             .left-team-card {
-                                border-left: 4px solid #3b82f6 !important;
+                                border-left: 4px solid #10b981 !important;
                             }
 
                             .right-team-card {
@@ -457,7 +457,7 @@ if ($refintid < $myintid) {
 
                             .left-icon-bg {
                                 background: rgba(59, 130, 246, 0.15) !important;
-                                color: #3b82f6 !important;
+                                color: #10b981 !important;
                                 border: 1px solid rgba(59, 130, 246, 0.25) !important;
                             }
 
@@ -481,7 +481,7 @@ if ($refintid < $myintid) {
 
                             .badge-left-team {
                                 background: rgba(59, 130, 246, 0.2) !important;
-                                color: #60a5fa !important;
+                                color: #10b981 !important;
                                 border: 1px solid rgba(59, 130, 246, 0.3) !important;
                                 padding: 0.25rem 0.5rem !important;
                                 font-size: 0.75rem !important;
