@@ -1531,7 +1531,7 @@ if (isset($_GET['page'])) {
                                                             <i class="fas fa-arrow-right"></i>
                                                         </span>
                                                     </a>
-                                                    <a href="https://youtu.be/_Fyk9pQ1Opw" class="watch-video-btn trk-btn trk-btn--outline22" data-fslightbox>
+                                                    {{-- <a href="https://youtu.be/_Fyk9pQ1Opw" class="watch-video-btn trk-btn trk-btn--outline22" data-fslightbox>
                                                         <span class="style1 watch-svg">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                                                 <g clip-path="url(#clip0_1397_814)">
@@ -1546,7 +1546,7 @@ if (isset($_GET['page'])) {
                                                             </svg>
                                                         </span>
                                                         Watch Video
-                                                    </a>
+                                                    </a> --}}
                                                     <!-- <img
                                                             decoding="async"
                                                             style="height: 140px;"

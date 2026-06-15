@@ -46,7 +46,7 @@ if(count($plans) == 0){
 
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon"
-            href="/assets/img/favicon/favicon.ico" />
+            href="/tst/grnyellow.png" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />

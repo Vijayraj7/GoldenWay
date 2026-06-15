@@ -68,7 +68,7 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
         <meta name="description" content="View your customer transactions history and income analytics dashboard." />
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/tst/grnyellow.png" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -357,11 +357,11 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
                                             <div class="mt-3">
                                                 <div class="d-flex justify-content-between mb-2" style="font-size: 13px;">
                                                     <span style="color: rgba(255,255,255,0.7);">Filtered Credits:</span>
-                                                    <span class="text-success fw-bold">+{{ number_format($transtins->where('wStatus', '0')->sum('tAmount'), 2) }} U</span>
+                                                    <span class="text-success fw-bold">+{{ number_format($transtins->where('wStatus', '0')->sum('tAmount'), 2) }} USDT</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between mb-2" style="font-size: 13px;">
                                                     <span style="color: rgba(255,255,255,0.7);">Filtered Debits:</span>
-                                                    <span class="text-danger fw-bold">-{{ number_format($transtins->where('wStatus', '1')->sum('tAmount'), 2) }} U</span>
+                                                    <span class="text-danger fw-bold">-{{ number_format($transtins->where('wStatus', '1')->sum('tAmount'), 2) }} USDT</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between pt-2 border-top" style="border-top-color: rgba(255, 255, 255, 0.12) !important; font-size: 14px;">
                                                     <span style="color: #fff; font-weight: 600;">Net Balance:</span>

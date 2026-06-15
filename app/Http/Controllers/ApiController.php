@@ -1455,23 +1455,15 @@ updateBalances();
                     'sub_error' => 'Insufficient Transfer Credit balance.',
                 ]);
             }
-
-            DB::table('customer_transfers')->insert([
-                'csId' => $customer->id,
-                'tType' => 'subscribe',
-                'tAmount' => strval(-$credit_paid),
-                'tStatus' => '1',
-                'wStatus' => '1',
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ]);
         }
 
         $prs = [
             'pname' => 'subscribe',
             'pamount' => strval($amount),
             'wlt_amount' => strval($wlt_amount),
+            'credit_paid' => strval($credit_paid),
             'msg' => 'Subscribe purchase',
+            'csId' => strval($customer->id),
         ];
 
         return $h->getboth('dashboard.dcards.wallet', [
@@ -1734,6 +1726,7 @@ updateBalances();
                             'msg' => $prs['msg'],
                             'lotc' => isset($prs['lotc']) ? $prs['lotc'] : null,
                             'boxc' => isset($prs['boxc']) ? $prs['boxc'] : null,
+                            'reciept' => isset($prs['reciept']) ? $prs['reciept'] : null,
                         ]);
                         // dd('hii');
                         return $this->buyproduct($request);
@@ -1752,6 +1745,7 @@ updateBalances();
                         'pamount' => $prs['pamount'],
                         'wlt_amount' => $prs['wlt_amount'],
                         'msg' => $prs['msg'],
+                        'reciept' => isset($prs['reciept']) ? $prs['reciept'] : null,
                     ]);
                     return $this->buyproduct($request);
                 }
@@ -1781,6 +1775,7 @@ updateBalances();
                             'msg' => $prs['msg'],
                             'lotc' => isset($prs['lotc']) ? $prs['lotc'] : null,
                             'boxc' => isset($prs['boxc']) ? $prs['boxc'] : null,
+                            'reciept' => isset($prs['reciept']) ? $prs['reciept'] : null,
                         ]);
                         return $this->buyproduct($request);
                     }

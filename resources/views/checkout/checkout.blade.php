@@ -9,17 +9,10 @@
     <title>Checkout</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <!-- Bootstrap core CSS -->
     <!-- <link href="/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -34,12 +27,10 @@
     <meta name="theme-color" content="#563d7c"> -->
 
 
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/tst/grnyellow.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
     <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
@@ -75,6 +66,7 @@
                 font-size: 3.5rem;
             }
         }
+
     </style>
     <!-- Custom styles for this template -->
     <link href="form-validation.css" rel="stylesheet">
@@ -115,8 +107,7 @@
                     </li>
                 </ul>
 
-                <button class="btn btn-primary btn-lg btn-block element-to-convert" id="convertButton" type="button"
-                    onclick="onclicker()">Continue to
+                <button class="btn btn-primary btn-lg btn-block element-to-convert" id="convertButton" type="button" onclick="onclicker()">Continue to
                     Order</button>
 
                 <!-- <form class="card p-2">
@@ -178,16 +169,14 @@
 
                     <div class="mb-3">
                         <label for="address">First name</label>
-                        <input type="text" name="name" class="form-control" value="{{$v->name}}" id="address"
-                            placeholder="first Name" required="">
+                        <input type="text" name="name" class="form-control" value="{{$v->name}}" id="address" placeholder="first Name" required="">
                         <div class="invalid-feedback">
                             Please enter your shipping address.
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="address">Address</label>
-                        <input type="text" name="address" class="form-control" value="{{$v->country}}, {{$v->address}}"
-                            id="address" placeholder="Address" required="">
+                        <input type="text" name="address" class="form-control" value="{{$v->country}}, {{$v->address}}" id="address" placeholder="Address" required="">
                         <div class="invalid-feedback">
                             Please enter your shipping address.
                         </div>
@@ -195,16 +184,14 @@
 
                     <div class="mb-3">
                         <label for="quantityt">Packing weight in {{$ps[0]->wsym}}</label>
-                        <input type="number" name="quantity" step="any" class="form-control" value="1" id="quantityt"
-                            placeholder="{{$ps[0]->wsym}}" required="">
+                        <input type="number" name="quantity" step="any" class="form-control" value="1" id="quantityt" placeholder="{{$ps[0]->wsym}}" required="">
                         <div class="invalid-feedback">
                             Packing weight in {{$ps[0]->wsym}}
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="address">Cartons</label>
-                        <input type="number" name="cartons" class="form-control" value="1" id="cartonty"
-                            placeholder="kg" required="">
+                        <input type="number" name="cartons" class="form-control" value="1" id="cartonty" placeholder="kg" required="">
                         <div class="invalid-feedback">
                             Please enter cartons
                         </div>
@@ -240,8 +227,7 @@
                         </div>
                         <div class="col-md-5 mb-3">
                             <label for="country">Glazing</label>
-                            <select class="custom-select d-block w-100" onchange="onglazechange(this.value)"
-                                name="glaze" id="glazn" required>
+                            <select class="custom-select d-block w-100" onchange="onglazechange(this.value)" name="glaze" id="glazn" required>
                                 <option value="10">10%</option>
                                 <option value="20">20%</option>
                                 <option value="30">30%</option>
@@ -254,12 +240,14 @@
                         </div>
                         <div class="col-md-5 mb-3">
                             <label for="country">Size</label>
-                            <select class="custom-select d-block w-100" onchange="onsizchange(this.value)" name="size"
-                                id="isizer" required>
+                            <select class="custom-select d-block w-100" onchange="onsizchange(this.value)" name="size" id="isizer" required>
                                 <script>
                                     if (allp[selectedIndex]['aprices'] == null) {
                                         // if (product['aprices'] == null) {
-                                        allp[selectedIndex]['aprices'] = [{ 'c': allp[selectedIndex]['count'], 'p': allp[selectedIndex]['price'] }];
+                                        allp[selectedIndex]['aprices'] = [{
+                                            'c': allp[selectedIndex]['count']
+                                            , 'p': allp[selectedIndex]['price']
+                                        }];
                                         // }
                                     }
                                     var sr = '';
@@ -268,10 +256,11 @@
                                         console.log(con);
                                         var nbm1 = con - 5;
                                         var nbm2 = con + 5;
-                                        sr += /*html*/`
+                                        sr += /*html*/ `
                                 <option value="${i}">${nbm1}/${nbm2}</option>`;
                                     }
                                     document.write(sr);
+
                                 </script>
 
                             </select>
@@ -291,8 +280,7 @@
                         </div> -->
                         <div class="col-md-3 mb-3">
                             <label for="zip">Zip</label>
-                            <input type="text" name="pincode" value="{{$v->pincode}}" class="form-control" id="zip"
-                                placeholder="" required="">
+                            <input type="text" name="pincode" value="{{$v->pincode}}" class="form-control" id="zip" placeholder="" required="">
                             <div class="invalid-feedback">
                                 Zip code required.
                             </div>
@@ -300,13 +288,11 @@
                     </div>
                     <hr class="mb-4">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="netcount"
-                            onclick="onradiochange('netcount')" checked>
+                        <input type="checkbox" class="custom-control-input" id="netcount" onclick="onradiochange('netcount')" checked>
                         <label class="custom-control-label" for="netcount">Net Count</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="netweight"
-                            onclick="onradiochange('netweight')" checked>
+                        <input type="checkbox" class="custom-control-input" id="netweight" onclick="onradiochange('netweight')" checked>
                         <label class="custom-control-label" for="netweight">Net Weight</label>
                     </div>
 
@@ -332,23 +318,24 @@
     @include('dashboard.dcards.footer')
     <!-- / Footer -->
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-    <script src="/docs/4.5/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script>
+        window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')
+
+    </script>
+    <script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script src="form-validation.js"></script>
     <script>
         function onsizchange(vl) {
             allp[selectedIndex]['apsl'] = Number(vl);
             posb();
         }
+
         function onglazechange(vl) {
             allp[selectedIndex]['glaze'] = vl;
             posb();
         }
+
         function onradiochange(id) {
             var el = document.getElementById(id);
             if (el.checked == true) {
@@ -359,6 +346,7 @@
             console.log(allp[selectedIndex][id] + " - . - . - .");
             posb();
         }
+
         function numberToWords(number) {
             const units = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
             const teens = ['Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
@@ -439,7 +427,7 @@
                         event.preventDefault();
                     }
                     // Add event listener to disable clicks on all elements
-                    document.querySelectorAll('*').forEach(function (element) {
+                    document.querySelectorAll('*').forEach(function(element) {
                         element.addEventListener('click', disableClick);
                     });
                     // document.getElementById('loadButton').addEventListener('click', function () {
@@ -463,7 +451,9 @@
 
                         const imageData = canvas.toDataURL('image/png'); // 'image/png' for PNG format, you can change to 'image/jpeg' for JPEG
                         const imgBlob = dataURItoBlob(imageData);
-                        const imageFile = new File([imgBlob], 'pimg.png', { type: 'image/png' })
+                        const imageFile = new File([imgBlob], 'pimg.png', {
+                            type: 'image/png'
+                        })
                         formData.append('pimg', imageFile);
 
                         // Step 3: Append the file input to the form
@@ -475,7 +465,9 @@
                             const imageData2 = canvas2.toDataURL('image/png'); // 'image/png' for PNG format, you can change to 'image/jpeg' for JPEG
                             const imgBlob2 = dataURItoBlob(imageData2);
                             //   const formData = new FormData();
-                            const imageFile2 = new File([imgBlob2], 'rimg.png', { type: 'image/png' })
+                            const imageFile2 = new File([imgBlob2], 'rimg.png', {
+                                type: 'image/png'
+                            })
                             formData.append('rimg', imageFile2);
 
                             // Step 3: Append the file input to the form
@@ -485,7 +477,7 @@
                             // Now, you can submit the form with the image as a file input
                             const xhr = new XMLHttpRequest();
                             xhr.open('POST', '/api/order', true);
-                            xhr.onload = function () {
+                            xhr.onload = function() {
                                 if (xhr.status === 200) {
                                     console.log(xhr.responseText);
                                     window.location.replace('/dashboard');
@@ -518,7 +510,9 @@
             for (let i = 0; i < byteString.length; i++) {
                 ia[i] = byteString.charCodeAt(i);
             }
-            return new Blob([ab], { type: mimeString });
+            return new Blob([ab], {
+                type: mimeString
+            });
         }
 
     </script>
@@ -526,12 +520,13 @@
         var netw = 1;
         var tamu = allp[selectedIndex]['price'];
         var fpri = Number(allp[selectedIndex]['price'])
+
         function dxAfter(pri) {
             var q = Number(document.getElementById('quantityt').value);
             var c = Number(document.getElementById('cartonty').value);
             netw = q * c;
 
-            fpri = pri ?? fpri;
+            fpri = pri ? ? fpri;
             tamu = netw * fpri;
             // Step 1: Select the element(s) by class name
             var elementss = document.getElementsByClassName('quantvieo');
@@ -550,26 +545,49 @@
             // Step 2 and 3: Access innerHTML and set new content
             for (var j = 0; j < elementss.length; j++) {
                 elementss[j].innerHTML = allp[selectedIndex]['sym'] + tamu.toFixed(2).toString();
-            }  // Step 1: Select the element(s) by class name
+            } // Step 1: Select the element(s) by class name
             var elementss = document.getElementsByClassName('amwordvie');
             // Step 2 and 3: Access innerHTML and set new content
             for (var j = 0; j < elementss.length; j++) {
                 elementss[j].innerHTML = numberToWords(parseInt(tamu));
             }
         }
-        var chngra =
-            [
-                // { 'id': 'quantityt', 'vid': 'quantvie', 't': `Net weight: % ${allp[selectedIndex]['wsym']}` },
-                { 'id': 'paym', 'vid': 'paymvie', 't': `%` },
-                { 'id': 'shipin', 'vid': 'shipinvie', 't': `Shiping Term : %` },
-                { 'id': 'quantityt', 'vid': 'quantvieo', 't': `%` },
-                { 'id': 'cartonty', 'vid': 'cartonvie', 't': `%` },
-                { 'id': 'isizer', 'vid': 'sizevie', 't': `%` },
-                { 'id': 'isizer2', 'vid': 'sizevie', 't': `%` },
-            ];
+        var chngra = [
+            // { 'id': 'quantityt', 'vid': 'quantvie', 't': `Net weight: % ${allp[selectedIndex]['wsym']}` },
+            {
+                'id': 'paym'
+                , 'vid': 'paymvie'
+                , 't': `%`
+            }
+            , {
+                'id': 'shipin'
+                , 'vid': 'shipinvie'
+                , 't': `Shiping Term : %`
+            }
+            , {
+                'id': 'quantityt'
+                , 'vid': 'quantvieo'
+                , 't': `%`
+            }
+            , {
+                'id': 'cartonty'
+                , 'vid': 'cartonvie'
+                , 't': `%`
+            }
+            , {
+                'id': 'isizer'
+                , 'vid': 'sizevie'
+                , 't': `%`
+            }
+            , {
+                'id': 'isizer2'
+                , 'vid': 'sizevie'
+                , 't': `%`
+            }
+        , ];
         for (var i = 0; i < chngra.length; i++) {
-            (function (i) { // Create a new scope for i
-                document.getElementById(chngra[i]['id']).addEventListener('input', function () {
+            (function(i) { // Create a new scope for i
+                document.getElementById(chngra[i]['id']).addEventListener('input', function() {
                     var va = this.value;
                     // var inexr = this.innerText;
                     // if (chngra[i]['id'] == 'quantityt') {
@@ -602,6 +620,7 @@
                 });
             })(i); // Pass i to the IIFE
         }
+
     </script>
     <style>
         /* body { */
@@ -650,6 +669,7 @@
         #content {
             text-align: center;
         }
+
     </style>
 </body>
 

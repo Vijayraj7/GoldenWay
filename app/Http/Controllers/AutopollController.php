@@ -55,6 +55,10 @@ class AutopollController extends Controller
             ]);
         }
 
+        $wallet_balance = (float) $rqs->input('wallet_balance', 0);
+        $wlt_amount = min($amount, $wallet_balance);
+        $credit_paid = $amount - $wlt_amount;
+
         if (isSubDomainAdmin()) {
             if (!Schema::hasTable('customer_autopolls')) {
                 Schema::create('customer_autopolls', function (Blueprint $table) {
@@ -96,11 +100,27 @@ class AutopollController extends Controller
             ]);
         }
 
+        if ($credit_paid > 0) {
+            $transferCreditBalance = DB::table('customer_transfers')
+                ->where('csId', $customer->id)
+                ->where('tStatus', '1')
+                ->get()
+                ->sum('tAmount');
+            if ($credit_paid > $transferCreditBalance + 0.01) {
+                return redirect()->back()->withInput($rqs->all())->withErrors([
+                    'poll_error' => 'Insufficient Transfer Credit balance.',
+                ]);
+            }
+        }
+
         $admin_config = DB::table('admin_config')->first();
         $prs = [
             'pname' => 'autopoll',
             'pamount' => strval($amount),
+            'wlt_amount' => strval($wlt_amount),
+            'credit_paid' => strval($credit_paid),
             'msg' => 'Auto Poll purchase',
+            'csId' => strval($customer->id),
         ];
 
         return $h->getboth('dashboard.dcards.wallet', [
@@ -109,7 +129,7 @@ class AutopollController extends Controller
             'prs' => $prs,
             'route' => '/successautopoll',
             'reciever' => $admin_config ? decStr($admin_config->admin_wallet) : null,
-            'amount' => $amount,
+            'amount' => $wlt_amount,
             'remark' => 'Auto Poll purchase',
         ]);
     }
@@ -118,6 +138,19 @@ class AutopollController extends Controller
     {
         $prs = json_decode(json_encode($rqs->input(), true), true);
         if ($prs['reciept'] != null) {
+            // Deduct transfer credit now that the blockchain tx is confirmed
+            if (isset($prs['credit_paid']) && (float) $prs['credit_paid'] > 0) {
+                DB::table('customer_transfers')->insert([
+                    'csId'       => $prs['csId'],
+                    'tType'      => 'autopoll',
+                    'tAmount'    => strval(-(float) $prs['credit_paid']),
+                    'tStatus'    => '1',
+                    'wStatus'    => '1',
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+
             if (!Schema::hasTable('customer_autopolls')) {
                 Schema::create('customer_autopolls', function (Blueprint $table) {
                     $table->id();

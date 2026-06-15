@@ -333,6 +333,19 @@ $pvt_wallet = decStr($v->gms_pvt_key);
             stakeCrdEl.innerText = dbTransferCredit.toFixed(2);
         }
 
+        var autopollBalEl = document.getElementById('autopoll_available_balance');
+        if (autopollBalEl) {
+            autopollBalEl.innerText = totalAvailable.toFixed(2);
+        }
+        var autopollWltEl = document.getElementById('autopoll_wallet_balance');
+        if (autopollWltEl) {
+            autopollWltEl.innerText = parseFloat(usdtbalance).toFixed(2);
+        }
+        var autopollCrdEl = document.getElementById('autopoll_credit_balance');
+        if (autopollCrdEl) {
+            autopollCrdEl.innerText = dbTransferCredit.toFixed(2);
+        }
+
         var subWltInput = document.getElementById('subscribe_wallet_balance_input');
         if (subWltInput) {
             subWltInput.value = usdtbalance;
@@ -340,6 +353,10 @@ $pvt_wallet = decStr($v->gms_pvt_key);
         var stakeWltInput = document.getElementById('stake_wallet_balance_input');
         if (stakeWltInput) {
             stakeWltInput.value = usdtbalance;
+        }
+        var autopollWltInput = document.getElementById('autopoll_wallet_balance_input');
+        if (autopollWltInput) {
+            autopollWltInput.value = usdtbalance;
         }
     }
 
@@ -367,12 +384,18 @@ $pvt_wallet = decStr($v->gms_pvt_key);
             if (!error) {
                 usdtbalance = result / Math.pow(10
                     , 18); // Adjust decimals based on token decimals (USDT has 18 decimals on BSC)
-                document.getElementById('usdt-balance').innerHTML = numPars(usdtbalance);
+                var usdtBalEl = document.getElementById('usdt-balance');
+                if (usdtBalEl) {
+                    usdtBalEl.innerHTML = numPars(usdtbalance);
+                }
                 balance_loaded.value = balance_loaded.value + 1;
                 updateAvailableBalanceDisplays();
             } else {
                 console.error('Error:', error);
-                document.getElementById('usdt-balance').innerHTML = 'Error: ' + error.message;
+                var usdtBalEl = document.getElementById('usdt-balance');
+                if (usdtBalEl) {
+                    usdtBalEl.innerHTML = 'Error: ' + error.message;
+                }
             }
         });
     }
@@ -383,11 +406,17 @@ $pvt_wallet = decStr($v->gms_pvt_key);
             if (!error) {
                 bnbalance = web3.utils.fromWei(result, 'ether'); // Convert balance from Wei to Ether
                 // balance = result; // Convert balance from Wei to Ether
-                document.getElementById('bnb-balance').innerHTML = numPars(bnbalance);
+                var bnbBalEl = document.getElementById('bnb-balance');
+                if (bnbBalEl) {
+                    bnbBalEl.innerHTML = numPars(bnbalance);
+                }
                 balance_loaded.value = balance_loaded.value + 1;
             } else {
                 console.error('Error:', error);
-                document.getElementById('bnb-balance').innerHTML = 'Error: ' + error.message;
+                var bnbBalEl = document.getElementById('bnb-balance');
+                if (bnbBalEl) {
+                    bnbBalEl.innerHTML = 'Error: ' + error.message;
+                }
             }
         });
     }
@@ -1024,11 +1053,7 @@ $pvt_wallet = decStr($v->gms_pvt_key);
 </style>
 @endif
 <script>
-    var isSubDomainAdmin = {
-        {
-            isSubDomainAdmin() ? 'true' : 'false'
-        }
-    };
+    var isSubDomainAdmin = {{ isSubDomainAdmin() ? 'true' : 'false' }};
 
     // Function to send USDT tokens
     function sendUSDT(recipient, amount, remarkk) {
@@ -1208,7 +1233,7 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
 
     </script>
     @endif
-    @elseif ($prs['pname'] == 'normal' || $prs['pname'] == 'compound' || $prs['pname'] == 'subscribe')
+    @elseif ($prs['pname'] == 'normal' || $prs['pname'] == 'compound' || $prs['pname'] == 'subscribe' || $prs['pname'] == 'autopoll')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function sleep(ms) {
@@ -1295,6 +1320,8 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
                             <?php $tsuccess = true; ?>
                             @elseif (old('reciept') != null)
                             <?php $tsuccess = true; ?>
+                            @elseif (old('pname') != null)
+                            <?php $tsuccess = true; ?>
                             @else
                             <?php $tsuccess = false; ?>
                             @endif
@@ -1329,7 +1356,7 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
                             </h3>
                             @endif
                             @if ($tsuccess)
-                            <h4>{{ old('wlt_amount') }}
+                            <h4>{{ (old('wlt_amount') !== null && (float)old('wlt_amount') > 0) ? old('wlt_amount') : (old('pamount') ?? old('amount') ?? '0.00') }}
                                 @if (old('coin_type') == 'usdt')
                                 USDT
                                 @elseif(old('coin_type') == 'bnb')

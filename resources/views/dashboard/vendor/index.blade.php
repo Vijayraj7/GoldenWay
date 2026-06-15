@@ -1105,7 +1105,8 @@ if (count($plans) == 0) {
                                                     <div class="card-title d-flex align-items-center justify-content-between">
                                                         <div style="display: flex; align-items: center; gap: 8px;">
                                                             <div class="wlt">
-                                                                <img src="/assets/img/icons/unicons/wallet.png" alt="chart success" class="rounded">
+                                                                <img src="/tst/grnyellow.png" alt="chart success" class="rounded">
+                                                                <!-- <img src="/assets/img/icons/unicons/wallet.png" alt="chart success" class="rounded"> -->
                                                             </div>
                                                             <span class="crd-title">Stake Amount</span>
                                                         </div>

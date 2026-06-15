@@ -17,7 +17,7 @@ ini_set('display_errors', 1);
         <meta name="description" content="Withdraw your earnings securely via crypto." />
 
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/tst/grnyellow.png" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
