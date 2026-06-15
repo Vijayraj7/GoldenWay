@@ -149,7 +149,8 @@ Route::post('/autopoll', 'App\Http\Controllers\AutopollController@autopoll');
 Route::post('/successautopoll', 'App\Http\Controllers\AutopollController@successautopoll');
 
 Route::post('/singletap', 'App\Http\Controllers\ApiController@singletap');
-Route::post('/getcusname', 'App\Http\Controllers\ApiController@getcusname');
+Route::post('/getcusname', 'App\Http\Controllers\TransferFundController@getcusname');
+Route::post('/transferfund/direct', 'App\Http\Controllers\TransferFundController@transferDirect');
 Route::post('/stoproduct', 'App\Http\Controllers\ApiController@stoproduct');
 
 Route::post('/successproduct', 'App\Http\Controllers\ApiController@successproduct');

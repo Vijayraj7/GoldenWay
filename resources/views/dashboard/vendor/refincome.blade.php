@@ -102,127 +102,175 @@ ini_set('display_errors', 1);
                                 Refferal Income</h4>
 
                             <!-- Basic Bootstrap Table -->
+                            <style>
+                                /* Premium Card Redesign */
+                                .premium-card {
+                                    background: linear-gradient(135deg, rgba(7, 31, 23, 0.95), rgba(12, 40, 32, 0.95)) !important;
+                                    backdrop-filter: blur(16px);
+                                    -webkit-backdrop-filter: blur(16px);
+                                    border: 1px solid rgba(249, 168, 38, 0.25) !important;
+                                    border-radius: 20px !important;
+                                    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.55) !important;
+                                    overflow: hidden;
+                                    margin-bottom: 2rem !important;
+                                }
 
-                            <div class="card">
-                                <h5
-                                    style="padding: 1.125rem 1.25rem !important;"
-                                    class="card-header">Income :
-                                    {{$totalrefincome}} USDT</h5>
+                                .premium-card .card-header {
+                                    background: rgba(255, 255, 255, 0.02) !important;
+                                    border-bottom: 1px solid rgba(249, 168, 38, 0.15) !important;
+                                    padding: 24px 30px !important;
+                                }
+
+                                .premium-card .card-header h5 {
+                                    color: #ffd700 !important;
+                                    font-size: 22px !important;
+                                    font-weight: 700 !important;
+                                    letter-spacing: 2px !important;
+                                    margin: 0 !important;
+                                    text-transform: uppercase;
+                                    background: linear-gradient(90deg, #ffd700, #f9a826);
+                                    -webkit-background-clip: text !important;
+                                    -webkit-text-fill-color: transparent !important;
+                                }
+
+                                /* Premium Table Styling */
+                                .premium-table {
+                                    margin-bottom: 0 !important;
+                                    background: transparent !important;
+                                    color: #ffffff !important;
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                .premium-table thead {
+                                    background: rgba(255, 255, 255, 0.03) !important;
+                                }
+
+                                .premium-table thead th {
+                                    border: none !important;
+                                    border-bottom: 2px solid rgba(249, 168, 38, 0.25) !important;
+                                    color: #ffd700 !important;
+                                    font-weight: 700 !important;
+                                    text-transform: uppercase;
+                                    font-size: 12px !important;
+                                    letter-spacing: 1px !important;
+                                    padding: 18px 24px !important;
+                                }
+
+                                .premium-table tbody tr {
+                                    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+                                    transition: background 0.3s ease;
+                                }
+
+                                .premium-table tbody tr:hover {
+                                    background: rgba(249, 168, 38, 0.05) !important;
+                                }
+
+                                .premium-table tbody td {
+                                    border: none !important;
+                                    padding: 16px 24px !important;
+                                    color: rgba(255, 255, 255, 0.9) !important;
+                                    font-size: 14px !important;
+                                    vertical-align: middle;
+                                }
+
+                                /* Status Badges */
+                                .premium-badge-success {
+                                    background: rgba(0, 208, 148, 0.15) !important;
+                                    border: 1px solid rgba(0, 208, 148, 0.3) !important;
+                                    color: #00D094 !important;
+                                    padding: 6px 12px !important;
+                                    border-radius: 30px !important;
+                                    font-weight: 700 !important;
+                                    font-size: 12px !important;
+                                    letter-spacing: 0.5px;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    gap: 4px;
+                                }
+
+                                .premium-badge-warning {
+                                    background: rgba(249, 168, 38, 0.15) !important;
+                                    border: 1px solid rgba(249, 168, 38, 0.3) !important;
+                                    color: #f9a826 !important;
+                                    padding: 6px 12px !important;
+                                    border-radius: 30px !important;
+                                    font-weight: 700 !important;
+                                    font-size: 12px !important;
+                                    letter-spacing: 0.5px;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    gap: 4px;
+                                }
+
+                                /* Header Override */
+                                .container-xxl h4.fw-bold {
+                                    color: #ffffff !important;
+                                    font-weight: 700 !important;
+                                    letter-spacing: 0.5px;
+                                }
+
+                                .container-xxl h4.fw-bold .text-muted {
+                                    color: rgba(255, 255, 255, 0.55) !important;
+                                }
+                            </style>
+                            <div class="card mb-4 premium-card">
+                                <div class="card-header d-flex align-items-center justify-content-between">
+                                    <h5 class="mb-0">Referral Income</h5>
+                                    <h5 class="mb-0" style="background: none !important; -webkit-text-fill-color: #ffd700 !important; font-size: 18px !important; letter-spacing: 0px !important;">Total: {{ number_format((float)$totalrefincome, 2) }} USDT</h5>
+                                </div>
                                 <div class="table-responsive text-nowrap">
-                                    <table class="table">
+                                    <table class="table premium-table">
                                         <thead>
                                             <tr>
                                                 <th>Date</th>
-                                                <th>Name</th>
-                                                <th>Amount</th>
-                                                <!-- <th>Users</th> -->
+                                                <th>UID</th>
+                                                <th>Amount Staked</th>
                                                 <th>Status</th>
-                                                <th>Income(10%)</th>
+                                                <th>Income (5%)</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-border-bottom-0">
-                                            @for($i = 0; $i <
-                                            count($cusrefferals); $i++)
+                                            @for($i = 0; $i < count($cusrefferals); $i++)
                                             @php
-                                            $cusrefferal = $cusrefferals[$i] ??
-                                            null;
+                                            $cusrefferal = $cusrefferals[$i] ?? null;
                                             $income = 0;
+                                            $plan = null;
 
                                             if ($cusrefferal) {
-                                            $plan =
-                                            DB::table("customer_plans")->where('csId',
-                                            $cusrefferal->id)->first();
-                                            if ($plan) {
-                                            $pamount = (float) $plan->pamount ??
-                                            0;
-                                            $income = (float) ($pamount * 10 /
-                                            100);
-                                            }
+                                                $plan = DB::table("customer_plans")->where('csId', $cusrefferal->id)->first();
+                                                if ($plan) {
+                                                    $pamount = (float) ($plan->pamount ?? 0);
+                                                    $income = (float) ($pamount * 5 / 100);
+                                                }
                                             }
                                             @endphp
 
                                             @if($plan)
-
                                             <tr>
                                                 <td>
-                                                    {{
-                                                    date('d, M, Y',
-                                                    strtotime($plan->created_at))
-                                                    }}
+                                                    {{ date('d, M, Y', strtotime($plan->created_at)) }}
                                                 </td>
-                                                <th>
-                                                    <a href="/dashboard/profile?prfid={{$cusrefferal->id}}">
-                                                    {{ $cusrefferal->name }}
+                                                <td>
+                                                    <a href="/dashboard/profile?prfid={{$cusrefferal->id}}" style="color: #ffd700; font-weight: 600; text-decoration: none;">
+                                                        {{ $cusrefferal->uid }}
                                                     </a>
-                                                </th>
-                                                <td>${{
-                                                    DB::table("customer_plans")->where('csId',
-                                                    $cusrefferal->id)->first()->pamount
-                                                    ?? '0' }}</td>
-                                                @if(false)
-                                                <td>
-                                                    <ul
-                                                        class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                                        <li
-                                                            data-bs-toggle="tooltip"
-                                                            data-popup="tooltip-custom"
-                                                            data-bs-placement="top"
-                                                            class="avatar avatar-xs pull-up"
-                                                            title="Lilian Fuller">
-                                                            <img
-                                                                src="../assets/img/avatars/5.png"
-                                                                alt="Avatar"
-                                                                class="rounded-circle" />
-                                                        </li>
-                                                        <li
-                                                            data-bs-toggle="tooltip"
-                                                            data-popup="tooltip-custom"
-                                                            data-bs-placement="top"
-                                                            class="avatar avatar-xs pull-up"
-                                                            title="Sophia Wilkerson">
-                                                            <img
-                                                                src="../assets/img/avatars/6.png"
-                                                                alt="Avatar"
-                                                                class="rounded-circle" />
-                                                        </li>
-                                                        <li
-                                                            data-bs-toggle="tooltip"
-                                                            data-popup="tooltip-custom"
-                                                            data-bs-placement="top"
-                                                            class="avatar avatar-xs pull-up"
-                                                            title="Christina Parker">
-                                                            <img
-                                                                src="../assets/img/avatars/7.png"
-                                                                alt="Avatar"
-                                                                class="rounded-circle" />
-                                                        </li>
-                                                    </ul>
                                                 </td>
-                                                @endif
-                                                <td>@if(
-                                                    (
-                                                    DB::table("customer_plans")->where('csId',
-                                                    $cusrefferal->id)->first()->pstatus??'0')
-                                                    == '1' )
-                                                    <span
-                                                        class="badge bg-label-primary me-1">Active</span>
-                                                    @endif
-                                                    @if(
-                                                    (
-                                                    DB::table("customer_plans")->where('csId',
-                                                    $cusrefferal->id)->first()->pstatus??'0')
-                                                    == '0' )
-                                                    <span
-                                                        class="badge bg-label-warning me-1">Pending</span>
-                                                    @endif
+                                                <td style="font-weight: 600;">
+                                                    {{ number_format($plan->pamount, 2) }} USDT
                                                 </td>
                                                 <td>
-                                                    ${{$income}}
+                                                    @if (($plan->pstatus ?? '0') == '1')
+                                                        <span class="premium-badge-success"><i class="bx bx-check-shield"></i> Active</span>
+                                                    @else
+                                                        <span class="premium-badge-warning"><i class="bx bx-time-five"></i> Pending</span>
+                                                    @endif
+                                                </td>
+                                                <td style="font-weight: 600; color: #00D094;">
+                                                    {{ number_format($income, 2) }} USDT
                                                 </td>
                                             </tr>
-
                                             @endif
-
                                             @endfor
 
                                         </tbody>
@@ -231,7 +279,7 @@ ini_set('display_errors', 1);
                             </div>
                             <!--/ Basic Bootstrap Table -->
 
-                            <hr class="my-5" />
+                            {{-- <hr class="my-5" /> --}}
 
                             <!-- Footer -->
                             @include('dashboard.dcards.footer')

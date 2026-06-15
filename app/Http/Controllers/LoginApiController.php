@@ -244,52 +244,69 @@ class LoginApiController extends Controller
     public function registerupdate(Request $rqs)
     {
         session_start();
-        if (isset($_SESSION['mail'])) {
-            $ve = DB::table('customers')
+        $userId = $_SESSION['id'] ?? null;
+        if (!$userId && isset($_SESSION['mail'])) {
+            $userObj = DB::table('customers')
                 ->where('email', $_SESSION['mail'])
+                ->orWhere('uid', $_SESSION['mail'])
+                ->first();
+            if ($userObj) {
+                $userId = $userObj->id;
+            }
+        }
+
+        if ($userId) {
+            $ve = DB::table('customers')
+                ->where('id', $userId)
                 ->first();
             $h = new HelperController;
+
+            // Check for file upload errors if file is present but failed to upload due to PHP server limits
+            if (isset($_FILES['image']) && $_FILES['image']['error'] !== UPLOAD_ERR_OK && $_FILES['image']['error'] !== UPLOAD_ERR_NO_FILE) {
+                $err_msg = 'Upload failed: ';
+                switch ($_FILES['image']['error']) {
+                    case UPLOAD_ERR_INI_SIZE:
+                        $err_msg .= 'The file exceeds the server\'s upload limit (upload_max_filesize). Please upload a smaller image.';
+                        break;
+                    case UPLOAD_ERR_PARTIAL:
+                        $err_msg .= 'The file was only partially uploaded.';
+                        break;
+                    case UPLOAD_ERR_NO_TMP_DIR:
+                        $err_msg .= 'Missing a temporary folder on the server.';
+                        break;
+                    case UPLOAD_ERR_CANT_WRITE:
+                        $err_msg .= 'Failed to write file to disk.';
+                        break;
+                    default:
+                        $err_msg .= 'Unknown upload error (code ' . $_FILES['image']['error'] . ').';
+                }
+                return redirect()->back()->withErrors(['image' => $err_msg]);
+            }
+
             $rqd = json_decode(json_encode($rqs->all()));
             if ($ve != null) {
-                if ($ve->otpcode != $rqd->otpcode) {
-                    return redirect()->back()->withInput()->withErrors([
-                        'email' => 'Incorrect otp',
-                        // 'password' => 'Wrong password',
-                    ]);
-                }
+                // Bypass OTP check as requested for photo changes
                 $rqd->otpcode = 'x';
-                // if ($rqs->hasFile('image') && $rqs->file('image')->isValid()) {
-                // if (isset($rqd->image)) {
-                //     // if (isset($prs['id']) && isset($prs['img'])) {
-                //     $h->deleteFileByUrl($ve->img);
-                //     // }
-                //     $image = $rqs->file('image');
-                //     $imageName = time() . '.' . $image->getClientOriginalExtension();
-                //     $image->move(public_path('uploads'), $imageName);
-                //     $url = asset('uploads/' . $imageName);
-                //     $rqd->img = $url;
-                // }
-                if (isset($rqd->image)) {
+                if ($rqs->hasFile('image')) {
                     $image = $rqs->file('image');
 
-                    // Check if image size exceeds 500MB (500 * 1024 * 1024 bytes)
+                    // Check if image size exceeds 5MB
                     $isize = ($image->getSize() / 1000000);
-                    if ($isize > 1) {
-                        return redirect()->back()->withInput()->withErrors([
-                            'image' => 'Image maximum size is 1MB',
-                            // 'password' => 'Wrong password',
+                    if ($isize > 5) {
+                        return redirect()->back()->withErrors([
+                            'image' => 'Image maximum size is 5MB',
                         ]);
                     }
 
                     // Delete existing image if it exists
-                    if (isset($ve->img)) {
+                    if (isset($ve->img) && !empty($ve->img) && $ve->img != 'x') {
                         $h->deleteFileByUrl($ve->img);
                     }
 
-                    // Move the uploaded image to the uploads directory
+                    // Move the uploaded image to the user_avatars directory
                     $imageName = time() . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path('uploads'), $imageName);
-                    $url = asset('uploads/' . $imageName);
+                    $image->move(public_path('user_avatars'), $imageName);
+                    $url = asset('user_avatars/' . $imageName);
                     $rqd->img = $url;
                 }
                 // if (isset($rqd->image)) {
@@ -350,7 +367,7 @@ class LoginApiController extends Controller
                 // $h->sendMail($mail, $rqd->name);
                 // session_start();
                 // $_SESSION["mail"] = "$mail";
-                return redirect('dashboard/profile');
+                return redirect('dashboard/profile')->with('success', 'Profile photo updated successfully!');
             }
         } else {
             return abort(404);

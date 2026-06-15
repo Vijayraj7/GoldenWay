@@ -248,6 +248,7 @@ class AutopollController extends Controller
             $currentPollIncome = (float) DB::table('customer_poll_transactions')
                 ->where('csId', $recipientId)
                 ->where('tType', 'pollincome')
+                ->where('wStatus', '0')
                 ->where('tamount', '>', 0)
                 ->sum('tamount');
 

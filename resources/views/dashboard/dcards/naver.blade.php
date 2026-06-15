@@ -306,7 +306,7 @@ if (count($nplans) == 0) {
             <div class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online avatar-onliner">
-                        <img src="/assets/img/avatars/1.png" alt="avatar" class="avatar-image">
+                        <img src="{{ $v->img ? $v->img . '?t=' . time() : '/images/icons/p1.jpeg' }}" alt="avatar" class="avatar-image">
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -315,7 +315,7 @@ if (count($nplans) == 0) {
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img style="height: 100%; width: 100%;" src="/assets/img/avatars/1.png" alt="user avatar" class="rounded-circle">
+                                        <img style="height: 100%; width: 100%;" src="{{ $v->img ? $v->img . '?t=' . time() : '/images/icons/p1.jpeg' }}" alt="user avatar" class="rounded-circle">
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">

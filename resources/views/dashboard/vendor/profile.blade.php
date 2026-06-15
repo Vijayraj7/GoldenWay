@@ -1,29 +1,8 @@
-<!-- =========================================================
-* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
-==============================================================
-
-* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
- -->
-<!-- beautify ignore:start -->
-<html
-  lang="en"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="/assets/"
-  data-template="vertical-menu-template-free"
->
-  <head>
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/assets/" data-template="vertical-menu-template-free">
+<head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>Profile</title>
 
@@ -37,13 +16,11 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="/tst/grnyellow.png" />
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
@@ -54,31 +31,267 @@
     <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <!-- Page CSS -->
- 
+    <style>
+        body {
+            background-color: #040907 !important;
+        }
+
+        .premium-profile-card {
+            background: radial-gradient(circle at top right, rgba(141, 105, 0, 0.12) 0%, rgba(10, 15, 12, 0.98) 70%, #050d0a 100%) !important;
+            border: 1px solid rgba(212, 175, 55, 0.2) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 15px rgba(212, 175, 55, 0.05) !important;
+            backdrop-filter: blur(12px);
+            margin-bottom: 2rem !important;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FFE082, #D4AF37, #B8860B);
+        }
+
+        .profile-title-gradient {
+            background: linear-gradient(135deg, #FFE082 0%, #D4AF37 50%, #B8860B 100%);
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            font-weight: 700;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1.5rem auto;
+            border-radius: 50%;
+            border: 3.5px solid rgba(212, 175, 55, 0.3);
+            padding: 4px;
+            background: rgba(7, 31, 23, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .avatar-wrapper.editable {
+            cursor: pointer;
+        }
+
+        .avatar-wrapper.editable:hover {
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+            transform: scale(1.03);
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .avatar-edit-overlay {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.65);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .avatar-wrapper:hover .avatar-edit-overlay {
+            opacity: 1;
+        }
+
+        .avatar-edit-overlay i {
+            color: #ffd700;
+            font-size: 1.8rem;
+            margin-bottom: 2px;
+            animation: bounceIcon 2s infinite;
+        }
+
+        .avatar-edit-overlay span {
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes bounceIcon {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .avatar-spinner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(7, 31, 23, 0.85);
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .info-grid-card {
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            border-radius: 12px;
+            padding: 1.25rem;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .info-grid-card:hover {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border-color: rgba(212, 175, 55, 0.15) !important;
+        }
+
+        .info-grid-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffd700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+            padding-bottom: 6px;
+        }
+
+        .info-grid-title i {
+            font-size: 1.1rem;
+            color: #ffd700;
+        }
+
+        .info-field {
+            margin-bottom: 0.75rem;
+        }
+
+        .info-field:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-field-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .info-field-value {
+            font-size: 0.9rem;
+            color: #fff;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            word-break: break-all;
+        }
+
+        .copy-icon-btn {
+            background: none;
+            border: none;
+            color: rgba(212, 175, 55, 0.65);
+            cursor: pointer;
+            padding: 2px;
+            transition: all 0.2s ease;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .copy-icon-btn:hover {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .alert-premium {
+            background: rgba(239, 68, 68, 0.1) !important;
+            border: 1px solid rgba(239, 68, 68, 0.25) !important;
+            color: #f87171 !important;
+            border-radius: 12px;
+        }
+
+        .premium-upload-trigger {
+            background: linear-gradient(135deg, #FFE082 0%, #D4AF37 50%, #B8860B 100%) !important;
+            color: #000 !important;
+            font-weight: 700 !important;
+            font-size: 11px !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            border: none !important;
+            border-radius: 30px !important;
+            padding: 8px 18px !important;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25) !important;
+            transition: all 0.3s ease-in-out !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            cursor: pointer !important;
+        }
+
+        .premium-upload-trigger:hover {
+            transform: translateY(-2px) scale(1.02) !important;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4) !important;
+            background: linear-gradient(135deg, #FFF59D 0%, #ffd700 50%, #D4AF37 100%) !important;
+        }
+
+        .premium-upload-trigger:active {
+            transform: translateY(0) scale(0.98) !important;
+        }
+
+    </style>
+
     <!-- Helpers -->
     <script src="/assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="/assets/js/config.js"></script>
-  </head>
+</head>
 
-  <body>
+<body>
 
 
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
-      <div class="layout-container">
-        <!-- Menu -->
-        @include('dashboard.dcards.menu', ['r' => 'profile'])
-        <!-- / Menu -->
+        <div class="layout-container">
+            <!-- Menu -->
+            @include('dashboard.dcards.menu', ['r' => 'profile'])
+            <!-- / Menu -->
 
-        <!-- Layout container -->
-        <div class="layout-page">
-            <!-- Navbar -->
-            @include('dashboard.dcards.nav')
-            <!-- / Navbar -->
-            <?php
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                @include('dashboard.dcards.nav')
+                <!-- / Navbar -->
+                <?php
 // Enable error reporting
 error_reporting(E_ALL);
 
@@ -88,8 +301,7 @@ ini_set('display_errors', 1);
 // Your PHP code here
 
 ?>
-<!DOCTYPE html>
-<?php
+                <?php
 $mainuser = $v;
 if (isset($_GET['prfid'])) {
   $spv = DB::table('customers')->where('id', $_GET['prfid'])->first();
@@ -106,324 +318,244 @@ if (isset($_GET['prfid'])) {
 
 }
 ?>
-@include('dashboard.dcards.naver', ['r' => 'dashboard'])
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
-            <!-- Content -->
+                @include('dashboard.dcards.naver', ['r' => 'dashboard'])
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
 
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account /</span> Profile</h4>
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <h4 class="fw-bold py-3 mb-4" style="color: #fff;"><span class="text-muted fw-light">Account /</span> Profile</h4>
 
-              <div class="row">
-                <div class="col-md-12">
-                  <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                    <li class="nav-item">
-                      <a class="nav-link" href="/dashboard/profile"
-                        ><i class="bx bx-user me-1"></i>Account</a>
-                    </li>
-                  </ul>
-                  <div class="card mb-4">
-                    <h5 class="card-header" style="background-color: #f9a826ff; margin-bottom:10px; text-transform: uppercase;font-size: 20px; color: #fff;">My Profile</h5>
-                    <!-- Account -->
-                    <div class="card-body">
-                      <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img
-                          src="{{$v->img ?? '/assets/img/avatars/1.png'}}"
-                          alt="user-avatar"
-                          class="d-block rounded"
-                          height="100"
-                          width="100"
-                          id="uploadedAvatar"
-                        />
-                        <div class="button-wrapper">
-                          <label for="upload" class="me-2 mb-4" style="display: flex;" tabindex="0">  
-                            <div class="input-box">
-                                <!-- <label>Name</label> -->
-                                <div style="color: #000; font-weight: 600; font-size: 18px;">{{ $v->name }}</div>
-                            </div> 
-                            <div class="input-box">
-                                <!-- <label>Name</label> -->
-                                <div style="color: #000; margin-left: 45px; font-weight: 600; font-size: 18px;">USER ID: {{ $v->id }}</div>
+                        @if($errors->any())
+                        <div class="alert alert-premium d-flex align-items-center mb-4" role="alert">
+                            <i class="bx bx-error-circle me-2 fs-4" style="color: #f87171;"></i>
+                            <div>
+                                @foreach($errors->all() as $error)
+                                <p class="mb-0">{{ $error }}</p>
+                                @endforeach
                             </div>
-                          </label>
                         </div>
-                      </div>
+                        @endif
+
+                        @if(session('success'))
+                        <div class="alert alert-premium d-flex align-items-center mb-4" role="alert" style="border: 1px solid rgba(0, 208, 148, 0.3); background: rgba(0, 208, 148, 0.05); color: #00d094;">
+                            <i class="bx bx-check-circle me-2 fs-4" style="color: #00d094;"></i>
+                            <div>
+                                <p class="mb-0">{{ session('success') }}</p>
+                            </div>
+                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                alert("{{ session('success') }}");
+                            });
+                        </script>
+                        @endif
+
+                        <div class="row">
+                             <!-- Left Column: Avatar & Profile Info -->
+                             <div class="col-lg-4 col-md-5 mb-4">
+                                 <div class="premium-profile-card text-center">
+                                     <div class="avatar-wrapper">
+                                         <img src="{{ $v->img ? $v->img . '?t=' . time() : '/images/icons/p1.jpeg' }}" alt="user-avatar" class="avatar-img" id="uploadedAvatar" />
+                                     </div>
+
+                                     @if($mainuser->id == $v->id)
+                                     <form action="/registerupdate" method="post" enctype="multipart/form-data" style="margin: 15px 0 15px 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                         @csrf
+                                         <input type="hidden" name="id" value="{{$v->id}}">
+                                         <input type="file" name="image" id="avatarFileInput" accept="image/*" style="width: 100%; max-width: 180px; background: rgba(255,255,255,0.05); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 8px; color: #fff; padding: 4px 6px; font-size: 11px; height: 28px;" required>
+                                         <button type="submit" class="premium-upload-trigger avatar-upload-btn" style="width: auto; max-width: 160px; text-align: center; justify-content: center; padding: 4px 12px !important; height: 26px !important; font-size: 10px !important; border-radius: 8px !important; letter-spacing: 0.5px !important;">
+                                             <i class="bx bx-upload"></i> Upload Photo
+                                         </button>
+                                     </form>
+                                     <style>
+                                         .avatar-upload-btn {
+                                             display: none !important;
+                                         }
+                                         #avatarFileInput:valid ~ .avatar-upload-btn {
+                                             display: inline-flex !important;
+                                         }
+                                     </style>
+                                     @endif
+
+                                    <h4 class="fw-bold mb-1" style="color: #fff; font-size: 1.3rem;">{{ $v->name }}</h4>
+                                    <p class="text-warning mb-3" style="font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px;">
+                                        USER ID: {{ $v->uid }}
+                                        <button class="copy-icon-btn" onclick="copyToClipboard('{{ $v->uid }}', this)" title="Copy User ID">
+                                            <i class="bx bx-copy"></i>
+                                        </button>
+                                    </p>
+
+                                    <div style="border-top: 1px solid rgba(212, 175, 55, 0.1); padding-top: 15px; margin-top: 15px;">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">Status</span>
+                                            <span class="badge bg-label-success" style="background-color: rgba(0, 208, 148, 0.12); color: #00D094; border: 1px solid rgba(0, 208, 148, 0.2); font-weight: 700;">Active</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span style="color: rgba(255,255,255,0.5); font-size: 0.8rem;">Member Since</span>
+                                            <span style="color: #fff; font-size: 0.8rem; font-weight: 600;">{{ date('M Y', strtotime($v->created_at)) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Profile Details Grid -->
+                            <div class="col-lg-8 col-md-7">
+                                <div class="row g-4">
+
+                                    <!-- Account & Credentials Info -->
+                                    <div class="col-12">
+                                        <div class="info-grid-card">
+                                            <div class="info-grid-title">
+                                                <i class="bx bx-shield-quarter"></i> Account Credentials
+                                            </div>
+
+                                            <div class="row">
+                                                @php
+                                                $susr = DB::table('customers')->where('id', $v->referral)->first();
+                                                @endphp
+                                                @if($susr != null)
+                                                <div class="col-md-6 info-field">
+                                                    <div class="info-field-label">Sponsor</div>
+                                                    <div class="info-field-value">
+                                                        <a href="/dashboard/profile?prfid={{$susr->id}}">{{ $susr->name }}</a>
+                                                        <span style="font-size: 0.8rem; color: rgba(255,255,255,0.4);">ID: {{ $susr->id }}</span>
+                                                        <button class="copy-icon-btn" onclick="copyToClipboard('{{ $susr->id }}', this)" title="Copy Sponsor ID">
+                                                            <i class="bx bx-copy"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                @endif
+
+                                                <div class="col-md-6 info-field">
+                                                    <div class="info-field-label">UID / Ref Key</div>
+                                                    <div class="info-field-value">
+                                                        <span>#{{ $v->uid }}</span>
+                                                        <button class="copy-icon-btn" onclick="copyToClipboard('{{ $v->uid }}', this)" title="Copy UID">
+                                                            <i class="bx bx-copy"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 info-field" style="margin-top: 0.5rem;">
+                                                    <div class="info-field-label">Wallet Address (BEP-20)</div>
+                                                    <div class="info-field-value">
+                                                        <span style="color: #FFE082; font-family: monospace;">{{ $v->wallet ?: 'Not Connected' }}</span>
+                                                        @if($v->wallet)
+                                                        <button class="copy-icon-btn" onclick="copyToClipboard('{{ $v->wallet }}', this)" title="Copy Wallet Address">
+                                                            <i class="bx bx-copy"></i>
+                                                        </button>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Personal Information -->
+                                    <div class="col-12">
+                                        <div class="info-grid-card">
+                                            <div class="info-grid-title">
+                                                <i class="bx bx-user-circle"></i> Personal Details
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 info-field">
+                                                    <div class="info-field-label">Full Name</div>
+                                                    <div class="info-field-value">{{ $v->name }}</div>
+                                                </div>
+
+                                                <div class="col-md-6 info-field">
+                                                    <div class="info-field-label">Email Address</div>
+                                                    <div class="info-field-value">{{ $v->email }}</div>
+                                                </div>
+
+                                                <div class="col-md-6 info-field">
+                                                    <div class="info-field-label">Phone Number</div>
+                                                    <div class="info-field-value">{{ $v->phone ?: 'Not Specified' }}</div>
+                                                </div>
+
+                                                <div class="col-md-6 info-field">
+                                                    <div class="info-field-label">Birth Date</div>
+                                                    <div class="info-field-value">
+                                                        {{ $v->birth ? date('M d, Y', strtotime($v->birth)) : 'Not Specified' }}
+                                                    </div>
+                                                </div>
+
+                                                @php
+                                                $genderMap = ['m' => 'Male', 'f' => 'Female', 'p' => 'Prefer not to say'];
+                                                $genderText = $genderMap[$v->gender] ?? ($v->gender ?: 'Not Specified');
+                                                @endphp
+                                                <div class="col-md-6 info-field">
+                                                    <div class="info-field-label">Gender</div>
+                                                    <div class="info-field-value">{{ $genderText }}</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Address & Location Details -->
+                                    <div class="col-12">
+                                        <div class="info-grid-card">
+                                            <div class="info-grid-title">
+                                                <i class="bx bx-map-pin"></i> Location & Address
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12 info-field">
+                                                    <div class="info-field-label">Street Address</div>
+                                                    <div class="info-field-value">{{ $v->address ?: 'Not Specified' }}</div>
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6 info-field">
+                                                    <div class="info-field-label">City</div>
+                                                    <div class="info-field-value">{{ $v->city ?: 'Not Specified' }}</div>
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6 info-field">
+                                                    <div class="info-field-label">State / Region</div>
+                                                    <div class="info-field-value">{{ $v->region ?: 'Not Specified' }}</div>
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6 info-field">
+                                                    <div class="info-field-label">Country</div>
+                                                    <div class="info-field-value" style="text-transform: capitalize;">{{ $v->country ?: 'Not Specified' }}</div>
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6 info-field">
+                                                    <div class="info-field-label">Pincode / Postal Code</div>
+                                                    <div class="info-field-value">{{ $v->pincode ?: 'Not Specified' }}</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <hr class="my-0" />
-                    <div class="card-body">
-@if($_SERVER['REQUEST_URI'] != '/dashboard/profile/edit')
-    <form class="form">
-
-    <!-- <div class="input-box">
-    <label>Name</label>
-    <div>{{ $v->name }}</div>
-    </div> -->
-  @php
-  $susr = DB::table('customers')->where('id', $v->referral)->first();
-@endphp
-    @if($susr != null)
-      @if($susr->id == $mainuser->referral)
-    <div class="input-box">
-    <label>Sponsor</label> 
-    <div> 
-    <a href="/dashboard/profile?prfid={{$susr->id}}">
-    {{ $susr->name }}
-    </a> ID : {{ $susr->id }}
-    </div>
-    </div>
-  @endif
-  @endif
-
-    <div class="column">
-    <div class="input-box">
-    <label>Email Address</label>
-    <div>{{ $v->email }}</div>
-    </div>
-
-    <div class="input-box">
-    <label>Wallet Address</label>
-    <div>{{ $v->wallet }}</div>
-    </div>
-    </div>
-
-    <!-- <div class="input-box">
-    <label>Password</label>
-    <div>*********</div>
-    </div> -->
-
-    <div class="column">
-    <div class="input-box">
-    <label>Phone Number</label>
-    <div>{{ $v->phone }}</div>
-    </div>
-
-    <div class="input-box">
-    <label>Birth Date</label>
-    <div>{{ $v->birth }}</div>
-    </div>
-    </div>
-
-
-    <div class="column">
-    <div class="input-box address">
-    <label>Gender</label>
-    <div>{{ $v->gender }}</div>
-    </div>
-
-    <div class="input-box address">
-    <label>Address</label>
-    <div>{{ $v->address }}</div>
-    </div>
-    </div>
-
-    <div class="column">
-    <div class="input-box address">
-    <label>State</label>
-    <div>{{ $v->region }}</div>
-    </div>
-
-    <div class="input-box address">
-    <label>Country</label>
-    <div>{{ $v->country }}</div>
-    </div>
-    </div>
-
-    <div class="column">
-    <div class="input-box address">
-    <label>City</label>
-    <div>{{ $v->city }}</div>
-    </div>  
-
-
-    <div class="input-box address">
-    <label>Pincode</label>
-    <div>{{ $v->pincode }}</div>
-    </div>
-    </div>
-
-
-    @if(!isset($_GET['prfid']))
-    <a href="/dashboard/profile/edit"> <button type="button">Edit</button> </a> 
-  @endif
-    </form>
-
-@else
-
-  <?php
-
-  function sendEditProfileOTPEmail($recipientEmail, $otp)
-  {
-    // Website name
-    $websiteName = "GWI";
-
-    // Subject of the email
-    $subject = "One-Time Password (OTP) for Editing Your Profile on $websiteName";
-
-    // Email body
-    $body = "
-    <html>
-    <head>
-    <title>One-Time Password (OTP) for Editing Your Profile</title>
-    </head>
-    <body>
-    <h2 style='color: #007bff;'>Edit Profile!</h2>
-    <p>You are receiving this email because you requested to edit your profile on $websiteName.</p>
-    <p>Please use the following One-Time Password (OTP) to proceed with your profile edit:</p>
-    <p style='font-size: 20px; font-weight: bold; color: #28a745;'>$otp</p>
-    <p>This OTP is valid for a limited time and can only be used once.</p>
-    <p>If you didn't request this, you can safely ignore this email.</p>
-    <p>Thank you for using $websiteName!</p>
-    <p>Best Regards,<br>$websiteName Team</p>
-    </body>
-    </html>
-    ";
-
-    // Headers for HTML email
-    $headers = "MIME-Version: 1.0" . "\r\n";
-    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: $websiteName <noreply@$websiteName.com>" . "\r\n";
-
-    // Send email
-    if (mail($recipientEmail, $subject, $body, $headers)) {
-    return true; // Email sent successfully
-    } else {
-    // Failed to send email, retrieve error message
-    $errorMessage = error_get_last()['message'];
-    return $errorMessage; // Return error message
-    }
-  }
-
-  // Usage example:
-  // if($v->otpcode == 'x' || $v->otpcode == null ){
-  $recipientEmail = "$v->email";
-  $otp = rand(100000, 999999); // Generate OTP dynamically
-  $result = sendEditProfileOTPEmail($recipientEmail, $otp);
-  if ($result === true) {
-    $r = DB::table('customers')->where('id', $v->id)->update(['otpcode' => strval($otp)]);
-    echo "OTP sent successfully to $v->email";
-  } else {
-    echo "<script>alert('Failed to send email! $result');</script>"; // Display error message
-  }
-  // }
-
-  ?>
-
-  <form action="/registerupdate" method="post" enctype="multipart/form-data" class="form">
-    @csrf
-
-    @error("email")
-    <p style="color: red; margin-bottom:20px;">{{$message}}</p>
-  @enderror
-
-    <input type="hidden" name="id" value="{{$v->id}}">
-
-    <div class="input-box">
-    <label><span style="color:red;">*</span> OTP</label>
-    <input name="otpcode" type="text" placeholder="Enter OTP sended to your email" required />
-    </div>
-
-    <!-- <div class="input-box">
-    <label>Name</label>
-    <input value="{{$v->name}}" name="name" type="text" placeholder="Enter full name" required />
-    </div> -->
-
-
-
-
-    <div class="input-box">
-    <label>Photo</label>
-    <input style="padding: 0.8375rem 0.875rem !important;" name="image" class="form-control" type="file" accept="image/*"
-    id="imh" />
-    </div>
-
-    <!-- <div class="column">
-    <div class="input-box">
-    <label>Phone Number</label>
-    <input value="{{$v->phone}}" type="number" name="phone" placeholder="Enter phone number"
-    required />
-    </div>
-
-    <div class="input-box">
-    <label>Birth Date</label>
-    <input value="{{$v->birth}}" type="date" name="birth" placeholder="Enter birth date" required />
-    </div>
-    </div> -->
-    <!-- @if($v->gender=="f" ) checked @endif -->
-    <!-- <div class="gender-box">
-    <h3>Gender</h3>
-    <div class="gender-option">
-    <div class="gender">
-    <input @if($v->gender=="m" ) checked @endif type="radio" id="check-male" value="m"
-    name="gender" />
-    <label for="check-male">male</label>
-    </div>
-    <div class="gender">
-    <input @if($v->gender=="f" ) checked @endif type="radio" value="f" id="check-female"
-    name="gender" />
-    <label for="check-female">Female</label>
-    </div>
-    <div class="gender">
-    <input @if($v->gender=="p" ) checked @endif type="radio" id="check-other" value="p"
-    name="gender" />
-    <label for="check-other">prefer not to say</label>
-    </div>
-    </div>
-    </div>
-    <div class="input-box address">
-    <label>Address</label>
-    <input value="{{$v->address}}" name="address" type="text" placeholder="Enter street address"
-    required /> -->
-    <!-- <input value="{{$v->address}}" type="text" placeholder="Enter street address line 2" required /> -->
-    <!-- <div class="column">
-    <div class="select-box">
-    <select required name="country">
-    <option hidden>Country</option>
-    <option @if($v->country=="america" ) selected @endif value="america">America</option>
-    <option @if($v->country=="japan" ) selected @endif  value="japan">Japan</option>
-    <option @if($v->country=="india" ) selected @endif  value="india">India</option>
-    <option @if($v->country=="nepal" ) selected @endif  value="nepal">Nepal</option>
-    </select>
-    </div>
-    <input value="{{$v->city}}" name="city" type="text" placeholder="Enter your city" required />
-    </div>
-    <div class="column">
-    <input value="{{$v->region}}" name="region" type="text" placeholder="Enter your state name"
-    required />
-    <input value="{{$v->pincode}}" name="pincode" type="number" placeholder="Enter postal code"
-    required />
-    </div>
-    </div> -->
-    <button type="submit">Save Changes</button>
-  </form>
-
-@endif
-
-
-                    </div>
-                    <!-- /Account -->
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- / Content -->
+                    <!-- / Content -->
 
                     <!-- Footer -->
                     @include('dashboard.dcards.footer')
                     <!-- / Footer -->
 
-            <div class="content-backdrop fade"></div>
-          </div>
-          <!-- Content wrapper -->
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
         </div>
-        <!-- / Layout page -->
-      </div>
 
-      <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
 
-    
+
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -441,14 +573,35 @@ if (isset($_GET['prfid'])) {
     <script src="/assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="/assets/js/pages-account-settings-account.js"></script>
+    {{-- <script src="/assets/js/pages-account-settings-account.js"></script> --}}
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
-  <style>
-    body{
-      padding: 0 !important;
+
+    <!-- Custom Profile Javascript Helpers -->
+    <script>
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Find copy icon and animate/update state
+                const icon = element.querySelector('i');
+                if (icon) {
+                    const originalClass = icon.className;
+                    icon.className = 'bx bx-check text-success';
+                    setTimeout(() => {
+                        icon.className = originalClass;
+                    }, 1500);
+                }
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
+    </script>
+</body>
+<style>
+    body {
+        padding: 0 !important;
     }
-  </style>
+
+</style>
 </html>

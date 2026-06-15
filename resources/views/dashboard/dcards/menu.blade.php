@@ -185,7 +185,7 @@
             <img src="/tst/grnyellow.png" alt="Logo" height="36px" style="filter: drop-shadow(0 0 8px rgba(249, 168, 38, 0.2));">
         </a>
         <div class="sidebar-avatar-wrapper">
-            <img src="{{ $v->img ?? '/assets/img/avatars/1.png' }}" alt="User Avatar">
+            <img src="{{ $v->img ? $v->img . '?t=' . time() : '/images/icons/p1.jpeg' }}" alt="User Avatar">
         </div>
         <div class="sidebar-user-name">{{ $v->name }}</div>
         <div class="sidebar-user-meta">Member since {{ date('M Y', strtotime($v->created_at)) }}</div>
@@ -194,6 +194,12 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1" style="padding-bottom: 12rem !important;">
+    
+
+        <!-- Components -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Account</span>
+        </li>
         <!-- Dashboard -->
         <li class="menu-item @if($r == 'dashboard') active @endif">
             <a href="/dashboard" class="menu-link">
@@ -201,18 +207,18 @@
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
-        <li class="menu-item @if($r == 'products') active @endif">
+        {{-- <li class="menu-item @if($r == 'products') active @endif">
             <a href="/dashboard/products/buy" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Stake</div>
             </a>
-        </li>
-        <li class="menu-item @if($r == 'depositstatus') active @endif">
+        </li> --}}
+        {{-- <li class="menu-item @if($r == 'depositstatus') active @endif">
             <a href="/dashboard/status/deposit" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-credit-card"></i>
                 <div data-i18n="Basic">Stake Status</div>
             </a>
-        </li>
+        </li> --}}
         <li class="menu-item @if($r == 'ref_tree') active @endif">
             <a href="/dashboard/reftree/{{$v->id}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-street-view"></i>
@@ -226,42 +232,39 @@
             </a>
         </li>
 
-        <!-- Components -->
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Account</span>
-        </li>
         <!-- Cards -->
-        <li class="menu-item @if($r == 'profile') active @endif">
+        {{-- <li class="menu-item @if($r == 'profile') active @endif">
             <a href="/dashboard/profile" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-user-account"></i>
                 <div data-i18n="Basic">Profile</div>
             </a>
+        </li> --}}
+        {{-- <li class="menu-item @if($r == 'trnsfrwithdrawhistory') active @endif">
+            <a href="/dashboard/status/withdraw?typ=trnsfr" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-transfer"></i>
+                <div data-i18n="Basic">Transfer History</div>
+            </a>
+        </li> --}}
+        {{-- <li class="menu-item @if($r == 'withdrawhistory') active @endif">
+            <a href="/dashboard/status/withdraw" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-send"></i>
+                <div data-i18n="Basic">Withdraw Requests</div>
+            </a>
+        </li> --}}
+
+        <!-- Components -->
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Income</span>
         </li>
+
         <li class="menu-item @if($r == 'transactions') active @endif">
             <a href="/dashboard/status/transactions" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer"></i>
                 <div data-i18n="Basic">Credit History</div>
             </a>
         </li>
-        <li class="menu-item @if($r == 'trnsfrwithdrawhistory') active @endif">
-            <a href="/dashboard/status/withdraw?typ=trnsfr" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-transfer"></i>
-                <div data-i18n="Basic">Transfer Credit History</div>
-            </a>
-        </li>
-        <li class="menu-item @if($r == 'withdrawhistory') active @endif">
-            <a href="/dashboard/status/withdraw" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-send"></i>
-                <div data-i18n="Basic">Withdraw Requests</div>
-            </a>
-        </li>
-
-        <!-- Components -->
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Income</span>
-        </li>
         <!-- Cards -->
-        <li class="menu-item @if($r == 'ref_income') active @endif">
+        {{-- <li class="menu-item @if($r == 'ref_income') active @endif">
             <a href="/dashboard/refincome" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dollar"></i>
                 <div data-i18n="Basic">Referral Income</div>
@@ -272,7 +275,7 @@
                 <i class="menu-icon tf-icons bx bx-dollar-circle"></i>
                 <div data-i18n="Basic">Level Income</div>
             </a>
-        </li>
+        </li> --}}
 
         <!-- Misc -->
         <li class="menu-header small text-uppercase">

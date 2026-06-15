@@ -102,7 +102,7 @@ class DashBoardController extends Controller
     public function transactions()
     {
         $h = new HelperController;
-        return $h->getboth('dashboard.vendor.transactions');
+        return $h->getboth('dashboard.vendor.custransactions');
     }
     public function orders()
     {
@@ -156,6 +156,9 @@ class DashBoardController extends Controller
     public function withdrawhistory()
     {
         $h = new HelperController;
+        if (request()->query('typ') === 'trnsfr') {
+            return $h->getboth('dashboard.vendor.transferhistory');
+        }
         return $h->getboth('dashboard.vendor.withdrawhistory');
     }
     public function withdrawtransactions()

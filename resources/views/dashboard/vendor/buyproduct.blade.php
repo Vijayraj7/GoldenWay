@@ -94,144 +94,292 @@ if (isset($_GET['typ'])) {
                         <div class="row">
                             <!-- Basic with Icons -->
                             <div class="col-xxl">
-                                <div class="card mb-4">
+                                <div class="card mb-4 premium-card">
                                     <div class="card-header d-flex align-items-center justify-content-between">
                                         <h5 class="mb-0">STAKE</h5>
                                     </div>
-                                    <div class="card-body" style="margin-top: 30px;">
+                                    <div class="card-body">
 
                                         @error('image')
-                                            <div class="form-text"
-                                                style="color: red; font-size: 18px; text-transform: capitalize; font-weight: 600; margin-bottom: 25px;">
-                                                * {{ $message }}</div>
+                                            <div class="premium-alert-banner">
+                                                <i class="bx bx-error-circle me-2" style="font-size: 20px;"></i>
+                                                {{ $message }}
+                                            </div>
                                         @enderror
 
                                         <style>
-                                            /* .hnot{
-                                                    width: 100%;
-                                                } */
+                                            /* Premium Card Redesign */
+                                            .premium-card {
+                                                background: linear-gradient(135deg, rgba(7, 31, 23, 0.95), rgba(12, 40, 32, 0.95)) !important;
+                                                backdrop-filter: blur(16px);
+                                                -webkit-backdrop-filter: blur(16px);
+                                                border: 1px solid rgba(249, 168, 38, 0.25) !important;
+                                                border-radius: 20px !important;
+                                                box-shadow: 0 15px 45px rgba(0, 0, 0, 0.55) !important;
+                                                overflow: hidden;
+                                                margin-bottom: 2rem !important;
+                                            }
+
+                                            .premium-card .card-header {
+                                                background: rgba(255, 255, 255, 0.02) !important;
+                                                border-bottom: 1px solid rgba(249, 168, 38, 0.15) !important;
+                                                padding: 24px 30px !important;
+                                            }
+
+                                            .premium-card .card-header h5 {
+                                                color: #ffd700 !important;
+                                                font-size: 22px !important;
+                                                font-weight: 700 !important;
+                                                letter-spacing: 2px !important;
+                                                margin: 0 !important;
+                                                text-transform: uppercase;
+                                                background: linear-gradient(90deg, #ffd700, #f9a826);
+                                                -webkit-background-clip: text !important;
+                                                -webkit-text-fill-color: transparent !important;
+                                            }
+
+                                            .premium-card .card-body {
+                                                padding: 30px 40px !important;
+                                            }
+
+                                            /* Form Row & Label Styling */
+                                            #buyprodct_frm_bbuy .row {
+                                                margin-bottom: 24px !important;
+                                            }
+
+                                            #buyprodct_frm_bbuy label.form-label,
+                                            #buyprodct_frm_bbuy label.col-form-label {
+                                                color: rgba(255, 255, 255, 0.9) !important;
+                                                font-weight: 600 !important;
+                                                font-size: 13px !important;
+                                                letter-spacing: 0.8px !important;
+                                                text-transform: uppercase !important;
+                                                display: flex;
+                                                align-items: center;
+                                                padding-top: 10px !important;
+                                            }
+
+                                            /* Inputs Styling */
+                                            #buyprodct_frm_bbuy .input-group {
+                                                border-radius: 10px !important;
+                                                overflow: hidden !important;
+                                                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+                                                border: 1px solid rgba(249, 168, 38, 0.25) !important;
+                                                background: rgba(0, 0, 0, 0.35) !important;
+                                                transition: all 0.3s ease;
+                                            }
+
+                                            #buyprodct_frm_bbuy .input-group:focus-within {
+                                                border-color: #ffd700 !important;
+                                                box-shadow: 0 0 15px rgba(249, 168, 38, 0.45) !important;
+                                            }
+
+                                            #buyprodct_frm_bbuy .input-group-text {
+                                                background: rgba(255, 255, 255, 0.05) !important;
+                                                border: none !important;
+                                                border-right: 1px solid rgba(249, 168, 38, 0.2) !important;
+                                                color: #ffd700 !important;
+                                                font-weight: 700 !important;
+                                                font-size: 14px !important;
+                                                padding: 12px 18px !important;
+                                            }
+
+                                            #buyprodct_frm_bbuy .form-control {
+                                                background: transparent !important;
+                                                border: none !important;
+                                                color: #ffffff !important;
+                                                padding: 12px 18px !important;
+                                                font-size: 15px !important;
+                                                font-weight: 500 !important;
+                                            }
+
+                                            #buyprodct_frm_bbuy .form-control::placeholder {
+                                                color: rgba(255, 255, 255, 0.35) !important;
+                                            }
+
+                                            #buyprodct_frm_bbuy .form-control:focus {
+                                                box-shadow: none !important;
+                                                outline: none !important;
+                                            }
+
+                                            /* Contract Display Chip */
+                                            .premium-chip {
+                                                display: inline-flex;
+                                                align-items: center;
+                                                background: linear-gradient(135deg, rgba(249, 168, 38, 0.2), rgba(255, 215, 0, 0.05));
+                                                border: 1px solid rgba(249, 168, 38, 0.4);
+                                                color: #ffd700 !important;
+                                                font-weight: 700 !important;
+                                                font-size: 16px !important;
+                                                padding: 8px 20px !important;
+                                                border-radius: 30px !important;
+                                                box-shadow: 0 5px 15px rgba(249, 168, 38, 0.2);
+                                            }
+
+                                            /* Buttons Redesign */
+                                            .premium-btn {
+                                                background: linear-gradient(135deg, #ffd700, #a78200) !important;
+                                                border: none !important;
+                                                color: #071f17 !important;
+                                                font-weight: 700 !important;
+                                                font-size: 16px !important;
+                                                letter-spacing: 1.5px !important;
+                                                text-transform: uppercase !important;
+                                                border-radius: 10px !important;
+                                                padding: 14px 36px !important;
+                                                box-shadow: 0 6px 20px rgba(249, 168, 38, 0.3) !important;
+                                                transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+                                                width: 100%;
+                                                cursor: pointer;
+                                            }
+
+                                            .premium-btn:hover {
+                                                background: linear-gradient(135deg, #ffffff, #ffd700) !important;
+                                                box-shadow: 0 8px 25px rgba(255, 215, 0, 0.45) !important;
+                                                transform: translateY(-3px) !important;
+                                                color: #071f17 !important;
+                                            }
+
+                                            .premium-btn:active {
+                                                transform: translateY(1px) !important;
+                                            }
+
+                                            /* Info Alerts & Subtitles */
+                                            .premium-info-text {
+                                                font-size: 12px;
+                                                color: rgba(255, 255, 255, 0.5) !important;
+                                                margin-top: 6px;
+                                                display: block;
+                                            }
+
+                                            /* Header Breadcrumb Override */
+                                            .container-xxl h4.fw-bold {
+                                                color: #ffffff !important;
+                                                font-weight: 700 !important;
+                                                letter-spacing: 0.5px;
+                                            }
+
+                                            .container-xxl h4.fw-bold .text-muted {
+                                                color: rgba(255, 255, 255, 0.55) !important;
+                                            }
+
+                                            /* Premium Modals (Success & Processing) Override */
+                                            .modal-content {
+                                                background: linear-gradient(135deg, rgba(7, 31, 23, 0.98), rgba(12, 40, 32, 0.98)) !important;
+                                                border: 1px solid rgba(249, 168, 38, 0.3) !important;
+                                                border-radius: 20px !important;
+                                                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7) !important;
+                                                color: #ffffff !important;
+                                            }
+
+                                            .modal-content h3, .modal-content h4 {
+                                                font-weight: 700 !important;
+                                                letter-spacing: 0.5px;
+                                            }
+
+                                            .modal-content h3 {
+                                                color: #ffffff !important;
+                                            }
+
+                                            .modal-content .btn-primary {
+                                                background: linear-gradient(135deg, #ffd700, #a78200) !important;
+                                                border: none !important;
+                                                color: #071f17 !important;
+                                                font-weight: 700 !important;
+                                                border-radius: 10px !important;
+                                                padding: 12px 28px !important;
+                                                box-shadow: 0 6px 20px rgba(249, 168, 38, 0.3) !important;
+                                                transition: all 0.3s ease !important;
+                                            }
+
+                                            .modal-content .btn-primary:hover {
+                                                background: linear-gradient(135deg, #ffffff, #ffd700) !important;
+                                                transform: translateY(-2px) !important;
+                                            }
+
+                                            .modal-content .btn-secondary {
+                                                background: rgba(255, 255, 255, 0.08) !important;
+                                                border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                                                color: #ffffff !important;
+                                                font-weight: 600 !important;
+                                                border-radius: 10px !important;
+                                                padding: 12px 28px !important;
+                                                transition: all 0.3s ease !important;
+                                            }
+
+                                            .modal-content .btn-secondary:hover {
+                                                background: rgba(255, 255, 255, 0.15) !important;
+                                            }
+
+                                            /* Success tic specifics override */
+                                            #success_tic .page-body {
+                                                background-color: transparent !important;
+                                                margin: 5% auto !important;
+                                            }
+
+                                            #success_tic .page-body h3 {
+                                                font-size: 24px !important;
+                                            }
+
+                                            /* Custom Alerts styling */
+                                            .premium-alert-banner {
+                                                background: rgba(255, 76, 76, 0.12) !important;
+                                                border: 1px solid rgba(255, 76, 76, 0.3) !important;
+                                                border-radius: 12px !important;
+                                                padding: 16px 24px !important;
+                                                margin-bottom: 25px !important;
+                                                color: #ff5252 !important;
+                                                font-weight: 600 !important;
+                                                box-shadow: 0 5px 15px rgba(255, 76, 76, 0.1);
+                                            }
+
+                                            /* Responsiveness adjustments */
                                             @media (max-width:900px) {
                                                 .hnot {
                                                     width: auto !important;
                                                 }
 
                                                 #buyprodct_frm_bbuy {
-                                                    width: 90%;
+                                                    width: 100% !important;
+                                                    padding: 0 10px;
+                                                }
+
+                                                .premium-card .card-body {
+                                                    padding: 24px 15px !important;
                                                 }
                                             }
 
                                             @media (min-width:900px) {
                                                 #buyprodct_frm_bbuy {
-                                                    width: 70%;
+                                                    width: 65% !important;
                                                 }
                                             }
                                         </style>
 
                                         @include('dashboard.dcards.wallet', ['snd' => false])
 
-                                        <div class="buyformcontainer" style="display: flex; justify-content:center;">
+                                        <div class="buyformcontainer" style="display: flex; justify-content:center; width: 100%;">
                                             <form action="/sendproduct" method="POST" onsubmit="return false"
                                                 id="buyprodct_frm_bbuy" class="row justify-content-center"
                                                 enctype="multipart/form-data">
                                                 @csrf
 
-
-
-                                                <!--   <input type="hidden"
-                                                    name="pamount"
-                                                    value="500"> -->
-
-                                                <!-- <input type="hidden"
-                                                    name="ptype"
-                                                    value="1"> -->
-                                                <!-- <input type="hidden"
-                                                    name="tuserid"
-                                                    value="0"> -->
-                                                <!-- <input type="hidden"
-                                                    name="pstatus"
-                                                    value="0"> -->
-                                                <!-- <input type="hidden"
-                                                    name="txid"
-                                                    value="0">
-                                                <input type="hidden"
-                                                    name="wtxid"
-                                                    value="0"> -->
-
                                                 <input type="hidden" name="csId" value="{{ $v->id }}">
 
-                                                <!-- <div class="row mb-3">
-                                                    <label
-                                                        class="col-sm-2 col-form-label hnot"
-                                                        for="basic-icon-default-fullname">Product</label>
-                                                    <div class="col-sm-10 hnot">
-                                                        <p class="form-control"
-                                                            style="border: none !important;"
-                                                            id="basic-icon-default-fullname">HIGH
-                                                            RISK</p>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <label
-                                                        class="col-sm-2 col-form-label hnot"
-                                                        for="basic-icon-default-fullname">Amount</label>
-                                                    <div class="col-sm-10 hnot">
-                                                        <p class="form-control"
-                                                            style="border: none !important;"
-                                                            id="basic-icon-default-fullname">$500</p>
-                                                    </div>
-                                                </div> -->
-                                                <style>
-                                                    .form-label {
-                                                        margin-top: 8px;
-                                                    }
-                                                </style>
-                                                <!-- <div
-                                                style="cursor: pointer;"
-                                                    id="copyWallet"
-                                                    class="row mb-3">
-                                                    <label
-                                                        class="col-sm-2 form-label"
-                                                        for="basic-icon-default-">Wallet (BEP 20)</label>
-                                                    <div class="col-sm-10">
-                                                        <p
-                                                            class="form-control"
-                                                            id="basic-icon-default-phone"><i
-                                                                class="bx bx-copy"></i>{{ $adminconfig->wallet }}</p>
-                                                    </div>
-                                                </div> -->
-                                                <script>
-                                                    document.getElementById('copyWallet').addEventListener('click', function() {
-                                                        var url = "{{ $adminconfig->wallet }}";
-
-                                                        navigator.clipboard.writeText(url)
-                                                            .then(function() {
-                                                                // Inform the user that the URL has been copied
-                                                                alert('Copied to clipboard: ' + url);
-                                                            })
-                                                            .catch(function(error) {
-                                                                // Handle errors
-                                                                console.error('Could not copy URL: ', error);
-                                                                alert('Could not copy URL. Please try again.');
-                                                            });
-                                                    });
-                                                </script>
-                                                <div class="row mb-3" style="margin-bottom: 0px !important;">
-                                                    <label class="col-sm-2 col-form-label hnot"
+                                                <div class="row mb-3 align-items-center">
+                                                    <label class="col-sm-3 col-form-label"
                                                         for="basic-icon-default-fullname">Contract</label>
-                                                    <div class="col-sm-10 hnot">
-                                                        <p class="form-control" style="border: none !important;"
-                                                            id="basic-icon-default-fullname">
-                                                            15 Months
-                                                            <strong>
-                                                            </strong>
-                                                        </p>
+                                                    <div class="col-sm-9">
+                                                        <div class="premium-chip" id="basic-icon-default-fullname">
+                                                            <i class="bx bx-award me-1"></i> 2x Limit
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div style="display: none;" class="row mb-3">
-                                                    <label style="margin-top: 7px;" class="col-sm-2 form-label"
-                                                        for="basic-icon-default-message">Package</label>
-                                                    <div class="col-sm-10">
 
+                                                <div style="display: none;" class="row mb-3">
+                                                    <label class="col-sm-3 form-label"
+                                                        for="inputGroupSelect02">Package</label>
+                                                    <div class="col-sm-9">
                                                         <select class="form-select" name="pname"
                                                             id="inputGroupSelect02">
                                                             @if ($isalltyp)
@@ -250,80 +398,78 @@ if (isset($_GET['typ'])) {
                                                                     <option selected value="normal">Silver</option>
                                                                 @endif
                                                             @endif
-
                                                         </select>
                                                     </div>
                                                 </div>
+
                                                 <div class="row mb-3">
-                                                    <label style="margin-top: 7px;" class="col-sm-2 form-label"
-                                                        for="basic-icon-default-message">Amount</label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-3 form-label"
+                                                        for="pamount_input">Amount</label>
+                                                    <div class="col-sm-9">
                                                         <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-message2"
-                                                                class="input-group-text">USDT</span>
+                                                            <span class="input-group-text"><i class="bx bx-dollar-circle"></i> &nbsp; USDT</span>
                                                             <input type="number" step="any" name="pamount"
                                                                 value="{{ old('pamount') ?? old('amount') }}"
-                                                                id="pamount_input" class="form-control phone-mask"
-                                                                placeholder="Min 100 USDT and Max {{ number_format(DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount'), 2) }}"
-                                                                aria-label="Min 100 USDT and Max {{ number_format(DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount'), 2) }}"
+                                                                id="pamount_input" class="form-control"
+                                                                placeholder="Min 100 USDT and Max {{ number_format(DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') * 10, 2) }}"
+                                                                aria-label="Min 100 USDT and Max {{ number_format(DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') * 10, 2) }}"
                                                                 aria-describedby="pamount" />
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
-                                                    <label class="col-sm-2 form-label" style="font-size: 11px;"
-                                                        for="basic-icon-default-message">Transaction
-                                                        Password</label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-3 form-label"
+                                                        for="tpassword_input">Transaction Password</label>
+                                                    <div class="col-sm-9">
                                                         <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-message2"
-                                                                class="input-group-text"><i
-                                                                    class="bx bx-hide"></i></span>
-                                                            <input type="text" name="tpassword" required
+                                                            <span class="input-group-text"><i class="bx bx-lock-alt"></i></span>
+                                                            <input type="password" name="tpassword" required
                                                                 aria-required="true" value="{{ old('tpassword') }}"
-                                                                id="basic-icon-default-message2"
-                                                                class="form-control phone-mask"
+                                                                id="tpassword_input"
+                                                                class="form-control"
                                                                 placeholder="Your Transaction Password"
-                                                                aria-label="Your Transaction Password"
-                                                                aria-describedby="basic-icon-default-message2" />
+                                                                aria-label="Your Transaction Password" />
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
-                                                    <label class="col-sm-2 form-label"
-                                                        for="basic-icon-default-message">Remark</label>
-                                                    <div class="col-sm-10">
+                                                    <label class="col-sm-3 form-label"
+                                                        for="remark_input">Remark</label>
+                                                    <div class="col-sm-9">
                                                         <div class="input-group input-group-merge">
-                                                            <span id="basic-icon-default-message2"
-                                                                class="input-group-text">
-                                                                <!-- <i class="bx bx-comment"></i> -->
-                                                                <img src="https://cdn-icons-png.flaticon.com/512/2593/2593491.png"
-                                                                    style="height: 14px;">
-                                                            </span>
+                                                            <span class="input-group-text"><i class="bx bx-comment-detail"></i></span>
                                                             <input type="text" name="msg"
                                                                 value="{{ old('msg') }}"
-                                                                id="basic-icon-default-message2"
-                                                                class="form-control phone-mask" placeholder="Remark"
-                                                                aria-label="Remark"
-                                                                aria-describedby="basic-icon-default-message2" />
+                                                                id="remark_input"
+                                                                class="form-control" placeholder="Remark (Optional)"
+                                                                aria-label="Remark" />
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 @if (DB::table('customer_subs')->where('csId', $v->id)->exists())
                                                     <div class="row justify-content-end">
-                                                        <div class="col-sm-10">
-                                                            <button onclick="onsubmitbuy()"
-                                                                class="btn btn-primary">Submit</button>
+                                                        <div class="col-sm-9">
+                                                            <button type="button" onclick="onsubmitbuy()"
+                                                                class="premium-btn">
+                                                                <i class="bx bx-check-circle me-1"></i> Submit Stake
+                                                            </button>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <h3>* Please subscribe to Stake.</h3>
+                                                    </div>
+                                                @else
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-sm-12">
+                                                            <div class="premium-alert-banner">
+                                                                <i class="bx bx-error-circle me-2" style="font-size: 20px;"></i>
+                                                                Please subscribe to Stake first to continue.
+                                                            </div>
                                                         </div>
+                                                    </div>
                                                 @endif
+                                            </form>
                                         </div>
-                                        </form>
 
                                     </div>
 
@@ -392,26 +538,26 @@ if (isset($_GET['typ'])) {
                                                     ->first();
                                             @endphp
                                             @if ($wltr->reciept != 'null')
-                                                <h3 style="margin-top:5px; color: #000;">Purchase Confirmed.</h3>
+                                                <h3 style="margin-top:5px; color: #00ff88 !important;">Purchase Confirmed.</h3>
                                             @else
                                                 <?php $issucc = false; ?>
-                                                <h3 style="margin-top:5px; color: #ff0000;">Purchase Failed.</h3>
+                                                <h3 style="margin-top:5px; color: #ff4c4c !important;">Purchase Failed.</h3>
                                             @endif
                                         @else
                                             @if (old('pname') == 'reinvest' || old('pname') == 'reinvest_compound' || old('pname') == 'lott')
                                                 @if (old('wlt_amount') == '0')
                                                     <?php $issucc = true; ?>
-                                                    <h3 style="margin-top:5px; color: #000;">Purchase Confirmed..</h3>
+                                                    <h3 style="margin-top:5px; color: #00ff88 !important;">Purchase Confirmed..</h3>
                                                 @else
                                                     <?php $issucc = false; ?>
-                                                    <h3 style="margin-top:5px; color: #ff0000;">Purchase Failed..</h3>
+                                                    <h3 style="margin-top:5px; color: #ff4c4c !important;">Purchase Failed..</h3>
                                                 @endif
                                             @else
                                                 <?php $issucc = false; ?>
-                                                <h3 style="margin-top:5px; color: #ff0000;">Purchase Failed...</h3>
+                                                <h3 style="margin-top:5px; color: #ff4c4c !important;">Purchase Failed...</h3>
                                             @endif
                                         @endif
-                                        <h4>{{ old('pamount') }} USDT</h4>
+                                        <h4 style="color: #ffd700 !important;">{{ old('pamount') }} USDT</h4>
                                     </div>
 
                                     <div style="display: flex; justify-content: center;">

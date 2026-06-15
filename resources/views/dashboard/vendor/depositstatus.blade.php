@@ -102,41 +102,268 @@ ini_set('display_errors', 1);
 
                             <!-- Basic Bootstrap Table -->
                             <style>
-                                .card-header{
-                                    background-color: #f9a826ff;
-                                    color: #fff;
+                                /* Premium Card Redesign */
+                                .premium-card {
+                                    background: linear-gradient(135deg, rgba(7, 31, 23, 0.95), rgba(12, 40, 32, 0.95)) !important;
+                                    backdrop-filter: blur(16px);
+                                    -webkit-backdrop-filter: blur(16px);
+                                    border: 1px solid rgba(249, 168, 38, 0.25) !important;
+                                    border-radius: 20px !important;
+                                    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.55) !important;
+                                    overflow: hidden;
+                                    margin-bottom: 2rem !important;
                                 }
-                                table thead tr th{
-                                    border: 1px solid #000 !important;
+
+                                .premium-card .card-header {
+                                    background: rgba(255, 255, 255, 0.02) !important;
+                                    border-bottom: 1px solid rgba(249, 168, 38, 0.15) !important;
+                                    padding: 24px 30px !important;
                                 }
-                                table tr{
-                                    border: 1px solid #000 !important;
+
+                                .premium-card .card-header h5 {
+                                    color: #ffd700 !important;
+                                    font-size: 22px !important;
+                                    font-weight: 700 !important;
+                                    letter-spacing: 2px !important;
+                                    margin: 0 !important;
+                                    text-transform: uppercase;
+                                    background: linear-gradient(90deg, #ffd700, #f9a826);
+                                    -webkit-background-clip: text !important;
+                                    -webkit-text-fill-color: transparent !important;
                                 }
-                                table tr td{
-                                    border: 1px solid #000 !important;
+
+                                /* Premium Table Styling */
+                                .premium-table {
+                                    margin-bottom: 0 !important;
+                                    background: transparent !important;
+                                    color: #ffffff !important;
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                .premium-table thead {
+                                    background: rgba(255, 255, 255, 0.03) !important;
+                                }
+
+                                .premium-table thead th {
+                                    border: none !important;
+                                    border-bottom: 2px solid rgba(249, 168, 38, 0.25) !important;
+                                    color: #ffd700 !important;
+                                    font-weight: 700 !important;
+                                    text-transform: uppercase;
+                                    font-size: 12px !important;
+                                    letter-spacing: 1px !important;
+                                    padding: 18px 24px !important;
+                                }
+
+                                .premium-table tbody tr {
+                                    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+                                    transition: background 0.3s ease;
+                                }
+
+                                .premium-table tbody tr:hover {
+                                    background: rgba(249, 168, 38, 0.05) !important;
+                                }
+
+                                .premium-table tbody td {
+                                    border: none !important;
+                                    padding: 16px 24px !important;
+                                    color: rgba(255, 255, 255, 0.9) !important;
+                                    font-size: 14px !important;
+                                    vertical-align: middle;
+                                }
+
+                                /* Status Badges */
+                                .premium-badge-success {
+                                    background: rgba(0, 208, 148, 0.15) !important;
+                                    border: 1px solid rgba(0, 208, 148, 0.3) !important;
+                                    color: #00D094 !important;
+                                    padding: 6px 12px !important;
+                                    border-radius: 30px !important;
+                                    font-weight: 700 !important;
+                                    font-size: 12px !important;
+                                    letter-spacing: 0.5px;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    gap: 4px;
+                                }
+
+                                .premium-badge-warning {
+                                    background: rgba(249, 168, 38, 0.15) !important;
+                                    border: 1px solid rgba(249, 168, 38, 0.3) !important;
+                                    color: #f9a826 !important;
+                                    padding: 6px 12px !important;
+                                    border-radius: 30px !important;
+                                    font-weight: 700 !important;
+                                    font-size: 12px !important;
+                                    letter-spacing: 0.5px;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    gap: 4px;
+                                }
+
+                                .premium-badge-danger {
+                                    background: rgba(255, 76, 76, 0.15) !important;
+                                    border: 1px solid rgba(255, 76, 76, 0.3) !important;
+                                    color: #ff4c4c !important;
+                                    padding: 6px 12px !important;
+                                    border-radius: 30px !important;
+                                    font-weight: 700 !important;
+                                    font-size: 12px !important;
+                                    letter-spacing: 0.5px;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    gap: 4px;
+                                }
+
+                                /* Progress bar inside table */
+                                .premium-progress-container {
+                                    width: 160px;
+                                }
+
+                                .premium-progress-text {
+                                    font-size: 10px;
+                                    color: rgba(255, 255, 255, 0.5);
+                                    display: block;
+                                    margin-top: 4px;
+                                }
+
+                                .premium-progress-bar-bg {
+                                    width: 100%;
+                                    height: 8px;
+                                    background: rgba(0, 0, 0, 0.4);
+                                    border-radius: 10px;
+                                    overflow: hidden;
+                                    border: 1px solid rgba(255, 255, 255, 0.05);
+                                }
+
+                                .premium-progress-bar-fill {
+                                    height: 100%;
+                                    background: linear-gradient(90deg, #00D094, #ffd700, #f9a826);
+                                    border-radius: 10px;
+                                    transition: width 0.4s ease;
+                                }
+
+                                /* Action Links */
+                                .premium-action-link {
+                                    background: linear-gradient(135deg, #ffd700, #a78200) !important;
+                                    color: #071f17 !important;
+                                    font-weight: 700 !important;
+                                    font-size: 12px !important;
+                                    padding: 6px 16px !important;
+                                    border-radius: 6px !important;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    gap: 4px;
+                                    text-transform: uppercase;
+                                    letter-spacing: 0.5px;
+                                    box-shadow: 0 4px 10px rgba(249, 168, 38, 0.25);
+                                    transition: all 0.3s ease;
+                                    text-decoration: none;
+                                }
+
+                                .premium-action-link:hover {
+                                    background: linear-gradient(135deg, #ffffff, #ffd700) !important;
+                                    transform: translateY(-2px);
+                                    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.35);
+                                    color: #071f17 !important;
+                                }
+
+                                /* Header Override */
+                                .container-xxl h4.fw-bold {
+                                    color: #ffffff !important;
+                                    font-weight: 700 !important;
+                                    letter-spacing: 0.5px;
+                                }
+
+                                .container-xxl h4.fw-bold .text-muted {
+                                    color: rgba(255, 255, 255, 0.55) !important;
                                 }
                             </style>
-                            <div 
-                            class="card" style="position: relative;">
-                             <h5
-                                    style="padding: 1.125rem 1.25rem !important;"
-                                    class="card-header">Deposit status</h5>
+                            @php
+                                 if(isset($_GET['plnid'])){
+                                     $first_plan = DB::table('customer_plans')->where('id', $_GET['plnid'])->first();
+                                     $target_csId = $first_plan ? $first_plan->csId : $v->id;
+                                 }else{
+                                     $target_csId = $v->id;
+                                 }
+
+                                 $total_staked = (float) DB::table('customer_plans')->where('csId', $target_csId)->where('pstatus', '1')->sum('pamount');
+                                 $overall_limit_cap = 2 * $total_staked;
+                                 $total_earned = (float) DB::table('customer_transactions')->where('csId', $target_csId)->where('wStatus', '0')->sum('tAmount');
+                                 $total_earned = max(0.0, $total_earned);
+                                 $overall_progress_percent = $overall_limit_cap > 0 ? min(100, ($total_earned / $overall_limit_cap) * 100) : 0;
+
+                                $get_gradient_color = function($percentage) {
+                                    $stops = [
+                                        ['p' => 0.0, 'r' => 0, 'g' => 208, 'b' => 148],
+                                        ['p' => 33.33, 'r' => 255, 'g' => 215, 'b' => 0],
+                                        ['p' => 66.67, 'r' => 249, 'g' => 168, 'b' => 38],
+                                        ['p' => 100.0, 'r' => 185, 'g' => 28, 'b' => 28]
+                                    ];
+                                    if ($percentage <= 0) return '#00D094';
+                                    if ($percentage >= 100) return '#b91c1c';
+                                    for ($i = 0; $i < count($stops) - 1; $i++) {
+                                        $curr = $stops[$i];
+                                        $next = $stops[$i+1];
+                                        if ($percentage >= $curr['p'] && $percentage <= $next['p']) {
+                                            $diff = $next['p'] - $curr['p'];
+                                            $factor = ($percentage - $curr['p']) / $diff;
+                                            $r = round($curr['r'] + ($next['r'] - $curr['r']) * $factor);
+                                            $g = round($curr['g'] + ($next['g'] - $curr['g']) * $factor);
+                                            $b = round($curr['b'] + ($next['b'] - $curr['b']) * $factor);
+                                            return sprintf("#%02x%02x%02x", $r, $g, $b);
+                                        }
+                                    }
+                                    return '#b91c1c';
+                                };
+                            @endphp
+                            <div class="card mb-4 premium-card">
+                                <div class="card-header d-flex align-items-center justify-content-between pb-2">
+                                    <h5 class="mb-0">Deposit status</h5>
+                                </div>
+
+                                @if($total_staked > 0)
+                                <div class="px-4 pb-3" style="border-bottom: 1px solid rgba(212, 175, 55, 0.12);">
+                                    <div style="display: flex; flex-direction: column; gap: 8px; max-width: 500px; margin-top: 10px;">
+                                        <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+                                            <span style="font-size: 12px; color: rgba(255,255,255,0.75); font-weight: 600; white-space: nowrap;">Overall 2X Limit Progress</span>
+                                            <div style="flex: 1; height: 10px; background-color: #222; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
+                                                <div style="width: {{ $overall_progress_percent }}%; height: 100%; background: linear-gradient(90deg, #00D094, #ffd700, #f9a826, #b91c1c) no-repeat; background-size: {{ $overall_progress_percent > 0 ? (100 / $overall_progress_percent) * 100 : 100 }}% 100%; border-radius: 10px; transition: width 0.5s ease-in-out;"></div>
+                                            </div>
+                                            @php
+                                                $overall_progress_color = $get_gradient_color($overall_progress_percent);
+                                            @endphp
+                                            <span style="font-size: 12px; font-weight: 700; color: {{ $overall_progress_color }}; white-space: nowrap; min-width: 60px; text-align: right;">
+                                                @if($overall_progress_percent >= 100)
+                                                    Completed
+                                                @else
+                                                    {{ number_format($overall_progress_percent, 1) }}%
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: rgba(255,255,255,0.55); margin-top: 2px;">
+                                            <span>Total Staked: {{ number_format($total_staked, 2) }} USDT</span>
+                                            <span>Earned: {{ number_format($total_earned, 2) }} / Limit: {{ number_format($overall_limit_cap, 2) }} USDT</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
                                 <div class="table-responsive text-nowrap">
-                                    <table class="table">
+                                    <table class="table premium-table">
                                         <thead>
                                             <tr>
                                                 <th>NO</th>
                                                 <th>Start Date And Time</th>
-                                                <th>End Date</th>
                                                 @if(isset($_GET['plnid']))
                                                 <th>Name</th>
                                                 @endif
-                                                <th>Package</th>
-                                                <th>Amount</th>
-                                                <!-- <th>Users</th> -->
+                                                {{-- <th>Package</th> --}}
+                                                <th>Amount Staked</th>
+                                                <th>Total Earned</th>
                                                 <th>Status</th>
-                                                <th>Link</th>
-                                                <!-- <th>Actions</th> -->
+                                                {{-- <th>Action</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody class="table-border-bottom-0">
@@ -168,70 +395,64 @@ ini_set('display_errors', 1);
                                             ?>
 
                                             @if($cmpmain)
+                                            <?php
+                                            $earned = DB::table('customer_transactions')
+                                                ->where('planId', $plan->id)
+                                                ->where('tType', 'pincome')
+                                                ->sum('tAmount');
+                                            $earned = max(0.0, (float) $earned);
+                                            $limit_cap = 2 * (float) $plan->pamount;
+                                            $progress_percent = $limit_cap > 0 ? min(100, ($earned / $limit_cap) * 100) : 0;
+                                            ?>
                                             <tr>
                                                 <td>
                                                     {{$i}}
                                                 </td>
-                                                    <td>
-                                                    {{
-                                                    date('d, M, Y h:i a',
-                                                    strtotime($plan->created_at))
-                                                    }}
-                                                </td>
                                                 <td>
-                                                    {{
-                                                        date('d, M, Y', strtotime('+15 months', strtotime($plan->created_at)))
-                                                    }}
+                                                    {{ date('d, M, Y h:i a', strtotime($plan->created_at)) }}
                                                 </td>
                                                 @if(isset($_GET['plnid']))
-                                                <th>
-                                                    <a href="/dashboard/profile?prfid={{$usr->id}}">
-                                                    {{ $usr->name }}
+                                                <td>
+                                                    <a href="/dashboard/profile?prfid={{$usr->id}}" style="color: #ffd700; font-weight: 600; text-decoration: none;">
+                                                    {{ $usr->uid }}
                                                     </a>
-                                                </th>
+                                                </td>
                                                 @endif
-                                                    <td>
-                                                        {{ getPname($plan->pname) }}</td>
-                                                <td>{{ $plan->pamount }} USDT</td>
+                                                {{-- <td>
+                                                    {{ getPname($plan->pname) }}
+                                                </td> --}}
+                                                <td style="font-weight: 600;">
+                                                    {{ number_format($plan->pamount, 2) }} USDT
+                                                </td>
+                                                <td style="font-weight: 600; color: #00D094;">
+                                                    {{ number_format($earned, 2) }} USDT
+                                                </td>
                                                 <td>
                                                     @if ($plan->pstatus == '1')
-                                                    <span
-                                                        class="badge bg-label-success me-1">Credit</span>
-                                                    @endif
-                                                    @if ($plan->pstatus == '0')
-                                                    <span
-                                                        class="badge bg-label-warning me-1">Pending</span>
-                                                    @endif
-                                                    @if ($plan->pstatus == '3')
-                                                    <span
-                                                        class="badge bg-label-danger me-1">Expired</span>
+                                                        @if ($progress_percent >= 100)
+                                                            <span class="premium-badge-danger"><i class="bx bx-check-shield"></i> Completed</span>
+                                                        @else
+                                                            <span class="premium-badge-success"><i class="bx bx-refresh"></i> Active</span>
+                                                        @endif
+                                                    @elseif ($plan->pstatus == '0')
+                                                        <span class="premium-badge-warning"><i class="bx bx-time-five"></i> Pending</span>
+                                                    @elseif ($plan->pstatus == '3')
+                                                        <span class="premium-badge-danger"><i class="bx bx-error-circle"></i> Expired</span>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                @if($plan->pname == 'compound' || $plan->pname == 'reinvest_compound')
-                                                @if(!isset($plan->cmpId))
-                                                <a href="/dashboard/status/compound/{{$plan->id}}">
-                                                View
-                                                </a>
-                                                @endif
-                                                @else 
-                                                <a href="/dashboard/status/depositview/{{$plan->id}}">
-                                                    View
-                                                    </a>
-                                                @endif
-                                                </td>
-                                                <!-- <td>
-                                                    <div class="dropdown">
-
-                                                        <a
-                                                            class="dropdown-item"
-                                                            style="padding: 0 !important;"
-                                                            href="/dashboard"><i
-                                                                class="bx bxs-contact me-1"></i>
-                                                            View</a>
-
-                                                    </div>
-                                                </td> -->
+                                                {{-- <td>
+                                                    @if($plan->pname == 'compound' || $plan->pname == 'reinvest_compound')
+                                                        @if(!isset($plan->cmpId))
+                                                            <a href="/dashboard/status/compound/{{$plan->id}}" class="premium-action-link">
+                                                                <i class="bx bx-show-alt"></i> View
+                                                            </a>
+                                                        @endif
+                                                    @else 
+                                                        <a href="/dashboard/status/depositview/{{$plan->id}}" class="premium-action-link">
+                                                            <i class="bx bx-show-alt"></i> View
+                                                        </a>
+                                                    @endif
+                                                </td> --}}
                                             </tr>
                                             @endif
                                             @endforeach
@@ -242,7 +463,7 @@ ini_set('display_errors', 1);
                             </div>
                             <!--/ Basic Bootstrap Table -->
 
-                            <hr class="my-5" />
+                            {{-- <hr class="my-5" /> --}}
 
                             <!-- Footer -->
                             @include('dashboard.dcards.footer')

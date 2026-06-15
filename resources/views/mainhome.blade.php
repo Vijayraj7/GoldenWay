@@ -883,9 +883,9 @@ if (isset($_GET['page'])) {
                             >
                                 <a title="About Us" href="#gms-academy" class="nav-links">GWI Academy</a>
                             </li> -->
-                            <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-818" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-818 nav-item">
+                            {{-- <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-818" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-818 nav-item">
                                 <a title="About Us" href="/all/calculator?amnt=100&typ=compound" class="nav-links">Package Calculation</a>
-                            </li>
+                            </li> --}}
                             <li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-819" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-819 nav-item">
                                 <a title="Contact Us" href="#colophon" class="nav-links">Contact Us</a>
                             </li>
@@ -3242,13 +3242,13 @@ if (isset($_GET['page'])) {
                                         </p>
                                     </div>
                                 </div>
-                                <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
+                                {{-- <div class="elementor-element elementor-element-211649c elementor-widget elementor-widget-tg-btn" data-id="211649c" data-element_type="widget" data-widget_type="tg-btn.default">
                                     <div class="elementor-widget-container">
                                         <a href="/?page=incomeplan" target="_self" rel="nofollow" style="background-color: #f9a826ff; border-color: #f9a826ff;" class="trk-btn trk-btn--border trk-btn--primary">
                                             View All
                                         </a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="elementor-element elementor-element-3d03e0f e-con-full e-flex e-con e-child" data-id="3d03e0f" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;full&quot;}">
                                 <div class="elementor-element elementor-element-8a79fe6 elementor-widget elementor-widget-genix-image" data-id="8a79fe6" data-element_type="widget" data-widget_type="genix-image.default">
@@ -5205,15 +5205,14 @@ if (isset($_GET['page'])) {
                             <div class="elementor-widget-container">
 
                                 <div class="section-title">
-                                    <h2 class="title">Our <span>Projects</span></h2>
+                                    <h2 class="title">Our <span>Business Verticals</span></h2>
                                 </div>
 
                             </div>
                         </div>
                         <div class="elementor-element elementor-element-c258034 elementor-widget elementor-widget-heading" data-id="c258034" data-element_type="widget" data-widget_type="heading.default">
                             <div class="elementor-widget-container">
-                                <p class="elementor-heading-title elementor-size-default">The roadmap shows
-                                    the path ahead, helps teams plan, and guides the delivery of the product.
+                                <p class="elementor-heading-title elementor-size-default">GoldenWay International diversifies wealth creation across multiple high-growth global sectors — combining technology, commodities, and real-world assets to deliver consistent, sustainable returns.
                                 </p>
                             </div>
                         </div>
@@ -5235,47 +5234,142 @@ if (isset($_GET['page'])) {
                         <div class="roadmap--style1">
                             <div class="roadmap__wrapper">
                                 <div class="row gy-4 gy-md-0 gx-5">
+
+                                    <!-- 01 Crypto Staking (right) -->
                                     <div class="col-md-6 offset-md-6">
                                         <div class="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
                                             <div class="roadmap__item-inner">
                                                 <div class="roadmap__item-content">
                                                     <div class="roadmap__item-header">
-                                                        <h3>Website launching</h3>
-                                                        <span>Q2</span>
+                                                        <h3>Crypto Staking</h3>
+                                                        <span>01</span>
                                                     </div>
-                                                    <p>Website launching and first level leaders meet in india.
-                                                    </p>
+                                                    <p>We stake leading proof-of-stake cryptocurrencies across multiple blockchain networks, generating passive validator rewards while maintaining high liquidity and security for our investors.</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 ">
+
+                                    <!-- 02 Tourism (left) -->
+                                    <div class="col-md-6">
                                         <div class="roadmap__item roadmap__item--style2 ms-auto me-md-4 aos-init aos-animate" data-aos="fade-right" data-aos-duration="800">
                                             <div class="roadmap__item-inner">
                                                 <div class="roadmap__item-content">
                                                     <div class="roadmap__item-header">
-                                                        <h3>International launching</h3>
-                                                        <span>Q3</span>
+                                                        <h3>Tourism</h3>
+                                                        <span>02</span>
                                                     </div>
-                                                    <p>Second leaders meet and international launching at dubai.
-                                                    </p>
+                                                    <p>Our global tourism portfolio connects premium travel experiences across Asia, the Middle East, and Europe — driving revenue through hospitality partnerships, travel packages, and destination management services.</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- 03 Forex Trading (right) -->
                                     <div class="col-md-6 offset-md-6">
                                         <div class="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
                                             <div class="roadmap__item-inner">
                                                 <div class="roadmap__item-content">
                                                     <div class="roadmap__item-header">
-                                                        <h3>Financial ecosystem</h3>
-                                                        <span>Q4</span>
+                                                        <h3>Forex Trading</h3>
+                                                        <span>03</span>
                                                     </div>
-                                                    <p>Thrive card launching</p>
+                                                    <p>Using AI-assisted quantitative strategies and cross-pair arbitrage models, our Forex desk trades major and emerging market currency pairs around the clock — delivering consistent, low-drawdown returns.</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- 04 Gold Trading (left) -->
+                                    <div class="col-md-6">
+                                        <div class="roadmap__item roadmap__item--style2 ms-auto me-md-4 aos-init aos-animate" data-aos="fade-right" data-aos-duration="800">
+                                            <div class="roadmap__item-inner">
+                                                <div class="roadmap__item-content">
+                                                    <div class="roadmap__item-header">
+                                                        <h3>Gold Trading</h3>
+                                                        <span>04</span>
+                                                    </div>
+                                                    <p>We participate in physical and digital gold markets, leveraging commodity price movements and safe-haven demand cycles to generate steady returns — a time-tested hedge against global financial uncertainty.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 05 Real Estate Business (right) -->
+                                    <div class="col-md-6 offset-md-6">
+                                        <div class="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
+                                            <div class="roadmap__item-inner">
+                                                <div class="roadmap__item-content">
+                                                    <div class="roadmap__item-header">
+                                                        <h3>Real Estate Business</h3>
+                                                        <span>05</span>
+                                                    </div>
+                                                    <p>Our real estate arm invests in high-yield residential and commercial properties across key growth markets, generating rental income and capital appreciation — a cornerstone of long-term wealth creation.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 06 Blockchain Technology (left) -->
+                                    <div class="col-md-6">
+                                        <div class="roadmap__item roadmap__item--style2 ms-auto me-md-4 aos-init aos-animate" data-aos="fade-right" data-aos-duration="800">
+                                            <div class="roadmap__item-inner">
+                                                <div class="roadmap__item-content">
+                                                    <div class="roadmap__item-header">
+                                                        <h3>Blockchain Technology</h3>
+                                                        <span>06</span>
+                                                    </div>
+                                                    <p>We develop and deploy custom smart contracts, decentralized protocols, and Web3 infrastructure — building the backbone of tomorrow's financial ecosystem while generating returns through tokenized asset programs and validator networks.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 07 Agriculture Farming (right) -->
+                                    <div class="col-md-6 offset-md-6">
+                                        <div class="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
+                                            <div class="roadmap__item-inner">
+                                                <div class="roadmap__item-content">
+                                                    <div class="roadmap__item-header">
+                                                        <h3>Agriculture Farming</h3>
+                                                        <span>07</span>
+                                                    </div>
+                                                    <p>GWI invests in large-scale sustainable farming operations across fertile regions, cultivating staple and cash crops. Agri-investments provide inflation-resistant, real-asset backed returns with growing global food demand as a tailwind.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 08 Export & Import (left) -->
+                                    <div class="col-md-6">
+                                        <div class="roadmap__item roadmap__item--style2 ms-auto me-md-4 aos-init aos-animate" data-aos="fade-right" data-aos-duration="800">
+                                            <div class="roadmap__item-inner">
+                                                <div class="roadmap__item-content">
+                                                    <div class="roadmap__item-header">
+                                                        <h3>Export &amp; Import</h3>
+                                                        <span>08</span>
+                                                    </div>
+                                                    <p>Our international trade division facilitates the movement of high-demand commodities and manufactured goods across global markets — creating diversified revenue streams through strategic trade partnerships and logistics networks.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 09 Agro Technology (right) -->
+                                    <div class="col-md-6 offset-md-6">
+                                        <div class="roadmap__item ms-md-4 aos-init aos-animate" data-aos="fade-left" data-aos-duration="800">
+                                            <div class="roadmap__item-inner">
+                                                <div class="roadmap__item-content">
+                                                    <div class="roadmap__item-header">
+                                                        <h3>Agro Technology</h3>
+                                                        <span>09</span>
+                                                    </div>
+                                                    <p>We invest in precision agriculture technology — drone farming, IoT soil sensors, and AI-driven crop management platforms — revolutionizing food production efficiency and delivering technology-backed returns from the agriculture sector.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -5558,6 +5652,7 @@ if (isset($_GET['page'])) {
             }
 
         </style>
+        @if(false)
         <div class="stticky">
             <div class="stticky-text">GWI EVENTS</div>
             <div class="elementor-element elementor-element-47b6712 e-flex e-con-boxed e-con e-parent" data-id="47b6712" id="low-latency" data-element_type="container" data-settings="{&quot;content_width&quot;:&quot;boxed&quot;}" data-core-v316-plus="true">
@@ -5733,6 +5828,7 @@ if (isset($_GET['page'])) {
                 </div>
             </div>
         </div>
+        @endif
         @endif
 
         <!-- Sbscrib -->

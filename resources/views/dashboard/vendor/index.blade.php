@@ -283,113 +283,133 @@ if (count($plans) == 0) {
                                             opacity: 1;
                                         }
 
-                                        .shr-referral {
+                                        .dashboard-top-buttons-row {
+                                            display: flex;
+                                            justify-content: space-between;
+                                            align-items: stretch;
+                                            gap: 12px;
+                                            width: 100%;
                                             margin-bottom: 20px;
-                                            /* color: var(--secondary-color); */
+                                        }
+
+                                        .dashboard-top-buttons-row .shr-referral {
+                                            flex: 1;
+                                            margin: 0 !important;
+                                            display: inline-flex !important;
+                                            align-items: center !important;
+                                            justify-content: center !important;
+                                            text-align: center;
+                                            min-height: 48px;
+                                            padding: 8px 12px !important;
+                                            font-size: 13px !important;
+                                            font-weight: 600 !important;
+                                            line-height: 1.2 !important;
                                             color: #000;
-                                            border-color: var(--secondary-color);
+                                            border: 1px solid var(--secondary-color) !important;
+                                            border-radius: 8px !important;
+                                            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+                                            background-color: #fff !important;
+                                            transition: all 0.3s ease !important;
                                         }
 
-                                        .shr-referral:hover {
-                                            color: #fff;
-                                            border-color: var(--secondary-color);
-                                            background-color: transparent;
+                                        .dashboard-top-buttons-row .shr-referral:hover {
+                                            color: #fff !important;
+                                            border-color: var(--secondary-color) !important;
+                                            background-color: transparent !important;
+                                            box-shadow: 0 4px 15px rgba(249, 168, 38, 0.35) !important;
+                                            transform: translateY(-1px);
                                         }
 
-                                        .gotos a {
-                                            font-size: 12px !important;
+                                        @media (max-width: 576px) {
+                                            .dashboard-top-buttons-row {
+                                                gap: 8px;
+                                            }
+                                            .dashboard-top-buttons-row .shr-referral {
+                                                font-size: 11px !important;
+                                                padding: 6px 8px !important;
+                                                min-height: 40px;
+                                                border-radius: 6px !important;
+                                            }
                                         }
 
                                     </style>
                                     <div style="margin-bottom: 15px;" class="col-lg-12 col-md-12 col-12 mb-12">
+                                        <div class="dashboard-top-buttons-row">
+                                            <a href="/dashboard/reftree/{{$v->id}}" class="btn btn-light shr-referral">
+                                                Community
+                                            </a>
 
-                                        <div style="display: flex; justify-content: space-between;">
+                                            @if(false)
+                                            <a id="downldapp_btn" href="https://play.google.com/store/apps/details?id=com.forv.globalmarketstars" target="_blank" class="btn btn-light shr-referral">
+                                                Download App
+                                            </a>
+                                            @endif
 
-                                            <div class="gotos">
-                                                @if (false)
-                                                <a href="/pdf/gms3.pdf" download="_pdf_gms.pdf" class="btn btn-light shr-referral">
-                                                    Download PDF
-                                                </a>
-                                                @endif
+                                            @if (DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') > 0)
+                                            <button type="button" id="shcopyButton" class="btn btn-light shr-referral" data-bs-toggle="modal" data-bs-target="#referralDirectionModal">
+                                                Share Referral
+                                            </button>
+                                            @endif
+                                        </div>
 
-                                                <a href="/dashboard/reftree/{{$v->id}}" class="btn btn-light shr-referral">
-                                                    Community
-                                                </a>
-                                            </div>
+                                        <script>
+                                            var isandroid = true;
+                                            try {
+                                                FlutterBridge.postMessage('ss:sc');
+                                            } catch (e) {
+                                                var isandroid = false;
+                                            }
+                                            if (isandroid) {
+                                                document.getElementById('downldapp_btn').style.display = 'none';
+                                            }
+                                        </script>
 
-                                            <div class="gotos" style="display: flex; justify-content: end;">
-
-
-                                                <a id="downldapp_btn" href="https://play.google.com/store/apps/details?id=com.forv.globalmarketstars" target="_blank" class="btn btn-light shr-referral">
-                                                    Download App
-                                                </a>
-                                                <script>
-                                                    var isandroid = true;
-                                                    try {
-                                                        FlutterBridge.postMessage('ss:sc');
-                                                    } catch (e) {
-                                                        var isandroid = false;
-                                                    }
-                                                    if (isandroid) {
-                                                        document.getElementById('downldapp_btn').style.display = 'none';
-                                                    }
-
-                                                </script>
-
-                                                <?php
-                                                // URL encode the parameter values
-                                                $text = urlencode('https://' . $_SERVER['HTTP_HOST'] . '/register?ref=' . $v->id . '&name=' . $v->name);
-                                                
-                                                // Construct the WhatsApp message link
-                                                $whatsappLink = 'whatsapp://send?text=' . $text;
-                                                ?>
-                                                @if (DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') > 0)
-                                                <button type="button" id="shcopyButton" style="margin-left: 25px;" class="btn btn-light shr-referral" data-bs-toggle="modal" data-bs-target="#referralDirectionModal">
-                                                    Share Referral
-                                                </button>
-
-                                                <!-- Referral Direction Modal -->
-                                                <div class="modal fade" id="referralDirectionModal" tabindex="-1" aria-hidden="true" style="z-index:2000;">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <div class="modal-content" style="padding: 1.5rem; background-color: #111; color: #fff; border-radius: 15px;">
-                                                            <div class="modal-header" style="border-bottom:none;">
-                                                                <h5 class="modal-title">Select Referral Direction
-                                                                </h5>
-                                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p>Choose which side to send your referral link:</p>
-                                                            </div>
-                                                            <div class="modal-footer" style="border-top:none;">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary" style="background-color: #8d6900; border-color: #8d6900;" onclick="shareReferralWithDirection('left', '{{ $v->id }}', '{{ $v->name }}')">Left</button>
-                                                                <button type="button" class="btn btn-success" style="background-color: #8d6900; border-color: #8d6900;" onclick="shareReferralWithDirection('right', '{{ $v->id }}', '{{ $v->name }}')">Right</button>
-                                                            </div>
-                                                        </div>
+                                        <?php
+                                        // URL encode the parameter values
+                                        $text = urlencode('https://' . $_SERVER['HTTP_HOST'] . '/register?ref=' . $v->id . '&name=' . $v->name);
+                                        
+                                        // Construct the WhatsApp message link
+                                        $whatsappLink = 'whatsapp://send?text=' . $text;
+                                        ?>
+                                        @if (DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') > 0)
+                                        <!-- Referral Direction Modal -->
+                                        <div class="modal fade" id="referralDirectionModal" tabindex="-1" aria-hidden="true" style="z-index:2000;">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content" style="padding: 1.5rem; background-color: #111; color: #fff; border-radius: 15px;">
+                                                    <div class="modal-header" style="border-bottom:none;">
+                                                        <h5 class="modal-title">Select Referral Direction</h5>
+                                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Choose which side to send your referral link:</p>
+                                                    </div>
+                                                    <div class="modal-footer" style="border-top:none;">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary" style="background-color: #8d6900; border-color: #8d6900;" onclick="shareReferralWithDirection('left', '{{ $v->id }}', '{{ $v->name }}')">Left</button>
+                                                        <button type="button" class="btn btn-success" style="background-color: #8d6900; border-color: #8d6900;" onclick="shareReferralWithDirection('right', '{{ $v->id }}', '{{ $v->name }}')">Right</button>
                                                     </div>
                                                 </div>
-
-                                                <script>
-                                                    function shareReferralWithDirection(direction, userId, userName) {
-                                                        var url = "https://" + window.location.host + "/register?ref=" + userId + "&dir=" + direction + "&name=" +
-                                                            userName;
-
-                                                        navigator.clipboard.writeText(url)
-                                                            .then(function() {
-                                                                alert('Referral link copied to clipboard!');
-                                                                var modal = bootstrap.Modal.getInstance(document.getElementById('referralDirectionModal'));
-                                                                modal.hide();
-                                                            })
-                                                            .catch(function(error) {
-                                                                console.error('Could not copy URL: ', error);
-                                                                alert('Could not copy URL. Please try again.');
-                                                            });
-                                                    }
-
-                                                </script>
-                                                @endif
                                             </div>
                                         </div>
+
+                                        <script>
+                                            function shareReferralWithDirection(direction, userId, userName) {
+                                                var url = "https://" + window.location.host + "/register?ref=" + userId + "&dir=" + direction + "&name=" + userName;
+
+                                                navigator.clipboard.writeText(url)
+                                                    .then(function() {
+                                                        alert('Referral link copied to clipboard!');
+                                                        var modal = bootstrap.Modal.getInstance(document.getElementById('referralDirectionModal'));
+                                                        modal.hide();
+                                                    })
+                                                    .catch(function(error) {
+                                                        console.error('Could not copy URL: ', error);
+                                                        alert('Could not copy URL. Please try again.');
+                                                    });
+                                            }
+                                        </script>
+                                        @endif
+                                    </div>
 
                                         <div class="gotos" style="display: none; justify-content: end;">
 
@@ -530,7 +550,7 @@ if (count($plans) == 0) {
 
                                         .card-body .align-items-center {
                                             border-bottom: 1px dotted rgba(249, 168, 38, 0.2);
-                                            padding-bottom: 9px;
+                                            padding-bottom: 0px;
                                         }
 
                                         .card-body .card-title .wlt {
@@ -565,8 +585,122 @@ if (count($plans) == 0) {
 
                                         @media (max-width: 576px) {
                                             .dashboard-grid {
-                                                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                                                gap: 16px;
+                                            }
+                                            .card-body .fw-semibold {
+                                                font-size: 16px !important;
+                                            }
+                                            .premium-card .card-title.h3-large {
+                                                font-size: 18px !important;
+                                            }
+                                            .premium-card .crd-title {
+                                                font-size: 10px !important;
+                                            }
+                                            .card-body .card-title {
+                                                font-size: 11px !important;
+                                            }
+                                            .card-body .card-title span {
+                                                font-size: 9px !important;
+                                            }
+                                            .numberx {
+                                                font-size: 16px !important;
+                                            }
+                                            .withdrawn-title {
+                                                font-size: 11px !important;
+                                            }
+                                            .balanc, .premium-card .balanc {
+                                                font-size: 9px !important;
+                                            }
+                                        }
+
+                                        @media (max-width: 1199px) {
+                                            .wallet-grid-card {
+                                                grid-column: span 2;
+                                            }
+                                        }
+
+                                        @media (max-width: 950px) {
+                                            .wallet-grid-card {
+                                                grid-column: span 2 !important;
+                                            }
+                                        }
+
+                                        @media (max-width: 750px) {
+                                            .top-dashboard-grid {
+                                                grid-template-columns: 1fr !important;
+                                            }
+                                            .wallet-grid-card {
+                                                grid-column: span 1 !important;
+                                            }
+                                            .card-body .fw-semibold {
+                                                font-size: 19px !important;
+                                            }
+                                            .premium-card .card-title.h3-large {
+                                                font-size: 21px !important;
+                                            }
+                                            .premium-card .crd-title {
+                                                font-size: 12px !important;
+                                            }
+                                            .card-body .card-title {
+                                                font-size: 13px !important;
+                                            }
+                                            .card-body .card-title span {
+                                                font-size: 11px !important;
+                                            }
+                                            .numberx {
+                                                font-size: 20px !important;
+                                            }
+                                            .withdrawn-title {
+                                                font-size: 13px !important;
+                                            }
+                                            .balanc, .premium-card .balanc {
+                                                font-size: 10px !important;
+                                            }
+                                            .premium-btn {
+                                                font-size: 11px !important;
+                                                padding: 8px 12px !important;
+                                            }
+                                        }
+
+                                        @container (max-width: 950px) {
+                                            .wallet-grid-card {
+                                                grid-column: span 2 !important;
+                                            }
+                                        }
+
+                                        @container (max-width: 750px) {
+                                            .top-dashboard-grid {
+                                                grid-template-columns: 1fr !important;
+                                            }
+                                            .wallet-grid-card {
+                                                grid-column: span 1 !important;
+                                            }
+                                            .card-body .fw-semibold {
+                                                font-size: 19px !important;
+                                            }
+                                            .premium-card .card-title.h3-large {
+                                                font-size: 21px !important;
+                                            }
+                                            .premium-card .crd-title {
+                                                font-size: 12px !important;
+                                            }
+                                            .card-body .card-title {
+                                                font-size: 13px !important;
+                                            }
+                                            .card-body .card-title span {
+                                                font-size: 11px !important;
+                                            }
+                                            .numberx {
+                                                font-size: 20px !important;
+                                            }
+                                            .withdrawn-title {
+                                                font-size: 13px !important;
+                                            }
+                                            .balanc, .premium-card .balanc {
+                                                font-size: 10px !important;
+                                            }
+                                            .premium-btn {
+                                                font-size: 11px !important;
+                                                padding: 8px 12px !important;
                                             }
                                         }
 
@@ -692,235 +826,322 @@ if (count($plans) == 0) {
 
                                     </style>
 
-                                    <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 30px;">
-                                        <!-- Subscription Card 1 -->
-                                        <div class="card premium-card">
-                                            <div class="card-body">
-                                                @php
-                                                $sub_amount = (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount');
-                                                $total_sub_earned = (float) DB::table('customer_transactions')->where('csId', $v->id)->sum('tAmount');
-                                                $total_sub_earned = max(0.0, $total_sub_earned);
-                                                $max_sub_cap = 2 * $sub_amount;
-                                                $sub_progress_percentage = $max_sub_cap > 0 ? min(100, ($total_sub_earned / $max_sub_cap) * 100) : 0;
-                                                $is_2x_complete = ($max_sub_cap > 0 && $total_sub_earned >= $max_sub_cap);
-                                                @endphp
-                                                <div style="flex-direction: column;" class="card-title d-flex align-items-center justify-content-around">
-                                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                                        <div class="wlt">
-                                                            <img style="border-radius: 100px;" src="https://icones.pro/wp-content/uploads/2021/05/symbole-de-l-homme-vert.png" alt="chart success" class="rounded">
-                                                        </div>
+                                    <div class="dashboard-grid-container" style="container-type: inline-size; width: 100%;">
+                                        <div class="dashboard-grid top-dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 30px;">
+                                            <!-- Subscription Card 1 -->
+                                            <div class="card premium-card" style="height: 100%;">
+                                                <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                                                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                                                         <div>
-                                                            <span class="crd-title" style="display: block;">Your Subscription</span>
-                                                            <h3 class="card-title h3-large">
-                                                                {{ number_format($sub_amount, 2) }}
-                                                                <span style="font-size: 14px; font-weight: 600; color: #f9a826 !important; padding-left: 2px;">USDT</span>
-                                                            </h3>
-                                                            @if($is_2x_complete)
-                                                            <div style="margin-top: 4px;">
-                                                                <span style="font-size: 10px; font-weight: 700; color: #3b82f6; padding: 2px 8px; border-radius: 12px; background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); display: inline-flex; align-items: center; gap: 4px;">
-                                                                    <i class="bx bxs-check-shield" style="font-size: 12px;"></i> 2X Complete
-                                                                </span>
+                                                            @php
+                                                            $sub_amount = (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount');
+                                                            $total_sub_earned = (float) DB::table('customer_transactions')->where('csId', $v->id)->where('wStatus', '0')->sum('tAmount');
+                                                            $total_sub_earned = max(0.0, $total_sub_earned);
+                                                            $staked_amount = (float) DB::table('customer_plans')->where('csId', $v->id)->where('pstatus', '1')->sum('pamount');
+                                                            $max_sub_cap = 2 * $staked_amount;
+                                                            $sub_progress_percentage = $max_sub_cap > 0 ? min(100, ($total_sub_earned / $max_sub_cap) * 100) : 0;
+                                                            $is_2x_complete = ($max_sub_cap > 0 && $total_sub_earned >= $max_sub_cap);
+                                                            @endphp
+                                                            <div style="flex-direction: column;" class="card-title d-flex align-items-center justify-content-around">
+                                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                                    <div class="wlt">
+                                                                        <img style="border-radius: 100px;" src="https://icones.pro/wp-content/uploads/2021/05/symbole-de-l-homme-vert.png" alt="chart success" class="rounded">
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="crd-title" style="display: block;">Your Subscription</span>
+                                                                        <h3 class="card-title h3-large">
+                                                                            {{ number_format($sub_amount, 2) }}
+                                                                            <span style="font-size: 14px; font-weight: 600; color: #f9a826 !important; padding-left: 2px;">USDT</span>
+                                                                        </h3>
+                                                                        @if($is_2x_complete)
+                                                                        <div style="margin-top: 4px;">
+                                                                            <span style="font-size: 10px; font-weight: 700; color: #3b82f6; padding: 2px 8px; border-radius: 12px; background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); display: inline-flex; align-items: center; gap: 4px;">
+                                                                                <i class="bx bxs-check-shield" style="font-size: 12px;"></i> 2X Complete
+                                                                            </span>
+                                                                        </div>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                @php
+                                                                use Carbon\Carbon;
+                                                                $totplanafterdiamond = DB::table('customer_plans')
+                                                                ->where('pstatus', '1')
+                                                                ->where('csId', $v->id)
+                                                                ->where('created_at', '>=', Carbon::create(2024, 8, 13))
+                                                                ->get()
+                                                                ->sum('pamount');
+                                                                @endphp
+                                                                @if ($totplanafterdiamond >= 1000 && false)
+                                                                <div style="display: flex; align-items: center; margin-top: 8px;">
+                                                                    <span class="crd-title" style="margin-right: 4px; font-size:11px !important;"></span>
+                                                                    <h3 class="card-title" style="color:rgb(255, 0, 255) !important; margin-bottom: 0px !important; font-weight:600; font-size:15px !important;">
+                                                                        @if ($totplanafterdiamond >= 10000)
+                                                                        Diamond 4
+                                                                        @elseif($totplanafterdiamond >= 5000)
+                                                                        Diamond 3
+                                                                        @elseif($totplanafterdiamond >= 3000)
+                                                                        Diamond 2
+                                                                        @elseif($totplanafterdiamond >= 1000)
+                                                                        Diamond 1
+                                                                        @endif
+                                                                    </h3>
+                                                                </div>
+                                                                @endif
                                                             </div>
-                                                            @endif
+                                                            <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px; padding: 0 10px; width: 100%;">
+                                                                <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(249, 168, 38, 0.15); padding: 8px 12px; border-radius: 10px; box-shadow: inset 0 0 8px rgba(0,0,0,0.2);">
+                                                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                                                        <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #ffd700;"></div>
+                                                                        <span class="crd-title" style="font-size: 11px !important; font-weight: 600; color: rgba(255,255,255,0.7) !important; letter-spacing: 0.5px; text-transform: uppercase;">Max Stake</span>
+                                                                    </div>
+                                                                    <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #fff !important; font-size: 13px !important; text-shadow: none !important;">
+                                                                        {{ number_format($sub_amount * 10, 2) }}
+                                                                        <span style="color: #f9a826; font-weight: 600; font-size: 11px;">USDT</span>
+                                                                    </h6>
+                                                                </div>
+                                                                <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(249, 168, 38, 0.15); padding: 8px 12px; border-radius: 10px; box-shadow: inset 0 0 8px rgba(0,0,0,0.2); margin-top: 8px;">
+                                                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                                                        <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #00D094;"></div>
+                                                                        <span class="crd-title" style="font-size: 11px !important; font-weight: 600; color: rgba(255,255,255,0.7) !important; letter-spacing: 0.5px; text-transform: uppercase;">Staked Amount</span>
+                                                                    </div>
+                                                                    <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #fff !important; font-size: 13px !important; text-shadow: none !important;">
+                                                                        {{ $capital }}
+                                                                        <span style="color: #f9a826; font-weight: 600; font-size: 11px;">USDT</span>
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- 2X Cap Progress Linear Design -->
+                                                        @php
+                                                             if (!isset($get_gradient_color)) {
+                                                                 $get_gradient_color = function($percentage) {
+                                                                     $stops = [
+                                                                         ['p' => 0.0, 'r' => 0, 'g' => 208, 'b' => 148],
+                                                                         ['p' => 33.33, 'r' => 255, 'g' => 215, 'b' => 0],
+                                                                         ['p' => 66.67, 'r' => 249, 'g' => 168, 'b' => 38],
+                                                                         ['p' => 100.0, 'r' => 185, 'g' => 28, 'b' => 28]
+                                                                     ];
+                                                                     if ($percentage <= 0) return '#00D094';
+                                                                     if ($percentage >= 100) return '#b91c1c';
+                                                                     for ($i = 0; $i < count($stops) - 1; $i++) {
+                                                                         $curr = $stops[$i];
+                                                                         $next = $stops[$i+1];
+                                                                         if ($percentage >= $curr['p'] && $percentage <= $next['p']) {
+                                                                             $diff = $next['p'] - $curr['p'];
+                                                                             $factor = ($percentage - $curr['p']) / $diff;
+                                                                             $r = round($curr['r'] + ($next['r'] - $curr['r']) * $factor);
+                                                                             $g = round($curr['g'] + ($next['g'] - $curr['g']) * $factor);
+                                                                             $b = round($curr['b'] + ($next['b'] - $curr['b']) * $factor);
+                                                                             return sprintf("#%02x%02x%02x", $r, $g, $b);
+                                                                         }
+                                                                     }
+                                                                     return '#b91c1c';
+                                                                 };
+                                                             }
+                                                             $sub_progress_text = number_format($sub_progress_percentage, 1) . '%';
+                                                             $sub_progress_color = $get_gradient_color($sub_progress_percentage);
+                                                             if ($sub_progress_percentage >= 100) {
+                                                                 $sub_progress_text = 'Completed';
+                                                             }
+                                                        @endphp
+                                                        <div class="w-100" style="margin-top: 15px; margin-bottom: 5px; padding: 0 15px;">
+                                                            <div style="display: flex; align-items: center; gap: 10px; width: 100%; margin-bottom: 5px;">
+                                                                <span style="font-size: 11px; color: rgba(255,255,255,0.7); white-space: nowrap; font-weight: 600;">2X Progress</span>
+                                                                <div style="flex: 1; height: 10px; background-color: #222; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
+                                                                    <div style="width: {{ $sub_progress_percentage }}%; height: 100%; background: linear-gradient(90deg, #00D094, #ffd700, #f9a826, #b91c1c) no-repeat; background-size: {{ $sub_progress_percentage > 0 ? (100 / $sub_progress_percentage) * 100 : 100 }}% 100%; border-radius: 10px; transition: width 0.5s ease-in-out;"></div>
+                                                                </div>
+                                                                <span style="font-size: 11px; font-weight: 700; color: {{ $sub_progress_color }}; white-space: nowrap; min-width: 60px; text-align: right;">{{ $sub_progress_text }}</span>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 10px; color: rgba(255,255,255,0.5);">
+                                                                <span>Earned: {{ number_format($total_sub_earned, 2) }} U</span>
+                                                                <span>Limit: {{ number_format($max_sub_cap, 2) }} U</span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    @php
-                                                    use Carbon\Carbon;
-                                                    $totplanafterdiamond = DB::table('customer_plans')
-                                                    ->where('pstatus', '1')
-                                                    ->where('csId', $v->id)
-                                                    ->where('created_at', '>=', Carbon::create(2024, 8, 13))
-                                                    ->get()
-                                                    ->sum('pamount');
-                                                    @endphp
-                                                    @if ($totplanafterdiamond >= 1000 && false)
-                                                    <div style="display: flex; align-items: center; margin-top: 8px;">
-                                                        <span class="crd-title" style="margin-right: 4px; font-size:11px !important;"></span>
-                                                        <h3 class="card-title" style="color:rgb(255, 0, 255) !important; margin-bottom: 0px !important; font-weight:600; font-size:15px !important;">
-                                                            @if ($totplanafterdiamond >= 10000)
-                                                            Diamond 4
-                                                            @elseif($totplanafterdiamond >= 5000)
-                                                            Diamond 3
-                                                            @elseif($totplanafterdiamond >= 3000)
-                                                            Diamond 2
-                                                            @elseif($totplanafterdiamond >= 1000)
-                                                            Diamond 1
-                                                            @endif
-                                                        </h3>
-                                                    </div>
-                                                    @endif
-                                                </div>
-                                                <div style="border-bottom: none !important; padding-bottom: 0px !important; margin-bottom: 0px !important; flex-direction: column; align-items: center !important; gap: 4px;" class="card-title d-flex justify-content-center">
-                                                    <div style="display: flex; align-items: center; gap: 6px;">
-                                                        <span class="crd-title" style="font-size: 12px !important; color: rgba(255,255,255,0.6) !important;">Maximum Stake -</span>
-                                                        <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #fff !important; font-size: 14px !important;">
-                                                            {{ number_format($sub_amount * 10, 2) }}
-                                                            <span style="color: #f9a826; font-weight: 600;">USDT</span>
-                                                        </h6>
-                                                    </div>
-                                                </div>
 
-                                                <!-- 2X Cap Progress Linear Design -->
-                                                <div class="w-100" style="margin-top: 15px; margin-bottom: 5px; padding: 0 15px;">
-                                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 11px; color: rgba(255,255,255,0.7);">
-                                                        <span>2X Limit Progress</span>
-                                                        <span style="font-weight: 700; color: #ffd700;">{{ number_format($sub_progress_percentage, 1) }}%</span>
+                                                    <div style="border-bottom: none !important; padding-top: 15px !important; margin-top: 15px !important; margin-bottom: 0px !important;" class="card-title d-flex align-items-center justify-content-center">
+                                                        <button type="button" onclick="openSubscribeModal()" style="width: 100%;" class="btn premium-btn">
+                                                            Subscribe
+                                                        </button>
                                                     </div>
-                                                    <div style="width: 100%; height: 10px; background-color: #222; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
-                                                        <div style="width: {{ $sub_progress_percentage }}%; height: 100%; background: linear-gradient(90deg, #00D094, #ffd700, #f9a826, #ef4444) no-repeat; background-size: {{ $sub_progress_percentage > 0 ? (100 / $sub_progress_percentage) * 100 : 100 }}% 100%; border-radius: 10px; transition: width 0.5s ease-in-out;"></div>
-                                                    </div>
-                                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 10px; color: rgba(255,255,255,0.5);">
-                                                        <span>Earned: {{ number_format($total_sub_earned, 2) }} U</span>
-                                                        <span>Limit: {{ number_format($max_sub_cap, 2) }} U</span>
-                                                    </div>
-                                                </div>
-
-                                                <div style="border-bottom: none !important; padding-top: 15px !important; margin-top: 15px !important; margin-bottom: 0px !important; gap: 10px;" class="card-title d-flex align-items-center justify-content-center">
-                                                    <button type="button" onclick="openSubscribeModal()" style="flex: 1;" class="btn premium-btn">
-                                                        Add Subscription
-                                                    </button>
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalCenter" onclick="onModalSilver()" style="flex: 1;" class="btn premium-btn">
-                                                        Stake Now
-                                                    </button>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <!-- Subscription Card 2 -->
-                                        <div class="card premium-card">
-                                            <div class="card-body">
-                                                @php
-                                                $total_poll_amount = Schema::hasTable('customer_autopolls') ? (float) DB::table('customer_autopolls')->where('csId', $v->id)->where('status', 'completed')->sum('poll_amount') : 0.0;
-                                                $total_poll_earned = Schema::hasTable('customer_poll_transactions') ? (float) DB::table('customer_poll_transactions')->where('csId', $v->id)->where('tType', 'pollincome')->where('tamount', '>', 0)->sum('tamount') : 0.0;
-                                                $total_poll_withdrawn = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname', 'pollincome')->where('status', '1')->sum('amount');
-                                                $total_poll_pending = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname', 'pollincome')->where('status', '0')->sum('amount');
-                                                $is_3x_complete = ($total_poll_amount > 0 && $total_poll_earned >= 3 * $total_poll_amount);
-                                                $max_cap = 3 * $total_poll_amount;
-                                                $progress_percentage = $max_cap > 0 ? min(100, ($total_poll_earned / $max_cap) * 100) : 0;
-                                                @endphp
-                                                <div style="flex-direction: column;" class="card-title d-flex align-items-center justify-content-around">
-                                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                                        <div class="wlt">
-                                                            <img style="border-radius: 100px;" src="https://icones.pro/wp-content/uploads/2021/05/symbole-de-l-homme-vert.png" alt="chart success" class="rounded">
-                                                        </div>
+                                            <!-- Subscription Card 2 -->
+                                            <div class="card premium-card" style="height: 100%;">
+                                                <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                                                    <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                                                         <div>
-                                                            <span class="crd-title" style="display: block;">Auto Poll</span>
-                                                            <h3 class="card-title h3-large">
-                                                                {{ number_format($total_poll_amount, 2) }} <span style="font-size: 14px; font-weight: 600; color: #f9a826 !important; padding-left: 2px;">USDT</span>
-                                                            </h3>
-                                                            @if($is_3x_complete)
-                                                            <div style="margin-top: 4px;">
-                                                                <span style="font-size: 10px; font-weight: 700; color: #00D094; padding: 2px 8px; border-radius: 12px; background-color: rgba(0, 208, 148, 0.1); border: 1px solid rgba(0, 208, 148, 0.3); display: inline-flex; align-items: center; gap: 4px;">
-                                                                    <i class="bx bxs-check-shield" style="font-size: 12px;"></i> 3X Complete
-                                                                </span>
+                                                            @php
+                                                            $total_poll_amount = Schema::hasTable('customer_autopolls') ? (float) DB::table('customer_autopolls')->where('csId', $v->id)->where('status', 'completed')->sum('poll_amount') : 0.0;
+                                                            $total_poll_earned = Schema::hasTable('customer_poll_transactions') ? (float) DB::table('customer_poll_transactions')->where('csId', $v->id)->where('tType', 'pollincome')->where('tamount', '>', 0)->sum('tamount') : 0.0;
+                                                            $total_poll_withdrawn = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname', 'pollincome')->where('status', '1')->sum('amount');
+                                                            $total_poll_pending = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname', 'pollincome')->where('status', '0')->sum('amount');
+                                                            $is_3x_complete = ($total_poll_amount > 0 && $total_poll_earned >= 3 * $total_poll_amount);
+                                                            $max_cap = 3 * $total_poll_amount;
+                                                            $progress_percentage = $max_cap > 0 ? min(100, ($total_poll_earned / $max_cap) * 100) : 0;
+                                                            @endphp
+                                                            <div style="flex-direction: column;" class="card-title d-flex align-items-center justify-content-around">
+                                                                <div style="display: flex; align-items: center; gap: 8px;">
+                                                                    <div class="wlt">
+                                                                        <img style="border-radius: 100px;" src="https://icones.pro/wp-content/uploads/2021/05/symbole-de-l-homme-vert.png" alt="chart success" class="rounded">
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="crd-title" style="display: block;">Auto Poll</span>
+                                                                        <h3 class="card-title h3-large">
+                                                                            {{ number_format($total_poll_amount, 2) }} <span style="font-size: 14px; font-weight: 600; color: #f9a826 !important; padding-left: 2px;">USDT</span>
+                                                                        </h3>
+                                                                        @if($is_3x_complete)
+                                                                        <div style="margin-top: 4px;">
+                                                                            <span style="font-size: 10px; font-weight: 700; color: #00D094; padding: 2px 8px; border-radius: 12px; background-color: rgba(0, 208, 148, 0.1); border: 1px solid rgba(0, 208, 148, 0.3); display: inline-flex; align-items: center; gap: 4px;">
+                                                                                <i class="bx bxs-check-shield" style="font-size: 12px;"></i> 3X Complete
+                                                                            </span>
+                                                                        </div>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                @if ($totplanafterdiamond >= 1000 && false)
+                                                                <div style="display: flex; align-items: center; margin-top: 8px;">
+                                                                    <span class="crd-title" style="margin-right: 4px; font-size:11px !important;"></span>
+                                                                    <h3 class="card-title" style="color:rgb(255, 0, 255) !important; margin-bottom: 0px !important; font-weight:600; font-size:15px !important;">
+                                                                        @if ($totplanafterdiamond >= 10000)
+                                                                        Diamond 4
+                                                                        @elseif($totplanafterdiamond >= 5000)
+                                                                        Diamond 3
+                                                                        @elseif($totplanafterdiamond >= 3000)
+                                                                        Diamond 2
+                                                                        @elseif($totplanafterdiamond >= 1000)
+                                                                        Diamond 1
+                                                                        @endif
+                                                                    </h3>
+                                                                </div>
+                                                                @endif
                                                             </div>
-                                                            @endif
+                                                            <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px; padding: 0 10px; width: 100%;">
+                                                                <!-- You Got -->
+                                                                <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(249, 168, 38, 0.15); padding: 8px 12px; border-radius: 10px; box-shadow: inset 0 0 8px rgba(0,0,0,0.2);">
+                                                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                                                        <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #3b82f6;"></div>
+                                                                        <span class="crd-title" style="font-size: 11px !important; font-weight: 600; color: rgba(255,255,255,0.7) !important; letter-spacing: 0.5px; text-transform: uppercase;">You Got</span>
+                                                                    </div>
+                                                                    <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #fff !important; font-size: 13px !important; text-shadow: none !important;">
+                                                                        {{ number_format($total_poll_earned, 2) }}
+                                                                        <span style="color: #f9a826; font-weight: 600; font-size: 11px;">USDT</span>
+                                                                    </h6>
+                                                                </div>
+
+                                                                <!-- Withdrawn -->
+                                                                <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(249, 168, 38, 0.15); padding: 8px 12px; border-radius: 10px; box-shadow: inset 0 0 8px rgba(0,0,0,0.2);">
+                                                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                                                        <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #00D094;"></div>
+                                                                        <span class="crd-title" style="font-size: 11px !important; font-weight: 600; color: rgba(255,255,255,0.7) !important; letter-spacing: 0.5px; text-transform: uppercase;">Withdrawn</span>
+                                                                    </div>
+                                                                    <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #00D094 !important; font-size: 13px !important; text-shadow: none !important;">
+                                                                        {{ number_format($total_poll_withdrawn, 2) }}
+                                                                        <span style="color: #f9a826; font-weight: 600; font-size: 11px;">USDT</span>
+                                                                    </h6>
+                                                                </div>
+
+                                                                <!-- Pending -->
+                                                                @if($total_poll_pending > 0)
+                                                                <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(249, 168, 38, 0.15); padding: 8px 12px; border-radius: 10px; box-shadow: inset 0 0 8px rgba(0,0,0,0.2);">
+                                                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                                                        <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #f9a826;"></div>
+                                                                        <span class="crd-title" style="font-size: 11px !important; font-weight: 600; color: rgba(255,255,255,0.7) !important; letter-spacing: 0.5px; text-transform: uppercase;">Pending</span>
+                                                                    </div>
+                                                                    <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #f9a826 !important; font-size: 13px !important; text-shadow: none !important;">
+                                                                        {{ number_format($total_poll_pending, 2) }}
+                                                                        <span style="color: #f9a826; font-weight: 600; font-size: 11px;">USDT</span>
+                                                                    </h6>
+                                                                </div>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- 3X Cap Progress Linear Design -->
+                                                        @php
+                                                             $poll_progress_text = number_format($progress_percentage, 1) . '%';
+                                                             $poll_progress_color = $get_gradient_color($progress_percentage);
+                                                             if ($progress_percentage >= 100) {
+                                                                 $poll_progress_text = 'Completed';
+                                                             }
+                                                        @endphp
+                                                        <div class="w-100" style="margin-top: 15px; margin-bottom: 5px; padding: 0 15px;">
+                                                            <div style="display: flex; align-items: center; gap: 10px; width: 100%; margin-bottom: 5px;">
+                                                                <span style="font-size: 11px; color: rgba(255,255,255,0.7); white-space: nowrap; font-weight: 600;">3X Progress</span>
+                                                                <div style="flex: 1; height: 10px; background-color: #222; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
+                                                                    <div style="width: {{ $progress_percentage }}%; height: 100%; background: linear-gradient(90deg, #00D094, #ffd700, #f9a826, #b91c1c) no-repeat; background-size: {{ $progress_percentage > 0 ? (100 / $progress_percentage) * 100 : 100 }}% 100%; border-radius: 10px; transition: width 0.5s ease-in-out;"></div>
+                                                                </div>
+                                                                <span style="font-size: 11px; font-weight: 700; color: {{ $poll_progress_color }}; white-space: nowrap; min-width: 60px; text-align: right;">{{ $poll_progress_text }}</span>
+                                                            </div>
+                                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 10px; color: rgba(255,255,255,0.5);">
+                                                                <span>Earned: {{ number_format($total_poll_earned, 2) }} U</span>
+                                                                <span>Limit: {{ number_format($max_cap, 2) }} U</span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    @if ($totplanafterdiamond >= 1000 && false)
-                                                    <div style="display: flex; align-items: center; margin-top: 8px;">
-                                                        <span class="crd-title" style="margin-right: 4px; font-size:11px !important;"></span>
-                                                        <h3 class="card-title" style="color:rgb(255, 0, 255) !important; margin-bottom: 0px !important; font-weight:600; font-size:15px !important;">
-                                                            @if ($totplanafterdiamond >= 10000)
-                                                            Diamond 4
-                                                            @elseif($totplanafterdiamond >= 5000)
-                                                            Diamond 3
-                                                            @elseif($totplanafterdiamond >= 3000)
-                                                            Diamond 2
-                                                            @elseif($totplanafterdiamond >= 1000)
-                                                            Diamond 1
-                                                            @endif
-                                                        </h3>
-                                                    </div>
-                                                    @endif
-                                                </div>
-                                                <div style="border-bottom: none !important; padding-bottom: 0px !important; margin-bottom: 0px !important; flex-direction: column; align-items: center !important; gap: 4px;" class="card-title d-flex justify-content-center">
-                                                    <div style="display: flex; align-items: center; gap: 6px;">
-                                                        <span class="crd-title" style="font-size: 12px !important; color: rgba(255,255,255,0.6) !important;">You Got -</span>
-                                                        <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #fff !important; font-size: 14px !important;">
-                                                            {{ number_format($total_poll_earned, 2) }} <span style="color: #f9a826; font-weight: 600;">USDT</span>
-                                                        </h6>
-                                                    </div>
-                                                    <div style="display: flex; align-items: center; gap: 6px;">
-                                                        <span class="crd-title" style="font-size: 12px !important; color: rgba(255,255,255,0.6) !important;">Withdrawn -</span>
-                                                        <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #00D094 !important; font-size: 14px !important;">
-                                                            {{ number_format($total_poll_withdrawn, 2) }} <span style="color: #f9a826; font-weight: 600;">USDT</span>
-                                                        </h6>
-                                                    </div>
-                                                    @if($total_poll_pending > 0)
-                                                    <div style="display: flex; align-items: center; gap: 6px;">
-                                                        <span class="crd-title" style="font-size: 12px !important; color: rgba(255,255,255,0.6) !important;">Pending -</span>
-                                                        <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #f9a826 !important; font-size: 14px !important;">
-                                                            {{ number_format($total_poll_pending, 2) }} <span style="color: #f9a826; font-weight: 600;">USDT</span>
-                                                        </h6>
-                                                    </div>
-                                                    @endif
-                                                </div>
 
-                                                <!-- 3X Cap Progress Linear Design -->
-                                                <div class="w-100" style="margin-top: 15px; margin-bottom: 5px; padding: 0 15px;">
-                                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 11px; color: rgba(255,255,255,0.7);">
-                                                        <span>3X Limit Progress</span>
-                                                        <span style="font-weight: 700; color: #f9a826;">{{ number_format($progress_percentage, 1) }}%</span>
+                                                    <div style="border-bottom: none !important; padding-top: 15px !important; margin-top: 15px !important; margin-bottom: 0px !important; gap: 10px; display: flex; width: 100%;" class="card-title d-flex align-items-center justify-content-center">
+                                                        <button type="button" onclick="openAutopollModal()" style="flex: 1; padding: 10px;" class="btn premium-btn">
+                                                            Add Auto Poll
+                                                        </button>
+                                                        <button type="button" onclick="openAutopollWithdrawModal()" style="flex: 1; padding: 10px;" class="btn premium-btn">
+                                                            Withdraw
+                                                        </button>
                                                     </div>
-                                                    <div style="width: 100%; height: 10px; background-color: #222; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
-                                                        <div style="width: {{ $progress_percentage }}%; height: 100%; background: linear-gradient(90deg, #00D094, #ffd700, #f9a826, #ef4444) no-repeat; background-size: {{ $progress_percentage > 0 ? (100 / $progress_percentage) * 100 : 100 }}% 100%; border-radius: 10px; transition: width 0.5s ease-in-out;"></div>
-                                                    </div>
-                                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 10px; color: rgba(255,255,255,0.5);">
-                                                        <span>Earned: {{ number_format($total_poll_earned, 2) }} U</span>
-                                                        <span>Limit: {{ number_format($max_cap, 2) }} U</span>
-                                                    </div>
-                                                </div>
-
-                                                <div style="border-bottom: none !important; padding-top: 15px !important; margin-top: 15px !important; margin-bottom: 0px !important; gap: 10px; display: flex; width: 100%;" class="card-title d-flex align-items-center justify-content-center">
-                                                    <button type="button" onclick="openAutopollModal()" style="flex: 1; padding: 10px;" class="btn premium-btn">
-                                                        Add Auto Poll
-                                                    </button>
-                                                    <button type="button" onclick="openAutopollWithdrawModal()" style="flex: 1; padding: 10px;" class="btn premium-btn">
-                                                        Withdraw
-                                                    </button>
-                                                    {{-- <a href="/dashboard/autopoll/history" style="flex: 1; padding: 10px;" class="btn premium-btn text-center d-flex align-items-center justify-content-center text-white">
-                                                        History
-                                                    </a> --}}
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        @include('dashboard.dcards.wallet', ['snd' => true, 'small' => true])
+                                            @include('dashboard.dcards.wallet', ['snd' => true, 'small' => true, 'only_card' => true])
+                                        </div>
                                     </div>
 
                                     <div class="dashboard-grid">
                                         <!-- Card 1: Stake Amount -->
-                                        <div class="card premium-card">
-                                            <div class="card-body">
-                                                <div class="card-title d-flex align-items-center justify-content-between">
-                                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                                        <div class="wlt">
-                                                            <img src="/assets/img/icons/unicons/wallet.png" alt="chart success" class="rounded">
+                                        <div class="card premium-card" style="height: 100%;">
+                                            <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                                                <div>
+                                                    <div class="card-title d-flex align-items-center justify-content-between">
+                                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                                            <div class="wlt">
+                                                                <img src="/assets/img/icons/unicons/wallet.png" alt="chart success" class="rounded">
+                                                            </div>
+                                                            <span class="crd-title">Stake Amount</span>
                                                         </div>
-                                                        <span class="crd-title">Stake Amount</span>
-                                                    </div>
-                                                    <div class="dropdown">
-                                                        <button class="btn p-0 text-white" type="button" id="cardOptStake" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="bx bx-dots-vertical-rounded" style="font-size: 20px;"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOptStake" style="background-color: #0c2820; border: 1px solid rgba(249, 168, 38, 0.25);">
-                                                            <a class="dropdown-item text-white" href="/dashboard/status/deposit">View</a>
+                                                        <div class="dropdown">
+                                                            <button class="btn p-0 text-white" type="button" id="cardOptStake" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="bx bx-dots-vertical-rounded" style="font-size: 20px;"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOptStake" style="background-color: #0c2820; border: 1px solid rgba(249, 168, 38, 0.25);">
+                                                                <a class="dropdown-item text-white" href="/dashboard/status/deposit">View</a>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <span style="display: none !important;" class="balanc mb-1">Balance</span>
+                                                    <h3 class="card-title h3-large">
+                                                        {{ $capital }}
+                                                        <span style="font-size: 14px; font-weight: 600; color: #f9a826;">USDT</span>
+                                                    </h3>
+                                                    <small class="text-success fw-semibold d-flex align-items-center gap-1">
+                                                        <i class="bx bx-up-arrow-alt" style="font-size: 16px;"></i>
+                                                        <span>+0.5%</span>
+                                                    </small>
                                                 </div>
-                                                <span style="display: none !important;" class="balanc mb-1">Balance</span>
-                                                <h3 class="card-title h3-large">
-                                                    {{ $capital }}
-                                                    <span style="font-size: 14px; font-weight: 600; color: #f9a826;">USDT</span>
-                                                </h3>
-                                                <small class="text-success fw-semibold d-flex align-items-center gap-1">
-                                                    <i class="bx bx-up-arrow-alt" style="font-size: 16px;"></i>
-                                                    <span>+0.5%</span>
-                                                </small>
+                                                @php
+                                                    $sub_amount = (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount');
+                                                @endphp
+                                                @if($sub_amount > 0)
+                                                <div style="margin-top: 15px;">
+                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalCenter" onclick="onModalSilver()" class="btn premium-btn w-100">
+                                                        Stake Now
+                                                    </button>
+                                                </div>
+                                                @endif
                                             </div>
                                         </div>
 
+                                        @if(false)
                                         <!-- Card 2: Daily Profit -->
                                         <div class="card premium-card">
                                             <div class="card-body">
@@ -942,7 +1163,7 @@ if (count($plans) == 0) {
                                                 </div>
                                                 <span style="display: none !important;" class="balanc mb-1">Balance</span>
                                                 <h3 class="card-title h3-large">
-                                                    {{ $profit }}
+                                                    {{ number_format(DB::table('customer_transactions')->where('csId', $v->id)->where('tType','stake_income')->sum('tAmount'), 2) }}
                                                     <span style="font-size: 14px; font-weight: 600; color: #f9a826;">USDT</span>
                                                 </h3>
                                                 <small class="text-success fw-semibold d-flex align-items-center gap-1">
@@ -951,6 +1172,7 @@ if (count($plans) == 0) {
                                                 </small>
                                             </div>
                                         </div>
+                                        @endif
 
                                         <!-- Card 3: Withdraw -->
                                         <div class="card premium-card">
@@ -967,23 +1189,30 @@ if (count($plans) == 0) {
                                                             <i class="bx bx-dots-vertical-rounded" style="font-size: 20px;"></i>
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOptWithdraw" style="background-color: #0c2820; border: 1px solid rgba(249, 168, 38, 0.25);">
-                                                            <a class="dropdown-item text-white" href="/dashboard/status/withdraw">Withdrawal History</a>
-                                                            <a class="dropdown-item text-white" href="/dashboard/status/transactions">Credit History</a>
                                                             {{-- <a class="dropdown-item text-white" href="/dashboard/lott">Purchase Bot</a> --}}
                                                             <a class="dropdown-item text-white" href="/dashboard/withdraw/all">Withdraw</a>
                                                             {{-- <a class="dropdown-item text-white" href="/dashboard/products/reinvest">Restake</a> --}}
-                                                            <a class="dropdown-item text-white" href="/dashboard/withdraw/trnsfr">Transfer</a>
+                                                            <a class="dropdown-item text-white" href="/dashboard/withdraw/trnsfr">Internal Transfer</a>
+                                                            <a class="dropdown-item text-white" href="/dashboard/status/transactions">Credit History</a>
+                                                            <a class="dropdown-item text-white" href="/dashboard/status/withdraw">Withdrawal History</a>
+                                                            <a class="dropdown-item text-white" href="/dashboard/status/withdraw?typ=trnsfr">Internal Transfer History</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <span class="balanc mb-1">Balance</span>
-                                                <h3 class="card-title h3-large">
-                                                    {{ number_format(DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount') , 7) }}
-                                                    <span style="font-size: 14px; font-weight: 600; color: #f9a826;">USDT</span>
+                                                <span class="balanc mb-1" style="display: block;">Withdraw Balance</span>
+                                                <h3 class="card-title h3-large" style="font-size: 20px !important; margin-bottom: 12px;">
+                                                    {{ number_format(DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount') , 2) }}
+                                                    <span style="font-size: 12px; font-weight: 600; color: #f9a826;">USDT</span>
+                                                </h3>
+                                                <span class="balanc mb-1" style="display: block;">Transfer Credit Balance</span>
+                                                <h3 class="card-title h3-large" style="font-size: 20px !important; margin-bottom: 0;">
+                                                    {{ number_format(DB::table('customer_transfers')->where('csId', $v->id)->where('tStatus', '1')->get()->sum('tAmount'), 2) }}
+                                                    <span style="font-size: 12px; font-weight: 600; color: #f9a826;">USDT</span>
                                                 </h3>
                                             </div>
                                         </div>
 
+                                        @if(false)
                                         <!-- Card 4: Transfer Credit -->
                                         <div class="card premium-card">
                                             <div class="card-body">
@@ -1019,7 +1248,9 @@ if (count($plans) == 0) {
                                                 </h3>
                                             </div>
                                         </div>
+                                        @endif
 
+                                        @if(false)
                                         <!-- Card 5: Total Referral Income -->
                                         <div class="card premium-card">
                                             <div class="card-body">
@@ -1079,6 +1310,7 @@ if (count($plans) == 0) {
                                                 </small>
                                             </div>
                                         </div>
+                                        @endif
 
                                         <!-- Card 7: Direct Community Volume -->
                                         <div class="card premium-card">
@@ -1100,24 +1332,6 @@ if (count($plans) == 0) {
                                                     </div>
                                                 </div>
                                                 <?php
-                                                $dtotalAmoun = 0;
-                                                if (!function_exists('getdTotalAmountForLevel')) {
-                                                    function getdTotalAmountForLevel($userid)
-                                                    {
-                                                        $dtotalAmou = 0;
-                                                        $users = DB::table('customers')->where('referral', $userid)->get();
-                                                        if (count($users) == 0) {
-                                                            return 0;
-                                                        }
-                                                        foreach ($users as $user) {
-                                                            $dtotalAmou += DB::table('customer_plans')->where('csID', $user->id)->where('pstatus', '1')->sum('pamount');
-                                                        }
-                                                        return $dtotalAmou;
-                                                    }
-                                                }
-                                                $referralId = $v->id;
-                                                $dtotalAmoun = getdTotalAmountForLevel($referralId);
-
                                                 // Fetch downline left/right stats efficiently
                                                 $customersMap = DB::table('customers')->select('id', 'left', 'right')->get()->keyBy('id');
                                                 if (!function_exists('getDownlineIdsForDashboard')) {
@@ -1153,11 +1367,45 @@ if (count($plans) == 0) {
                                                 $rightCount = count($rightIds);
                                                 $rightSub = $rightCount > 0 ? DB::table('customer_subs')->whereIn('csId', $rightIds)->sum('sub_amount') : 0;
                                                 $rightStake = $rightCount > 0 ? DB::table('customer_plans')->whereIn('csId', $rightIds)->sum('pamount') : 0;
+
+                                                // Direct Volume calculations
+                                                $directUsers = DB::table('customers')->where('referral', $v->id)->get();
+                                                $directUserIds = $directUsers->pluck('id')->toArray();
+                                                $directStake = 0;
+                                                $directSub = 0;
+                                                if (!empty($directUserIds)) {
+                                                    $directStake = DB::table('customer_plans')
+                                                        ->whereIn('csId', $directUserIds)
+                                                        ->where('pstatus', '1')
+                                                        ->sum('pamount');
+                                                    $directSub = DB::table('customer_subs')
+                                                        ->whereIn('csId', $directUserIds)
+                                                        ->sum('sub_amount');
+                                                }
+
+                                                // Total Volume calculations (All downline customers under tree)
+                                                $allDownlineIds = array_merge($leftIds, $rightIds);
+                                                $totalStakeVolume = 0;
+                                                $totalSubVolume = 0;
+                                                if (!empty($allDownlineIds)) {
+                                                    $totalStakeVolume = DB::table('customer_plans')
+                                                        ->whereIn('csId', $allDownlineIds)
+                                                        ->where('pstatus', '1')
+                                                        ->sum('pamount');
+                                                    $totalSubVolume = DB::table('customer_subs')
+                                                        ->whereIn('csId', $allDownlineIds)
+                                                        ->sum('sub_amount');
+                                                }
                                                 ?>
-                                                <span class="balanc mb-1">Total</span>
-                                                <h3 class="card-title h3-large">
-                                                    {{ number_format($dtotalAmoun, 2) }}
-                                                    <span style="font-size: 14px; font-weight: 600; color: #f9a826;">USDT</span>
+                                                <span class="balanc mb-1" style="display: block; margin-top: 8px;">Direct Stake Volume</span>
+                                                <h3 class="card-title h3-large" style="font-size: 20px !important; margin-bottom: 12px;">
+                                                    {{ number_format($directStake, 2) }}
+                                                    <span style="font-size: 12px; font-weight: 600; color: #f9a826;">USDT</span>
+                                                </h3>
+                                                <span class="balanc mb-1" style="display: block;">Direct Sub Volume</span>
+                                                <h3 class="card-title h3-large" style="font-size: 20px !important; margin-bottom: 0;">
+                                                    {{ number_format($directSub, 2) }}
+                                                    <span style="font-size: 12px; font-weight: 600; color: #f9a826;">USDT</span>
                                                 </h3>
                                             </div>
                                         </div>
@@ -1182,34 +1430,20 @@ if (count($plans) == 0) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php
-                                                $totalAmoun = 0;
-                                                if (!function_exists('getTotalAmountForLevel')) {
-                                                    function getTotalAmountForLevel($userid)
-                                                    {
-                                                        $totalAmou = 0;
-                                                        $users = DB::table('customers')->where('referral', $userid)->get();
-                                                        if (count($users) == 0) {
-                                                            return 0;
-                                                        }
-                                                        foreach ($users as $user) {
-                                                            $totalAmou += DB::table('customer_plans')->where('csID', $user->id)->where('pstatus', '1')->sum('pamount');
-                                                            $totalAmou += getTotalAmountForLevel($user->id);
-                                                        }
-                                                        return $totalAmou;
-                                                    }
-                                                }
-                                                $referralId = $v->id;
-                                                $totalAmoun = getTotalAmountForLevel($referralId);
-                                                ?>
-                                                <span class="balanc mb-1">Total</span>
-                                                <h3 class="card-title h3-large">
-                                                    {{ number_format($totalAmoun, 2) }}
-                                                    <span style="font-size: 14px; font-weight: 600; color: #f9a826;">USDT</span>
+                                                <span class="balanc mb-1" style="display: block; margin-top: 8px;">Total Stake Volume</span>
+                                                <h3 class="card-title h3-large" style="font-size: 20px !important; margin-bottom: 12px;">
+                                                    {{ number_format($totalStakeVolume, 2) }}
+                                                    <span style="font-size: 12px; font-weight: 600; color: #f9a826;">USDT</span>
+                                                </h3>
+                                                <span class="balanc mb-1" style="display: block;">Total Sub Volume</span>
+                                                <h3 class="card-title h3-large" style="font-size: 20px !important; margin-bottom: 0;">
+                                                    {{ number_format($totalSubVolume, 2) }}
+                                                    <span style="font-size: 12px; font-weight: 600; color: #f9a826;">USDT</span>
                                                 </h3>
                                             </div>
                                         </div>
 
+                                        @if(false)
                                         <!-- Card 7b: Left Team Downline Volume -->
                                         <div class="card premium-card" style="border-left: 4px solid #3b82f6 !important;">
                                             <div class="card-body">
@@ -1285,6 +1519,7 @@ if (count($plans) == 0) {
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
 
                                     </div>
                                 </div>
@@ -1406,19 +1641,14 @@ if (count($plans) == 0) {
                             </div>
                         </div>
                         <script>
-                            function onModalSilver() {}
-
+                            function onModalSilver() { }
                             document.addEventListener('submit', function(event) {
                                 var form = event.target;
                                 if (form && form.id === 'slform') {
                                     var amountInput = document.getElementById('sil_amnt');
                                     if (amountInput && (amountInput.offsetWidth > 0 || amountInput.offsetHeight > 0)) {
                                         var enteredAmount = parseFloat(amountInput.value.trim());
-                                        var maxLimit = {
-                                            {
-                                                DB::table('customer_subs') - > where('csId', $v - > id) - > sum('sub_amount') * 10
-                                            }
-                                        };
+                                        var maxLimit = {{ DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') * 10 }};
                                         if (isNaN(enteredAmount) || enteredAmount <= 0) {
                                             alert('Please enter a valid amount.');
                                             event.preventDefault();
@@ -1429,6 +1659,15 @@ if (count($plans) == 0) {
                                                 minimumFractionDigits: 2
                                                 , maximumFractionDigits: 2
                                             }) + ' USDT.');
+                                            event.preventDefault();
+                                            return false;
+                                        }
+
+                                        var usdt_bal = (typeof usdtbalance !== 'undefined') ? parseFloat(usdtbalance) : 0;
+                                        var db_bal = (typeof dbTransferCredit !== 'undefined') ? parseFloat(dbTransferCredit) : 0;
+                                        var totalAvailable = usdt_bal + db_bal;
+                                        if (enteredAmount > totalAvailable) {
+                                            alert('Insufficient balance. Your total available balance is ' + totalAvailable.toFixed(2) + ' USDT.');
                                             event.preventDefault();
                                             return false;
                                         }
@@ -1473,7 +1712,7 @@ if (count($plans) == 0) {
                                             ?>
                                     <form action="/sendproduct" method="POST" id="slform" class="silform" enctype="multipart/form-data">
                                         @csrf
-
+                                        <input type="hidden" name="wallet_balance" id="stake_wallet_balance_input" value="0">
                                         <input type="hidden" name="ptype" value="1">
                                         <input type="hidden" name="tuserid" value="0">
                                         <input type="hidden" name="pstatus" value="0">
@@ -1594,6 +1833,11 @@ if (count($plans) == 0) {
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="formrow row mb-3">
+                                             <div class="col-sm-10 offset-sm-2">
+                                                 <p style="margin:0; color:#ddd;">Available Balance: <strong id="stake_available_balance">0.00</strong> USDT (Wallet: <span id="stake_wallet_balance">0.00</span> USDT + Transfer Credit: <span id="stake_credit_balance">0.00</span> USDT)</p>
+                                             </div>
+                                         </div>
 
 
                                         <div class="formrow mb-3">
@@ -1734,6 +1978,7 @@ if (count($plans) == 0) {
     <script src="/assets/js/dashboards-analytics.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- All Js -->
+    @include('dashboard.dcards.wallet', ['snd' => true, 'small' => true, 'only_scripts' => true])
 </body>
 
 <style>

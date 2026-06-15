@@ -20,6 +20,8 @@ if (!function_exists('getPname')) {
                 return "Level Income";
             case 'pincome':
                 return "Profit";
+            case 'stake_income':
+                return "Stake Income";
             case 'compound':
                 return "Gold";
             case 'reinvest_compound':
@@ -150,16 +152,21 @@ function balance2x($user_id)
     // if ($stake_amount < 1) {
     //     $stake_amount = DB::table('customer_subs')->where('csId', $user_id)->sum('sub_amount');
     // }
-    $total_amount = DB::table('customer_transactions')->where('csId', $user_id)->sum('tamount');
+    $total_amount = DB::table('customer_transactions')->where('csId', $user_id)->where('wStatus','0')->sum('tamount');
     $balance = ($stake_amount * 2) - $total_amount;
     return $balance;
+}
+function isSubDomainAdminx(): bool
+{
+    return false;
 }
 function isSubDomainAdmin(): bool
 {
     if (!empty($_SERVER['HTTP_HOST'])) {
         $host = strtolower($_SERVER['HTTP_HOST']);
-        if (strpos($host, 'sub.') === 0) {
-            return true;
+        if (strpos($host, 'sub.') === 0 && isAdmin()) {
+            return false;
+            // return true;
         }
     }
     return false;

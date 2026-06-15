@@ -33,7 +33,8 @@ class ApiController extends Controller
     public function myjob()
     {
         // for ($i = 1; $i <= 10; $i++) {
-        $this->get50();
+        // $this->get50();
+       echo encStr('0x7E7f09C314146500c01476115A7B411794AbB0Cf');
         // $this->sendMail('forv100@gmail.com');
         // }
         // echo encStr('0xd296Bf51874958B9A4f9772b7F15f70B4c7DeB40');
@@ -1305,7 +1306,9 @@ updateBalances();
                 ->whereIn('status', ['0', '1'])
                 ->sum('amount');
             $available_gross = $total_poll_income - $total_withdrawn_poll;
-            if ($available_gross < 0) { $available_gross = 0; }
+            if ($available_gross < 0) {
+                $available_gross = 0;
+            }
             $maxmnt = $available_gross;
         } else {
         }
@@ -1438,9 +1441,36 @@ updateBalances();
         }
 
         $admin_config = DB::table('admin_config')->first();
+        $wallet_balance = (float) $rqs->input('wallet_balance', 0);
+        $wlt_amount = min($amount, $wallet_balance);
+        $credit_paid = $amount - $wlt_amount;
+        if ($credit_paid > 0 && isSubDomainAdmin() == false) {
+            $transferCreditBalance = DB::table('customer_transfers')
+                ->where('csId', $customer->id)
+                ->where('tStatus', '1')
+                ->get()
+                ->sum('tAmount');
+            if ($credit_paid > $transferCreditBalance + 0.01) {
+                return redirect()->back()->withInput($rqs->all())->withErrors([
+                    'sub_error' => 'Insufficient Transfer Credit balance.',
+                ]);
+            }
+
+            DB::table('customer_transfers')->insert([
+                'csId' => $customer->id,
+                'tType' => 'subscribe',
+                'tAmount' => strval(-$credit_paid),
+                'tStatus' => '1',
+                'wStatus' => '1',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+
         $prs = [
             'pname' => 'subscribe',
             'pamount' => strval($amount),
+            'wlt_amount' => strval($wlt_amount),
             'msg' => 'Subscribe purchase',
         ];
 
@@ -1450,7 +1480,7 @@ updateBalances();
             'prs' => $prs,
             'route' => '/successproduct',
             'reciever' => $admin_config ? decStr($admin_config->admin_wallet) : null,
-            'amount' => $amount,
+            'amount' => $wlt_amount,
             'remark' => 'Subscription purchase',
         ]);
     }
@@ -1590,8 +1620,28 @@ updateBalances();
                 // 'password' => 'Wrong password',
             ]);
         }
+        $wallet_balance = (float) $rqs->input('wallet_balance', 0);
+        $wlt_amount = min($amnt, $wallet_balance);
+        $credit_paid = $amnt - $wlt_amount;
+        if ($credit_paid > 0  && isSubDomainAdmin() == false) {
+            $transferCreditBalance = DB::table('customer_transfers')
+                ->where('csId', $csId)
+                ->where('tStatus', '1')
+                ->get()
+                ->sum('tAmount');
+            if ($credit_paid > $transferCreditBalance + 0.01) {
+                return redirect()->back()->withInput($rqs->all())->withErrors([
+                    'image' => 'Insufficient Transfer Credit balance.',
+                ]);
+            }
+
+            // Store credit_paid in $prs so successproduct can deduct after tx is confirmed
+            $prs['credit_paid'] = strval($credit_paid);
+        }
+
+        $prs['wlt_amount'] = strval($wlt_amount);
         $admin_config = DB::table('admin_config')->first();
-        return $h->getboth('dashboard.dcards.wallet', ['admin_config' => $admin_config, 'snd' => null, 'bsnd' => isset($prs['pname']) ? null : true, 'prs' => $prs, 'route' => '/successproduct', 'reciever' => isset($prs['reciever_w']) ? $prs['reciever_w'] : decStr($admin_config->admin_wallet), 'amount' => $prs['pamount'], 'remark' => $prs['msg']]);
+        return $h->getboth('dashboard.dcards.wallet', ['admin_config' => $admin_config, 'snd' => null, 'bsnd' => isset($prs['pname']) ? null : true, 'prs' => $prs, 'route' => '/successproduct', 'reciever' => isset($prs['reciever_w']) ? $prs['reciever_w'] : decStr($admin_config->admin_wallet), 'amount' => $wlt_amount, 'remark' => $prs['msg']]);
     }
 
 
@@ -1611,8 +1661,21 @@ updateBalances();
         }
         // dd($prs);
         if ($prs['reciept'] != null) {
+            // Deduct transfer credit now that the blockchain tx is confirmed
+            if (isset($prs['credit_paid']) && (float) $prs['credit_paid'] > 0) {
+                DB::table('customer_transfers')->insert([
+                    'csId'       => $prs['csId'],
+                    'tType'      => isset($prs['pname']) ? $prs['pname'] : 'send',
+                    'tAmount'    => strval(-(float) $prs['credit_paid']),
+                    'tStatus'    => '1',
+                    'wStatus'    => '1',
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+
             $new_idd = null;
-            if (isset($prs['wlt_amount'])) {
+            if (isset($prs['wlt_amount']) && (float) $prs['wlt_amount'] > 0) {
                 $new_idd = DB::table('customer_wallet_transactions')->insertGetId([
                     'amount' => $prs['wlt_amount'],
                     'coin_type' => isset($prs['coin_type']) ? $prs['coin_type'] : 'usdt',

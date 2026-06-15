@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/assets/" data-template="vertical-menu-template-free">
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="/assets/"
+    data-template="vertical-menu-template-free">
 <?php
 // Enable error reporting
 error_reporting(E_ALL);
@@ -18,19 +19,22 @@ if ($refintid < $myintid) {
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>Binary Referral Tree</title>
 
     <meta name="description" content="Binary MLM referral tree view" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/tst/grnyellow.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
 
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
@@ -81,268 +85,284 @@ if ($refintid < $myintid) {
                         </h4>
 
                         @php
-                        $refuser = DB::table('customers')->where('id', $refid)->first();
+                            $refuser = DB::table('customers')->where('id', $refid)->first();
 
-                        // Query binary parent for hierarchical layout up-level navigation
-                        $binaryParent = null;
-                        if ($refuser && $refuser->id !== $myintid) {
-                        $binaryParent = DB::table('customers')
-                        ->where('left', $refuser->id)
-                        ->orWhere('right', $refuser->id)
-                        ->first();
-                        }
+                            // Query binary parent for hierarchical layout up-level navigation
+                            $binaryParent = null;
+                            if ($refuser && $refuser->id !== $myintid) {
+                                $binaryParent = DB::table('customers')
+                                    ->where('left', $refuser->id)
+                                    ->orWhere('right', $refuser->id)
+                                    ->first();
+                            }
                         @endphp
 
                         @if ($refuser)
-                        @php
-                        // Fetch downline stats efficiently
-                        $customersMap = DB::table('customers')->select('id', 'left', 'right')->get()->keyBy('id');
-                        
-                        if (!function_exists('getDownlineIds')) {
-                            function getDownlineIds($startId, $customersMap) {
-                                if (!$startId || !isset($customersMap[$startId])) {
-                                    return [];
-                                }
-                                $ids = [];
-                                $queue = [$startId];
-                                while (!empty($queue)) {
-                                    $currId = array_shift($queue);
-                                    $ids[] = $currId;
-                                    $curr = $customersMap[$currId] ?? null;
-                                    if ($curr) {
-                                        if ($curr->left && isset($customersMap[$curr->left])) {
-                                            $queue[] = $curr->left;
+                            @php
+                                // Fetch downline stats efficiently
+                                $customersMap = DB::table('customers')->select('id', 'left', 'right')->get()->keyBy('id');
+
+                                if (!function_exists('getDownlineIds')) {
+                                    function getDownlineIds($startId, $customersMap)
+                                    {
+                                        if (!$startId || !isset($customersMap[$startId])) {
+                                            return [];
                                         }
-                                        if ($curr->right && isset($customersMap[$curr->right])) {
-                                            $queue[] = $curr->right;
+                                        $ids = [];
+                                        $queue = [$startId];
+                                        while (!empty($queue)) {
+                                            $currId = array_shift($queue);
+                                            $ids[] = $currId;
+                                            $curr = $customersMap[$currId] ?? null;
+                                            if ($curr) {
+                                                if ($curr->left && isset($customersMap[$curr->left])) {
+                                                    $queue[] = $curr->left;
+                                                }
+                                                if ($curr->right && isset($customersMap[$curr->right])) {
+                                                    $queue[] = $curr->right;
+                                                }
+                                            }
                                         }
+                                        return $ids;
                                     }
                                 }
-                                return $ids;
-                            }
-                        }
 
-                        $leftIds = getDownlineIds($refuser->left, $customersMap);
-                        $leftCount = count($leftIds);
-                        $leftSub = $leftCount > 0 ? DB::table('customer_subs')->whereIn('csId', $leftIds)->sum('sub_amount') : 0;
-                        $leftStake = $leftCount > 0 ? DB::table('customer_plans')->whereIn('csId', $leftIds)->sum('pamount') : 0;
+                                $leftIds = getDownlineIds($refuser->left, $customersMap);
+                                $leftCount = count($leftIds);
+                                $leftSub = $leftCount > 0 ? DB::table('customer_subs')->whereIn('csId', $leftIds)->sum('sub_amount') : 0;
+                                $leftStake = $leftCount > 0 ? DB::table('customer_plans')->whereIn('csId', $leftIds)->sum('pamount') : 0;
 
-                        $rightIds = getDownlineIds($refuser->right, $customersMap);
-                        $rightCount = count($rightIds);
-                        $rightSub = $rightCount > 0 ? DB::table('customer_subs')->whereIn('csId', $rightIds)->sum('sub_amount') : 0;
-                        $rightStake = $rightCount > 0 ? DB::table('customer_plans')->whereIn('csId', $rightIds)->sum('pamount') : 0;
-                        @endphp
-                        <!-- Control Panel -->
-                        <div class="tree-control-panel mb-4">
-                            <div class="control-left">
-                                <a href="/dashboard/reftree/{{ $myintid }}" class="btn btn-primary btn-sm btn-control">
-                                    <i class="bx bx-home-alt me-1"></i> My Tree
-                                </a>
-                                @if ($binaryParent && $binaryParent->id >= $myintid)
-                                <a href="/dashboard/reftree/{{ $binaryParent->id }}" class="btn btn-secondary btn-sm btn-control">
-                                    <i class="bx bx-up-arrow-alt me-1"></i> Up One Level
-                                </a>
-                                @endif
+                                $rightIds = getDownlineIds($refuser->right, $customersMap);
+                                $rightCount = count($rightIds);
+                                $rightSub = $rightCount > 0 ? DB::table('customer_subs')->whereIn('csId', $rightIds)->sum('sub_amount') : 0;
+                                $rightStake = $rightCount > 0 ? DB::table('customer_plans')->whereIn('csId', $rightIds)->sum('pamount') : 0;
+                            @endphp
+                            <!-- Control Panel -->
+                            <div class="tree-control-panel mb-4">
+                                <div class="control-left">
+                                    <a href="/dashboard/reftree/{{ $myintid }}" class="btn btn-primary btn-sm btn-control">
+                                        <i class="bx bx-home-alt me-1"></i> My Tree
+                                    </a>
+                                    @if ($binaryParent && $binaryParent->id >= $myintid)
+                                        <a href="/dashboard/reftree/{{ $binaryParent->id }}"
+                                            class="btn btn-secondary btn-sm btn-control">
+                                            <i class="bx bx-up-arrow-alt me-1"></i> Up One Level
+                                        </a>
+                                    @endif
+                                </div>
+
+                                <!-- Search bar with frontend validation -->
+                                <div class="control-search">
+                                    <form onsubmit="searchMember(event)" class="search-form">
+                                        <div class="input-group">
+                                            <input type="number" id="searchMemberId"
+                                                class="form-control form-control-sm search-input"
+                                                placeholder="Search Member ID..." required min="{{ $myintid }}">
+                                            <button type="submit" class="btn btn-primary btn-sm search-btn">
+                                                <i class="bx bx-search"></i> Search
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
 
-                            <!-- Search bar with frontend validation -->
-                            <div class="control-search">
-                                <form onsubmit="searchMember(event)" class="search-form">
-                                    <div class="input-group">
-                                        <input type="number" id="searchMemberId" class="form-control form-control-sm search-input" placeholder="Search Member ID..." required min="{{ $myintid }}">
-                                        <button type="submit" class="btn btn-primary btn-sm search-btn">
-                                            <i class="bx bx-search"></i> Search
-                                        </button>
+                            <!-- Downline Team Stats Widgets -->
+                            <div class="row g-4 mb-4">
+                                <!-- Left Team Stats Card -->
+                                <div class="col-md-6">
+                                    <div class="team-stats-card left-team-card">
+                                        <div class="team-stats-header">
+                                            <div class="stats-icon-wrapper left-icon-bg">
+                                                <i class="bx bx-group"></i>
+                                            </div>
+                                            <div class="stats-title-area">
+                                                <h5 class="stats-heading">Left Team Downline</h5>
+                                                <span class="badge badge-left-team">{{ number_format($leftCount) }}
+                                                    Members</span>
+                                            </div>
+                                        </div>
+                                        <div class="team-stats-body mt-3">
+                                            <div class="stats-metric-row">
+                                                <span class="metric-label">Total Sub Amount</span>
+                                                <span class="metric-value">{{ number_format($leftSub, 2) }} USDT</span>
+                                            </div>
+                                            <div class="stats-metric-row mt-2">
+                                                <span class="metric-label">Total Stake Amount</span>
+                                                <span class="metric-value-accent">{{ number_format($leftStake, 2) }}
+                                                    USDT</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
+                                </div>
 
-                        <!-- Downline Team Stats Widgets -->
-                        <div class="row g-4 mb-4">
-                            <!-- Left Team Stats Card -->
-                            <div class="col-md-6">
-                                <div class="team-stats-card left-team-card">
-                                    <div class="team-stats-header">
-                                        <div class="stats-icon-wrapper left-icon-bg">
-                                            <i class="bx bx-group"></i>
+                                <!-- Right Team Stats Card -->
+                                <div class="col-md-6">
+                                    <div class="team-stats-card right-team-card">
+                                        <div class="team-stats-header">
+                                            <div class="stats-icon-wrapper right-icon-bg">
+                                                <i class="bx bx-group"></i>
+                                            </div>
+                                            <div class="stats-title-area">
+                                                <h5 class="stats-heading">Right Team Downline</h5>
+                                                <span class="badge badge-right-team">{{ number_format($rightCount) }}
+                                                    Members</span>
+                                            </div>
                                         </div>
-                                        <div class="stats-title-area">
-                                            <h5 class="stats-heading">Left Team Downline</h5>
-                                            <span class="badge badge-left-team">{{ number_format($leftCount) }} Members</span>
-                                        </div>
-                                    </div>
-                                    <div class="team-stats-body mt-3">
-                                        <div class="stats-metric-row">
-                                            <span class="metric-label">Total Sub Amount</span>
-                                            <span class="metric-value">{{ number_format($leftSub, 2) }} USDT</span>
-                                        </div>
-                                        <div class="stats-metric-row mt-2">
-                                            <span class="metric-label">Total Stake Amount</span>
-                                            <span class="metric-value-accent">{{ number_format($leftStake, 2) }} USDT</span>
+                                        <div class="team-stats-body mt-3">
+                                            <div class="stats-metric-row">
+                                                <span class="metric-label">Total Sub Amount</span>
+                                                <span class="metric-value">{{ number_format($rightSub, 2) }} USDT</span>
+                                            </div>
+                                            <div class="stats-metric-row mt-2">
+                                                <span class="metric-label">Total Stake Amount</span>
+                                                <span class="metric-value-accent">{{ number_format($rightStake, 2) }}
+                                                    USDT</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Right Team Stats Card -->
-                            <div class="col-md-6">
-                                <div class="team-stats-card right-team-card">
-                                    <div class="team-stats-header">
-                                        <div class="stats-icon-wrapper right-icon-bg">
-                                            <i class="bx bx-group"></i>
-                                        </div>
-                                        <div class="stats-title-area">
-                                            <h5 class="stats-heading">Right Team Downline</h5>
-                                            <span class="badge badge-right-team">{{ number_format($rightCount) }} Members</span>
-                                        </div>
-                                    </div>
-                                    <div class="team-stats-body mt-3">
-                                        <div class="stats-metric-row">
-                                            <span class="metric-label">Total Sub Amount</span>
-                                            <span class="metric-value">{{ number_format($rightSub, 2) }} USDT</span>
-                                        </div>
-                                        <div class="stats-metric-row mt-2">
-                                            <span class="metric-label">Total Stake Amount</span>
-                                            <span class="metric-value-accent">{{ number_format($rightStake, 2) }} USDT</span>
-                                        </div>
-                                    </div>
+                            <!-- Tree UI Controls Header -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="text-white mb-0"
+                                    style="font-weight: 600; font-size: 15px; letter-spacing: 0.5px;">Referral Tree View
+                                </h5>
+                                <div class="tree-zoom-dock">
+                                    <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(1.1)" title="Zoom In"><i
+                                            class="bx bx-zoom-in"></i></button>
+                                    <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(0.9)" title="Zoom Out"><i
+                                            class="bx bx-zoom-out"></i></button>
+                                    <button class="btn btn-sm btn-zoom-dock" onclick="resetZoom()" title="Reset Zoom"><i
+                                            class="bx bx-refresh"></i></button>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Tree UI Controls Header -->
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="text-white mb-0" style="font-weight: 600; font-size: 15px; letter-spacing: 0.5px;">Referral Tree View</h5>
-                            <div class="tree-zoom-dock">
-                                <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(1.1)" title="Zoom In"><i class="bx bx-zoom-in"></i></button>
-                                <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(0.9)" title="Zoom Out"><i class="bx bx-zoom-out"></i></button>
-                                <button class="btn btn-sm btn-zoom-dock" onclick="resetZoom()" title="Reset Zoom"><i class="bx bx-refresh"></i></button>
-                            </div>
-                        </div>
+                            <!-- Tree Viewport Supporting Scroll and Interactive Scaling -->
+                            <div class="tree-viewport">
+                                <div class="tree-container" id="treeContainer">
+                                    @php
+                                        if (!function_exists('renderNewUserTree')) {
+                                            function renderNewUserTree($user, $currentDepth = 0, $maxDepth = 2, $parentId = null, $placementSide = null, $path = '')
+                                            {
+                                                if ($user === null) {
+                                                    // Render vacant slots up to the maximum depth display
+                                                    if ($currentDepth <= $maxDepth && $parentId !== null && $placementSide !== null) {
+                                                        $isInner = ($path === 'I');
+                                                        $registerUrl = $isInner ? 'javascript:void(0);' : ("/register?ref=" . theUser()->id . "&dir={$placementSide}");
+                                                        $targetAttr = $isInner ? '' : 'target="_blank"';
+                                                        $cursorStyle = $isInner ? 'style="cursor: not-allowed;"' : '';
+                                                        echo '<div class="tree-node-wrapper">';
+                                                        echo ' <a href="' . $registerUrl . '" ' . $targetAttr . ' ' . $cursorStyle . ' class="tree-card-link">';
+                                                        echo ' <div class="tree-card vacant-card">';
+                                                        echo ' <div class="avatar-wrapper vacant-avatar">';
+                                                        echo ' <i class="bx bx-plus"></i>';
+                                                        echo ' </div>';
+                                                        echo ' <h6 class="member-name">Vacant Slot</h6>';
+                                                        echo ' <p class="member-id">' . ($isInner ? 'Locked Leg' : 'Click to Register') . '</p>';
+                                                        echo ' <span class="badge badge-vacant">Open Leg</span>';
+                                                        echo ' </div>';
+                                                        echo ' </a>';
+                                                        echo '</div>';
+                                                    }
+                                                    return;
+                                                }
 
-                        <!-- Tree Viewport Supporting Scroll and Interactive Scaling -->
-                        <div class="tree-viewport">
-                            <div class="tree-container" id="treeContainer">
-                                @php
-                                 if (!function_exists('renderNewUserTree')) {
-                                function renderNewUserTree($user, $currentDepth = 0, $maxDepth = 2, $parentId = null, $placementSide = null, $path = '')
-                                {
-                                if ($user === null) {
-                                // Render vacant slots up to the maximum depth display
-                                if ($currentDepth <= $maxDepth && $parentId !==null && $placementSide !==null) {
-                                    $isInner = ($path === 'I');
-                                    $registerUrl = $isInner ? 'javascript:void(0);' : ("/register?ref=" . theUser()->id . "&dir={$placementSide}");
-                                    $targetAttr = $isInner ? '' : 'target="_blank"';
-                                    $cursorStyle = $isInner ? 'style="cursor: not-allowed;"' : '';
-                                    echo '<div class="tree-node-wrapper">';
-                                        echo ' <a href="' . $registerUrl . '" ' . $targetAttr . ' ' . $cursorStyle . ' class="tree-card-link">';
-                                            echo ' <div class="tree-card vacant-card">';
-                                                echo ' <div class="avatar-wrapper vacant-avatar">';
-                                                    echo ' <i class="bx bx-plus"></i>';
-                                                    echo ' </div>';
-                                                echo ' <h6 class="member-name">Vacant Slot</h6>';
-                                                echo ' <p class="member-id">' . ($isInner ? 'Locked Leg' : 'Click to Register') . '</p>';
-                                                echo ' <span class="badge badge-vacant">Open Leg</span>';
-                                                echo ' </div>';
-                                            echo ' </a>';
-                                        echo '</div>';
-                                    }
-                                    return;
-                                    }
+                                                // Fetch user active plan statistics
+                                                $pltot = DB::table('customer_subs')
+                                                    ->where('csId', $user->id)
+                                                    ->sum('sub_amount');
+                                                $stake_total = DB::table('customer_plans')
+                                                    ->where('csId', $user->id)
+                                                    ->sum('pamount');
 
-                                    // Fetch user active plan statistics
-                                    $pltot = DB::table('customer_subs')
-                                    ->where('csId', $user->id)
-                                    ->sum('sub_amount');
-                                    $stake_total = DB::table('customer_plans')
-                                    ->where('csId', $user->id)
-                                    ->sum('pamount');
+                                                $isActive = $pltot > 0;
+                                                $cardClass = $isActive ? 'active-card' : 'inactive-card';
+                                                $statusClass = $isActive ? 'status-active' : 'status-inactive';
+                                                $avatarBorder = $isActive ? 'active-avatar' : 'inactive-avatar';
 
-                                    $isActive = $pltot > 0;
-                                    $cardClass = $isActive ? 'active-card' : 'inactive-card';
-                                    $statusClass = $isActive ? 'status-active' : 'status-inactive';
-                                    $avatarBorder = $isActive ? 'active-avatar' : 'inactive-avatar';
-
-                                    echo '<div class="tree-node-wrapper">';
-                                        echo ' <div class="tree-card-container">';
-                                            echo ' <a href="/dashboard/reftree/' . $user->id . '" class="tree-card-link">';
+                                                echo '<div class="tree-node-wrapper">';
+                                                echo ' <div class="tree-card-container">';
+                                                echo ' <a href="/dashboard/reftree/' . $user->id . '" class="tree-card-link">';
                                                 echo ' <div class="tree-card ' . $cardClass . '">';
 
-                                                    // Avatar picture with status halo
-                                                    echo ' <div class="avatar-wrapper ' . $avatarBorder . '">';
-                                                        echo ' <img src="/images/icons/profile.webp" alt="Avatar" />';
-                                                        echo ' <span class="status-indicator ' . $statusClass . '"></span>';
-                                                        echo ' </div>';
+                                                // Avatar picture with status halo
+                                                echo ' <div class="avatar-wrapper ' . $avatarBorder . '">';
+                                                echo ' <img src="/images/icons/profile.webp" alt="Avatar" />';
+                                                echo ' <span class="status-indicator ' . $statusClass . '"></span>';
+                                                echo ' </div>';
 
-                                                    // Name, ID, Phone details
-                                                    echo ' <h6 class="member-name" style="display:none">' . htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8') . '</h6>';
-                                                    echo ' <p class="member-name">ID ' . htmlspecialchars($user->uid, ENT_QUOTES, 'UTF-8') . ' <span onclick="copyUid(event, \'' . htmlspecialchars($user->uid, ENT_QUOTES, 'UTF-8') . '\'); event.stopPropagation(); event.preventDefault(); return false;" class="copy-uid-btn" style="cursor: pointer; margin-left: 5px; color: #ffd700; transition: color 0.2s;" onmouseover="this.style.color=\'#fff\'" onmouseout="this.style.color=\'#ffd700\'" title="Copy ID"><i class="bx bx-copy"></i></span></p>';
+                                                // Name, ID, Phone details
+                                                echo ' <h6 class="member-name" style="display:none">' . htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8') . '</h6>';
+                                                echo ' <p class="member-name">ID ' . htmlspecialchars($user->uid, ENT_QUOTES, 'UTF-8') . ' <span onclick="copyUid(event, \'' . htmlspecialchars($user->uid, ENT_QUOTES, 'UTF-8') . '\'); event.stopPropagation(); event.preventDefault(); return false;" class="copy-uid-btn" style="cursor: pointer; margin-left: 5px; color: #ffd700; transition: color 0.2s;" onmouseover="this.style.color=\'#fff\'" onmouseout="this.style.color=\'#ffd700\'" title="Copy ID"><i class="bx bx-copy"></i></span></p>';
 
-                                                    if ($currentDepth <= 1 && !empty($user->phone)) {
-                                                        echo ' <p class="member-phone"><i class="bx bx-phone"></i> ' . htmlspecialchars($user->phone, ENT_QUOTES, 'UTF-8') . '</p>';
-                                                        }
+                                                // if ($currentDepth <= 1 && !empty($user->phone)) {
+                                                //     echo ' <p class="member-phone"><i class="bx bx-phone"></i> ' . htmlspecialchars($user->phone, ENT_QUOTES, 'UTF-8') . '</p>';
+                                                //     }
 
-                                                        // Current user business volume plan total
-                                                        if ($isActive) {
-                                                        echo ' <span class="badge badge-active">Sub ' . number_format($pltot, 0) . ' USDT</span>';
-                                                        echo '<div style="height: 10px;"></div>';
-                                                        echo ' <span class="badge badge-stake">Stake ' . number_format($stake_total, 0) . ' USDT</span>';
-                                                        } else {
-                                                        echo ' <span class="badge badge-inactive">0 USDT</span>';
-                                                        }
+                                                // Current user business volume plan total
+                                                if ($isActive) {
+                                                    echo ' <span class="badge badge-active">Sub ' . number_format($pltot, 0) . ' USDT</span>';
+                                                    echo '<div style="height: 10px;"></div>';
+                                                    echo ' <span class="badge badge-stake">Stake ' . number_format($stake_total, 0) . ' USDT</span>';
+                                                } else {
+                                                    echo ' <span class="badge badge-inactive">0 USDT</span>';
+                                                }
 
-                                                        echo ' </div>';
+                                                echo ' </div>';
                                                 echo ' </a>';
-                                            echo ' </div>';
+                                                echo ' </div>';
 
-                                        // Depth limited recursion for Left/Right legs
-                                        if ($currentDepth < $maxDepth) { $leftUser=$user->left ? DB::table('customers')->where('id', $user->left)->first() : null;
-                                            $rightUser = $user->right ? DB::table('customers')->where('id', $user->right)->first() : null;
+                                                // Depth limited recursion for Left/Right legs
+                                                if ($currentDepth < $maxDepth) {
+                                                    $leftUser = $user->left ? DB::table('customers')->where('id', $user->left)->first() : null;
+                                                    $rightUser = $user->right ? DB::table('customers')->where('id', $user->right)->first() : null;
 
-                                            echo ' <div class="tree-children">';
-                                                echo ' <div class="tree-branch left-branch">';
+                                                    echo ' <div class="tree-children">';
+                                                    echo ' <div class="tree-branch left-branch">';
                                                     renderNewUserTree($leftUser, $currentDepth + 1, $maxDepth, $user->id, 'left', ($path === '' || $path === 'L') ? 'L' : 'I');
                                                     echo ' </div>';
-                                                echo ' <div class="tree-branch right-branch">';
+                                                    echo ' <div class="tree-branch right-branch">';
                                                     renderNewUserTree($rightUser, $currentDepth + 1, $maxDepth, $user->id, 'right', ($path === '' || $path === 'R') ? 'R' : 'I');
                                                     echo ' </div>';
-                                                echo ' </div>';
+                                                    echo ' </div>';
+                                                }
+
+                                                echo '</div>';
                                             }
+                                        }
 
-                                            echo '</div>';
-                                    }
-                                    }
-
-                                    // Start tree drawing
-                                    renderNewUserTree($refuser, 0, 2, null, null, '');
+                                        // Start tree drawing
+                                        renderNewUserTree($refuser, 0, 2, null, null, '');
                                     @endphp
+                                </div>
                             </div>
-                        </div>
 
 
-                        <!-- Legend and Zoom Utility Panel -->
-                        <div class="tree-utility-panel mb-4" style="margin-top: 20px;">
-                            <div class="legend-container">
-                                <div class="legend-item"><span class="legend-dot active-dot"></span> Active</div>
-                                <div class="legend-item"><span class="legend-dot inactive-dot"></span> Inactive</div>
-                                <div class="legend-item"><span class="legend-dot vacant-dot"></span> Vacant Slot</div>
+                            <!-- Legend and Zoom Utility Panel -->
+                            <div class="tree-utility-panel mb-4" style="margin-top: 20px;">
+                                <div class="legend-container">
+                                    <div class="legend-item"><span class="legend-dot active-dot"></span> Active</div>
+                                    <div class="legend-item"><span class="legend-dot inactive-dot"></span> Inactive</div>
+                                    <div class="legend-item"><span class="legend-dot vacant-dot"></span> Vacant Slot</div>
+                                </div>
                             </div>
-                        </div>
 
 
                         @else
-                        <!-- Not Found / Security warning -->
-                        <div class="card bg-dark text-white border-warning p-5 text-center my-5 animate__animated animate__fadeIn" style="border-radius: 16px;">
-                            <i class="bx bx-error-circle text-warning mb-3" style="font-size: 4rem;"></i>
-                            <h4 class="text-white fw-bold">Member Not Found</h4>
-                            <p class="text-muted">The searched member ID does not exist, or is not located within your downline.</p>
-                            <div class="mt-4">
-                                <a href="/dashboard/reftree/{{ $myintid }}" class="btn btn-warning">
-                                    <i class="bx bx-arrow-back me-1"></i> Back to My Tree
-                                </a>
+                            <!-- Not Found / Security warning -->
+                            <div class="card bg-dark text-white border-warning p-5 text-center my-5 animate__animated animate__fadeIn"
+                                style="border-radius: 16px;">
+                                <i class="bx bx-error-circle text-warning mb-3" style="font-size: 4rem;"></i>
+                                <h4 class="text-white fw-bold">Member Not Found</h4>
+                                <p class="text-muted">The searched member ID does not exist, or is not located within your
+                                    downline.</p>
+                                <div class="mt-4">
+                                    <a href="/dashboard/reftree/{{ $myintid }}" class="btn btn-warning">
+                                        <i class="bx bx-arrow-back me-1"></i> Back to My Tree
+                                    </a>
+                                </div>
                             </div>
-                        </div>
                         @endif
 
                         <style>
@@ -386,6 +406,7 @@ if ($refintid < $myintid) {
                                     padding: 4px 8px !important;
                                     border-radius: 8px !important;
                                 }
+
                                 .btn-zoom-dock {
                                     width: 36px !important;
                                     height: 36px !important;
@@ -1054,7 +1075,6 @@ if ($refintid < $myintid) {
                                     padding: 0.2em 0.4em;
                                 }
                             }
-
                         </style>
 
                         <div style="height: 100px;"></div>
@@ -1146,10 +1166,10 @@ if ($refintid < $myintid) {
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(uid)
-                    .then(function() {
+                    .then(function () {
                         alert('User ID ' + uid + ' copied to clipboard!');
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         fallbackCopyUid(uid);
                     });
             } else {

@@ -22,6 +22,7 @@ $buyproduct = false;
 }
 
 @endphp
+@if (!isset($only_card) || !$only_card)
 @if ($buyproduct || $bbsnd)
 <link rel="icon" type="image/x-icon" href="/tst/grnyellow.png">
 <!-- All -->
@@ -125,6 +126,7 @@ $buyproduct = false;
     }
 
 </style>
+@endif
 @if ($v->gms_wallet != null)
 
 @php
@@ -136,74 +138,90 @@ $gms_wallet = decStr($v->gms_wallet);
 $pvt_wallet = decStr($v->gms_pvt_key);
 }
 @endphp
+@if (!isset($only_scripts) || !$only_scripts)
 @if (isset($snd))
-<div class="wallet-container" style="{{ isset($small) && $small ? 'width: 100%; margin: 0; max-width: none;' : 'max-width: 600px; margin: 20px auto 40px auto; width: 100%;' }}">
-    <div class="card premium-card" style="{{ isset($small) && $small ? 'height: 100%; margin: 0;' : '' }}">
-        <div class="card-body" style="{{ isset($small) && $small ? 'padding: 16px;' : 'padding: 24px;' }}">
-            <div class="d-flex align-items-center justify-content-between {{ isset($small) && $small ? 'mb-2' : 'mb-4' }}" style="border-bottom: 1px dashed rgba(249, 168, 38, 0.15); {{ isset($small) && $small ? 'padding-bottom: 8px;' : 'padding-bottom: 12px;' }}">
-                <h4 class="mb-0 text-white" style="font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; {{ isset($small) && $small ? 'font-size: 13px;' : 'font-size: 15px;' }}">
-                    @if (isset($adminwlt))
-                    Admin Wallet
-                    @else
-                    My Wallet
+@if (isset($small) && $small)
+<div class="card premium-card wallet-grid-card" style="height: 100% !important; margin: 0; display: flex; flex-direction: column;">
+    <div class="card-body" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; flex: 1;">
+        @else
+        <div class="wallet-container" style="max-width: 600px; margin: 20px auto 40px auto; width: 100%;">
+            <div class="card premium-card">
+                <div class="card-body" style="padding: 24px;">
                     @endif
-                </h4>
-                <span id="wallet-history">
-                    <a href="https://bscscan.com/address/{{ $gms_wallet }}#tokentxns" target="_blank" class="btn premium-btn" style="{{ isset($small) && $small ? 'padding: 4px 8px !important; font-size: 10px !important;' : 'padding: 6px 12px !important; font-size: 11px !important;' }}">
-                        <i class="fas fa-history me-1"></i> History
-                    </a>
-                </span>
-            </div>
-
-            <!-- Balances Grid -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); {{ isset($small) && $small ? 'gap: 10px; margin-bottom: 12px;' : 'gap: 16px; margin-bottom: 20px;' }}">
-                <!-- USDT Balance -->
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(249,168,38,0.1); {{ isset($small) && $small ? 'padding: 8px 10px; border-radius: 8px; gap: 8px;' : 'padding: 12px; border-radius: 12px; gap: 10px;' }} display: flex; align-items: center;">
-                    <img src="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/512/Tether-USDT-icon.png" style="{{ isset($small) && $small ? 'height: 22px; width: 22px;' : 'height: 28px; width: 28px;' }}">
-                    <div>
-                        <span class="crd-title" style="{{ isset($small) && $small ? 'font-size: 8px !important;' : 'font-size: 10px !important;' }} color: rgba(255,255,255,0.5) !important; text-transform: uppercase; display: block;">USDT</span>
-                        <h4 class="mb-0 text-white" style="font-weight: 700; {{ isset($small) && $small ? 'font-size: 14px;' : 'font-size: 16px;' }} margin: 0;" id="usdt-balance">0.00</h4>
+                    <div class="d-flex align-items-center justify-content-between {{ isset($small) && $small ? 'mb-2' : 'mb-4' }}" style="border-bottom: 1px dashed rgba(249, 168, 38, 0.15); {{ isset($small) && $small ? 'padding-bottom: 8px;' : 'padding-bottom: 12px;' }}">
+                        <h4 class="mb-0 text-white" style="font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; {{ isset($small) && $small ? 'font-size: 13px;' : 'font-size: 15px;' }}">
+                            @if (isset($adminwlt))
+                            Admin Wallet
+                            @else
+                            My Wallet
+                            @endif
+                        </h4>
+                        <span id="wallet-history">
+                            <a href="https://bscscan.com/address/{{ $gms_wallet }}#tokentxns" target="_blank" class="btn premium-btn" style="{{ isset($small) && $small ? 'padding: 4px 8px !important; font-size: 10px !important;' : 'padding: 6px 12px !important; font-size: 11px !important;' }}">
+                                <i class="fas fa-history me-1"></i> History
+                            </a>
+                        </span>
                     </div>
-                </div>
-                <!-- BNB Balance -->
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(249,168,38,0.1); {{ isset($small) && $small ? 'padding: 8px 10px; border-radius: 8px; gap: 8px;' : 'padding: 12px; border-radius: 12px; gap: 10px;' }} display: flex; align-items: center;">
-                    <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png" style="{{ isset($small) && $small ? 'height: 22px; width: 22px;' : 'height: 28px; width: 28px;' }}">
-                    <div>
-                        <span class="crd-title" style="{{ isset($small) && $small ? 'font-size: 8px !important;' : 'font-size: 10px !important;' }} color: rgba(255,255,255,0.5) !important; text-transform: uppercase; display: block;">BNB</span>
-                        <h4 class="mb-0 text-white" style="font-weight: 700; {{ isset($small) && $small ? 'font-size: 14px;' : 'font-size: 16px;' }} margin: 0;" id="bnb-balance">0.00</h4>
+
+                    <!-- Balances Column -->
+                    <div style="display: flex; flex-direction: column; {{ isset($small) && $small ? 'gap: 12px; margin-bottom: 12px;' : 'gap: 16px; margin-bottom: 20px;' }}">
+                        <!-- USDT Balance -->
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(249,168,38,0.1); {{ isset($small) && $small ? 'padding: 12px 14px; border-radius: 8px; gap: 10px;' : 'padding: 16px 20px; border-radius: 12px; gap: 16px;' }} display: flex; align-items: center;">
+                            <img src="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/512/Tether-USDT-icon.png" style="{{ isset($small) && $small ? 'height: 36px; width: 36px;' : 'height: 48px; width: 48px;' }}">
+                            <div>
+                                <span class="crd-title" style="{{ isset($small) && $small ? 'font-size: 12px !important;' : 'font-size: 15px !important;' }} color: rgba(255,255,255,0.5) !important; text-transform: uppercase; display: block; font-weight: 600;">USDT</span>
+                                <h4 class="mb-0 text-white" style="font-weight: 700; {{ isset($small) && $small ? 'font-size: 22px;' : 'font-size: 28px;' }} margin: 0; line-height: 1.1;" id="usdt-balance">0.00</h4>
+                            </div>
+                        </div>
+                        <!-- BNB Balance -->
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(249,168,38,0.1); {{ isset($small) && $small ? 'padding: 12px 14px; border-radius: 8px; gap: 10px;' : 'padding: 16px 20px; border-radius: 12px; gap: 16px;' }} display: flex; align-items: center;">
+                            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png" style="{{ isset($small) && $small ? 'height: 36px; width: 36px;' : 'height: 48px; width: 48px;' }}">
+                            <div>
+                                <span class="crd-title" style="{{ isset($small) && $small ? 'font-size: 12px !important;' : 'font-size: 15px !important;' }} color: rgba(255,255,255,0.5) !important; text-transform: uppercase; display: block; font-weight: 600;">BNB</span>
+                                <h4 class="mb-0 text-white" style="font-weight: 700; {{ isset($small) && $small ? 'font-size: 22px;' : 'font-size: 28px;' }} margin: 0; line-height: 1.1;" id="bnb-balance">0.00</h4>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Address and Action row -->
+                    <div style="display: flex; flex-direction: column; {{ isset($small) && $small ? 'gap: 10px; flex: 1; justify-content: space-between;' : 'gap: 16px;' }}">
+                        <!-- Wallet Address -->
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); {{ isset($small) && $small ? 'padding: 8px 12px; border-radius: 8px; gap: 8px;' : 'padding: 12px 16px; border-radius: 12px; gap: 12px;' }} display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0;">
+                                <span class="crd-title" style="{{ isset($small) && $small ? 'font-size: 10px !important;' : 'font-size: 12px !important;' }} color: rgba(255,255,255,0.5) !important; text-transform: uppercase; display: block; margin-bottom: 2px;">Wallet Address</span>
+                                <span id="wallet-address" data-address="{{ $gms_wallet }}" style="{{ isset($small) && $small ? 'font-size: 12px;' : 'font-size: 14px;' }} color: #4ade80; font-family: monospace; font-weight: 600; display: block;">
+                                    <span class="d-none d-sm-inline">{{ $gms_wallet }}</span>
+                                    <span class="d-inline d-sm-none">{{ substr($gms_wallet, 0, 8) . '...' . substr($gms_wallet, -8) }}</span>
+                                </span>
+                            </div>
+                            <button type="button" class="btn p-2 text-warning" onclick="copyAddress('wallet-address')" style="background: rgba(249, 168, 38, 0.1); border: none; border-radius: 6px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; {{ isset($small) && $small ? 'padding: 6px 8px !important; font-size: 13px !important;' : 'padding: 8px 10px !important; font-size: 15px !important;' }}">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+
+                        <!-- Buttons -->
+                        @if ($snd)
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; {{ isset($small) && $small ? 'gap: 10px;' : 'gap: 12px;' }}">
+                            <button type="button" class="btn premium-btn" onclick="onWalletSend()" style="width: 100%; {{ isset($small) && $small ? 'padding: 10px !important; font-size: 13px !important;' : 'padding: 10px !important; font-size: 12px !important;' }}">
+                                <i class="fas fa-paper-plane me-1"></i> Send
+                            </button>
+                            <button type="button" class="btn premium-btn" onclick="onWalleRecieve()" style="width: 100%; {{ isset($small) && $small ? 'padding: 10px !important; font-size: 13px !important;' : 'padding: 10px !important; font-size: 12px !important;' }} background: linear-gradient(135deg, #475569, #334155) !important; box-shadow: none !important;">
+                                <i class="fas fa-arrow-down me-1"></i> Receive
+                            </button>
+                        </div>
+                        @endif
+                    </div>
+                    @if (isset($small) && $small)
                 </div>
             </div>
-
-            <!-- Address and Action row -->
-            <div style="display: flex; flex-direction: column; {{ isset($small) && $small ? 'gap: 10px;' : 'gap: 16px;' }}">
-                <!-- Wallet Address -->
-                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); {{ isset($small) && $small ? 'padding: 6px 10px; border-radius: 8px; gap: 8px;' : 'padding: 10px 14px; border-radius: 12px; gap: 10px;' }} display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                    <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;">
-                        <span class="crd-title" style="{{ isset($small) && $small ? 'font-size: 8px !important;' : 'font-size: 9px !important;' }} color: rgba(255,255,255,0.5) !important; text-transform: uppercase; display: block;">Wallet Address</span>
-                        <span id="wallet-address" style="{{ isset($small) && $small ? 'font-size: 10px;' : 'font-size: 11px;' }} color: #4ade80; font-family: monospace; font-weight: 600; overflow: hidden; text-overflow: ellipsis; display: block;">{{ $gms_wallet }}</span>
-                    </div>
-                    <button type="button" class="btn p-2 text-warning" onclick="copyAddress('wallet-address')" style="background: rgba(249, 168, 38, 0.1); border: none; border-radius: 6px; flex-shrink: 0; {{ isset($small) && $small ? 'padding: 4px 6px !important;' : '' }}">
-                        <i class="fas fa-copy" style="{{ isset($small) && $small ? 'font-size: 11px;' : '' }}"></i>
-                    </button>
-                </div>
-
-                <!-- Buttons -->
-                @if ($snd)
-                <div style="display: grid; grid-template-columns: 1fr 1fr; {{ isset($small) && $small ? 'gap: 10px;' : 'gap: 12px;' }}">
-                    <button type="button" class="btn premium-btn" onclick="onWalletSend()" style="width: 100%; {{ isset($small) && $small ? 'padding: 8px !important; font-size: 11px !important;' : 'padding: 10px !important; font-size: 12px !important;' }}">
-                        <i class="fas fa-paper-plane me-1"></i> Send
-                    </button>
-                    <button type="button" class="btn premium-btn" onclick="onWalleRecieve()" style="width: 100%; {{ isset($small) && $small ? 'padding: 8px !important; font-size: 11px !important;' : 'padding: 10px !important; font-size: 12px !important;' }} background: linear-gradient(135deg, #475569, #334155) !important; box-shadow: none !important;">
-                        <i class="fas fa-arrow-down me-1"></i> Receive
-                    </button>
-                </div>
-                @endif
-            </div>
+            @else
         </div>
     </div>
 </div>
 @endif
+@endif
+@endif
+@if (!isset($only_card) || !$only_card)
 <script>
     var coin_type = 'usdt';
     // Check if web3 is available
@@ -285,6 +303,46 @@ $pvt_wallet = decStr($v->gms_pvt_key);
     // var walletAdress = '0x01e2c1eb75d485dC17A977f286Eb66009eF94b90';
     var usdtbalance = 0;
     var bnbalance = 0;
+    var dbTransferCredit = parseFloat("{{ isset($v) ? DB::table('customer_transfers')->where('csId', $v->id)->where('tStatus', '1')->get()->sum('tAmount') : 0 }}") || 0;
+
+    function updateAvailableBalanceDisplays() {
+        var totalAvailable = parseFloat(usdtbalance) + dbTransferCredit;
+        var subBalEl = document.getElementById('subscribe_available_balance');
+        if (subBalEl) {
+            subBalEl.innerText = totalAvailable.toFixed(2);
+        }
+        var subWltEl = document.getElementById('subscribe_wallet_balance');
+        if (subWltEl) {
+            subWltEl.innerText = parseFloat(usdtbalance).toFixed(2);
+        }
+        var subCrdEl = document.getElementById('subscribe_credit_balance');
+        if (subCrdEl) {
+            subCrdEl.innerText = dbTransferCredit.toFixed(2);
+        }
+
+        var stakeBalEl = document.getElementById('stake_available_balance');
+        if (stakeBalEl) {
+            stakeBalEl.innerText = totalAvailable.toFixed(2);
+        }
+        var stakeWltEl = document.getElementById('stake_wallet_balance');
+        if (stakeWltEl) {
+            stakeWltEl.innerText = parseFloat(usdtbalance).toFixed(2);
+        }
+        var stakeCrdEl = document.getElementById('stake_credit_balance');
+        if (stakeCrdEl) {
+            stakeCrdEl.innerText = dbTransferCredit.toFixed(2);
+        }
+
+        var subWltInput = document.getElementById('subscribe_wallet_balance_input');
+        if (subWltInput) {
+            subWltInput.value = usdtbalance;
+        }
+        var stakeWltInput = document.getElementById('stake_wallet_balance_input');
+        if (stakeWltInput) {
+            stakeWltInput.value = usdtbalance;
+        }
+    }
+
     let balance_loaded = {
         _value: 0
         , _listener: null, // Store the listener function
@@ -311,6 +369,7 @@ $pvt_wallet = decStr($v->gms_pvt_key);
                     , 18); // Adjust decimals based on token decimals (USDT has 18 decimals on BSC)
                 document.getElementById('usdt-balance').innerHTML = numPars(usdtbalance);
                 balance_loaded.value = balance_loaded.value + 1;
+                updateAvailableBalanceDisplays();
             } else {
                 console.error('Error:', error);
                 document.getElementById('usdt-balance').innerHTML = 'Error: ' + error.message;
@@ -351,7 +410,8 @@ $pvt_wallet = decStr($v->gms_pvt_key);
     }
 
     function copyAddress(elementId) {
-        var copyText = document.getElementById(elementId).innerText;
+        var element = document.getElementById(elementId);
+        var copyText = element.getAttribute('data-address') || element.innerText;
         navigator.clipboard.writeText(copyText).then(function() {
             alert("Copied the address: " + copyText);
         }, function(err) {
@@ -1156,7 +1216,26 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
             }
             async function runfromsecure() {
                 await sleep(4000);
-                sendUSDT("{{ $reciever }}", "{{ $amount }}", "{{ $remark }}");
+                var totalAmount = parseFloat("{{ $amount }}");
+                var walletAmount = 0;
+                if (usdtbalance >= totalAmount) {
+                    walletAmount = totalAmount;
+                } else if (usdtbalance > 0) {
+                    walletAmount = usdtbalance;
+                } else {
+                    walletAmount = 0;
+                }
+
+                if (walletAmount > 0) {
+                    sendUSDT("{{ $reciever }}", walletAmount.toString(), "{{ $remark }}");
+                } else {
+                    document.getElementById('coin_type').value = 'usdt';
+                    document.getElementById('send_amount').value = '0';
+                    document.getElementById('send_remark').value = "{{ $remark }}";
+                    document.getElementById('send_txid').value = 'transfer_credit_only_' + Date.now();
+                    document.getElementById('send_reciept').value = 'transfer_credit_only';
+                    document.getElementById('sendusdtform').submit();
+                }
             }
             runfromsecure();
         });
@@ -1308,5 +1387,5 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
     @endif
     @enderror
 
-
+    @endif
     @endif
