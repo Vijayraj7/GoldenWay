@@ -39,9 +39,9 @@
             </a>
         </li>
         <!-- Misc -->
-        <li class="menu-header small text-uppercase">
+        {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Product</span>
-        </li>
+        </li> --}}
         <li class="menu-item @if($r == 'productpendingrequests') active @endif">
             <a href="/admin/product/requests?typ=pending" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-pause-circle"></i>
@@ -55,7 +55,7 @@
             </a>
         </li>
         <!-- Misc -->
-        <li class="menu-header small text-uppercase">
+        {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Lott</span>
         </li>
         <li class="menu-item @if($r == 'lotthistory') active @endif">
@@ -69,11 +69,11 @@
                 <i class="menu-icon tf-icons bx bx-send"></i>
                 <div data-i18n="Basic">Lott Box</div>
             </a>
-        </li>
+        </li> --}}
         <!-- Misc -->
-        <li class="menu-header small text-uppercase">
+        {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Withdraw</span>
-        </li>
+        </li> --}}
         <li class="menu-item @if($r == 'transferequests') active @endif">
             <a href="/admin/withdraw/requests?typ=trnsfr" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
@@ -88,9 +88,9 @@
             </a>
         </li>
         <!-- Misc -->
-        <li class="menu-header small text-uppercase">
+        {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Add Fund</span>
-        </li>
+        </li> --}}
         <li class="menu-item @if($r == 'creditaddpendingrequests') active @endif">
             <a href="/admin/creditadd/requests?typ=pending" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-pause"></i>
@@ -114,14 +114,14 @@
         @endif
         <!-- Misc -->
         <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Transactions</span>
+            <span class="menu-header-text">Withdraw</span>
         </li>
-        <li class="menu-item @if($r == 'transactions') active @endif">
+        {{-- <li class="menu-item @if($r == 'transactions') active @endif">
             <a href="/admin/transactions/all" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
                 <div data-i18n="Basic">Transaction History</div>
             </a>
-        </li>
+        </li> --}}
         <li class="menu-item @if($r == 'credittransactions') active @endif">
             <a href="/admin/transactions/all?typ=trnsfr" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
