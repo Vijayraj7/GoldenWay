@@ -335,7 +335,7 @@ if (count($plans) == 0) {
                                     </style>
                                     <div style="margin-bottom: 15px;" class="col-lg-12 col-md-12 col-12 mb-12">
                                         <div class="dashboard-top-buttons-row">
-                                            @if(isAdmin() || true)
+                                            @if(isAdmin())
                                             <a href="/admin" class="btn btn-light shr-referral">
                                                 Admin
                                             </a>
