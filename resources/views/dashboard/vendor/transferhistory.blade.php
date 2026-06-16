@@ -456,7 +456,7 @@ use Carbon\Carbon;
                                             </td>
 
                                             <!-- Total Credit (+) / Debit (-) -->
-                                            @if($wthdraw->tAmount > 0)
+                                            @if($wthdraw->fuserid == $v->id)
                                             <td style="color: #00D094 !important; font-weight: 700; font-size: 0.9rem;">
                                                 {{ number_format($wthdraw->tAmount, 2) }} USDT
                                             </td>
