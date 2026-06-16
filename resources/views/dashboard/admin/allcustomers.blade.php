@@ -925,7 +925,7 @@ $i = 0;
                                                 @endif
                                             </td>
 
-                                            <td><span class="uid-tag">{{ $cstomer->id }}</span></td>
+                                            <td><span class="uid-tag">{{ $cstomer->uid }}</span></td>
 
                                             <td>
                                                 @if($isActive)
