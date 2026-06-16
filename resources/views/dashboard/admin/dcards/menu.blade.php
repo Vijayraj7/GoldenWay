@@ -113,9 +113,9 @@
         </li>
         @endif
         <!-- Misc -->
-        <li class="menu-header small text-uppercase">
+        {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Withdraw</span>
-        </li>
+        </li> --}}
         {{-- <li class="menu-item @if($r == 'transactions') active @endif">
             <a href="/admin/transactions/all" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
