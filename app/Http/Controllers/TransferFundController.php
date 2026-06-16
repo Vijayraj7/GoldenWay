@@ -18,17 +18,17 @@ class TransferFundController extends Controller
     public function getcusname(Request $rqs)
     {
         $prs = json_decode(json_encode($rqs->input(), true), true);
-        
+
         if (!isset($prs['csId'])) {
             return 'no user found';
         }
-        
+
         $usr = DB::table('customers')->where('uid', trim($prs['csId']))->first();
-        
+
         if ($usr) {
             return 'user found';
         }
-        
+
         return 'no user found';
     }
 
@@ -85,7 +85,7 @@ class TransferFundController extends Controller
             ]);
         }
 
-        $amnt = (float)$prs['amount'];
+        $amnt = (float) $prs['amount'];
         if ($amnt < 10.0) {
             return redirect()->back()->withInput($rqs->all())->withErrors([
                 'image' => 'Min USDT is 10',
@@ -125,13 +125,13 @@ class TransferFundController extends Controller
             // Both parties see this via their fuserid / tuserid columns.
             // csId is set to sender so their transfer-wallet balance is aware.
             DB::table('customer_transfers')->insert([
-                'csId'       => $sender->id,
-                'tType'      => 'transfer',
-                'fuserid'    => $sender->id,
-                'tuserid'    => $recipient->id,
-                'tAmount'    => strval($amnt),
-                'tStatus'    => '1',
-                'wStatus'    => '0',
+                'csId' => $sender->id,
+                'tType' => 'transfer',
+                'fuserid' => $sender->id,
+                'tuserid' => $recipient->id,
+                'tAmount' => strval($amnt),
+                'tStatus' => '1',
+                'wStatus' => '0',
                 'created_at' => $thisdate,
                 'updated_at' => $thisdate,
             ]);
@@ -147,13 +147,13 @@ class TransferFundController extends Controller
             if ($total_deducted <= $twalletAmnt) {
                 // Enough in transfer wallet – deduct all from there
                 DB::table('customer_transfers')->insert([
-                    'csId'       => $sender->id,
-                    'tType'      => 'transfer_fee',
-                    'fuserid'    => $sender->id,
-                    'tuserid'    => $sender->id,
-                    'tAmount'    => strval($total_deducted * -1),
-                    'tStatus'    => '1',
-                    'wStatus'    => '1',
+                    'csId' => $sender->id,
+                    'tType' => 'transfer_fee',
+                    'fuserid' => $sender->id,
+                    'tuserid' => $sender->id,
+                    'tAmount' => strval(-$total_deducted),
+                    'tStatus' => '1',
+                    'wStatus' => '1',
                     'created_at' => $thisdate,
                     'updated_at' => $thisdate,
                 ]);
@@ -161,13 +161,13 @@ class TransferFundController extends Controller
                 // Drain transfer wallet first
                 if ($twalletAmnt > 0) {
                     DB::table('customer_transfers')->insert([
-                        'csId'       => $sender->id,
-                        'tType'      => 'transfer_fee',
-                        'fuserid'    => $sender->id,
-                        'tuserid'    => $sender->id,
-                        'tAmount'    => strval($twalletAmnt * -1),
-                        'tStatus'    => '1',
-                        'wStatus'    => '1',
+                        'csId' => $sender->id,
+                        'tType' => 'transfer_fee',
+                        'fuserid' => $sender->id,
+                        'tuserid' => $sender->id,
+                        'tAmount' => strval(-$twalletAmnt),
+                        'tStatus' => '1',
+                        'wStatus' => '1',
                         'created_at' => $thisdate,
                         'updated_at' => $thisdate,
                     ]);
@@ -175,11 +175,11 @@ class TransferFundController extends Controller
                 // Remainder from transactions wallet
                 $remainder = $total_deducted - $twalletAmnt;
                 DB::table('customer_transactions')->insert([
-                    'csId'       => $sender->id,
-                    'tType'      => 'transfer',
-                    'tAmount'    => strval($remainder * -1),
-                    'tStatus'    => '1',
-                    'wStatus'    => '1',
+                    'csId' => $sender->id,
+                    'tType' => 'transfer',
+                    'tAmount' => strval(-$remainder),
+                    'tStatus' => '1',
+                    'wStatus' => '1',
                     'created_at' => $thisdate,
                     'updated_at' => $thisdate,
                 ]);
@@ -260,7 +260,7 @@ class TransferFundController extends Controller
             ]);
         }
 
-        $amnt = (float)$prs['amount'];
+        $amnt = (float) $prs['amount'];
         if ($amnt <= 0) {
             return redirect()->back()->withInput($rqs->all())->withErrors([
                 'image' => 'Amount must be greater than 0',
@@ -270,7 +270,7 @@ class TransferFundController extends Controller
         DB::beginTransaction();
         try {
             $thisdate = date('Y-m-d H:i:s');
-            
+
             // Credit the recipient's transfers balance ONLY
             DB::table('customer_transfers')->insert([
                 'csId' => $recipient->id,

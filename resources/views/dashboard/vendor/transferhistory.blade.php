@@ -361,8 +361,8 @@ use Carbon\Carbon;
                                             $query = DB::table('customer_transfers')
                                                 ->where(function($q) use ($v) {
                                                     $q->where('csId', $v->id)
-                                                      ->orWhere('fuserid', $v->id)
-                                                      ->orWhere('tuserid', $v->id);
+                                                     // ->orWhere('fuserid', $v->id)
+                                                     // ->orWhere('tuserid', $v->id);
                                                 });
                                             if (!$showAll) {
                                                 $query->where('tType', 'transfer');
