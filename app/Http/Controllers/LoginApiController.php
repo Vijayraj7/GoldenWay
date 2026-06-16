@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterWelcomeMail;
+use App\Mail\PasswordResetMail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\File;
 use App\Http\Controllers\HelperController;
@@ -127,7 +128,18 @@ class LoginApiController extends Controller
         );
 
         try {
-            Mail::to($rqd->email)->send(new RegisterWelcomeMail($rqd->name, $rqd->email, $pas));
+            $html = view('mail.register_welcome', [
+                'name' => $rqd->name,
+                'email' => $rqd->email,
+                'password' => $pas
+            ])->render();
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            $headers .= 'From: GoldenWay International <noreply@' . env('WEB_URL') . '>' . "\r\n";
+            $headers .= 'Reply-To: noreply@' . env('WEB_URL') . "\r\n";
+            $headers .= 'X-Mailer: PHP/' . phpversion();
+
+            mail($rqd->email, 'Welcome to GoldenWay International', $html, $headers);
         } catch (\Exception $e) {
             Log::error('Failed to send registration email: ' . $e->getMessage());
         }
@@ -502,83 +514,104 @@ class LoginApiController extends Controller
     {
         $h = new HelperController;
         $rqd = json_decode(json_encode($rqs->all()));
-        // $ve = DB::table("customers")->where('email', $rqd->email)->first();
-        $ve = DB::table("customers")->where('email', $rqd->email)->first();
-        $vef = DB::table("customers_inactive")->where('email', $rqd->email)->first();
+        
+        $uid = trim($rqd->uid ?? '');
+        // Search strictly by User ID, fallback to Email
+        $ve = DB::table("customers")->where('uid', $uid)->first();
         if ($ve == null) {
-            return redirect()->back()->withInput($rqs->only('email', 'password'))->withErrors([
-                'email' => 'email not found',
-                // 'password' => 'Wrong password',
+            $ve = DB::table("customers")->where('email', $uid)->first();
+        }
+
+        if ($ve == null) {
+            return redirect()->back()->withInput()->withErrors([
+                'email' => 'User ID / Email not found',
             ]);
         }
-        $rqd->fcode = Str::random(6);
-        $rqd->id = $vef->id;
-        $h->toTableupdate("customers_inactive", $rqd);
-        $h->sendforgetMail($ve->email, $ve->name, $vef->id, $h->encrypt($rqd->fcode));
+
+        $fcode = Str::random(6);
+        // Save token directly to customers table
+        $h->toTableupdate("customers", ['id' => $ve->id, 'fcode' => $fcode]);
+
+        // Send reset email
+        try {
+            $html = view('mail.password_reset', [
+                'name' => $ve->name,
+                'uid' => $ve->uid,
+                'id' => $ve->id,
+                'code' => $h->encrypt($fcode)
+            ])->render();
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            $headers .= 'From: GoldenWay International <noreply@' . env('WEB_URL') . '>' . "\r\n";
+            $headers .= 'Reply-To: noreply@' . env('WEB_URL') . "\r\n";
+            $headers .= 'X-Mailer: PHP/' . phpversion();
+
+            mail($ve->email, 'Reset Your Password - GoldenWay International', $html, $headers);
+        } catch (\Exception $e) {
+            Log::error('Failed to send password reset email: ' . $e->getMessage());
+        }
+
         return redirect('/login/sendpass/s');
     }
 
     public function forget($id, $code)
     {
         $h = new HelperController;
-        // $rqd = json_decode(json_encode($rqs->all()));
-        $vef = DB::table("customers_inactive")->where('id', $id)->where('fcode', $h->decrypt($code))->first();
-        if ($vef == null) {
+        $ve = DB::table("customers")->where('id', $id)->first();
+        if ($ve == null || $ve->fcode !== $h->decrypt($code)) {
             abort(404);
-        } else {
-            $ve = DB::table("customers")->where('email', $vef->email)->first();
-            return view('auth.login.forget', ['st' => 'form', 'v' => $ve, 'id' => $id, 'code' => $code]);
         }
+        return view('auth.login.forget', ['st' => 'form', 'v' => $ve, 'id' => $id, 'code' => $code]);
     }
 
     public function changepass(Request $rqs)
     {
         $h = new HelperController;
         $rqd = json_decode(json_encode($rqs->all()));
-        $vef = DB::table("customers_inactive")->where('id', $rqd->id)->where('fcode', $h->decrypt($rqd->code))->first();
+        $ve = DB::table("customers")->where('id', $rqd->id)->first();
+        
+        if ($ve == null || $ve->fcode !== $h->decrypt($rqd->code)) {
+            return 'something error..';
+        }
+
         if (isset($rqd->password) && isset($rqd->tpassword)) {
             if ($rqd->password == $rqd->tpassword) {
                 return redirect()->back()->withInput()->withErrors([
-                    'password' => 'password and transaction password cannot be same',
-                    // 'password' => 'Wrong password',
+                    'password' => 'Password and Transaction Password cannot be the same',
                 ]);
             }
         }
         if (isset($rqd->password)) {
             if ($rqd->password != $rqd->spassword) {
                 return redirect()->back()->withInput()->withErrors([
-                    'password' => 'password not same',
-                    // 'password' => 'Wrong password',
+                    'password' => 'Passwords do not match',
                 ]);
             }
         }
         if (isset($rqd->tpassword)) {
             if ($rqd->tpassword != $rqd->stpassword) {
                 return redirect()->back()->withInput()->withErrors([
-                    'password' => 'transaction password not same',
-                    // 'password' => 'Wrong password',
+                    'password' => 'Transaction passwords do not match',
                 ]);
             }
         }
-        if ($vef == null) {
-            // abort(404);
-            return 'something error..';
-        } else {
-            $ve = DB::table("customers")->where('email', $vef->email)->first();
-            if (isset($rqd->password)) {
-                $h->toTableupdate("customers", ['id' => $ve->id, 'password' => Hash::make($rqd->password)]);
-                $user = User::where('email', $vef->email)->first();
-                if ($user != null) {
-                    $user->password = $rqd->password;
-                    $user->save();
-                }
+
+        if (isset($rqd->password)) {
+            $h->toTableupdate("customers", ['id' => $ve->id, 'password' => Hash::make($rqd->password)]);
+            $user = User::where('email', $ve->email)->first();
+            if ($user != null) {
+                $user->password = $rqd->password;
+                $user->save();
             }
-            if (isset($rqd->tpassword)) {
-                $h->toTableupdate("customers", ['id' => $ve->id, 'tpassword' => Hash::make($rqd->tpassword)]);
-            }
-            $h->toTableupdate("customers_inactive", ['id' => $vef->id, 'fcode' => 'x']);
-            return redirect('/');
         }
+        if (isset($rqd->tpassword)) {
+            $h->toTableupdate("customers", ['id' => $ve->id, 'tpassword' => Hash::make($rqd->tpassword)]);
+        }
+
+        // Reset the fcode field to clear the reset session
+        $h->toTableupdate("customers", ['id' => $ve->id, 'fcode' => 'x']);
+
+        return redirect('/login')->withErrors(['success' => 'Password reset successfully! Please log in.']);
     }
 
     public function dltuser(Request $rqs)

@@ -53,17 +53,155 @@
         <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
         <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
         <script src="../assets/js/config.js"></script>
+        
+        <style>
+            body {
+                background: radial-gradient(circle at 50% 50%, #0c2b21 0%, #051410 100%) !important;
+                font-family: 'Public Sans', sans-serif;
+                color: #ffffff !important;
+                min-height: 100vh;
+                margin: 0;
+            }
+            .card {
+                background: rgba(10, 36, 28, 0.75) !important;
+                backdrop-filter: blur(15px);
+                -webkit-backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 215, 0, 0.25) !important;
+                border-radius: 16px !important;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.05) !important;
+            }
+            .card-body {
+                color: #ffffff !important;
+                padding: 2.5rem !important;
+            }
+            h4, .card-title {
+                color: #ffffff !important;
+                font-weight: 700 !important;
+            }
+            .text-muted, p, span {
+                color: rgba(255, 255, 255, 0.7) !important;
+            }
+            .form-label {
+                color: #ffd700 !important;
+                font-weight: 600 !important;
+                letter-spacing: 0.5px;
+                font-size: 13px;
+            }
+            .form-control {
+                background-color: rgba(5, 20, 16, 0.6) !important;
+                border: 1px solid rgba(255, 215, 0, 0.2) !important;
+                color: #ffffff !important;
+                border-radius: 8px !important;
+                transition: all 0.3s ease !important;
+            }
+            .form-control:focus {
+                background-color: rgba(5, 20, 16, 0.8) !important;
+                border-color: #ffd700 !important;
+                box-shadow: 0 0 8px rgba(255, 215, 0, 0.3) !important;
+                color: #ffffff !important;
+            }
+            .form-control::placeholder {
+                color: rgba(255, 255, 255, 0.4) !important;
+            }
+            .input-group-text {
+                background-color: rgba(5, 20, 16, 0.6) !important;
+                border: 1px solid rgba(255, 215, 0, 0.2) !important;
+                color: #ffd700 !important;
+            }
+            .btn-primary, button[type="submit"], .btn-submit {
+                background: linear-gradient(135deg, #ffd700 0%, #f9a826 100%) !important;
+                border: none !important;
+                color: #051410 !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.5px;
+                transition: all 0.3s ease !important;
+                border-radius: 8px !important;
+                box-shadow: 0 4px 15px rgba(249, 168, 38, 0.3) !important;
+            }
+            .btn-primary:hover, button[type="submit"]:hover, .btn-submit:hover {
+                background: linear-gradient(135deg, #f9a826 0%, #d88910 100%) !important;
+                box-shadow: 0 6px 20px rgba(249, 168, 38, 0.5) !important;
+                transform: translateY(-1px);
+                color: #051410 !important;
+            }
+            a {
+                color: #ffd700 !important;
+                transition: all 0.3s ease;
+                text-decoration: none;
+            }
+            a:hover {
+                color: #f9a826 !important;
+                text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+                text-decoration: none;
+            }
+            .form-check-input {
+                background-color: rgba(5, 20, 16, 0.6) !important;
+                border: 1px solid rgba(255, 215, 0, 0.3) !important;
+            }
+            .form-check-input:checked {
+                background-color: #ffd700 !important;
+                border-color: #ffd700 !important;
+            }
+            .form-check-label {
+                color: rgba(255, 255, 255, 0.8) !important;
+            }
+            .modal-content {
+                background-color: #09221a !important;
+                border: 1px solid rgba(255, 215, 0, 0.3) !important;
+                border-radius: 12px;
+                box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            }
+            .modal-header {
+                border-bottom: 1px solid rgba(255, 215, 0, 0.15) !important;
+                color: #ffffff !important;
+            }
+            .modal-footer {
+                border-top: 1px solid rgba(255, 215, 0, 0.15) !important;
+            }
+            .modal-title {
+                color: #ffd700 !important;
+                font-weight: 700;
+            }
+            .slidercaptcha {
+                background: rgba(10, 36, 28, 0.95) !important;
+                border: 1px solid rgba(255, 215, 0, 0.25) !important;
+                border-radius: 8px;
+            }
+            .slidercaptcha .card-header {
+                background: rgba(5, 20, 16, 0.8) !important;
+                border-bottom: 1px solid rgba(255, 215, 0, 0.15) !important;
+                color: #ffffff !important;
+                font-weight: 600;
+            }
+            .sliderbg {
+                background-color: rgba(5, 20, 16, 0.8) !important;
+                border: 1px solid rgba(255, 215, 0, 0.2) !important;
+            }
+            .sliderContainer {
+                color: #ffffff !important;
+                background: rgba(5, 20, 16, 0.6) !important;
+                border-radius: 4px;
+            }
+            .slider {
+                background: #ffd700 !important;
+                color: #051410 !important;
+            }
+            .sliderMask {
+                background: rgba(255, 215, 0, 0.2) !important;
+                border-color: rgba(255, 215, 0, 0.3) !important;
+            }
+        </style>
     </head>
-    <body style="background-color: #8d6900 !important;">
+    <body>
         <!-- Content -->
-        <div class="container-xxl" style="display: flex; justify-content: space-around; align-items: center;">
+        <div class="container-xxl" style="display: flex; justify-content: space-around; align-items: center; min-height: 100vh;">
             <div class="imag" style="background-image: url('https://infinqx.ai/assets/images/login/wave.png');">
                 <img src="https://infinqx.ai/assets/images/login/login.svg" style="height: 600px;" alt="">
             </div>
             <div class="authentication-wrapper authentication-basic container-p-y">
                 <div class="authentication-inner">
                     <!-- Register -->
-                    <div class="card" style="background-color: #00ffc5 !important;">
+                    <div class="card">
                         <div class="card-body">
                             <!-- Logo -->
                             <div class="app-brand justify-content-center">
@@ -82,6 +220,12 @@
                                 Please sign-in to your account and
                                 make the profit.
                             </p>
+                            @error("success")
+                            <div class="alert alert-success text-center mb-4" style="background: rgba(4, 120, 87, 0.15); border: 1px solid rgba(4, 120, 87, 0.35); color: #047857; border-radius: 8px; padding: 12px; font-weight: 600; font-size: 13px;">
+                                {{ $message }}
+                            </div>
+                            @enderror
+
                             <form
                                 id="loginAuthenticationx"
                                 class="mb-3"
@@ -147,7 +291,6 @@
                                 <div class="mb-3">
                                     <button
                                         onclick="return confirmLogin()"
-                                        style="background-color: #f9a826 !important; border-color: #f9a826 !important;"
                                         class="btn btn-primary d-grid w-100"
                                         type="submit"
                                     >Sign in</button>
