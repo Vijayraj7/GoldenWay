@@ -458,11 +458,11 @@ use Carbon\Carbon;
                                             <!-- Total Credit (+) / Debit (-) -->
                                             @if($wthdraw->tAmount > 0)
                                             <td style="color: #00D094 !important; font-weight: 700; font-size: 0.9rem;">
-                                                +{{ number_format($wthdraw->tAmount, 2) }} USDT
+                                                {{ number_format($wthdraw->tAmount, 2) }} USDT
                                             </td>
                                             @else
                                             <td style="color: #ef4444 !important; font-weight: 700; font-size: 0.9rem;">
-                                                -{{ number_format($wthdraw->tAmount + $wthdraw->fee, 2) }} USDT
+                                                {{ number_format($wthdraw->tAmount + $wthdraw->fee, 2) }} USDT
                                             </td>
                                             @endif
                                         </tr>
