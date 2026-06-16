@@ -425,7 +425,7 @@ if (count($plans) == 0) {
                                             </a>
                                             @endif
 
-                                            @if (isAdmin())
+                                            @if (false)
                                             <a href="/admin" class="btn btn-light shr-referral">
                                                 Admin
                                             </a>
