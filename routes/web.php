@@ -79,6 +79,7 @@ Route::get('/admin/creditadd/requests/{id}', 'App\Http\Controllers\AdminDashboar
 Route::get('/admin/withdraw/requests', 'App\Http\Controllers\AdminDashboard@withdrawrequests');
 Route::get('/admin/withdraw/requests/{id}', 'App\Http\Controllers\AdminDashboard@withdrawrequestsview');
 Route::get('/admin/customer/support/status', 'App\Http\Controllers\AdminDashboard@supportstatus');
+Route::get('/admin/transferfund/free', 'App\Http\Controllers\AdminDashboard@transferFundFree');
 
 
 //dashboard
@@ -151,6 +152,7 @@ Route::post('/successautopoll', 'App\Http\Controllers\AutopollController@success
 Route::post('/singletap', 'App\Http\Controllers\ApiController@singletap');
 Route::post('/getcusname', 'App\Http\Controllers\TransferFundController@getcusname');
 Route::post('/transferfund/direct', 'App\Http\Controllers\TransferFundController@transferDirect');
+Route::post('/admin/transferfund/free', 'App\Http\Controllers\TransferFundController@transferFree');
 Route::post('/stoproduct', 'App\Http\Controllers\ApiController@stoproduct');
 
 Route::post('/successproduct', 'App\Http\Controllers\ApiController@successproduct');

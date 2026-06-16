@@ -125,4 +125,11 @@ class AdminDashboard extends Controller
         return $h->getboth('dashboard.admin.userprofile', ['usrid' => $id, 'pusr' => $pusr]);
     }
 
+    public function transferFundFree()
+    {
+        checkadmin();
+        $h = new HelperController;
+        return $h->getboth('dashboard.admin.transferfundfree');
+    }
+
 }

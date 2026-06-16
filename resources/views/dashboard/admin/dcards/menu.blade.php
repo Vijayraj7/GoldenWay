@@ -106,6 +106,14 @@
                 <div data-i18n="Basic">Add-Fund History</div>
             </a>
         </li>
+        @if(isAdmin())
+        <li class="menu-item @if($r == 'transferfundfree') active @endif">
+            <a href="/admin/transferfund/free" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-send"></i>
+                <div data-i18n="Basic">Direct Transfer Free</div>
+            </a>
+        </li>
+        @endif
         <!-- Misc -->
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Transactions</span>

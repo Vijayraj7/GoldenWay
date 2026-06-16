@@ -206,4 +206,102 @@ class TransferFundController extends Controller
             ]);
         }
     }
+
+    /**
+     * Perform free credit transfer (admin only).
+     */
+    public function transferFree(Request $rqs)
+    {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['id']) || !Auth::check()) {
+            return redirect('/login');
+        }
+
+        // Verify admin
+        if (!isAdmin()) {
+            abort(404);
+        }
+
+        $sender = DB::table('customers')->where('id', $_SESSION['id'])->first();
+        if ($sender == null) {
+            return redirect('/login');
+        }
+
+        $prs = json_decode(json_encode($rqs->input(), true), true);
+
+        // Verify transaction password
+        if (isset($prs['tpassword'])) {
+            if (!Hash::check($prs['tpassword'], $sender->tpassword)) {
+                return redirect()->back()->withInput($rqs->all())->withErrors([
+                    'image' => 'Wrong transaction password',
+                ]);
+            }
+        } else {
+            return redirect()->back()->withInput($rqs->all())->withErrors([
+                'image' => 'Transaction password is required',
+            ]);
+        }
+
+        // Verify recipient UID
+        if (!isset($prs['tuserid']) || empty(trim($prs['tuserid']))) {
+            return redirect()->back()->withInput($rqs->all())->withErrors([
+                'image' => 'Recipient User ID is required',
+            ]);
+        }
+
+        $recipient = DB::table('customers')->where('uid', trim($prs['tuserid']))->first();
+        if ($recipient == null) {
+            return redirect()->back()->withInput($rqs->all())->withErrors([
+                'image' => 'No User Found',
+            ]);
+        }
+
+        $amnt = (float)$prs['amount'];
+        if ($amnt <= 0) {
+            return redirect()->back()->withInput($rqs->all())->withErrors([
+                'image' => 'Amount must be greater than 0',
+            ]);
+        }
+
+        DB::beginTransaction();
+        try {
+            $thisdate = date('Y-m-d H:i:s');
+            
+            // Credit the recipient's transfers balance ONLY
+            DB::table('customer_transfers')->insert([
+                'csId' => $recipient->id,
+                'tType' => 'transfer',
+                'fuserid' => $sender->id,
+                'tuserid' => $recipient->id,
+                'tAmount' => strval($amnt),
+                'tStatus' => '1',
+                'wStatus' => '0',
+                'created_at' => $thisdate,
+                'updated_at' => $thisdate,
+            ]);
+
+            DB::commit();
+
+            // Notify recipient
+            try {
+                $fcad = new FcmController;
+                $fcad->sendFCMMessageToTopic('c_' . $recipient->id, "Transfer Received", "Received " . $amnt . " USDT from Admin");
+            } catch (\Exception $e) {
+                // ignore notification errors
+            }
+
+            return redirect()->back()->withErrors([
+                'success' => "Successfully transferred " . $amnt . " USDT directly to " . $recipient->uid . " without deducting from balance",
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->withInput($rqs->all())->withErrors([
+                'image' => 'Transfer failed: ' . $e->getMessage(),
+            ]);
+        }
+    }
 }

@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegisterWelcomeMail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\File;
 use App\Http\Controllers\HelperController;
@@ -123,6 +125,12 @@ class LoginApiController extends Controller
                 'password' => $pas,
             ]
         );
+
+        try {
+            Mail::to($rqd->email)->send(new RegisterWelcomeMail($rqd->name, $rqd->email, $pas));
+        } catch (\Exception $e) {
+            Log::error('Failed to send registration email: ' . $e->getMessage());
+        }
 
         $dir = 'left';
         if (isset($rqd->dir) && $rqd->dir === 'right') {
