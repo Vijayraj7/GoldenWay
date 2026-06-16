@@ -22,24 +22,51 @@ ini_set('display_errors', 1);
     <script src="/assets/vendor/js/helpers.js"></script>
     <script src="/assets/js/config.js"></script>
     <style>
+        /* ── Page background ── */
+        body { background-color: #8d6900 !important; }
+        .content-wrapper, .layout-page { background-color: #8d6900 !important; }
+        .container-xxl { background-color: transparent !important; }
+
+        /* ── Card header ── */
         .card-header-premium {
-            background: linear-gradient(135deg, #0f2e22 0%, #1e4d3a 100%) !important;
-            border-bottom: 2px solid #f9a826 !important;
+            background: linear-gradient(135deg, #5a4100 0%, #8d6900 100%) !important;
+            border-bottom: 3px solid #ffe066 !important;
             color: #fff !important;
         }
-        .table-premium th {
-            background-color: rgba(15, 46, 34, 0.06) !important;
-            font-weight: 700 !important;
-            color: #0f2e22 !important;
-            border: 1px solid rgba(0,0,0,0.08) !important;
+
+        /* ── Main cards ── */
+        .card {
+            background: rgba(255,255,255,0.96) !important;
+            border: none !important;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.22) !important;
         }
-        .table-premium td { border: 1px solid rgba(0,0,0,0.08) !important; }
-        .text-green-premium  { color: #2e7d32 !important; font-weight: bold; }
-        .text-gold-premium   { color: #f9a826 !important; font-weight: bold; }
-        .stat-box { background: #f8f9fa; border-radius: 10px; padding: 16px 22px; border-left: 4px solid #f9a826; }
-        .uid-link { color: #0f2e22; font-weight: 700; text-decoration: none; }
-        .uid-link:hover { color: #f9a826; }
+
+        /* ── Tables ── */
+        .table-premium th {
+            background-color: rgba(141,105,0,0.10) !important;
+            font-weight: 700 !important;
+            color: #5a4100 !important;
+            border: 1px solid rgba(141,105,0,0.18) !important;
+        }
+        .table-premium td { border: 1px solid rgba(141,105,0,0.10) !important; }
+
+        /* ── Stat cards – each a distinct color ── */
+        .stat-card-1 { background: linear-gradient(135deg,#c62828,#e53935); color:#fff; border-radius:12px; padding:18px 22px; box-shadow:0 4px 18px rgba(198,40,40,.35); }
+        .stat-card-2 { background: linear-gradient(135deg,#1565c0,#1976d2); color:#fff; border-radius:12px; padding:18px 22px; box-shadow:0 4px 18px rgba(21,101,192,.35); }
+        .stat-card-3 { background: linear-gradient(135deg,#2e7d32,#388e3c); color:#fff; border-radius:12px; padding:18px 22px; box-shadow:0 4px 18px rgba(46,125,50,.35); }
+        .stat-card-4 { background: linear-gradient(135deg,#6a1b9a,#8e24aa); color:#fff; border-radius:12px; padding:18px 22px; box-shadow:0 4px 18px rgba(106,27,154,.35); }
+        .stat-card-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; opacity:0.85; }
+        .stat-card-value { font-size:1.5rem; font-weight:800; margin-top:4px; }
+        .stat-card-unit  { font-size:12px; font-weight:500; opacity:0.8; }
+
+        /* ── Misc ── */
+        .text-gold-premium { color: #8d6900 !important; font-weight: bold; }
+        .text-green-premium { color: #2e7d32 !important; font-weight: bold; }
+        .uid-link { color: #5a4100; font-weight: 700; text-decoration: none; }
+        .uid-link:hover { color: #8d6900; }
         .search-bar { max-width: 340px; }
+        h4 { color: #fff !important; }
+        h4 .text-muted { color: rgba(255,255,255,0.6) !important; }
     </style>
 </head>
 <body>
@@ -100,27 +127,27 @@ ini_set('display_errors', 1);
                         {{-- Summary Cards --}}
                         <div class="row mb-4">
                             <div class="col-md-3 col-6 mb-3">
-                                <div class="stat-box">
-                                    <div class="text-muted" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Total Poll Amount</div>
-                                    <div class="text-gold-premium" style="font-size:1.4rem;">{{ number_format($totalPollAmount, 2) }} <span style="font-size:12px;">USDT</span></div>
+                                <div class="stat-card-1">
+                                    <div class="stat-card-label">Total Poll Amount</div>
+                                    <div class="stat-card-value">{{ number_format($totalPollAmount, 2) }} <span class="stat-card-unit">USDT</span></div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-6 mb-3">
-                                <div class="stat-box" style="border-left-color:#2e7d32;">
-                                    <div class="text-muted" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Total Income Distributed</div>
-                                    <div class="text-green-premium" style="font-size:1.4rem;">{{ number_format($totalIncome, 2) }} <span style="font-size:12px;">USDT</span></div>
+                                <div class="stat-card-2">
+                                    <div class="stat-card-label">Total Income Distributed</div>
+                                    <div class="stat-card-value">{{ number_format($totalIncome, 2) }} <span class="stat-card-unit">USDT</span></div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-6 mb-3">
-                                <div class="stat-box" style="border-left-color:#1976d2;">
-                                    <div class="text-muted" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Total Purchases</div>
-                                    <div style="font-size:1.4rem; font-weight:800; color:#1976d2;">{{ $totalPollCount }}</div>
+                                <div class="stat-card-3">
+                                    <div class="stat-card-label">Total Purchases</div>
+                                    <div class="stat-card-value">{{ $totalPollCount }}</div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-6 mb-3">
-                                <div class="stat-box" style="border-left-color:#7b1fa2;">
-                                    <div class="text-muted" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Unique Participants</div>
-                                    <div style="font-size:1.4rem; font-weight:800; color:#7b1fa2;">{{ $totalCustomers }}</div>
+                                <div class="stat-card-4">
+                                    <div class="stat-card-label">Unique Participants</div>
+                                    <div class="stat-card-value">{{ $totalCustomers }}</div>
                                 </div>
                             </div>
                         </div>

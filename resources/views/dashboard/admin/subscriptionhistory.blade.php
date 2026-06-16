@@ -22,23 +22,50 @@ ini_set('display_errors', 1);
     <script src="/assets/vendor/js/helpers.js"></script>
     <script src="/assets/js/config.js"></script>
     <style>
+        /* ── Page background ── */
+        body { background-color: #8d6900 !important; }
+        .content-wrapper, .layout-page { background-color: #8d6900 !important; }
+        .container-xxl { background-color: transparent !important; }
+
+        /* ── Card header ── */
         .card-header-premium {
-            background: linear-gradient(135deg, #0f2e22 0%, #1e4d3a 100%) !important;
-            border-bottom: 2px solid #f9a826 !important;
+            background: linear-gradient(135deg, #5a4100 0%, #8d6900 100%) !important;
+            border-bottom: 3px solid #ffe066 !important;
             color: #fff !important;
         }
-        .table-premium th {
-            background-color: rgba(15, 46, 34, 0.06) !important;
-            font-weight: 700 !important;
-            color: #0f2e22 !important;
-            border: 1px solid rgba(0,0,0,0.08) !important;
+
+        /* ── Main cards ── */
+        .card {
+            background: rgba(255,255,255,0.96) !important;
+            border: none !important;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.22) !important;
         }
-        .table-premium td { border: 1px solid rgba(0,0,0,0.08) !important; }
-        .text-green-premium  { color: #2e7d32 !important; font-weight: bold; }
-        .text-gold-premium   { color: #f9a826 !important; font-weight: bold; }
-        .stat-box { background: #f8f9fa; border-radius: 10px; padding: 16px 22px; border-left: 4px solid #f9a826; }
-        .uid-link { color: #0f2e22; font-weight: 700; text-decoration: none; }
-        .uid-link:hover { color: #f9a826; }
+
+        /* ── Tables ── */
+        .table-premium th {
+            background-color: rgba(141,105,0,0.10) !important;
+            font-weight: 700 !important;
+            color: #5a4100 !important;
+            border: 1px solid rgba(141,105,0,0.18) !important;
+        }
+        .table-premium td { border: 1px solid rgba(141,105,0,0.10) !important; }
+
+        /* ── Stat cards – each a distinct color ── */
+        .stat-card-1 { background: linear-gradient(135deg,#b71c1c,#e53935); color:#fff; border-radius:12px; padding:18px 22px; box-shadow:0 4px 18px rgba(183,28,28,.35); }
+        .stat-card-2 { background: linear-gradient(135deg,#1b5e20,#2e7d32); color:#fff; border-radius:12px; padding:18px 22px; box-shadow:0 4px 18px rgba(27,94,32,.35); }
+        .stat-card-3 { background: linear-gradient(135deg,#e65100,#f57c00); color:#fff; border-radius:12px; padding:18px 22px; box-shadow:0 4px 18px rgba(230,81,0,.35); }
+        .stat-card-4 { background: linear-gradient(135deg,#4a148c,#7b1fa2); color:#fff; border-radius:12px; padding:18px 22px; box-shadow:0 4px 18px rgba(74,20,140,.35); }
+        .stat-card-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; opacity:0.85; }
+        .stat-card-value { font-size:1.5rem; font-weight:800; margin-top:4px; }
+        .stat-card-unit  { font-size:12px; font-weight:500; opacity:0.8; }
+
+        /* ── Misc ── */
+        .text-gold-premium { color: #8d6900 !important; font-weight: bold; }
+        .text-green-premium { color: #2e7d32 !important; font-weight: bold; }
+        .uid-link { color: #5a4100; font-weight: 700; text-decoration: none; }
+        .uid-link:hover { color: #8d6900; }
+        h4 { color: #fff !important; }
+        h4 .text-muted { color: rgba(255,255,255,0.6) !important; }
     </style>
 </head>
 <body>
@@ -98,27 +125,27 @@ ini_set('display_errors', 1);
                         {{-- Summary Cards --}}
                         <div class="row mb-4">
                             <div class="col-md-3 col-6 mb-3">
-                                <div class="stat-box">
-                                    <div class="text-muted" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Total Subscriptions</div>
-                                    <div class="text-gold-premium" style="font-size:1.4rem;">{{ number_format($totalSubAmount, 2) }} <span style="font-size:12px;">USDT</span></div>
+                                <div class="stat-card-1">
+                                    <div class="stat-card-label">Total Subscriptions</div>
+                                    <div class="stat-card-value">{{ number_format($totalSubAmount, 2) }} <span class="stat-card-unit">USDT</span></div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-6 mb-3">
-                                <div class="stat-box" style="border-left-color:#2e7d32;">
-                                    <div class="text-muted" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Active Subscriptions</div>
-                                    <div class="text-green-premium" style="font-size:1.4rem;">{{ number_format($activeSubAmount, 2) }} <span style="font-size:12px;">USDT</span></div>
+                                <div class="stat-card-2">
+                                    <div class="stat-card-label">Active Subscriptions</div>
+                                    <div class="stat-card-value">{{ number_format($activeSubAmount, 2) }} <span class="stat-card-unit">USDT</span></div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-6 mb-3">
-                                <div class="stat-box" style="border-left-color:#ed6c02;">
-                                    <div class="text-muted" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Pending Approval</div>
-                                    <div style="font-size:1.4rem; font-weight:800; color:#ed6c02;">{{ $pendingCount }}</div>
+                                <div class="stat-card-3">
+                                    <div class="stat-card-label">Pending Approval</div>
+                                    <div class="stat-card-value">{{ $pendingCount }}</div>
                                 </div>
                             </div>
                             <div class="col-md-3 col-6 mb-3">
-                                <div class="stat-box" style="border-left-color:#7b1fa2;">
-                                    <div class="text-muted" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px;">Unique Subscribers</div>
-                                    <div style="font-size:1.4rem; font-weight:800; color:#7b1fa2;">{{ $uniqueSubbers }}</div>
+                                <div class="stat-card-4">
+                                    <div class="stat-card-label">Unique Subscribers</div>
+                                    <div class="stat-card-value">{{ $uniqueSubbers }}</div>
                                 </div>
                             </div>
                         </div>
