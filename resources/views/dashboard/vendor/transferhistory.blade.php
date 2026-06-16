@@ -397,15 +397,12 @@ use Carbon\Carbon;
                                                     $istransfer = true;
                                                     $ffuser = DB::table('customers')->where('id', $wthdraw->fuserid ?? 0)->first();
                                                     $ttuser = DB::table('customers')->where('id', $wthdraw->tuserid ?? 0)->first();
-                                                    if ($wthdraw->fuserid == $v->id) {
-                                                        $isDebit = true;
-                                                    }
-                                                } else {
-                                                    if ($wthdraw->wStatus != '0') {
-                                                        $isDebit = true;
-                                                    }
+                                                    
                                                 }
-                                                
+                                                if ($wthdraw->wStatus != '0') {
+                                                    $isDebit = true;
+                                                }
+
                                                 ?>
                             <tr>
                                 <td><span class="text-muted">{{$i}}</span></td>
@@ -465,7 +462,7 @@ use Carbon\Carbon;
                                 </td>
 
                                 <!-- Total Credit (+) / Debit (-) -->
-                                @if($wthdraw->fuserid == $v->id)
+                                @if($isDebit)
                                 <td style="color: #ef4444 !important; font-weight: 700; font-size: 0.9rem;">
                                     {{ number_format(abs($wthdraw->tAmount), 2) }} USDT
                                 </td>
