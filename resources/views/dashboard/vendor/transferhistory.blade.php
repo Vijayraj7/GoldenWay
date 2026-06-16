@@ -100,6 +100,10 @@ use Carbon\Carbon;
             background: linear-gradient(180deg, #FFE082, #D4AF37);
         }
 
+        .stat-balance::before {
+            background: linear-gradient(180deg, #60a5fa, #3b82f6);
+        }
+
         .premium-stat-card:hover {
             transform: translateY(-3px);
             border-color: rgba(212, 175, 55, 0.3) !important;
@@ -267,11 +271,12 @@ use Carbon\Carbon;
                         @php
                         $total_received = (float) DB::table('customer_transfers')->where('tuserid', $v->id)->where('wStatus', '0')->sum('tAmount');
                         $total_transferred = abs((float) DB::table('customer_transfers')->where('fuserid', $v->id)->sum('tAmount'));
+                        $net_balance = $total_received - $total_transferred;
                         @endphp
 
                         <!-- Summary Stats Grid -->
                         <div class="row">
-                            <div class="col-lg-4 col-md-6 col-12">
+                            <div class="col-lg-3 col-md-6 col-12">
                                 <div class="card premium-stat-card stat-received">
                                     <div class="card-body">
                                         <span class="stat-label"><i class="bx bx-down-arrow-alt" style="color: #00D094;"></i> Total Received</span>
@@ -282,7 +287,7 @@ use Carbon\Carbon;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 col-12">
+                            <div class="col-lg-3 col-md-6 col-12">
                                 <div class="card premium-stat-card stat-sent">
                                     <div class="card-body">
                                         <span class="stat-label"><i class="bx bx-up-arrow-alt" style="color: #ef4444;"></i> Total Transferred</span>
@@ -293,13 +298,24 @@ use Carbon\Carbon;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-12 col-12">
+                            <div class="col-lg-3 col-md-6 col-12">
                                 <div class="card premium-stat-card stat-count">
                                     <div class="card-body">
                                         <span class="stat-label"><i class="bx bx-list-check" style="color: #D4AF37;"></i> Total Transfers</span>
                                         <h3 class="card-title">
                                             {{ DB::table('customer_transfers')->where('csId',$v->id)->orWhere('fuserid',$v->id)->orWhere('tuserid',$v->id)->count() }}
                                             <span class="currency">Transactions</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-12">
+                                <div class="card premium-stat-card stat-balance">
+                                    <div class="card-body">
+                                        <span class="stat-label"><i class="bx bx-wallet-alt" style="color: #60a5fa;"></i> Net Balance</span>
+                                        <h3 class="card-title" style="color: {{ $net_balance >= 0 ? '#60a5fa' : '#ef4444' }} !important;">
+                                            {{ $net_balance >= 0 ? '+' : '' }}{{ number_format($net_balance, 2) }}
+                                            <span class="currency">USDT</span>
                                         </h3>
                                     </div>
                                 </div>
