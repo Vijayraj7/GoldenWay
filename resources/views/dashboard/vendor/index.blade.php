@@ -337,7 +337,7 @@ if (count($plans) == 0) {
                                         <div class="dashboard-top-buttons-row">
                                             @if(isAdmin())
                                             <a href="/admin" class="btn btn-light shr-referral">
-                                                Community
+                                                Admin
                                             </a>
                                             @endif
                                             <a href="/dashboard/reftree/{{$v->id}}" class="btn btn-light shr-referral">
