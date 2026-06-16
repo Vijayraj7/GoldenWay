@@ -119,70 +119,71 @@ class TransferFundController extends Controller
         DB::beginTransaction();
         try {
             $thisdate = date('Y-m-d H:i:s');
-            
-            // Deduct from sender's transfers balance first, then transactions if necessary
+
+            // ── ONE shared transfer record ──────────────────────────────────
+            // fuserid = sender, tuserid = recipient, tAmount = credit amount.
+            // Both parties see this via their fuserid / tuserid columns.
+            // csId is set to sender so their transfer-wallet balance is aware.
+            DB::table('customer_transfers')->insert([
+                'csId'       => $sender->id,
+                'tType'      => 'transfer',
+                'fuserid'    => $sender->id,
+                'tuserid'    => $recipient->id,
+                'tAmount'    => strval($amnt),
+                'tStatus'    => '1',
+                'wStatus'    => '0',
+                'created_at' => $thisdate,
+                'updated_at' => $thisdate,
+            ]);
+
+            // ── Deduct total_deducted (amount + fee) from sender's balance ──
+            // First drain transfer wallet, then spill into transactions wallet.
             $twalletAmnt = DB::table('customer_transfers')
                 ->where('csId', $sender->id)
                 ->where('tStatus', '1')
                 ->get()
                 ->sum('tAmount');
 
-            if ($total_deducted > $twalletAmnt) {
-                $tfwnm = $twalletAmnt * -1;
-                if ($tfwnm != 0) {
-                    DB::table('customer_transfers')->insert([
-                        'csId' => $sender->id,
-                        'tType' => 'transfer',
-                        'fuserid' => $sender->id,
-                        'tuserid' => $recipient->id,
-                        'tAmount' => strval($tfwnm),
-                        'tStatus' => '1',
-                        'wStatus' => '1',
-                        'created_at' => $thisdate,
-                        'updated_at' => $thisdate,
-                    ]);
-                }
-                
-                $btsnm = $total_deducted - $twalletAmnt;
-                $tsnm = $btsnm * -1;
-                if ($tsnm != 0) {
-                    DB::table('customer_transactions')->insert([
-                        'csId' => $sender->id,
-                        'tType' => 'transfer',
-                        'tAmount' => strval($tsnm),
-                        'tStatus' => '1',
-                        'wStatus' => '1',
-                        'created_at' => $thisdate,
-                        'updated_at' => $thisdate,
-                    ]);
-                }
-            } else {
-                $nm = $total_deducted * -1;
+            if ($total_deducted <= $twalletAmnt) {
+                // Enough in transfer wallet – deduct all from there
                 DB::table('customer_transfers')->insert([
-                    'csId' => $sender->id,
-                    'tType' => 'transfer',
-                    'fuserid' => $sender->id,
-                    'tuserid' => $recipient->id,
-                    'tAmount' => strval($nm),
-                    'tStatus' => '1',
-                    'wStatus' => '1',
+                    'csId'       => $sender->id,
+                    'tType'      => 'transfer_fee',
+                    'fuserid'    => $sender->id,
+                    'tuserid'    => $sender->id,
+                    'tAmount'    => strval($total_deducted * -1),
+                    'tStatus'    => '1',
+                    'wStatus'    => '1',
+                    'created_at' => $thisdate,
+                    'updated_at' => $thisdate,
+                ]);
+            } else {
+                // Drain transfer wallet first
+                if ($twalletAmnt > 0) {
+                    DB::table('customer_transfers')->insert([
+                        'csId'       => $sender->id,
+                        'tType'      => 'transfer_fee',
+                        'fuserid'    => $sender->id,
+                        'tuserid'    => $sender->id,
+                        'tAmount'    => strval($twalletAmnt * -1),
+                        'tStatus'    => '1',
+                        'wStatus'    => '1',
+                        'created_at' => $thisdate,
+                        'updated_at' => $thisdate,
+                    ]);
+                }
+                // Remainder from transactions wallet
+                $remainder = $total_deducted - $twalletAmnt;
+                DB::table('customer_transactions')->insert([
+                    'csId'       => $sender->id,
+                    'tType'      => 'transfer',
+                    'tAmount'    => strval($remainder * -1),
+                    'tStatus'    => '1',
+                    'wStatus'    => '1',
                     'created_at' => $thisdate,
                     'updated_at' => $thisdate,
                 ]);
             }
-
-            // Credit the recipient's transfers balance
-            DB::table('customer_transfers')->insert([
-                'csId' => $recipient->id,
-                'tType' => 'transfer',
-                'fuserid' => $sender->id,
-                'tuserid' => $recipient->id,
-                'tAmount' => strval($amnt),
-                'tStatus' => '1',
-                'wStatus' => '0',
-                'created_at' => $thisdate,
-                'updated_at' => $thisdate,
-            ]);
 
             DB::commit();
 
