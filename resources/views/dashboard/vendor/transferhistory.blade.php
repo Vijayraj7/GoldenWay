@@ -323,9 +323,23 @@ use Carbon\Carbon;
                         </div>
 
                         <!-- Transfer History Table Card -->
+                        @php $showAll = request('show_all') == '1'; @endphp
                         <div class="card premium-card">
-                            <div class="card-header">
+                            <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
                                 <h5 class="mb-0">Transfer Transactions</h5>
+                                @if($showAll)
+                                    <a href="{{ url()->current() }}"
+                                       class="btn btn-sm px-3 py-1 fw-semibold"
+                                       style="background: linear-gradient(135deg,#00D094,#008f66); color:#fff; border-radius:8px; font-size:0.78rem; letter-spacing:0.4px; box-shadow:0 2px 10px rgba(0,208,148,.35);">
+                                        <i class="bx bx-transfer-alt me-1"></i>Transfers Only
+                                    </a>
+                                @else
+                                    <a href="{{ url()->current() }}?show_all=1"
+                                       class="btn btn-sm px-3 py-1 fw-semibold"
+                                       style="background: linear-gradient(135deg,#60a5fa,#3b82f6); color:#fff; border-radius:8px; font-size:0.78rem; letter-spacing:0.4px; box-shadow:0 2px 10px rgba(96,165,250,.35);">
+                                        <i class="bx bx-list-ul me-1"></i>Show All
+                                    </a>
+                                @endif
                             </div>
                             <div class="table-responsive text-nowrap">
                                 <table class="table premium-table">
@@ -344,13 +358,16 @@ use Carbon\Carbon;
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $withdraws = DB::table('customer_transfers')
-                                                ->where('csId',$v->id)
-                                                ->where('tType','transfer')
-                                                ->orWhere('fuserid',$v->id)
-                                                ->orWhere('tuserid',$v->id)
-                                                ->orderBy('id', 'desc')
-                                                ->get();
+                                            $query = DB::table('customer_transfers')
+                                                ->where(function($q) use ($v) {
+                                                    $q->where('csId', $v->id)
+                                                      ->orWhere('fuserid', $v->id)
+                                                      ->orWhere('tuserid', $v->id);
+                                                });
+                                            if (!$showAll) {
+                                                $query->where('tType', 'transfer');
+                                            }
+                                            $withdraws = $query->orderBy('id', 'desc')->get();
                                             $i = 0;
                                             ?>
                                         @if($withdraws->isEmpty())
