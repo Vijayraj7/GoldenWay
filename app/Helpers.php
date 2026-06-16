@@ -132,7 +132,7 @@ function isAdmin(): bool
         if (
             $_SESSION['mail'] == '36' ||
             $_SESSION['mail'] == '1111' ||
-            $_SESSION['mail'] == 'GW644810' ||
+            $_SESSION['mail'] == '1302' ||
             $_SESSION['mail'] == 'GW243457' ||
             $_SESSION['mail'] == 'GW839472'
             // $_SESSION['mail'] == 'mprasheed51@gmail.com'
