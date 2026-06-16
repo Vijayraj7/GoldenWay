@@ -1,4 +1,4 @@
-@if (DB::table('customers')->where('id', $v->id)->first()->vphone == null)
+@if (DB::table('customers')->where('id', $v->id)->first()->vphone == null && false)
     <div class="modal fade" id="otpVerifyModel" style="z-index: 2000 !important;" tabindex="-1" aria-hidden="true">
         @php
             $country_code = $v->country_code;
