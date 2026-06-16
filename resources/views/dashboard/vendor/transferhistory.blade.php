@@ -444,7 +444,7 @@ use Carbon\Carbon;
 
 
                                             <td style="font-weight: 600;">
-                                                {{ number_format(abs($wthdraw->tAmount - $wthdraw->fee), 2) }} USDT
+                                                {{ number_format(abs($wthdraw->tAmount) - abs($wthdraw->fee), 2) }} USDT
                                             </td>
 
                                             <!-- Admin Fee (10% paid by sender) -->
