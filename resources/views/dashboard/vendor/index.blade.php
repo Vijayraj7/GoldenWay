@@ -411,10 +411,10 @@ if (count($plans) == 0) {
                                         @endif
                                     </div>
 
-                                        <div class="gotos" style="display: none; justify-content: end;">
+                                        <div class="gotos" style= justify-content: end;">
 
 
-                                            @if (true)
+                                            @if (false)
                                             <a id="downldapp_btn" href="/dashboard/lott" style="margin-right: 20px;" target="_blank" class="btn btn-light shr-referral">
                                                 GWI Bot
                                             </a>
