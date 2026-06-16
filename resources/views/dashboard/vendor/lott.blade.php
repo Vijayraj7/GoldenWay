@@ -42,7 +42,7 @@ if (count($plans) == 0) {
         <title>Dashoard</title>
         <meta name="description" content>
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="/tst/grnyellow.png">
+        <link rel="icon" type="image/x-icon" href="/tst/goldenlogo.png">
         <!-- All -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

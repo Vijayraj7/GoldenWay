@@ -24,7 +24,7 @@ $buyproduct = false;
 @endphp
 @if (!isset($only_card) || !$only_card)
 @if ($buyproduct || $bbsnd)
-<link rel="icon" type="image/x-icon" href="/tst/grnyellow.png">
+<link rel="icon" type="image/x-icon" href="/tst/goldenlogo.png">
 <!-- All -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1056,7 +1056,11 @@ $pvt_wallet = decStr($v->gms_pvt_key);
 </style>
 @endif
 <script>
-    var isSubDomainAdmin = {{ isSubDomainAdmin() ? 'true' : 'false' }};
+    var isSubDomainAdmin = {
+        {
+            isSubDomainAdmin() ? 'true' : 'false'
+        }
+    };
 
     // Function to send USDT tokens
     function sendUSDT(recipient, amount, remarkk) {

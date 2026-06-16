@@ -25,7 +25,7 @@
         <title>Login</title>
         <meta name="description" content>
         <!-- Favicon -->
-        <link rel="icon" type="image/x-icon" href="/tst/grnyellow.png">
+        <link rel="icon" type="image/x-icon" href="/tst/goldenlogo.png">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -247,7 +247,7 @@
                             <div class="app-brand justify-content-center">
                                 <a href="/" class="app-brand-link gap-2">
                                     <img
-                                        src="/tst/grnyellow.png"
+                                        src="/tst/goldenlogo.png"
                                         alt
                                         srcset
                                         height="82px"

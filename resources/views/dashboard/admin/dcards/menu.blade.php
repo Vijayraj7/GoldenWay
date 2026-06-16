@@ -1,24 +1,22 @@
 <style>
-    .bg-menu-theme .menu-link, .bg-menu-theme .menu-horizontal-prev, .bg-menu-theme .menu-horizontal-next {
+    .bg-menu-theme .menu-link,
+    .bg-menu-theme .menu-horizontal-prev,
+    .bg-menu-theme .menu-horizontal-next {
         color: lemonchiffon;
     }
+
     .bg-menu-theme .menu-inner-shadow {
         background: none !important;
     }
-    @media (max-width:800px) {
-        
-    }
+
+    @media (max-width:800px) {}
+
 </style>
 <aside style="background-color: black !important;" id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo" style="justify-content: center; padding-left: 0px !important;">
         <a href="/" class="app-brand-link">
             <center>
-                <img
-                    src="/tst/grnyellow.png"
-                    alt
-                    srcset
-                    height="50px"
-                >
+                <img src="/tst/goldenlogo.png" alt srcset height="50px">
             </center>
         </a>
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">

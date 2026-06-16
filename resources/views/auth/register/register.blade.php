@@ -10,7 +10,7 @@
     <!---Custom CSS File--->
     <title>Registration</title>
     <link rel="stylesheet" href="/css/register.css" />
-    <link rel="icon" type="image/x-icon" href="/tst/grnyellow.png">
+    <link rel="icon" type="image/x-icon" href="/tst/goldenlogo.png">
     <!-- Icons. Uncomment required icon fonts -->
     <!-- <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" /> -->
 
@@ -360,7 +360,7 @@
         </a> -->
 
                     <header>
-                        <img src="/tst/grnyellow.png" alt srcset style="height:38px;">
+                        <img src="/tst/goldenlogo.png" alt srcset style="height:38px;">
                         Sign Up
                     </header>
                     <h4 style="text-align: center; color: #8a8a8a;">Golden Way International</h4>

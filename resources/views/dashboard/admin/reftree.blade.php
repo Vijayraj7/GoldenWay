@@ -42,7 +42,7 @@ $refintid = (int) $_GET['refid'];
 
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon"
-            href="/tst/grnyellow.png" />
+            href="/tst/goldenlogo.png" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />

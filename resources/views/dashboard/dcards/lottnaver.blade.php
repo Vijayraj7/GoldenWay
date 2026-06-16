@@ -150,6 +150,7 @@ if (count($nplans) == 0) {
     .layout-navbar-fixed .layout-page:before {
         background: rgba(141, 105, 0, 0.15) !important;
     }
+
 </style>
 
 <nav id="nvcbr" class="navbar">
@@ -162,7 +163,7 @@ if (count($nplans) == 0) {
         </div>
         <div style="display: flex; justify-content: center; align-items: center;" class="navimgcontainer app-brand demo">
             <a href="/" class="app-brand-link">
-                <img style="padding: 10px;" src="/tst/grnyellow.png" alt srcset height="65px">
+                <img style="padding: 10px;" src="/tst/goldenlogo.png" alt srcset height="65px">
             </a>
         </div>
 

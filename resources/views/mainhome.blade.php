@@ -776,17 +776,17 @@ if (isset($_GET['page'])) {
     <link rel="alternate" type="application/json+oembed" href="/dark/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fbitrader.thetork.com%2Fdark%2F">
     <link rel="alternate" type="text/xml+oembed" href="/dark/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fbitrader.thetork.com%2Fdark%2F&#038;format=xml">
     <meta name="generator" content="Elementor 3.16.5; features: e_dom_optimization, e_optimized_assets_loading, e_optimized_css_loading, additional_custom_breakpoints; settings: css_print_method-external, google_font-enabled, font_display-swap">
-    <link rel="icon" href="/tst/grnyellow.png" sizes="32x32">
-    <link rel="icon" href="/tst/grnyellow.png" sizes="192x192">
-    <link rel="apple-touch-icon" href="/tst/grnyellow.png">
-    <meta name="msapplication-TileImage" content="/tst/grnyellow.png">
+    <link rel="icon" href="/tst/goldenlogo.png" sizes="32x32">
+    <link rel="icon" href="/tst/goldenlogo.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/tst/goldenlogo.png">
+    <meta name="msapplication-TileImage" content="/tst/goldenlogo.png">
     <style id="kirki-inline-styles"></style>
 </head>
 
 <body class="home page-template page-template-elementor_header_footer page page-id-67 wp-embed-responsive ehf-footer ehf-template-bitrader ehf-stylesheet-bitrader no-sidebar elementor-default elementor-template-full-width elementor-kit-7 elementor-page elementor-page-67">
     <!-- preloader -->
     <!-- <div class="preloader">
-            <img src="/tst/grnyellow.png" style="max-height: 60px" alt="Preloader">
+            <img src="/tst/goldenlogo.png" style="max-height: 60px" alt="Preloader">
         </div> -->
     <!-- preloader-end -->
     <!-- <a href="javascript:void(0)" class="scrollToTop scroll__top scroll-to-target scrollToTop--home1" data-target="html">
@@ -815,7 +815,7 @@ if (isset($_GET['page'])) {
                 <div class="header-wrapper">
                     <div class="logo" style="display: none;">
                         <a class="main-logo" href="/dark/" style="display: flex; justify-content: center;">
-                            <img src="/tst/grnyellow.png" style="max-height: 60px" alt="Logo">
+                            <img src="/tst/goldenlogo.png" style="max-height: 60px" alt="Logo">
                         </a>
                         <h3 style="text-align: center;">Golden Way International</h3>
                         <h3 style="text-align: center; font-size: 13px;">Golden Way International</h3>
@@ -1467,6 +1467,7 @@ if (isset($_GET['page'])) {
                 flex-direction: column !important;
                 align-items: stretch !important;
             }
+
             .contact-main-card .cta-form__inner .contact-submit-btn {
                 margin-top: 10px !important;
             }
@@ -1513,7 +1514,7 @@ if (isset($_GET['page'])) {
                                                 {{-- <div class="banner__content tg-content" data-aos="fade-right" data-aos-duration="1000"> --}}
                                                 <div class="banner__content-coi">
                                                     <div style="height: 80px;"></div>
-                                                    <img decoding="async" style="height: 160px; display: none;" src="/tst/grnyellow.png" alt="Coin icon">
+                                                    <img decoding="async" style="height: 160px; display: none;" src="/tst/goldenlogo.png" alt="Coin icon">
                                                 </div>
                                                 <h1 class="banner-title banner__content-heading title">
                                                     Golden
@@ -1588,7 +1589,7 @@ if (isset($_GET['page'])) {
                                         </div>
                                         <div class="col-lg-6 col-md-5">
                                             <div class="banner__thumb" id="bird">
-                                                <img style="height: 398px;" decoding="async" src="/tst/grnyellow.png" alt="">
+                                                <img style="height: 398px;" decoding="async" src="/tst/goldenlogo.png" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -2330,7 +2331,7 @@ if (isset($_GET['page'])) {
                                     <div class="about__thumb pe-lg-5" data-aos="fade-right" data-aos-duration="800">
                                         <div class="about__thumb-inner">
                                             <div class="about__thumb-image floating-content">
-                                                <img decoding="async" style="height: 298px; margin-top: 70px;" src="/tst/grnyellow.png" alt="">
+                                                <img decoding="async" style="height: 298px; margin-top: 70px;" src="/tst/goldenlogo.png" alt="">
                                                 <div class="floating-content__top-left">
                                                     <!-- <div class="floating-content__item">
                                                         <h3>10 Years</h3>
@@ -6078,7 +6079,7 @@ if (isset($_GET['page'])) {
                                                 <a data-elementor-open-lightbox="" class="elementor-clickable" href="/dark">
                                                     <div class="hfe-site-logo-set">
                                                         <div class="hfe-site-logo-container">
-                                                            <img class="hfe-site-logo-img elementor-animation-" src="/tst/grnyellow.png" alt="logo-dark">
+                                                            <img class="hfe-site-logo-img elementor-animation-" src="/tst/goldenlogo.png" alt="logo-dark">
                                                         </div>
                                                     </div>
                                                 </a>

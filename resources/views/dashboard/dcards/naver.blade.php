@@ -269,8 +269,7 @@ if (count($nplans) == 0) {
         background: linear-gradient(rgba(141, 105, 0, 0.31) 41%, rgba(141, 105, 0, 0.11) 95%, rgba(141, 105, 0, 0.05)) !important;
     }
 
-    @if(isSubDomain())
-    .test-banner {
+    @if(isSubDomain()) .test-banner {
         background: linear-gradient(90deg, #d1fae5, #a7f3d0) !important;
         color: #065f46 !important;
         height: 50px;
@@ -288,13 +287,15 @@ if (count($nplans) == 0) {
         box-shadow: 0 2px 10px rgba(4, 120, 87, 0.1);
         border-bottom: 1px solid rgba(4, 120, 87, 0.15);
     }
+
     #nvcbr {
         top: 50px !important;
     }
-    @else
-    #nvcbr {
+
+    @else #nvcbr {
         top: 0 !important;
     }
+
     @endif
 
 </style>
@@ -317,7 +318,7 @@ if (count($nplans) == 0) {
                 </a>
             </div>
             <a href="/" class="app-brand-link">
-                <img src="/tst/grnyellow.png" alt="GoldenWay Logo" class="nav-logo">
+                <img src="/tst/goldenlogo.png" alt="GoldenWay Logo" class="nav-logo">
             </a>
         </div>
 
@@ -341,7 +342,7 @@ if (count($nplans) == 0) {
             <div class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online avatar-onliner">
-                        <img src="{{ $v->img ? $v->img . '?t=' . time() : '/tst/grnyellow.png' }}" alt="avatar" class="avatar-image">
+                        <img src="{{ $v->img ? $v->img . '?t=' . time() : '/tst/goldenlogo.png' }}" alt="avatar" class="avatar-image">
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -350,7 +351,7 @@ if (count($nplans) == 0) {
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img style="height: 100%; width: 100%;" src="{{ $v->img ? $v->img . '?t=' . time() : '/tst/grnyellow.png' }}" alt="user avatar" class="rounded-circle">
+                                        <img style="height: 100%; width: 100%;" src="{{ $v->img ? $v->img . '?t=' . time() : '/tst/goldenlogo.png' }}" alt="user avatar" class="rounded-circle">
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">

@@ -14,7 +14,7 @@ use Carbon\Carbon;
     <title>Transfer History - GoldenWay</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/tst/grnyellow.png" />
+    <link rel="icon" type="image/x-icon" href="/tst/goldenlogo.png" />
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

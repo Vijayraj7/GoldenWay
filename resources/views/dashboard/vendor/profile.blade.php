@@ -14,7 +14,7 @@
   <meta name="description" content="" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/tst/grnyellow.png" />
+  <link rel="icon" type="image/x-icon" href="/tst/goldenlogo.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,7 +25,7 @@
 
   <!-- Icons. Uncomment required icon fonts -->
   <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
-  <link rel="stylesheet" href="/tst/grnyellow.png" />
+  <link rel="stylesheet" href="/tst/goldenlogo.png" />
 
   <!-- Core CSS -->
   <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
@@ -362,7 +362,7 @@ if (isset($_GET['prfid'])) {
               <div class="col-lg-4 col-md-5 mb-4">
                 <div class="premium-profile-card text-center">
                   <div class="avatar-wrapper">
-                    <img src="{{ $v->img ? $v->img . '?t=' . time() : '/tst/grnyellow.png' }}" alt="user-avatar"
+                    <img src="{{ $v->img ? $v->img . '?t=' . time() : '/tst/goldenlogo.png' }}" alt="user-avatar"
                       class="avatar-img" id="uploadedAvatar" />
                   </div>
 
@@ -540,7 +540,8 @@ if (isset($_GET['prfid'])) {
                         <div class="col-md-4 col-sm-6 info-field">
                           <div class="info-field-label">Country</div>
                           <div class="info-field-value" style="text-transform: capitalize;">
-                            {{ $v->country ?: 'Not Specified' }}</div>
+                            {{ $v->country ?: 'Not Specified' }}
+                          </div>
                         </div>
 
                         <div class="col-md-4 col-sm-6 info-field">
