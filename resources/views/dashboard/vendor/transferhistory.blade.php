@@ -360,9 +360,9 @@ use Carbon\Carbon;
                                         <?php
                                             $query = DB::table('customer_transfers')
                                                 ->where(function($q) use ($v) {
-                                                    $q->where('csId', $v->id)
-                                                     // ->orWhere('fuserid', $v->id)
-                                                     // ->orWhere('tuserid', $v->id);
+                                                   // $q->where('csId', $v->id)
+                                                      $q->orWhere('fuserid', $v->id)
+                                                      ->orWhere('tuserid', $v->id);
                                                 });
                                             if (!$showAll) {
                                                 $query->where('tType', 'transfer');
