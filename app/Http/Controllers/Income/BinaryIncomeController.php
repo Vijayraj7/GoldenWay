@@ -22,6 +22,28 @@ class BinaryIncomeController extends Controller
 
     public function binaryincome()
     {
+        $now = Carbon::now('Asia/Kolkata');
+        if ($now->hour < 5) {
+            return "too early";
+        }
+
+        $admin_config = DB::table('admin_config')->first();
+        if ($admin_config) {
+            if (!Schema::hasColumn('admin_config', 'last_binary')) {
+                Schema::table('admin_config', function (Blueprint $table) {
+                    $table->timestamp('last_binary')->nullable();
+                });
+                $admin_config = DB::table('admin_config')->first();
+            }
+
+            if ($admin_config && $admin_config->last_binary) {
+                $last_run = Carbon::parse($admin_config->last_binary);
+                if ($last_run->addHours(24)->isFuture()) {
+                    return "too early, less than 24 hours since last run";
+                }
+            }
+        }
+
         $users = DB::table('customers')->get();
         foreach ($users as $user) {
             // Process each user
@@ -88,6 +110,29 @@ class BinaryIncomeController extends Controller
                 }
             }
         }
+
+        if ($admin_config) {
+            $new_last_binary = null;
+            if ($admin_config->last_binary) {
+                $new_last_binary = Carbon::parse($admin_config->last_binary)->addHours(24);
+                $new_last_binary->timezone('Asia/Kolkata')->setTime(5, 0, 0);
+
+                // Prevent runaway catching up if the cron missed multiple days
+                $today_5am = Carbon::now('Asia/Kolkata')->setTime(5, 0, 0);
+                if ($new_last_binary->lt($today_5am)) {
+                    $new_last_binary = $today_5am;
+                }
+            } else {
+                $new_last_binary = Carbon::now('Asia/Kolkata')->setTime(5, 0, 0);
+            }
+
+            DB::table('admin_config')
+                ->where('id', $admin_config->id)
+                ->update([
+                    'last_binary' => $new_last_binary
+                ]);
+        }
+
         return "yes";
     }
 

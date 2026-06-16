@@ -152,9 +152,17 @@ function balance2x($user_id)
     // if ($stake_amount < 1) {
     //     $stake_amount = DB::table('customer_subs')->where('csId', $user_id)->sum('sub_amount');
     // }
-    $total_amount = DB::table('customer_transactions')->where('csId', $user_id)->where('wStatus','0')->sum('tamount');
+    $total_amount = DB::table('customer_transactions')->where('csId', $user_id)->where('wStatus', '0')->sum('tamount');
     $balance = ($stake_amount * 2) - $total_amount;
     return $balance;
+}
+function isSubDomain(): bool
+{
+    $host = strtolower($_SERVER['HTTP_HOST']);
+    if (strpos($host, 'sub.') === 0) {
+        return true;
+    }
+    return false;
 }
 function isSubDomainAdminx(): bool
 {

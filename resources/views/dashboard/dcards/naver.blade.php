@@ -269,8 +269,43 @@ if (count($nplans) == 0) {
         background: linear-gradient(rgba(141, 105, 0, 0.31) 41%, rgba(141, 105, 0, 0.11) 95%, rgba(141, 105, 0, 0.05)) !important;
     }
 
+    @if(isSubDomain())
+    .test-banner {
+        background: linear-gradient(90deg, #d1fae5, #a7f3d0) !important;
+        color: #065f46 !important;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 1201;
+        box-shadow: 0 2px 10px rgba(4, 120, 87, 0.1);
+        border-bottom: 1px solid rgba(4, 120, 87, 0.15);
+    }
+    #nvcbr {
+        top: 50px !important;
+    }
+    @else
+    #nvcbr {
+        top: 0 !important;
+    }
+    @endif
+
 </style>
 
+
+@if(isSubDomain())
+<div class="test-banner">
+    <i class="bx bx-info-circle" style="font-size: 18px; margin-right: 8px;"></i>
+    <span>you are using test website</span>
+</div>
+@endif
 
 <nav id="nvcbr" class="navbar">
     <div class="nav-container">

@@ -4558,7 +4558,7 @@ if (isset($_GET['page'])) {
                                                                 <div class="feature__item">
                                                                     <div class="feature__item-inner">
                                                                         <div class="feature__item-content">
-                                                                            <h6>Stake Income (0.5% Daily)</h6>
+                                                                            <h6>Stake Income 2x (0.5% Daily)</h6>
                                                                         </div>
                                                                     </div>
                                                                 </div>

@@ -362,7 +362,7 @@ if (isset($_GET['prfid'])) {
               <div class="col-lg-4 col-md-5 mb-4">
                 <div class="premium-profile-card text-center">
                   <div class="avatar-wrapper">
-                    <img src="{{ $v->img ? $v->img . '?t=' . time() : '/images/icons/p1.jpeg' }}" alt="user-avatar"
+                    <img src="{{ $v->img ? $v->img . '?t=' . time() : '/tst/grnyellow.png' }}" alt="user-avatar"
                       class="avatar-img" id="uploadedAvatar" />
                   </div>
 
@@ -494,21 +494,21 @@ if (isset($_GET['prfid'])) {
                           <div class="info-field-value">{{ $v->phone ?: 'Not Specified' }}</div>
                         </div>
 
-                        <div class="col-md-6 info-field">
+                        <!-- <div class="col-md-6 info-field">
                           <div class="info-field-label">Birth Date</div>
                           <div class="info-field-value">
                             {{ $v->birth ? date('M d, Y', strtotime($v->birth)) : 'Not Specified' }}
                           </div>
-                        </div>
+                        </div> -->
 
-                        @php
+                        <!-- @php
                           $genderMap = ['m' => 'Male', 'f' => 'Female', 'p' => 'Prefer not to say'];
                           $genderText = $genderMap[$v->gender] ?? ($v->gender ?: 'Not Specified');
                         @endphp
                         <div class="col-md-6 info-field">
                           <div class="info-field-label">Gender</div>
                           <div class="info-field-value">{{ $genderText }}</div>
-                        </div>
+                        </div> -->
                       </div>
 
                     </div>
