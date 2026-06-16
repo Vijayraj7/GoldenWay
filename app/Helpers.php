@@ -127,6 +127,7 @@ function isAdmin(): bool
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
     }
+    dd($_SESSION['mail']);
     // dd($_SESSION['id']);
     if (isset($_SESSION['mail'])) {
         if (
