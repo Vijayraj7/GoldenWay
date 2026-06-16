@@ -346,6 +346,7 @@ use Carbon\Carbon;
                                         <?php
                                             $withdraws = DB::table('customer_transfers')
                                                 ->where('csId',$v->id)
+                                                ->where('tType','transfer')
                                                 ->orWhere('fuserid',$v->id)
                                                 ->orWhere('tuserid',$v->id)
                                                 ->orderBy('id', 'desc')
