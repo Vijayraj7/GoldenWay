@@ -351,7 +351,7 @@ use Carbon\Carbon;
                                             <th>Sender</th>
                                             <th>Recipient</th>
                                             <th>Status</th>
-                                            <th>Transfer Amount</th>
+                                            {{-- <th>Transfer Amount</th> --}}
                                             <th>Admin Fee</th>
                                             <th>Total</th>
                                         </tr>
@@ -441,9 +441,9 @@ use Carbon\Carbon;
                                                 <span style="color: rgba(255,255,255,0.45);">System</span>
                                                 @endif
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 <span class="premium-badge-success"><i class="bx bx-check-circle"></i> Completed</span>
-                                            </td>
+                                            </td> --}}
 
                                             <!-- Net Transfer Amount -->
                                             <td style="font-weight: 600;">
