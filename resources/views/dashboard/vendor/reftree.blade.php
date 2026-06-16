@@ -76,7 +76,7 @@ if ($refintid < $myintid) {
 
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="fw-bold mb-4">
-                            <span class="text-muted fw-light">Dashboard /</span>
+                            <a href="/dashboard"><span class="text-muted fw-light">Dashboard /</span></a>
                             <span style="color: #fff;">Community Tree</span>
                         </h4>
 
