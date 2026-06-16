@@ -13,17 +13,19 @@ class RegisterWelcomeMail extends Mailable
     public $name;
     public $email;
     public $password;
+    public $uid;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name, $email, $password)
+    public function __construct($name, $email, $password, $uid)
     {
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
+        $this->uid = $uid;
     }
 
     /**

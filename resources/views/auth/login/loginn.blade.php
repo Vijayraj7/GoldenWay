@@ -146,49 +146,89 @@
                 color: rgba(255, 255, 255, 0.8) !important;
             }
             .modal-content {
-                background-color: #09221a !important;
+                background-color: #051410 !important;
                 border: 1px solid rgba(255, 215, 0, 0.3) !important;
-                border-radius: 12px;
-                box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+                border-radius: 16px !important;
+                box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 25px rgba(255, 215, 0, 0.1) !important;
             }
             .modal-header {
-                border-bottom: 1px solid rgba(255, 215, 0, 0.15) !important;
+                border-bottom: none !important;
                 color: #ffffff !important;
             }
             .modal-footer {
-                border-top: 1px solid rgba(255, 215, 0, 0.15) !important;
+                border-top: none !important;
             }
             .modal-title {
                 color: #ffd700 !important;
                 font-weight: 700;
             }
             .slidercaptcha {
-                background: rgba(10, 36, 28, 0.95) !important;
-                border: 1px solid rgba(255, 215, 0, 0.25) !important;
-                border-radius: 8px;
+                margin: 0 auto;
+                width: 100%;
+                height: auto !important;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
             }
-            .slidercaptcha .card-header {
-                background: rgba(5, 20, 16, 0.8) !important;
-                border-bottom: 1px solid rgba(255, 215, 0, 0.15) !important;
-                color: #ffffff !important;
-                font-weight: 600;
+            .slidercaptcha canvas:first-child {
+                border-radius: 8px !important;
+                border: 1px solid rgba(255, 215, 0, 0.35) !important;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5) !important;
             }
             .sliderbg {
                 background-color: rgba(5, 20, 16, 0.8) !important;
                 border: 1px solid rgba(255, 215, 0, 0.2) !important;
+                border-radius: 8px !important;
+                height: 40px !important;
             }
             .sliderContainer {
-                color: #ffffff !important;
+                color: rgba(255, 255, 255, 0.8) !important;
                 background: rgba(5, 20, 16, 0.6) !important;
-                border-radius: 4px;
+                border: 1px solid rgba(255, 215, 0, 0.2) !important;
+                border-radius: 8px !important;
+                height: 42px !important;
+                margin-top: 20px;
             }
             .slider {
                 background: #ffd700 !important;
                 color: #051410 !important;
+                border: none !important;
+                border-radius: 8px !important;
+                height: 40px !important;
+                width: 44px !important;
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.3) !important;
+                transition: all 0.3s ease !important;
+            }
+            .slider:hover {
+                background: #f9a826 !important;
+                transform: scale(1.05);
             }
             .sliderMask {
-                background: rgba(255, 215, 0, 0.2) !important;
-                border-color: rgba(255, 215, 0, 0.3) !important;
+                background: rgba(255, 215, 0, 0.15) !important;
+                border: 1px solid rgba(255, 215, 0, 0.3) !important;
+                border-width: 1px 0 1px 1px !important;
+                border-radius: 8px 0 0 8px !important;
+                height: 40px !important;
+            }
+            .btn-outline-gold {
+                background-color: transparent !important;
+                border: 1px solid rgba(255, 215, 0, 0.5) !important;
+                color: #ffd700 !important;
+                font-weight: 600 !important;
+                transition: all 0.3s ease !important;
+            }
+            .btn-outline-gold:hover {
+                background-color: #ffd700 !important;
+                color: #051410 !important;
+                box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3) !important;
+            }
+            .refreshIcon {
+                background-color: rgba(255, 76, 76, 0.9) !important;
+                border-radius: 50% !important;
+                transition: background-color 0.2s !important;
+            }
+            .refreshIcon:hover {
+                background-color: rgb(255, 50, 50) !important;
             }
         </style>
     </head>
@@ -220,6 +260,18 @@
                                 Please sign-in to your account and
                                 make the profit.
                             </p>
+                            @if(isSubDomain())
+                            <div class="alert text-center mb-4" style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; border-radius: 10px; padding: 16px; font-size: 13.5px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.1);">
+                                <div class="mb-2">
+                                    <i class="bx bx-error-alt me-1" style="font-size: 18px; vertical-align: middle;"></i>
+                                    <strong>You are using test website</strong>
+                                </div>
+                                <p class="mb-3 text-muted" style="font-size: 12px; color: rgba(255, 255, 255, 0.7) !important;">All data and actions here are for staging and testing purposes only.</p>
+                                <a href="https://goldenway-international.com" class="btn btn-sm w-100" style="background: linear-gradient(135deg, #f87171 0%, #dc2626 100%) !important; color: #ffffff !important; border: none !important; font-weight: 700; border-radius: 6px; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);">
+                                    Go to Live Website
+                                </a>
+                            </div>
+                            @endif
                             @error("success")
                             <div class="alert alert-success text-center mb-4" style="background: rgba(4, 120, 87, 0.15); border: 1px solid rgba(4, 120, 87, 0.35); color: #047857; border-radius: 8px; padding: 12px; font-weight: 600; font-size: 13px;">
                                 {{ $message }}
@@ -394,38 +446,25 @@ function confirmLogin(event) {
             tabindex="-1"
             aria-hidden="true"
         >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalCenterTitle">Verification</h5>
-                        <!-- <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                        ></button> -->
+            <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 360px; margin: 1.5rem auto;">
+                <div class="modal-content" style="padding: 1.5rem 1rem;">
+                    <div class="modal-header" style="border: none !important; display: block; text-align: center; padding: 0 0 10px 0;">
+                        <h5 class="modal-title" id="modalCenterTitle" style="font-size: 20px; color: #ffd700; font-weight: 700; margin-bottom: 4px;">Security Verification</h5>
+                        <p class="text-muted mb-0" style="font-size: 13px; color: rgba(255, 255, 255, 0.6) !important;">Please complete security verification!</p>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="padding: 10px 0 0 0; width: 100%;">
                         <div class="container-fluid">
                             <div class="row justify-content-center">
-                                <div class="col-md-12 mb-12 rowwm">
-                                    <div class="slidercaptcha card">
-                                        <div class="card-header">
-                                            <span>Please complete security verification!</span>
-                                        </div>
-                                        <div class="card-body crbm">
-                                            <div id="captcha"></div>
-                                        </div>
-                                    </div>
+                                <div class="col-md-12 mb-12 rowwm text-center">
+                                    <div id="captcha" style="display: inline-block;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    <div class="modal-footer" style="border: none !important; justify-content: center; padding: 15px 0 0 0; width: 100%;">
+                        <button type="button" class="btn btn-outline-gold px-4 py-2" data-bs-dismiss="modal" style="border-radius: 8px;">
                             Close
                         </button>
-                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                     </div>
                 </div>
             </div>

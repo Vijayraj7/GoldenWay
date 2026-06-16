@@ -131,7 +131,8 @@ class LoginApiController extends Controller
             $html = view('mail.register_welcome', [
                 'name' => $rqd->name,
                 'email' => $rqd->email,
-                'password' => $pas
+                'password' => $pas,
+                'uid' => $uid
             ])->render();
             $headers = "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";

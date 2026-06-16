@@ -103,6 +103,10 @@
             
             <div class="credentials-box">
                 <div class="credential-row">
+                    <span class="label">User ID:</span>
+                    <span class="value">{{ $uid }}</span>
+                </div>
+                <div class="credential-row">
                     <span class="label">Email:</span>
                     <span class="value">{{ $email }}</span>
                 </div>
