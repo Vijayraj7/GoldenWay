@@ -271,7 +271,7 @@ use Carbon\Carbon;
                         @php
                         $total_received = (float) DB::table('customer_transfers')->where('tuserid', $v->id)->where('wStatus', '0')->sum('tAmount');
                         $total_transferred = abs((float) DB::table('customer_transfers')->where('fuserid', $v->id)->sum('tAmount'));
-                        $net_balance = $total_received - $total_transferred;
+                        $net_balance = (float) DB::table('customer_transfers')->where('csId', $v->id)->sum('tAmount');;
                         @endphp
 
                         <!-- Summary Stats Grid -->
