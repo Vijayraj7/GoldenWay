@@ -56,7 +56,12 @@
 
                     <div class="mb-3">
                         <label for="poll_wth_password" class="form-label text-white">Transaction Password</label>
-                        <input id="poll_wth_password" name="tpassword" type="password" class="form-control" style="background-color: #222; border: 1px solid #444; color: #fff;" placeholder="Your Transaction Password" required>
+                        <div class="input-group input-group-merge" style="border: 1px solid #444; border-radius: 6px; overflow: hidden; background-color: #222;">
+                            <input id="poll_wth_password" name="tpassword" type="password" class="form-control" style="background-color: transparent; border: none; color: #fff;" placeholder="Your Transaction Password" required>
+                            <span class="input-group-text cursor-pointer" style="background-color: transparent; border: none; color: rgba(255, 255, 255, 0.7);" onclick="togglePasswordVisibility('poll_wth_password', this)">
+                                <i class="bx bx-hide"></i>
+                            </span>
+                        </div>
                     </div>
 
                     <div class="mb-3">

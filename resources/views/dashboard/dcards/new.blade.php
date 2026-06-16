@@ -430,7 +430,12 @@
 
                     <div class="mb-3">
                         <label for="subscribe_password" class="form-label">Transaction Password</label>
-                        <input id="subscribe_password" name="tpassword" type="password" class="form-control" placeholder="Your Transaction Password" required>
+                        <div class="input-group input-group-merge">
+                            <input id="subscribe_password" name="tpassword" type="password" class="form-control" placeholder="Your Transaction Password" required>
+                            <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('subscribe_password', this)">
+                                <i class="bx bx-hide"></i>
+                            </span>
+                        </div>
                     </div>
 
                     <div class="stake-info-card">

@@ -173,10 +173,10 @@ if ($refintid < $myintid) {
                                     <div class="team-stats-card left-team-card">
                                         <div class="team-stats-header">
                                             <div class="stats-icon-wrapper left-icon-bg">
-                                                <i class="bx bx-group"></i>
+                                                <img src="/tst/grnyellow.png" style="height: 24px;">
                                             </div>
                                             <div class="stats-title-area">
-                                                <h5 class="stats-heading">Left Team Community</h5>
+                                                <h5 class="stats-heading">Left Community</h5>
                                                 <span class="badge badge-left-team">{{ number_format($leftCount) }}
                                                     Members</span>
                                             </div>
@@ -200,10 +200,10 @@ if ($refintid < $myintid) {
                                     <div class="team-stats-card right-team-card">
                                         <div class="team-stats-header">
                                             <div class="stats-icon-wrapper right-icon-bg">
-                                                <i class="bx bx-group"></i>
+                                                <img src="/tst/grnyellow.png" style="height: 24px;">
                                             </div>
                                             <div class="stats-title-area">
-                                                <h5 class="stats-heading">Right Team Community</h5>
+                                                <h5 class="stats-heading">Right Community</h5>
                                                 <span class="badge badge-right-team">{{ number_format($rightCount) }}
                                                     Members</span>
                                             </div>

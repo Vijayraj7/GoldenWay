@@ -333,6 +333,9 @@ ini_set('display_errors', 1);
                                                     <div class="input-group">
                                                         <span class="input-group-text"><i class="bx bx-lock-alt"></i></span>
                                                         <input type="password" name="tpassword" required aria-required="true" value="{{old('tpassword')}}" id="tpassword_input" class="form-control" placeholder="Your Transaction Password" />
+                                                        <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('tpassword_input', this)">
+                                                            <i class="bx bx-hide"></i>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>

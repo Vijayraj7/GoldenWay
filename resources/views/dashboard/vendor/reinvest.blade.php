@@ -271,26 +271,27 @@ $totBalance += DB::table('customer_transfers')->where('csId',$v->id)->where('tSt
                                                 <div class="row mb-3">
                                                     <label
                                                         class="col-sm-2 form-label"
-                                                        for="basic-icon-default-message">Transaction
+                                                        for="reinvest_tpassword">Transaction
                                                         Password</label>
                                                     <div class="col-sm-10">
                                                         <div
                                                             class="input-group input-group-merge">
                                                             <span
-                                                                id="basic-icon-default-message2"
                                                                 class="input-group-text"><i
-                                                                    class="bx bx-hide"></i></span>
+                                                                    class="bx bx-lock-alt"></i></span>
                                                             <input
-                                                                type="text"
+                                                                type="password"
                                                                 name="tpassword"
                                                                 required
                                                                 aria-required="true"
                                                                 value="{{old('tpassword')}}"
-                                                                id="basic-icon-default-message2"
-                                                                class="form-control phone-mask"
+                                                                id="reinvest_tpassword"
+                                                                class="form-control"
                                                                 placeholder="Your Transaction Password"
-                                                                aria-label="Your Transaction Password"
-                                                                aria-describedby="basic-icon-default-message2" />
+                                                                aria-label="Your Transaction Password" />
+                                                            <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('reinvest_tpassword', this)">
+                                                                <i class="bx bx-hide"></i>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>

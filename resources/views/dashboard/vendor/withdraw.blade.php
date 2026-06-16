@@ -498,6 +498,9 @@ ini_set('display_errors', 1);
                                                             class="wth-input-inner"
                                                             placeholder="Enter transaction password"
                                                         />
+                                                        <span class="cursor-pointer" style="padding: 0 14px; display: flex; align-items: center; color: #8a96b0;" onclick="togglePasswordVisibility('wth_tpassword', this)">
+                                                            <i class="bx bx-hide"></i>
+                                                        </span>
                                                     </div>
                                                 </div>
 

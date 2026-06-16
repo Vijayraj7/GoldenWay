@@ -818,15 +818,18 @@ $pvt_wallet = decStr($v->gms_pvt_key);
 
                 </script>
                 <div class="formrow mb-3">
-                    <label class="col-sm-2 form-label" for="basic-icon-default-message">Transaction Password
+                    <label class="col-sm-2 form-label" for="trans_input">Transaction Password
                     </label>
                     <div class="col-sm-10">
                         <div class="input-group input-group-merge">
-                            <span id="reciever_inputs" class="input-group-text">
+                            <span class="input-group-text">
                                 <!-- <i class="bx bx-comment"></i> -->
                                 <img src="https://cdn-icons-png.freepik.com/512/1592/1592485.png" style="height: 17px;">
                             </span>
-                            <input type="text" name="tpassword" id="trans_input" class="form-control phone-mask" placeholder="Transaction Password" aria-label="Transaction Password" aria-describedby="trans_input">
+                            <input type="password" name="tpassword" id="trans_input" class="form-control" placeholder="Transaction Password" aria-label="Transaction Password">
+                            <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('trans_input', this)">
+                                <i class="bx bx-hide"></i>
+                            </span>
                         </div>
                     </div>
                 </div>

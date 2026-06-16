@@ -230,3 +230,48 @@ font-size:186px;
     }
 
 </style>
+
+<script>
+    function togglePasswordVisibility(inputId, element) {
+        console.log("togglePasswordVisibility called with:", inputId, element);
+        var input = document.getElementById(inputId);
+        if (!input) {
+            console.error("Input element with ID not found:", inputId);
+            return;
+        }
+        
+        var icon = element.tagName === 'I' ? element : element.querySelector('i');
+        if (!icon) {
+            console.error("Icon tag not found in element:", element);
+            return;
+        }
+        
+        if (input.type === "password") {
+            input.type = "text";
+            if (icon.classList.contains('bx-hide')) {
+                icon.classList.remove('bx-hide');
+                icon.classList.add('bx-show');
+            }
+            if (icon.classList.contains('fa-eye')) {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+            if (!icon.classList.contains('bx-show') && !icon.classList.contains('fa-eye-slash')) {
+                icon.className = icon.className.replace('bx-hide', 'bx-show').replace('fa-eye', 'fa-eye-slash');
+            }
+        } else {
+            input.type = "password";
+            if (icon.classList.contains('bx-show')) {
+                icon.classList.remove('bx-show');
+                icon.classList.add('bx-hide');
+            }
+            if (icon.classList.contains('fa-eye-slash')) {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+            if (!icon.classList.contains('bx-hide') && !icon.classList.contains('fa-eye')) {
+                icon.className = icon.className.replace('bx-show', 'bx-hide').replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+    }
+</script>

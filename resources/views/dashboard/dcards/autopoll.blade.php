@@ -159,7 +159,12 @@
 
                     <div class="mb-3">
                         <label for="autopoll_password" class="form-label">Transaction Password</label>
-                        <input id="autopoll_password" name="tpassword" type="password" class="form-control" placeholder="Your Transaction Password" required>
+                        <div class="input-group input-group-merge">
+                            <input id="autopoll_password" name="tpassword" type="password" class="form-control" placeholder="Your Transaction Password" required>
+                            <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('autopoll_password', this)">
+                                <i class="bx bx-hide"></i>
+                            </span>
+                        </div>
                     </div>
 
                     @error('poll_error')

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashoard</title>
     <meta name="description" content>
     <!-- Favicon -->
@@ -1842,13 +1842,16 @@ if (count($plans) == 0) {
 
 
                                         <div class="formrow mb-3">
-                                            <label class="col-sm-2 form-label" for="basic-icon-default-message">Transaction password</label>
+                                            <label class="col-sm-2 form-label" for="stake_tpassword">Transaction password</label>
                                             <div class="col-sm-10">
                                                 <div class="input-group input-group-merge">
-                                                    <span id="basic-icon-default-message2" class="input-group-text">
+                                                    <span class="input-group-text">
                                                         <img src="https://cdn-icons-png.freepik.com/512/10204/10204254.png" style="height: 14px;">
                                                     </span>
-                                                    <input type="text" name="tpassword" value="{{ old('tpassword') }}" id="basic-icon-default-message2" class="form-control phone-mask" placeholder="Transaction password" aria-label="Transaction password" aria-describedby="basic-icon-default-message2" />
+                                                    <input type="password" name="tpassword" value="{{ old('tpassword') }}" id="stake_tpassword" class="form-control" placeholder="Transaction password" aria-label="Transaction password" />
+                                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('stake_tpassword', this)">
+                                                        <i class="bx bx-hide"></i>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>

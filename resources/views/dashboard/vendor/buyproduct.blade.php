@@ -402,11 +402,14 @@ if (isset($_GET['typ'])) {
                                                 </div>
 
                                                 <div class="row mb-3">
-                                                    <label class="col-sm-3 form-label" for="tpassword_input">Transaction Password</label>
+                                                    <label class="col-sm-3 form-label" for="buyproduct_tpassword">Transaction Password</label>
                                                     <div class="col-sm-9">
                                                         <div class="input-group input-group-merge">
                                                             <span class="input-group-text"><i class="bx bx-lock-alt"></i></span>
-                                                            <input type="password" name="tpassword" required aria-required="true" value="{{ old('tpassword') }}" id="tpassword_input" class="form-control" placeholder="Your Transaction Password" aria-label="Your Transaction Password" />
+                                                            <input type="password" name="tpassword" required aria-required="true" value="{{ old('tpassword') }}" id="buyproduct_tpassword" class="form-control" placeholder="Your Transaction Password" aria-label="Your Transaction Password" />
+                                                            <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('buyproduct_tpassword', this)">
+                                                                <i class="bx bx-hide"></i>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
