@@ -366,6 +366,8 @@ use Carbon\Carbon;
                                                 });
                                             if (!$showAll) {
                                                 $query->where('tType', 'transfer');
+                                                $query->where('csId', $v->id);
+                                                $query->whereNot('tType', 'transfer fee');
                                             }
                                             $withdraws = $query->orderBy('id', 'desc')->get();
                                             $i = 0;
