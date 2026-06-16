@@ -103,6 +103,18 @@
             .form-control::placeholder {
                 color: rgba(255, 255, 255, 0.4) !important;
             }
+            /* Fix browser autofill black text / background override */
+            .form-control:-webkit-autofill,
+            .form-control:-webkit-autofill:hover,
+            .form-control:-webkit-autofill:focus,
+            .form-control:-webkit-autofill:active {
+                -webkit-box-shadow: 0 0 0 1000px rgba(5, 20, 16, 0.95) inset !important;
+                box-shadow: 0 0 0 1000px rgba(5, 20, 16, 0.95) inset !important;
+                -webkit-text-fill-color: #ffffff !important;
+                caret-color: #ffffff !important;
+                border: 1px solid rgba(255, 215, 0, 0.2) !important;
+                transition: background-color 9999s ease-in-out 0s;
+            }
             .input-group-text {
                 background-color: rgba(5, 20, 16, 0.6) !important;
                 border: 1px solid rgba(255, 215, 0, 0.2) !important;
