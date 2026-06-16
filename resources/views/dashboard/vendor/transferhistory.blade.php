@@ -348,11 +348,13 @@ use Carbon\Carbon;
                                                 $i++;
                                                 $istransfer = false;
                                                 $isDebit = false;
+                                                $ffuser = null;
+                                                $ttuser = null;
                                                 if($wthdraw->tType == 'transfer'){
                                                     $istransfer = true;
                                                     $wthdrw = DB::table('customer_withdraws')->where('id',$wthdraw->wthId)->first();
-                                                    $ffuser = DB::table('customers')->where('id', $wthdrw->fuserid ?? 0)->first();
-                                                    $ttuser = DB::table('customers')->where('id', $wthdrw->tuserid ?? 0)->first();
+                                                    $ffuser = DB::table('customers')->where('id', $wthdraw->fuserid ?? 0)->first();
+                                                    $ttuser = DB::table('customers')->where('id', $wthdraw->tuserid ?? 0)->first();
                                                     if ($wthdraw->fuserid == $v->id) {
                                                         $isDebit = true;
                                                     }
@@ -361,6 +363,7 @@ use Carbon\Carbon;
                                                         $isDebit = true;
                                                     }
                                                 }
+                                                
                                                 ?>
                                         <tr>
                                             <td><span class="text-muted">{{$i}}</span></td>
@@ -380,8 +383,8 @@ use Carbon\Carbon;
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($istransfer && $ffuser)
-                                                @if($ffuser->id == $v->id || true)
+                                                @if($ffuser)
+                                                @if($ffuser->id == $v->id)
                                                 <span style="color: #00D094; font-weight: 600;"><i class="bx bx-user me-1"></i>You</span>
                                                 @else
                                                 <a style="color: #D4AF37; font-weight: 600; text-decoration: none;" href="/dashboard/profile?prfid={{ $ffuser->id }}">
@@ -393,8 +396,8 @@ use Carbon\Carbon;
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($istransfer && $ttuser)
-                                                @if($ttuser->id == $v->id || true)
+                                                @if($ttuser)
+                                                @if($ttuser->id == $v->id)
                                                 <span style="color: #00D094; font-weight: 600;"><i class="bx bx-user me-1"></i>You</span>
                                                 @else
                                                 <a style="color: #D4AF37; font-weight: 600; text-decoration: none;" href="/dashboard/profile?prfid={{ $ttuser->id }}">
