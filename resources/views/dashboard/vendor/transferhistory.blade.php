@@ -355,7 +355,7 @@ use Carbon\Carbon;
                                     <tbody>
                                         <?php
                                             
-                                            if ($showAll) {
+                                            if (!$showAll) {
                                                 $query = DB::table('customer_transfers')
                                                     ->orWhere('fuserid', $v->id)
                                                     ->orWhere('tuserid', $v->id)
