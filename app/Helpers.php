@@ -105,9 +105,9 @@ function checkadmin(): bool
     session_start();
     if (isset($_SESSION['mail'])) {
         if (
-            $_SESSION['mail'] == '36' ||
-            $_SESSION['mail'] == '1111' ||
-            $_SESSION['mail'] == '1302' ||
+            $_SESSION['mail'] == 'GW874374' ||
+            $_SESSION['mail'] == 'GW644810' ||
+            $_SESSION['mail'] == 'GW476342' ||
             $_SESSION['mail'] == 'GW243457' ||
             $_SESSION['mail'] == 'GW839472'
         ) {
@@ -127,13 +127,12 @@ function isAdmin(): bool
     if (session_status() !== PHP_SESSION_ACTIVE) {
         session_start();
     }
-    dd($_SESSION['mail']);
     // dd($_SESSION['id']);
     if (isset($_SESSION['mail'])) {
         if (
-            $_SESSION['mail'] == '36' ||
-            $_SESSION['mail'] == '1111' ||
-            $_SESSION['mail'] == '1302' ||
+            $_SESSION['mail'] == 'GW874374' ||
+            $_SESSION['mail'] == 'GW644810' ||
+            $_SESSION['mail'] == 'GW476342' ||
             $_SESSION['mail'] == 'GW243457' ||
             $_SESSION['mail'] == 'GW839472'
             // $_SESSION['mail'] == 'mprasheed51@gmail.com'
