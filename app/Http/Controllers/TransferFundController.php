@@ -125,7 +125,7 @@ class TransferFundController extends Controller
             // Both parties see this via their fuserid / tuserid columns.
             // csId is set to sender so their transfer-wallet balance is aware.
             DB::table('customer_transfers')->insert([
-                'csId' => $sender->id,
+                'csId' => $recipient->id,
                 'tType' => 'transfer',
                 // 'fuserid' => $sender->id,
                 // 'tuserid' => $recipient->id,

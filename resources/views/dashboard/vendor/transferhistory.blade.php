@@ -328,17 +328,13 @@ use Carbon\Carbon;
                             <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
                                 <h5 class="mb-0">Transfer Transactions</h5>
                                 @if($showAll)
-                                    <a href="{{ request()->fullUrlWithoutQuery(['show_all']) }}"
-                                       class="btn btn-sm px-3 py-1 fw-semibold"
-                                       style="background: linear-gradient(135deg,#00D094,#008f66); color:#fff; border-radius:8px; font-size:0.78rem; letter-spacing:0.4px; box-shadow:0 2px 10px rgba(0,208,148,.35);">
-                                        <i class="bx bx-transfer-alt me-1"></i>Transfers Only
-                                    </a>
+                                <a href="{{ request()->fullUrlWithoutQuery(['show_all']) }}" class="btn btn-sm px-3 py-1 fw-semibold" style="background: linear-gradient(135deg,#00D094,#008f66); color:#fff; border-radius:8px; font-size:0.78rem; letter-spacing:0.4px; box-shadow:0 2px 10px rgba(0,208,148,.35);">
+                                    <i class="bx bx-transfer-alt me-1"></i>Transfers Only
+                                </a>
                                 @else
-                                    <a href="{{ request()->fullUrlWithQuery(['show_all' => '1']) }}"
-                                       class="btn btn-sm px-3 py-1 fw-semibold"
-                                       style="background: linear-gradient(135deg,#60a5fa,#3b82f6); color:#fff; border-radius:8px; font-size:0.78rem; letter-spacing:0.4px; box-shadow:0 2px 10px rgba(96,165,250,.35);">
-                                        <i class="bx bx-list-ul me-1"></i>Show All
-                                    </a>
+                                <a href="{{ request()->fullUrlWithQuery(['show_all' => '1']) }}" class="btn btn-sm px-3 py-1 fw-semibold" style="background: linear-gradient(135deg,#60a5fa,#3b82f6); color:#fff; border-radius:8px; font-size:0.78rem; letter-spacing:0.4px; box-shadow:0 2px 10px rgba(96,165,250,.35);">
+                                    <i class="bx bx-list-ul me-1"></i>Show All
+                                </a>
                                 @endif
                             </div>
                             <div class="table-responsive text-nowrap">
@@ -358,16 +354,21 @@ use Carbon\Carbon;
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $query = DB::table('customer_transfers')
-                                                ->where(function($q) use ($v) {
-                                                   // $q->where('csId', $v->id)
-                                                      $q->orWhere('fuserid', $v->id)
-                                                      ->orWhere('tuserid', $v->id);
-                                                });
-                                            if (!$showAll) {
-                                                $query->where('tType', 'transfer');
-                                                $query->where('csId', $v->id);
-                                                $query->whereNot('tType', 'transfer fee');
+                                            
+                                            if ($showAll) {
+                                                $query = DB::table('customer_transfers')
+                                                    ->orWhere('fuserid', $v->id)
+                                                    ->orWhere('tuserid', $v->id)
+                                                    ->where('tType', 'transfer')
+                                                    ->where('csId', $v->id)
+                                                    ->whereNot('tType', 'transfer_fee');
+                                            }else{
+                                                $query = DB::table('customer_transfers')
+                                                    ->orWhere('fuserid', $v->id)
+                                                    ->orWhere('tuserid', $v->id)
+                                                    ->where('tType', 'transfer')
+                                                    ->where('csId', $v->id)
+                                                    ->whereNot('tType', 'transfer_fee');
                                             }
                                             $withdraws = $query->orderBy('id', 'desc')->get();
                                             $i = 0;
