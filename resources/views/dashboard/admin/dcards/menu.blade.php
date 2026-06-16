@@ -42,16 +42,16 @@
         {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Product</span>
         </li> --}}
-        <li class="menu-item @if($r == 'productpendingrequests') active @endif">
+        {{-- <li class="menu-item @if($r == 'productpendingrequests') active @endif">
             <a href="/admin/product/requests?typ=pending" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-pause-circle"></i>
                 <div data-i18n="Basic">Pending Requests</div>
             </a>
-        </li>
+        </li> --}}
         <li class="menu-item @if($r == 'productrequests') active @endif">
             <a href="/admin/product/requests" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-send"></i>
-                <div data-i18n="Basic">Product History</div>
+                <div data-i18n="Basic">Stake History</div>
             </a>
         </li>
         <!-- Misc -->
