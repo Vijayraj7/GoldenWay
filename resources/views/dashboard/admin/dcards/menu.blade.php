@@ -74,12 +74,12 @@
         {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Withdraw</span>
         </li> --}}
-        <li class="menu-item @if($r == 'transferequests') active @endif">
+        {{-- <li class="menu-item @if($r == 'transferequests') active @endif">
             <a href="/admin/withdraw/requests?typ=trnsfr" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
                 <div data-i18n="Basic">Transfer Requests</div>
             </a>
-        </li>
+        </li> --}}
         <li class="menu-item @if($r == 'withdrawrequests') active @endif">
             <a href="/admin/withdraw/requests" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-money"></i>
