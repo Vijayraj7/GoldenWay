@@ -277,7 +277,7 @@ class TransferFundController extends Controller
             DB::table('customer_transfers')->insert([
                 'csId' => $recipient->id,
                 'tType' => 'transfer',
-                'fuserid' => $sender->id,
+                // 'fuserid' => $sender->id,
                 'tuserid' => $recipient->id,
                 'tAmount' => strval($amnt),
                 'tStatus' => '1',
