@@ -105,11 +105,11 @@ function checkadmin(): bool
     session_start();
     if (isset($_SESSION['mail'])) {
         if (
-            $_SESSION['mail'] == 'GW874374' ||
-            $_SESSION['mail'] == 'GW644810' ||
-            $_SESSION['mail'] == 'GW476342' ||
-            $_SESSION['mail'] == 'GW243457' ||
-            $_SESSION['mail'] == 'GW839472'
+            strtoupper($_SESSION['mail']) == 'GW874374' ||
+            strtoupper($_SESSION['mail']) == 'GW644810' ||
+            strtoupper($_SESSION['mail']) == 'GW476342' ||
+            strtoupper($_SESSION['mail']) == 'GW243457' ||
+            strtoupper($_SESSION['mail']) == 'GW839472'
         ) {
             return true;
         } else {
@@ -130,13 +130,13 @@ function isAdmin(): bool
     // dd($_SESSION['id']);
     if (isset($_SESSION['mail'])) {
         if (
-            $_SESSION['mail'] == 'GW874374' ||
-            $_SESSION['mail'] == 'GW644810' ||
-            $_SESSION['mail'] == 'GW476342' ||
-            $_SESSION['mail'] == 'GW243457' ||
-            $_SESSION['mail'] == 'GW839472' 
-            // $_SESSION['mail'] == 'mprasheed51@gmail.com'
-            // $_SESSION['mail'] == 'globalmarketstars@gmail.com'
+            strtoupper($_SESSION['mail']) == 'GW874374' ||
+            strtoupper($_SESSION['mail']) == 'GW644810' ||
+            strtoupper($_SESSION['mail']) == 'GW476342' ||
+            strtoupper($_SESSION['mail']) == 'GW243457' ||
+            strtoupper($_SESSION['mail']) == 'GW839472'
+            // strtoupper($_SESSION['mail']) == 'mprasheed51@gmail.com'
+            // strtoupper($_SESSION['mail']) == 'globalmarketstars@gmail.com'
         ) {
             return true;
         } else {
