@@ -408,9 +408,9 @@ use Carbon\Carbon;
                             <tr>
                                 <td><span class="text-muted">{{$i}}</span></td>
                                 <td>
-                                    <span class="text-muted"><i class="bx bx-calendar-alt me-1"></i>{{ date('d M, Y', strtotime($wthdraw->created_at)) }}</span>
+                                    <span class="text-muted"><i class="bx bx-calendar-alt me-1"></i>{{ \Carbon\Carbon::parse($wthdraw->created_at)->setTimezone('Asia/Dubai')->format('d M, Y') }}</span>
                                     <br>
-                                    <span style="font-size: 11px; color: rgba(255,255,255,0.45);"><i class="bx bx-time-five me-1"></i>{{ date('h:i a', strtotime($wthdraw->created_at)) }}</span>
+                                    <span style="font-size: 11px; color: rgba(255,255,255,0.45);"><i class="bx bx-time-five me-1"></i>{{ \Carbon\Carbon::parse($wthdraw->created_at)->setTimezone('Asia/Dubai')->format('h:i a') }} <span style="font-size:9px;opacity:0.6;">GST</span></span>
                                 </td>
                                 <td>
                                     <span style="font-weight: 600; color: #FFE082; display: block; margin-bottom: 4px;">
