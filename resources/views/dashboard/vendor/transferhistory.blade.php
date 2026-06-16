@@ -386,7 +386,6 @@ use Carbon\Carbon;
                                                 $ttuser = null;
                                                 if($wthdraw->tType == 'transfer'){
                                                     $istransfer = true;
-                                                    $wthdrw = DB::table('customer_withdraws')->where('id',$wthdraw->wthId)->first();
                                                     $ffuser = DB::table('customers')->where('id', $wthdraw->fuserid ?? 0)->first();
                                                     $ttuser = DB::table('customers')->where('id', $wthdraw->tuserid ?? 0)->first();
                                                     if ($wthdraw->fuserid == $v->id) {
@@ -443,66 +442,28 @@ use Carbon\Carbon;
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($istransfer && $wthdrw)
-                                                @if ($wthdrw->status == '1')
-                                                <span class="premium-badge-success"><i class="bx bx-check-circle"></i> Success</span>
-                                                @elseif ($wthdrw->status == '0')
-                                                <span class="premium-badge-warning"><i class="bx bx-time-five"></i> Pending</span>
-                                                <br>
-                                                <span style="color: #ef4444; font-size: 10px; font-weight: 600; display: block; margin-top: 3px;">
-                                                    Max {{72 - Carbon::parse($wthdrw->created_at)->diffInHours(Carbon::now())}} hrs
-                                                </span>
-                                                @elseif ($wthdrw->status == '3')
-                                                <span class="premium-badge-danger"><i class="bx bx-x-circle"></i> Expired</span>
-                                                @endif
-                                                @else
                                                 <span class="premium-badge-success"><i class="bx bx-check-circle"></i> Completed</span>
-                                                @endif
                                             </td>
 
                                             <!-- Net Transfer Amount -->
                                             <td style="font-weight: 600;">
-                                                @if($istransfer && $wthdrw)
-                                                {{ number_format($wthdrw->amount, 2) }} USDT
-                                                @else
                                                 {{ number_format(abs($wthdraw->tAmount), 2) }} USDT
-                                                @endif
                                             </td>
 
                                             <!-- Admin Fee (10% paid by sender) -->
                                             <td style="color: rgba(255, 255, 255, 0.655);">
-                                                @if($istransfer && $wthdrw)
-                                                @if($isDebit)
-                                                {{ number_format($wthdrw->fuel, 2) }} USDT
-                                                @else
-                                                0.00 USDT
-                                                @endif
-                                                @else
-                                                0.00 USDT
-                                                @endif
+                                                {{ number_format($wthdraw->fee, 2) }} USDT
                                             </td>
 
                                             <!-- Total Credit (+) / Debit (-) -->
-                                            @if($isDebit)
-                                            @if($istransfer && $wthdrw)
-                                            <td style="color: #ef4444 !important; font-weight: 700; font-size: 0.9rem;">
-                                                -{{ number_format($wthdrw->amount + $wthdrw->fuel, 2) }} USDT
-                                            </td>
-                                            @else
-                                            <td style="color: #ef4444 !important; font-weight: 700; font-size: 0.9rem;">
-                                                -{{ number_format(abs($wthdraw->tAmount), 2) }} USDT
-                                            </td>
-                                            @endif
-                                            @else
-                                            @if($istransfer && $wthdrw)
+                                            @if($wthdraw->tAmount > 0)
                                             <td style="color: #00D094 !important; font-weight: 700; font-size: 0.9rem;">
-                                                +{{ number_format($wthdrw->amount, 2) }} USDT
+                                                +{{ number_format($wthdraw->tAmount, 2) }} USDT
                                             </td>
                                             @else
-                                            <td style="color: #00D094 !important; font-weight: 700; font-size: 0.9rem;">
-                                                +{{ number_format(abs($wthdraw->tAmount), 2) }} USDT
+                                            <td style="color: #ef4444 !important; font-weight: 700; font-size: 0.9rem;">
+                                                -{{ number_format($wthdraw->tAmount + $wthdraw->fee, 2) }} USDT
                                             </td>
-                                            @endif
                                             @endif
                                         </tr>
                                         @endforeach
