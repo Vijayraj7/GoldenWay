@@ -270,7 +270,7 @@ use Carbon\Carbon;
 
                         @php
                         $total_received = (float) DB::table('customer_transfers')->where('tuserid', $v->id)->where('wStatus', '0')->sum('tAmount');
-                        $total_transferred = (float) DB::table('customer_transfers')->where('fuserid', $v->id)->sum('tAmount');
+                        $total_transferred = (float) DB::table('customer_transfers')->where('csId', $v->id)->where('tType', 'transfer_fee')->sum('tAmount');
                         $net_balance = (float) DB::table('customer_transfers')->where('csId', $v->id)->sum('tAmount');;
                         @endphp
 
