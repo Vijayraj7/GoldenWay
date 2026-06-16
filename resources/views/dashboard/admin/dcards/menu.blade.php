@@ -128,6 +128,18 @@
                 <div data-i18n="Basic">Transfer Credit History</div>
             </a>
         </li>
+        <li class="menu-item @if($r == 'adminautopoolhistory') active @endif">
+            <a href="/admin/autopool/history" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-trending-up"></i>
+                <div data-i18n="Basic">Auto Pool History</div>
+            </a>
+        </li>
+        <li class="menu-item @if($r == 'adminsubscriptionhistory') active @endif">
+            <a href="/admin/subscription/history" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-layer"></i>
+                <div data-i18n="Basic">Subscription History</div>
+            </a>
+        </li>
         <!-- Misc -->
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Support</span>

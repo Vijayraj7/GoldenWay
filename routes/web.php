@@ -80,7 +80,8 @@ Route::get('/admin/withdraw/requests', 'App\Http\Controllers\AdminDashboard@with
 Route::get('/admin/withdraw/requests/{id}', 'App\Http\Controllers\AdminDashboard@withdrawrequestsview');
 Route::get('/admin/customer/support/status', 'App\Http\Controllers\AdminDashboard@supportstatus');
 Route::get('/admin/transferfund/free', 'App\Http\Controllers\AdminDashboard@transferFundFree');
-
+Route::get('/admin/autopool/history', 'App\Http\Controllers\AdminDashboard@adminAutopoolHistory');
+Route::get('/admin/subscription/history', 'App\Http\Controllers\AdminDashboard@adminSubscriptionHistory');
 
 //dashboard
 Route::get('/dashboard', 'App\Http\Controllers\DashBoardController@dashboard');

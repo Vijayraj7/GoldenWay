@@ -132,4 +132,18 @@ class AdminDashboard extends Controller
         return $h->getboth('dashboard.admin.transferfundfree');
     }
 
+    public function adminAutopoolHistory()
+    {
+        checkadmin();
+        $h = new HelperController;
+        return $h->getboth('dashboard.admin.autopoolhistory');
+    }
+
+    public function adminSubscriptionHistory()
+    {
+        checkadmin();
+        $h = new HelperController;
+        return $h->getboth('dashboard.admin.subscriptionhistory');
+    }
+
 }
