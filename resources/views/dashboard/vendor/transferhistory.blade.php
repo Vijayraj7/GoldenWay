@@ -346,8 +346,8 @@ use Carbon\Carbon;
                                             <th>Type</th>
                                             <th>Sender</th>
                                             <th>Recipient</th>
-                                            <th>Status</th>
-                                            {{-- <th>Transfer Amount</th> --}}
+                                            {{-- <th>Status</th> --}}
+                                            <th>Amount</th>
                                             <th>Admin Fee</th>
                                             <th>Total</th>
                                         </tr>
@@ -442,9 +442,9 @@ use Carbon\Carbon;
                                                 <span class="premium-badge-success"><i class="bx bx-check-circle"></i> Completed</span>
                                             </td> --}}
 
-                                            <!-- Net Transfer Amount -->
+
                                             <td style="font-weight: 600;">
-                                                {{ number_format(abs($wthdraw->tAmount), 2) }} USDT
+                                                {{ number_format(abs($wthdraw->tAmount - $wthdraw->fee), 2) }} USDT
                                             </td>
 
                                             <!-- Admin Fee (10% paid by sender) -->
