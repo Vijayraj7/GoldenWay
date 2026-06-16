@@ -271,7 +271,8 @@ use Carbon\Carbon;
                         @php
                         $total_received = (float) DB::table('customer_transfers')->where('csId', $v->id)->where('tType', 'transfer')->sum('tAmount');
                         $total_transferred = (float) DB::table('customer_transfers')->where('csId', $v->id)->where('tType', 'transfer_fee')->sum('tAmount');
-                        $other_transferred = (float) DB::table('customer_transfers')->where('csId', $v->id)->whereNot('tType', 'transfer')->sum('tAmount');
+                        $other_transferred = (float) DB::table('customer_transfers')->where('csId', $v->id)
+                                                        ->whereNot('tType','transfer')->whereNot('tType','transfer_fee')->sum('tAmount');
                         $net_balance = (float) DB::table('customer_transfers')->where('csId', $v->id)->sum('tAmount');
                         @endphp
 
