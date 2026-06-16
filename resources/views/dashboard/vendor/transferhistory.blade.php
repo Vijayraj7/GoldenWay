@@ -269,8 +269,9 @@ use Carbon\Carbon;
                         </h4>
 
                         @php
-                        $total_received = (float) DB::table('customer_transfers')->where('tuserid', $v->id)->where('wStatus', '0')->sum('tAmount');
+                        $total_received = (float) DB::table('customer_transfers')->where('csId', $v->id)->where('tType', 'transfer')->sum('tAmount');
                         $total_transferred = (float) DB::table('customer_transfers')->where('csId', $v->id)->where('tType', 'transfer_fee')->sum('tAmount');
+                        $other_transferred = (float) DB::table('customer_transfers')->where('csId', $v->id)->whereNot('tType', ['transfer','transfer_fee'])->sum('tAmount');
                         $net_balance = (float) DB::table('customer_transfers')->where('csId', $v->id)->sum('tAmount');;
                         @endphp
 
@@ -299,61 +300,72 @@ use Carbon\Carbon;
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 col-12">
-                                <div class="card premium-stat-card stat-count">
+                                <div class="card premium-stat-card stat-sent">
                                     <div class="card-body">
-                                        <span class="stat-label"><i class="bx bx-list-check" style="color: #D4AF37;"></i> Total Transfers</span>
+                                        <span class="stat-label"><i class="bx bx-up-arrow-alt" style="color: #ef4444;"></i>Other Used</span>
                                         <h3 class="card-title">
-                                            {{ DB::table('customer_transfers')->where('csId',$v->id)->orWhere('fuserid',$v->id)->orWhere('tuserid',$v->id)->count() }}
-                                            <span class="currency">Transactions</span>
-                                        </h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 col-12">
-                                <div class="card premium-stat-card stat-balance">
-                                    <div class="card-body">
-                                        <span class="stat-label"><i class="bx bx-wallet-alt" style="color: #60a5fa;"></i> Net Balance</span>
-                                        <h3 class="card-title" style="color: {{ $net_balance >= 0 ? '#60a5fa' : '#ef4444' }} !important;">
-                                            {{ $net_balance >= 0 ? '+' : '' }}{{ number_format($net_balance, 2) }}
+                                            {{ number_format($other_transferred, 2) }}
                                             <span class="currency">USDT</span>
                                         </h3>
                                     </div>
                                 </div>
                             </div>
+                            {{-- <div class="col-lg-3 col-md-6 col-12">
+                                <div class="card premium-stat-card stat-count">
+                                    <div class="card-body">
+                                        <span class="stat-label"><i class="bx bx-list-check" style="color: #D4AF37;"></i> Used Transfers</span>
+                                        <h3 class="card-title">
+                                            {{ DB::table('customer_transfers')->where('csId',$v->id)->orWhere('fuserid',$v->id)->orWhere('tuserid',$v->id)->count() }}
+                            <span class="currency">Transactions</span>
+                            </h3>
                         </div>
+                    </div>
+                </div> --}}
+                <div class="col-lg-3 col-md-6 col-12">
+                    <div class="card premium-stat-card stat-balance">
+                        <div class="card-body">
+                            <span class="stat-label"><i class="bx bx-wallet-alt" style="color: #60a5fa;"></i> Net Balance</span>
+                            <h3 class="card-title" style="color: {{ $net_balance >= 0 ? '#60a5fa' : '#ef4444' }} !important;">
+                                {{ $net_balance >= 0 ? '+' : '' }}{{ number_format($net_balance, 2) }}
+                                <span class="currency">USDT</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        <!-- Transfer History Table Card -->
-                        @php $showAll = request('show_all') == '1'; @endphp
-                        <div class="card premium-card">
-                            <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
-                                <h5 class="mb-0">Transfer Transactions</h5>
-                                @if($showAll)
-                                <a href="{{ request()->fullUrlWithoutQuery(['show_all']) }}" class="btn btn-sm px-3 py-1 fw-semibold" style="background: linear-gradient(135deg,#00D094,#008f66); color:#fff; border-radius:8px; font-size:0.78rem; letter-spacing:0.4px; box-shadow:0 2px 10px rgba(0,208,148,.35);">
-                                    <i class="bx bx-transfer-alt me-1"></i>Transfers Only
-                                </a>
-                                @else
-                                <a href="{{ request()->fullUrlWithQuery(['show_all' => '1']) }}" class="btn btn-sm px-3 py-1 fw-semibold" style="background: linear-gradient(135deg,#60a5fa,#3b82f6); color:#fff; border-radius:8px; font-size:0.78rem; letter-spacing:0.4px; box-shadow:0 2px 10px rgba(96,165,250,.35);">
-                                    <i class="bx bx-list-ul me-1"></i>Show All
-                                </a>
-                                @endif
-                            </div>
-                            <div class="table-responsive text-nowrap">
-                                <table class="table premium-table">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Date & Time</th>
-                                            <th>Type</th>
-                                            <th>Sender</th>
-                                            <th>Recipient</th>
-                                            {{-- <th>Status</th> --}}
-                                            <th>Amount</th>
-                                            <th>Admin Fee</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
+            <!-- Transfer History Table Card -->
+            @php $showAll = request('show_all') == '1'; @endphp
+            <div class="card premium-card">
+                <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <h5 class="mb-0">Transfer Transactions</h5>
+                    @if($showAll)
+                    <a href="{{ request()->fullUrlWithoutQuery(['show_all']) }}" class="btn btn-sm px-3 py-1 fw-semibold" style="background: linear-gradient(135deg,#00D094,#008f66); color:#fff; border-radius:8px; font-size:0.78rem; letter-spacing:0.4px; box-shadow:0 2px 10px rgba(0,208,148,.35);">
+                        <i class="bx bx-transfer-alt me-1"></i>Transfers Only
+                    </a>
+                    @else
+                    <a href="{{ request()->fullUrlWithQuery(['show_all' => '1']) }}" class="btn btn-sm px-3 py-1 fw-semibold" style="background: linear-gradient(135deg,#60a5fa,#3b82f6); color:#fff; border-radius:8px; font-size:0.78rem; letter-spacing:0.4px; box-shadow:0 2px 10px rgba(96,165,250,.35);">
+                        <i class="bx bx-list-ul me-1"></i>Show All
+                    </a>
+                    @endif
+                </div>
+                <div class="table-responsive text-nowrap">
+                    <table class="table premium-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date & Time</th>
+                                <th>Type</th>
+                                <th>Sender</th>
+                                <th>Recipient</th>
+                                {{-- <th>Status</th> --}}
+                                <th>Amount</th>
+                                <th>Admin Fee</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                                             
                                             if (!$showAll) {
                                                 $query = DB::table('customer_transfers')
@@ -367,15 +379,15 @@ use Carbon\Carbon;
                                             $withdraws = $query->orderBy('id', 'desc')->get();
                                             $i = 0;
                                             ?>
-                                        @if($withdraws->isEmpty())
-                                        <tr>
-                                            <td colspan="9" class="text-center py-4" style="color: rgba(255, 255, 255, 0.4) !important;">
-                                                No peer-to-peer transfers found.
-                                            </td>
-                                        </tr>
-                                        @else
-                                        @foreach($withdraws as $wthdraw)
-                                        <?php
+                            @if($withdraws->isEmpty())
+                            <tr>
+                                <td colspan="9" class="text-center py-4" style="color: rgba(255, 255, 255, 0.4) !important;">
+                                    No peer-to-peer transfers found.
+                                </td>
+                            </tr>
+                            @else
+                            @foreach($withdraws as $wthdraw)
+                            <?php
                                                 $i++;
                                                 $istransfer = false;
                                                 $isDebit = false;
@@ -395,88 +407,88 @@ use Carbon\Carbon;
                                                 }
                                                 
                                                 ?>
-                                        <tr>
-                                            <td><span class="text-muted">{{$i}}</span></td>
-                                            <td>
-                                                <span class="text-muted"><i class="bx bx-calendar-alt me-1"></i>{{ date('d M, Y', strtotime($wthdraw->created_at)) }}</span>
-                                                <br>
-                                                <span style="font-size: 11px; color: rgba(255,255,255,0.45);"><i class="bx bx-time-five me-1"></i>{{ date('h:i a', strtotime($wthdraw->created_at)) }}</span>
-                                            </td>
-                                            <td>
-                                                <span style="font-weight: 600; color: #FFE082; display: block; margin-bottom: 4px;">
-                                                    {{getPname($wthdraw->tType)}}
-                                                </span>
-                                                @if($isDebit)
-                                                <span class="premium-badge-danger" style="padding: 2px 6px !important; font-size: 9px !important; line-height: 1;"><i class="bx bx-minus-circle"></i> Debited</span>
-                                                @else
-                                                <span class="premium-badge-success" style="padding: 2px 6px !important; font-size: 9px !important; line-height: 1;"><i class="bx bx-plus-circle"></i> Credited</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($ffuser)
-                                                @if($ffuser->id == $v->id)
-                                                <span style="color: #00D094; font-weight: 600;"><i class="bx bx-user me-1"></i>You</span>
-                                                @else
-                                                <a style="color: #D4AF37; font-weight: 600; text-decoration: none;" href="/dashboard/profile?prfid={{ $ffuser->id }}">
-                                                    {{ $ffuser->uid }}
-                                                </a>
-                                                @endif
-                                                @else
-                                                <span style="color: rgba(255,255,255,0.45);">System</span>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if($ttuser)
-                                                @if($ttuser->id == $v->id)
-                                                <span style="color: #00D094; font-weight: 600;"><i class="bx bx-user me-1"></i>You</span>
-                                                @else
-                                                <a style="color: #D4AF37; font-weight: 600; text-decoration: none;" href="/dashboard/profile?prfid={{ $ttuser->id }}">
-                                                    {{ $ttuser->uid }}
-                                                </a>
-                                                @endif
-                                                @else
-                                                <span style="color: rgba(255,255,255,0.45);">System</span>
-                                                @endif
-                                            </td>
-                                            {{-- <td>
+                            <tr>
+                                <td><span class="text-muted">{{$i}}</span></td>
+                                <td>
+                                    <span class="text-muted"><i class="bx bx-calendar-alt me-1"></i>{{ date('d M, Y', strtotime($wthdraw->created_at)) }}</span>
+                                    <br>
+                                    <span style="font-size: 11px; color: rgba(255,255,255,0.45);"><i class="bx bx-time-five me-1"></i>{{ date('h:i a', strtotime($wthdraw->created_at)) }}</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: 600; color: #FFE082; display: block; margin-bottom: 4px;">
+                                        {{getPname($wthdraw->tType)}}
+                                    </span>
+                                    @if($isDebit)
+                                    <span class="premium-badge-danger" style="padding: 2px 6px !important; font-size: 9px !important; line-height: 1;"><i class="bx bx-minus-circle"></i> Debited</span>
+                                    @else
+                                    <span class="premium-badge-success" style="padding: 2px 6px !important; font-size: 9px !important; line-height: 1;"><i class="bx bx-plus-circle"></i> Credited</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($ffuser)
+                                    @if($ffuser->id == $v->id)
+                                    <span style="color: #00D094; font-weight: 600;"><i class="bx bx-user me-1"></i>You</span>
+                                    @else
+                                    <a style="color: #D4AF37; font-weight: 600; text-decoration: none;" href="/dashboard/profile?prfid={{ $ffuser->id }}">
+                                        {{ $ffuser->uid }}
+                                    </a>
+                                    @endif
+                                    @else
+                                    <span style="color: rgba(255,255,255,0.45);">System</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($ttuser)
+                                    @if($ttuser->id == $v->id)
+                                    <span style="color: #00D094; font-weight: 600;"><i class="bx bx-user me-1"></i>You</span>
+                                    @else
+                                    <a style="color: #D4AF37; font-weight: 600; text-decoration: none;" href="/dashboard/profile?prfid={{ $ttuser->id }}">
+                                        {{ $ttuser->uid }}
+                                    </a>
+                                    @endif
+                                    @else
+                                    <span style="color: rgba(255,255,255,0.45);">System</span>
+                                    @endif
+                                </td>
+                                {{-- <td>
                                                 <span class="premium-badge-success"><i class="bx bx-check-circle"></i> Completed</span>
                                             </td> --}}
 
 
-                                            <td style="font-weight: 600;">
-                                                {{ number_format(abs($wthdraw->tAmount) - abs($wthdraw->fee), 2) }} USDT
-                                            </td>
+                                <td style="font-weight: 600;">
+                                    {{ number_format(abs($wthdraw->tAmount) - abs($wthdraw->fee), 2) }} USDT
+                                </td>
 
-                                            <!-- Admin Fee (10% paid by sender) -->
-                                            <td style="color: rgba(255, 255, 255, 0.655);">
-                                                {{ number_format($wthdraw->fee, 2) }} USDT
-                                            </td>
+                                <!-- Admin Fee (10% paid by sender) -->
+                                <td style="color: rgba(255, 255, 255, 0.655);">
+                                    {{ number_format($wthdraw->fee, 2) }} USDT
+                                </td>
 
-                                            <!-- Total Credit (+) / Debit (-) -->
-                                            @if($wthdraw->fuserid == $v->id)
-                                            <td style="color: #ef4444 !important; font-weight: 700; font-size: 0.9rem;">
-                                                {{ number_format(abs($wthdraw->tAmount), 2) }} USDT
-                                            </td>
-                                            @else
-                                            <td style="color: #00D094 !important; font-weight: 700; font-size: 0.9rem;">
-                                                {{ number_format(abs($wthdraw->tAmount) , 2) }} USDT
-                                            </td>
-                                            @endif
-                                        </tr>
-                                        @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Footer -->
-                        @include('dashboard.dcards.footer')
-                        <!-- / Footer -->
-                    </div>
+                                <!-- Total Credit (+) / Debit (-) -->
+                                @if($wthdraw->fuserid == $v->id)
+                                <td style="color: #ef4444 !important; font-weight: 700; font-size: 0.9rem;">
+                                    {{ number_format(abs($wthdraw->tAmount), 2) }} USDT
+                                </td>
+                                @else
+                                <td style="color: #00D094 !important; font-weight: 700; font-size: 0.9rem;">
+                                    {{ number_format(abs($wthdraw->tAmount) , 2) }} USDT
+                                </td>
+                                @endif
+                            </tr>
+                            @endforeach
+                            @endif
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
+            <!-- Footer -->
+            @include('dashboard.dcards.footer')
+            <!-- / Footer -->
         </div>
+    </div>
+    </div>
+    </div>
     </div>
 
     <!-- Core JS -->
