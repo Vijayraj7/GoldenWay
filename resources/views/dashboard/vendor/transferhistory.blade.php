@@ -359,16 +359,10 @@ use Carbon\Carbon;
                                                 $query = DB::table('customer_transfers')
                                                     ->orWhere('fuserid', $v->id)
                                                     ->orWhere('tuserid', $v->id)
-                                                    ->where('tType', 'transfer')
-                                                    ->where('csId', $v->id)
-                                                    ->whereNot('tType', 'transfer_fee');
+                                                    ->where('tType', 'transfer');
                                             }else{
                                                 $query = DB::table('customer_transfers')
-                                                    ->orWhere('fuserid', $v->id)
-                                                    ->orWhere('tuserid', $v->id)
-                                                    ->where('tType', 'transfer')
-                                                    ->where('csId', $v->id)
-                                                    ->whereNot('tType', 'transfer_fee');
+                                                    ->where('csId', $v->id);
                                             }
                                             $withdraws = $query->orderBy('id', 'desc')->get();
                                             $i = 0;
