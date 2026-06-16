@@ -381,7 +381,7 @@ use Carbon\Carbon;
                                             </td>
                                             <td>
                                                 @if($istransfer && $ffuser)
-                                                @if($ffuser->id == $v->id)
+                                                @if($ffuser->id == $v->id || true)
                                                 <span style="color: #00D094; font-weight: 600;"><i class="bx bx-user me-1"></i>You</span>
                                                 @else
                                                 <a style="color: #D4AF37; font-weight: 600; text-decoration: none;" href="/dashboard/profile?prfid={{ $ffuser->id }}">
@@ -394,7 +394,7 @@ use Carbon\Carbon;
                                             </td>
                                             <td>
                                                 @if($istransfer && $ttuser)
-                                                @if($ttuser->id == $v->id)
+                                                @if($ttuser->id == $v->id || true)
                                                 <span style="color: #00D094; font-weight: 600;"><i class="bx bx-user me-1"></i>You</span>
                                                 @else
                                                 <a style="color: #D4AF37; font-weight: 600; text-decoration: none;" href="/dashboard/profile?prfid={{ $ttuser->id }}">
