@@ -453,14 +453,26 @@ use Carbon\Carbon;
                                             </td> --}}
 
 
-                                <td style="font-weight: 600;">
+                                @if($isDebit)
+                                <td style="font-weight: 600; color: #ef4444;">
                                     {{ number_format(abs($wthdraw->tAmount) - abs($wthdraw->fee), 2) }} USDT
                                 </td>
+                                @else
+                                <td style="font-weight: 600; color: #fff;">
+                                    {{ number_format(abs($wthdraw->tAmount) - abs($wthdraw->fee), 2) }} USDT
+                                </td>
+                                @endif
 
                                 <!-- Admin Fee (10% paid by sender) -->
-                                <td style="color: rgba(255, 255, 255, 0.655);">
+                                @if($isDebit)
+                                <td style="color: #ef4444;">
                                     {{ number_format($wthdraw->fee, 2) }} USDT
                                 </td>
+                                @else
+                                <td style="color: #fff;">
+                                    {{ number_format($wthdraw->fee, 2) }} USDT
+                                </td>
+                                @endif
 
                                 <!-- Total Credit (+) / Debit (-) -->
                                 @if($isDebit)
