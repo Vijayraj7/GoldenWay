@@ -91,7 +91,7 @@
         {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Add Fund</span>
         </li> --}}
-        <li class="menu-item @if($r == 'creditaddpendingrequests') active @endif">
+        {{-- <li class="menu-item @if($r == 'creditaddpendingrequests') active @endif">
             <a href="/admin/creditadd/requests?typ=pending" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-pause"></i>
                 <div data-i18n="Basic">Add-Fund Pending Requests</div>
@@ -103,7 +103,7 @@
                 <box-icon name="money-withdraw"></box-icon>
                 <div data-i18n="Basic">Add-Fund History</div>
             </a>
-        </li>
+        </li> --}}
         @if(isAdmin())
         <li class="menu-item @if($r == 'transferfundfree') active @endif">
             <a href="/admin/transferfund/free" class="menu-link">
