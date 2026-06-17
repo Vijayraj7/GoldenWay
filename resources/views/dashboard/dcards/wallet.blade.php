@@ -1056,11 +1056,7 @@ $pvt_wallet = decStr($v->gms_pvt_key);
 </style>
 @endif
 <script>
-    var isSubDomainAdmin = {
-        {
-            isSubDomainAdmin() ? 'true' : 'false'
-        }
-    };
+    var isSubDomainAdmin = {{ isSubDomainAdmin() ? 'true' : 'false' }};
 
     // Function to send USDT tokens
     function sendUSDT(recipient, amount, remarkk) {
