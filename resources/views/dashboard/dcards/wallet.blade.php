@@ -43,11 +43,15 @@ $buyproduct = false;
 @endif
 <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+{{-- <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script> --}}
+<script
+  src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.14/dist/dotlottie-wc.js"
+  type="module"
+></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 @if ($buyproduct || $bbsnd)
 <div style="width: 100%; margin-top: 60px; display:flex; justify-content:center;">
-    <lottie-player src="https://lottie.host/88bc1219-7a83-4255-a08c-e3712266c834/a5tyHOgVGy.json" background="##ffffff" speed="1" style="width: 300px; height: 300px" loop autoplay direction="1" mode="normal"></lottie-player>
+    <dotlottie-wc src="https://lottie.host/fc177493-1018-4f86-a803-30dc49b467c3/tCG0HLsist.lottie" style="width: 300px;height: 300px" autoplay loop></dotlottie-wc>
 </div>
 @endif
 @if (!$snd)
