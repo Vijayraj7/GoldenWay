@@ -235,8 +235,46 @@ if ($refintid < $myintid) {
                                 function renderNewUserTree($user, $currentDepth = 0, $maxDepth = 2, $parentId = null, $placementSide = null, $path = '')
                                 {
                                 if ($user === null) {
-                                // Render vacant slots up to the maximum depth display
-                                if ($currentDepth <= $maxDepth && $parentId !==null && $placementSide !==null) { $isInner=($path==='I' ); $registerUrl=$isInner ? 'javascript:void(0);' : ("/register?ref=" . theUser()->id . " &dir={$placementSide}"); $targetAttr=$isInner ? '' : 'target="_blank"' ; $cursorStyle=$isInner ? 'style="cursor: not-allowed;"' : '' ; echo '<div class="tree-node-wrapper">' ; echo ' <a href="' . $registerUrl . '" ' . $targetAttr . ' ' . $cursorStyle . ' class="tree-card-link">' ; echo ' <div class="tree-card vacant-card">' ; echo ' <div class="avatar-wrapper vacant-avatar">' ; echo ' <i class="bx bx-plus"></i>' ; echo ' </div>' ; echo ' <h6 class="member-name">Vacant Slot</h6>' ; echo ' <p class="member-id">' . ($isInner ? 'Locked Leg' : 'Click to Register' ) . '</p>' ; echo ' <span class="badge badge-vacant">Open Leg</span>' ; echo ' </div>' ; echo ' </a>' ; echo '</div>' ; } return; }
+                                // Render vacant slots up to the maximum depth — always recurse so all 7 boxes show
+                                if ($currentDepth <= $maxDepth) {
+                                    $isInner = ($path === 'I');
+                                    // Only the pure-left-end and pure-right-end leaf slots are clickable
+                                    $isClickable = !$isInner && ($path === 'L' || $path === 'R');
+                                    $registerUrl = $isClickable ? ("/register?ref=" . theUser()->id . "&dir={$placementSide}") : 'javascript:void(0);';
+                                    $targetAttr  = $isClickable ? 'target="_blank"' : '';
+                                    $cursorStyle = $isClickable ? '' : 'style="cursor: not-allowed;"';
+                                    $slotLabel   = $isClickable ? 'Click to Register' : 'Locked Leg';
+
+                                    echo '<div class="tree-node-wrapper">';
+                                    echo '<a href="' . $registerUrl . '" ' . $targetAttr . ' ' . $cursorStyle . ' class="tree-card-link">';
+                                    echo '<div class="tree-card vacant-card">';
+                                    echo '<div class="avatar-wrapper vacant-avatar">';
+                                    echo ($isClickable ? '<i class="bx bx-plus"></i>' : '<i class="bx bx-lock-alt"></i>');
+                                    echo '</div>';
+                                    echo '<h6 class="member-name">Vacant Slot</h6>';
+                                    echo '<p class="member-id">' . $slotLabel . '</p>';
+                                    echo '<span class="badge badge-vacant">Open Leg</span>';
+                                    echo '</div>';
+                                    echo '</a>';
+
+                                    // Recurse so children of this vacant slot are also drawn
+                                    if ($currentDepth < $maxDepth) {
+                                        $leftPath  = ($path === '' || $path === 'L') ? 'L' : 'I';
+                                        $rightPath = ($path === '' || $path === 'R') ? 'R' : 'I';
+                                        echo '<div class="tree-children">';
+                                        echo '<div class="tree-branch left-branch">';
+                                        renderNewUserTree(null, $currentDepth + 1, $maxDepth, -1, 'left', $leftPath);
+                                        echo '</div>';
+                                        echo '<div class="tree-branch right-branch">';
+                                        renderNewUserTree(null, $currentDepth + 1, $maxDepth, -1, 'right', $rightPath);
+                                        echo '</div>';
+                                        echo '</div>';
+                                    }
+
+                                    echo '</div>';
+                                }
+                                return;
+                                }
                                 // Fetch user active plan statistics 
                                 $pltot=DB::table('customer_subs') ->where('csId', $user->id)->sum('sub_amount');
                                     $stake_total = DB::table('customer_plans')

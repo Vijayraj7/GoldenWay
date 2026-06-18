@@ -1309,96 +1309,266 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
     @endif
 
     @error('walletsuccess')
-    <!-- Success Modal -->
-    <div id="success_tic" style="z-index: 2000 !important;" class="modal fade" role="dialog">
-        <div style="
-        width: 100%;
-        height: 100%;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;">
-            <div class="modal-dialog">
-                <!-- Modal content -->
-                <div class="modal-content" style="
-      padding: 10px;">
-                    <div class="page-body">
-                        <div class="head">
-                            @if (isSubDomainAdmin())
-                            <?php $tsuccess = true; ?>
-                            @elseif (old('reciept') != null)
-                            <?php $tsuccess = true; ?>
-                            @elseif (old('pname') != null)
-                            <?php $tsuccess = true; ?>
-                            @else
-                            <?php $tsuccess = false; ?>
-                            @endif
+    <!-- Success / Failure Modal — Premium Design -->
+    <style>
+        #success_tic .modal-dialog {
+            max-width: 400px;
+        }
+        #success_tic .modal-content {
+            background: linear-gradient(145deg, #071f17, #0c2820) !important;
+            border: 1px solid rgba(249, 168, 38, 0.2) !important;
+            border-radius: 24px !important;
+            overflow: hidden;
+            padding: 0 !important;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(249,168,38,0.08);
+        }
+        /* Glow stripe at the top */
+        #success_tic .stc-topbar {
+            height: 4px;
+            width: 100%;
+        }
+        #success_tic .stc-topbar.success-bar {
+            background: linear-gradient(90deg, #00D094, #f9a826, #00D094);
+            background-size: 200% 100%;
+            animation: shimmerBar 2.5s linear infinite;
+        }
+        #success_tic .stc-topbar.fail-bar {
+            background: linear-gradient(90deg, #ef4444, #f97316, #ef4444);
+            background-size: 200% 100%;
+            animation: shimmerBar 2.5s linear infinite;
+        }
+        @keyframes shimmerBar {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        #success_tic .stc-body {
+            padding: 28px 28px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        /* Status badge */
+        #success_tic .stc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        #success_tic .stc-badge.success-badge {
+            background: rgba(0, 208, 148, 0.12);
+            border: 1px solid rgba(0, 208, 148, 0.35);
+            color: #00D094;
+        }
+        #success_tic .stc-badge.fail-badge {
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #ef4444;
+        }
+        /* Animation container */
+        #success_tic .stc-anim {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 4px;
+        }
+        /* Title */
+        #success_tic .stc-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0 0 6px;
+            line-height: 1.3;
+        }
+        #success_tic .stc-title.fail-title {
+            color: #ef4444;
+        }
+        /* Amount pill */
+        #success_tic .stc-amount {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(249,168,38,0.08);
+            border: 1px solid rgba(249,168,38,0.2);
+            border-radius: 12px;
+            padding: 10px 22px;
+            margin: 14px 0 12px;
+        }
+        #success_tic .stc-amount .amt-val {
+            font-size: 26px;
+            font-weight: 800;
+            color: #f9a826;
+            line-height: 1;
+        }
+        #success_tic .stc-amount .amt-coin {
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(249,168,38,0.7);
+            text-transform: uppercase;
+            align-self: flex-end;
+            padding-bottom: 3px;
+        }
+        /* TXID */
+        #success_tic .stc-txid {
+            font-size: 10px;
+            color: rgba(255,255,255,0.35);
+            word-break: break-all;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 8px;
+            padding: 8px 14px;
+            margin-top: 4px;
+            width: 100%;
+            text-align: left;
+        }
+        #success_tic .stc-txid span {
+            color: rgba(255,255,255,0.55);
+            font-family: monospace;
+        }
+        /* Divider */
+        #success_tic .stc-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(249,168,38,0.1);
+            margin: 20px 0 16px;
+        }
+        /* OK Button */
+        #success_tic .stc-ok-btn {
+            width: 100%;
+            padding: 13px;
+            border-radius: 12px;
+            border: none;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #success_tic .stc-ok-btn.success-btn {
+            background: linear-gradient(135deg, #00D094, #00a876);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0,208,148,0.3);
+        }
+        #success_tic .stc-ok-btn.success-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(0,208,148,0.45);
+        }
+        #success_tic .stc-ok-btn.fail-btn {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(239,68,68,0.3);
+        }
+        #success_tic .stc-ok-btn.fail-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(239,68,68,0.45);
+        }
+    </style>
 
-                            @if ($tsuccess)
-                            <h3 style="margin-top:5px; font-size:14px; color: #000;">
+    @php
+        if (isSubDomainAdmin()) {
+            $tsuccess = true;
+        } elseif (old('reciept') != null) {
+            $tsuccess = true;
+        } elseif (old('pname') != null) {
+            $tsuccess = true;
+        } else {
+            $tsuccess = false;
+        }
 
-                                @if ($errors->first('type') == 'sub' && isSubDomainAdmin())
-                                Subscription Successful
-                                @else
-                                @if (old('coin_type') == 'usdt')
-                                USDT
-                                @elseif(old('coin_type') == 'bnb')
-                                BNB
-                                @else
-                                USDT
-                                @endif
-                                Transfered Successfully
-                                @endif
+        if ($errors->first('type') == 'sub' && isSubDomainAdmin()) {
+            $stc_title = 'Subscription Successful';
+        } else {
+            $coin_lbl = old('coin_type') == 'bnb' ? 'BNB' : 'USDT';
+            $stc_title = $tsuccess ? ($coin_lbl . ' Transferred') : ($coin_lbl . ' Transfer Failed');
+        }
 
-                            </h3>
-                            @else
-                            <h3 style="margin-top:5px; font-size:14px; color: blue;">
+        $stc_amount = (old('wlt_amount') !== null && (float)old('wlt_amount') > 0)
+            ? old('wlt_amount')
+            : (old('pamount') ?? old('amount') ?? '0.00');
+        $stc_coin = old('coin_type') == 'bnb' ? 'BNB' : 'USDT';
+        $stc_txid  = old('txid') ?? '';
+    @endphp
 
-                                @if (old('coin_type') == 'usdt')
-                                USDT
-                                @else
-                                BNB
-                                @endif
-                                Transfer Failed
+    <div id="success_tic" style="z-index: 2000 !important;" class="modal fade" role="dialog" aria-labelledby="stcModalLabel" aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
-                            </h3>
-                            @endif
-                            @if ($tsuccess)
-                            <h4>{{ (old('wlt_amount') !== null && (float)old('wlt_amount') > 0) ? old('wlt_amount') : (old('pamount') ?? old('amount') ?? '0.00') }}
-                                @if (old('coin_type') == 'usdt')
-                                USDT
-                                @elseif(old('coin_type') == 'bnb')
-                                BNB
-                                @else
-                                USDT
-                                @endif
-                            </h4>
-                            <h6 style="font-size: 7px;">TXID : {{ old('txid') }}</h6>
-                            @endif
-                        </div>
-                        <div style="display: flex; justify-content: center;">
-                            @if ($tsuccess)
-                            <lottie-player src="https://lottie.host/41338084-a6b2-4f6a-a8df-f98e7d614724/M8az2MDYWk.json" background="##FFFFFF" speed="1" style="width: 200px; height: 200px" autoplay direction="1" mode="normal"></lottie-player>
-                            @else
-                            <lottie-player src="https://lottie.host/fe8c4af2-099e-4368-9b12-c254999b2452/dc72wDU8s0.json" background="##ffffff" speed="1" style="width: 200px; height: 200px" loop autoplay direction="1" mode="normal"></lottie-player>
-                            @endif
-                        </div>
-                        <div style="height: 50px;"></div>
-                        <div class="row justify-content-end">
-                            <div class="" style="display: flex; justify-content: end;">
-                                <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-primary">OK</button>
-                            </div>
-                        </div>
+                {{-- Animated colour stripe at top --}}
+                <div class="stc-topbar {{ $tsuccess ? 'success-bar' : 'fail-bar' }}"></div>
+
+                <div class="stc-body">
+
+                    {{-- Status badge --}}
+                    <div class="stc-badge {{ $tsuccess ? 'success-badge' : 'fail-badge' }}">
+                        @if ($tsuccess)
+                            <i class="fas fa-check-circle"></i> Confirmed
+                        @else
+                            <i class="fas fa-times-circle"></i> Failed
+                        @endif
                     </div>
-                </div>
-            </div>
-        </div>
+
+                    {{-- Lottie animation --}}
+                    <div class="stc-anim">
+                        @if ($tsuccess)
+                            <dotlottie-wc src="https://lottie.host/6004adba-c962-44e8-b061-f9e5c04806a6/n7dkwv7l6E.lottie" style="width:100%;height:100%;" autoplay loop></dotlottie-wc>
+                        @else
+                            <dotlottie-wc src="https://lottie.host/a9c882a3-b43c-4b15-8640-3cc99c4f3a9e/NrHRDyJtV4.lottie" style="width:100%;height:100%;" autoplay loop></dotlottie-wc>
+                        @endif
+                    </div>
+
+                    {{-- Title --}}
+                    <h2 id="stcModalLabel" class="stc-title {{ $tsuccess ? '' : 'fail-title' }}">
+                        {{ $stc_title }}
+                    </h2>
+
+                    @if ($tsuccess)
+                    {{-- Amount pill --}}
+                    <div class="stc-amount">
+                        <img src="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/512/Tether-USDT-icon.png"
+                             style="height:28px;width:28px;border-radius:50%;">
+                        <span class="amt-val">{{ $stc_amount }}</span>
+                        <span class="amt-coin">{{ $stc_coin }}</span>
+                    </div>
+
+                    {{-- TXID --}}
+                    @if ($stc_txid)
+                    <div class="stc-txid">
+                        <span style="color:rgba(249,168,38,0.6);font-weight:600;">TXID&nbsp;</span>
+                        <span>{{ $stc_txid }}</span>
+                    </div>
+                    @endif
+                    @endif
+
+                    <div class="stc-divider"></div>
+
+                    {{-- OK button --}}
+                    <button type="button"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            class="stc-ok-btn {{ $tsuccess ? 'success-btn' : 'fail-btn' }}">
+                        @if ($tsuccess)
+                            <i class="fas fa-check me-2"></i> Done
+                        @else
+                            <i class="fas fa-redo me-2"></i> Try Again
+                        @endif
+                    </button>
+
+                </div>{{-- /.stc-body --}}
+
+            </div>{{-- /.modal-content --}}
+        </div>{{-- /.modal-dialog --}}
     </div>
+
     <script>
-        // window.history.replaceState({}, document.title, '/');
         $(document).ready(function() {
             $('#success_tic').modal('show');
         });
-
     </script>
     @enderror
 

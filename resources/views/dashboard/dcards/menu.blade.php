@@ -221,7 +221,7 @@
         </li> --}}
         <li class="menu-item @if($r == 'ref_tree') active @endif">
             <a href="/dashboard/reftree/{{$v->id}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-street-view"></i>
+                <i class="menu-icon tf-icons bx bx-group"></i>
                 <div data-i18n="Basic">Community</div>
             </a>
         </li>
