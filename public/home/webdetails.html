@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>GoldenWay International — Member Guide</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Clash+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  /* BRAND GOLD */
+  --gold:#D4A843;--gold2:#8B6914;--gold3:#C09028;--gold4:#5A420A;
+  /* PAGE ACCENT COLORS - RICH & READABLE FOR LIGHT BACKGROUNDS */
+  --amber:#D97706;--amber2:#B45309;
+  --violet:#7C3AED;--violet2:#6D28D9;
+  --teal:#0D9488;--teal2:#0F766E;
+  --rose:#E11D48;--rose2:#BE123C;
+  --emerald:#059669;--emerald2:#047857;
+  --sky:#0284C7;--sky2:#0369A1;
+  --orange:#EA580C;--orange2:#C2410C;
+  --purple:#9333EA;--purple2:#7E22CE;
+  --cyan:#0891B2;--cyan2:#06B6D4;
+  
+  /* LIGHT THEME BASES */
+  --text-main:#1E293B; /* Slate 800 */
+  --text-sub:#475569;  /* Slate 600 */
+  --text-muted:#64748B; /* Slate 500 */
+  
+  /* CARD LIGHT BACKGROUNDS */
+  --card-bg:#FFFFFF;
+  --card-border:rgba(226,232,240,0.8); /* Slate 200 */
+  --card-shadow:rgba(148,163,184,0.08);
+  
+  --r:12px;--r2:20px;
+}
+
+html{font-size:11px}
+body{font-family:'Space Grotesk',sans-serif;background:#F8FAFC;color:var(--text-main);line-height:1.6}
+
+/* ────────────── PRINT ────────────── */
+@page{size:A4;margin:0}
+@media print{
+  body{background:#F8FAFC!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .cover,.page{
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+    page-break-after:always;
+  }
+}
+
+/* ════════════════════════════════════
+   COVER
+   ════════════════════════════════════ */
+.cover{
+  width:100%;min-height:297mm;
+  background:#FAFAFE;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  page-break-after:always;position:relative;overflow:hidden;
+  padding:16mm 22mm;text-align:center;
+}
+/* Vibrant multi-color radial gradient background */
+.cv-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 55% 45% at 20% 25%, rgba(139,92,246,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 20%, rgba(20,184,166,.08) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 50% at 80% 80%, rgba(249,115,22,.08) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 15% 80%, rgba(16,185,129,.06) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 70% at 50% 50%, rgba(212,168,67,.05) 0%, transparent 70%);
+}
+/* Grid overlay */
+.cv-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(15,23,42,.015) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(15,23,42,.015) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+/* Noise texture feel */
+.cv-glow{
+  position:absolute;width:500px;height:500px;
+  top:50%;left:50%;transform:translate(-50%,-58%);
+  background:radial-gradient(circle,rgba(212,168,67,.08) 0%,transparent 70%);
+}
+
+/* Rings */
+.cv-rings{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.cr{position:absolute;border-radius:50%;transform:translate(-50%,-50%)}
+.cr1{width:680px;height:680px;border:1px solid rgba(139,92,246,.05)}
+.cr2{width:530px;height:530px;border:1px dashed rgba(20,184,166,.05)}
+.cr3{width:380px;height:380px;border:1px solid rgba(212,168,67,.06)}
+.cr4{width:230px;height:230px;border:1px dashed rgba(249,115,22,.05)}
+
+/* Cover emblem */
+.cv-emblem{
+  width:120px;height:120px;border-radius:50%;
+  background:conic-gradient(from 0deg,var(--violet) 0%,var(--teal) 25%,var(--gold) 50%,var(--orange) 75%,var(--violet) 100%);
+  padding:3px;margin:0 auto 26px;position:relative;
+  box-shadow:0 10px 40px rgba(139,92,246,.15),0 10px 40px rgba(20,184,166,.1);
+}
+.cv-emblem-inner{
+  width:100%;height:100%;border-radius:50%;
+  background:linear-gradient(145deg,#ffffff,#f8fafc);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;
+}
+.cv-emblem-inner span{
+  background-clip:text;color:transparent;
+  background-image:linear-gradient(135deg,var(--gold3),var(--gold2),var(--gold));
+  -webkit-background-clip:text;
+  font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;
+}
+.cv-emblem::after{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  border:1px dashed rgba(212,168,67,.2);
+}
+
+/* Cover badge */
+.cv-badge{
+  display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;
+  padding:5px 16px;border-radius:50px;font-size:8.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  background:linear-gradient(135deg,rgba(139,92,246,.08),rgba(20,184,166,.05));
+  border:1px solid rgba(139,92,246,.15);color:#5b21b6;
+}
+.cv-dot{width:5px;height:5px;border-radius:50%;background:conic-gradient(var(--violet),var(--teal));box-shadow:0 0 8px var(--violet)}
+
+.cover h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:64px;font-weight:700;line-height:1;
+  background:linear-gradient(145deg,var(--gold3) 0%,var(--gold2) 30%,var(--amber) 60%,var(--gold) 90%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:6px;
+}
+.cv-tag{font-size:9px;letter-spacing:6px;text-transform:uppercase;color:var(--text-muted);margin-bottom:24px}
+.cv-line{
+  width:120px;height:2px;margin:0 auto 24px;
+  background:linear-gradient(90deg,var(--violet),var(--teal),var(--gold),var(--orange));
+  border-radius:2px;
+}
+.cv-desc{
+  font-size:12px;color:var(--text-sub);max-width:380px;margin:0 auto 38px;
+  font-family:'Inter',sans-serif;font-weight:400;line-height:1.9;
+}
+.cv-desc b{font-weight:700;color:var(--gold2)}
+
+/* Cover stats bar */
+.cv-stats{
+  display:flex;margin-bottom:44px;
+  border:1px solid rgba(226,232,240,0.8);border-radius:var(--r2);
+  overflow:hidden;background:rgba(255,255,255,.8);backdrop-filter:blur(20px);
+  box-shadow:0 10px 30px rgba(148,163,184,0.06);
+}
+.cs{flex:1;padding:16px 12px;text-align:center;border-right:1px solid rgba(226,232,240,0.8)}
+.cs:last-child{border-right:none}
+.cs-val{font-size:24px;font-weight:900;line-height:1;margin-bottom:3px}
+.cs-lbl{font-size:7.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px}
+.cs:nth-child(1) .cs-val{color:var(--violet)}
+.cs:nth-child(2) .cs-val{color:var(--teal)}
+.cs:nth-child(3) .cs-val{color:var(--gold)}
+.cs:nth-child(4) .cs-val{color:var(--orange)}
+.cs:nth-child(5) .cs-val{color:var(--emerald)}
+
+.cv-foot{
+  position:absolute;bottom:14mm;left:0;right:0;display:flex;justify-content:center;gap:16px;
+  font-size:8px;letter-spacing:1.5px;text-transform:uppercase;
+}
+.cv-foot span{color:var(--text-muted)}
+.cv-foot .sep{color:rgba(148,163,184,0.3)}
+
+/* ════════════════════════════════════
+   PAGE BASE
+   ════════════════════════════════════ */
+.page{
+  width:100%;min-height:297mm;
+  padding:12mm 14mm 20mm;page-break-after:always;position:relative;
+}
+.page:last-child{page-break-after:auto}
+
+/* Subtle side accent bar - changes per page */
+.page::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--page-accent,var(--gold)),transparent);
+}
+
+/* PAGE ACCENTS per class - beautiful pastel light backgrounds */
+.pa-violet{background:#FAF5FF;--page-accent:var(--violet)}
+.pa-teal{background:#F0FDFA;--page-accent:var(--teal)}
+.pa-rose{background:#FFF1F2;--page-accent:var(--rose)}
+.pa-sky{background:#F0F9FF;--page-accent:var(--sky)}
+.pa-orange{background:#FFF7ED;--page-accent:var(--orange)}
+.pa-emerald{background:#F0FDF4;--page-accent:var(--emerald)}
+.pa-purple{background:#FAF5FF;--page-accent:var(--purple)}
+
+/* Page header */
+.ph{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:9px;margin-bottom:16px;
+  border-bottom:1px solid rgba(226,232,240,0.8);
+  position:relative;
+}
+.ph::after{content:'';position:absolute;bottom:-1px;left:0;width:36px;height:2px;background:var(--page-accent,var(--gold))}
+.ph-brand{font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--page-accent,var(--gold))}
+.ph-chap{font-size:8px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase}
+
+/* Section head */
+.sh{margin-bottom:14px}
+.sh-eye{
+  font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--page-accent,var(--gold));
+  display:flex;align-items:center;gap:8px;margin-bottom:3px;
+}
+.sh-eye::before{content:'';width:20px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--page-accent,var(--gold)),transparent)}
+.sh h2{font-size:21px;font-weight:800;color:var(--text-main);line-height:1.15}
+.sh h2 em{font-style:normal;color:var(--page-accent,var(--gold))}
+.sh p{font-size:10px;color:var(--text-sub);margin-top:4px}
+
+/* Highlight box — accent-tinted light box */
+.hl{
+  border-radius:var(--r);padding:12px 16px;margin-bottom:16px;
+  font-size:10.5px;line-height:1.75;font-family:'Inter',sans-serif;
+  background:#ffffff;
+  border:1px solid rgba(226,232,240,0.9);
+  border-left:4px solid var(--page-accent,var(--gold));
+  color:var(--text-main);
+  box-shadow:0 4px 12px rgba(148,163,184,0.04);
+}
+.hl b{font-weight:700;color:var(--page-accent,var(--gold))}
+
+/* ────── GRIDS ────── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:16px}
+.g2x3{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+
+/* ────── BASE CARD ────── */
+.card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);border-radius:var(--r);
+  padding:14px;position:relative;overflow:hidden;
+  box-shadow:0 6px 16px var(--card-shadow);
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2.5px;
+}
+.card-ico{font-size:22px;margin-bottom:8px;display:block;line-height:1}
+.card h3{font-size:12px;font-weight:700;margin-bottom:5px;color:var(--text-main)}
+.card p{font-size:9.5px;color:var(--text-sub);line-height:1.65;font-family:'Inter',sans-serif}
+
+/* Colored card variants in light theme */
+.cv-violet .card::before{background:linear-gradient(90deg,var(--violet),transparent)}
+.cv-violet .card h3{color:var(--violet)}
+.cv-teal .card::before{background:linear-gradient(90deg,var(--teal),transparent)}
+.cv-teal .card h3{color:var(--teal)}
+.cv-rose .card::before{background:linear-gradient(90deg,var(--rose),transparent)}
+.cv-rose .card h3{color:var(--rose)}
+.cv-sky .card::before{background:linear-gradient(90deg,var(--sky),transparent)}
+.cv-sky .card h3{color:var(--sky)}
+.cv-orange .card::before{background:linear-gradient(90deg,var(--orange),transparent)}
+.cv-orange .card h3{color:var(--orange)}
+.cv-emerald .card::before{background:linear-gradient(90deg,var(--emerald),transparent)}
+.cv-emerald .card h3{color:var(--emerald)}
+.cv-purple .card::before{background:linear-gradient(90deg,var(--purple),transparent)}
+.cv-purple .card h3{color:var(--purple)}
+.cv-gold .card::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.cv-gold .card h3{color:var(--gold)}
+.cv-cyan .card::before{background:linear-gradient(90deg,var(--cyan),transparent)}
+.cv-cyan .card h3{color:var(--cyan)}
+
+/* Individual card color classes (for mixed grids) */
+.c-violet::before{background:linear-gradient(90deg,var(--violet),transparent)!important}
+.c-violet h3{color:var(--violet)!important}
+.c-teal::before{background:linear-gradient(90deg,var(--teal),transparent)!important}
+.c-teal h3{color:var(--teal)!important}
+.c-rose::before{background:linear-gradient(90deg,var(--rose),transparent)!important}
+.c-rose h3{color:var(--rose)!important}
+.c-sky::before{background:linear-gradient(90deg,var(--sky),transparent)!important}
+.c-sky h3{color:var(--sky)!important}
+.c-orange::before{background:linear-gradient(90deg,var(--orange),transparent)!important}
+.c-orange h3{color:var(--orange)!important}
+.c-emerald::before{background:linear-gradient(90deg,var(--emerald),transparent)!important}
+.c-emerald h3{color:var(--emerald)!important}
+.c-purple::before{background:linear-gradient(90deg,var(--purple),transparent)!important}
+.c-purple h3{color:var(--purple)!important}
+.c-gold::before{background:linear-gradient(90deg,var(--gold),transparent)!important}
+.c-gold h3{color:var(--gold)!important}
+.c-amber::before{background:linear-gradient(90deg,var(--amber),transparent)!important}
+.c-amber h3{color:var(--amber)!important}
+.c-cyan::before{background:linear-gradient(90deg,var(--cyan),transparent)!important}
+.c-cyan h3{color:var(--cyan)!important}
+
+/* ────── INCOME CARDS ────── */
+.inc{
+  border-radius:var(--r2);padding:20px 20px 18px;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:5px;
+  border:1px solid var(--card-border);
+  box-shadow:0 10px 25px var(--card-shadow);
+}
+.inc::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px}
+.inc::after{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;opacity:.15}
+.inc-rate{font-size:38px;font-weight:900;line-height:1;letter-spacing:-1px}
+.inc-unit{font-size:9px;line-height:1.5;color:var(--text-sub)}
+.inc-name{font-size:13px;font-weight:700;color:var(--text-main);margin-top:2px}
+.inc-desc{font-size:9.5px;color:var(--text-sub);line-height:1.65;font-family:'Inter',sans-serif}
+.inc-tag{
+  display:inline-flex;align-items:center;gap:4px;margin-top:5px;
+  padding:3px 10px;border-radius:20px;font-size:8.5px;font-weight:700;width:fit-content;
+  border:1px solid;
+}
+
+/* Income card color themes in light theme */
+.inc-referral{background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border-color:rgba(139,92,246,.15)}
+.inc-referral::before{background:linear-gradient(180deg,var(--violet),transparent)}
+.inc-referral::after{background:radial-gradient(circle,rgba(139,92,246,.2) 0%,transparent 70%)}
+.inc-referral .inc-rate,.inc-referral .inc-tag{color:var(--violet)}
+.inc-referral .inc-tag{background:rgba(139,92,246,.08);border-color:rgba(139,92,246,.15)}
+
+.inc-binary{background:linear-gradient(135deg,#F0FDFA,#CCFBF1);border-color:rgba(20,184,166,.15)}
+.inc-binary::before{background:linear-gradient(180deg,var(--teal),transparent)}
+.inc-binary::after{background:radial-gradient(circle,rgba(20,184,166,.2) 0%,transparent 70%)}
+.inc-binary .inc-rate,.inc-binary .inc-tag{color:var(--teal)}
+.inc-binary .inc-tag{background:rgba(20,184,166,.08);border-color:rgba(20,184,166,.15)}
+
+.inc-stake{background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border-color:rgba(16,185,129,.15)}
+.inc-stake::before{background:linear-gradient(180deg,var(--emerald),transparent)}
+.inc-stake::after{background:radial-gradient(circle,rgba(16,185,129,.2) 0%,transparent 70%)}
+.inc-stake .inc-rate,.inc-stake .inc-tag{color:var(--emerald)}
+.inc-stake .inc-tag{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.15)}
+
+.inc-level{background:linear-gradient(135deg,#FFF7ED,#FFEDD5);border-color:rgba(249,115,22,.15)}
+.inc-level::before{background:linear-gradient(180deg,var(--orange),transparent)}
+.inc-level::after{background:radial-gradient(circle,rgba(249,115,22,.2) 0%,transparent 70%)}
+.inc-level .inc-rate,.inc-level .inc-tag{color:var(--orange)}
+.inc-level .inc-tag{background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.15)}
+
+/* ────── STEPS ────── */
+.steps{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.step{
+  display:flex;align-items:flex-start;gap:13px;
+  background:#ffffff;
+  border:1px solid var(--card-border);border-radius:var(--r);
+  padding:12px 14px;
+  box-shadow:0 4px 12px var(--card-shadow);
+}
+.sn{
+  width:30px;height:30px;min-width:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:900;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+.step h4{font-size:11.5px;font-weight:700;color:var(--text-main);margin-bottom:2px}
+.step p{font-size:9.5px;color:var(--text-sub);line-height:1.6;font-family:'Inter',sans-serif}
+
+/* Step number colors */
+.sn-1{background:linear-gradient(135deg,#7c3aed,#4f46e5)}
+.sn-2{background:linear-gradient(135deg,#0891b2,#0d9488)}
+.sn-3{background:linear-gradient(135deg,#059669,#047857)}
+.sn-4{background:linear-gradient(135deg,#d97706,#b45309)}
+.sn-5{background:linear-gradient(135deg,#e11d48,#9f1239)}
+.sn-6{background:linear-gradient(135deg,#7c3aed,#be185d)}
+
+/* ────── STAT STRIP ────── */
+.ss{display:flex;gap:8px;margin-bottom:16px}
+.si{
+  flex:1;text-align:center;padding:13px 8px;
+  background:#ffffff;
+  border:1px solid var(--card-border);border-radius:var(--r);
+  border-top:3px solid transparent;
+  box-shadow:0 4px 12px var(--card-shadow);
+  position:relative;overflow:hidden;
+}
+.si .sv{font-size:22px;font-weight:900;line-height:1;margin-bottom:3px}
+.si .sl{font-size:7.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;line-height:1.4}
+.si:nth-child(1){border-top-color:var(--violet)} .si:nth-child(1) .sv{color:var(--violet)}
+.si:nth-child(2){border-top-color:var(--teal)}   .si:nth-child(2) .sv{color:var(--teal)}
+.si:nth-child(3){border-top-color:var(--emerald)}.si:nth-child(3) .sv{color:var(--emerald)}
+.si:nth-child(4){border-top-color:var(--orange)} .si:nth-child(4) .sv{color:var(--orange)}
+.si:nth-child(5){border-top-color:var(--rose)}   .si:nth-child(5) .sv{color:var(--rose)}
+
+/* ────── CHECK LIST ────── */
+.cl{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.cl li{
+  display:flex;align-items:flex-start;gap:10px;
+  background:#ffffff;border:1px solid var(--card-border);border-radius:8px;
+  padding:8px 12px;font-size:10px;color:var(--text-main);line-height:1.5;font-family:'Inter',sans-serif;
+  box-shadow:0 3px 8px var(--card-shadow);
+}
+.cl li::before{content:'✓';font-weight:900;font-size:11px;flex-shrink:0;margin-top:1px}
+.pa-violet .cl li::before{color:var(--violet)}
+.pa-teal .cl li::before{color:var(--teal)}
+.pa-rose .cl li::before{color:var(--rose)}
+
+/* ────── TRUST GRID ────── */
+.trust{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-bottom:16px}
+.ti{
+  background:#ffffff;border:1px solid var(--card-border);border-radius:var(--r);
+  padding:14px;text-align:center;
+  box-shadow:0 6px 16px var(--card-shadow);
+}
+.ti-ico{font-size:26px;margin-bottom:7px}
+.ti h4{font-size:11px;font-weight:700;margin-bottom:4px;color:var(--text-main)}
+.ti p{font-size:9px;color:var(--text-sub);line-height:1.6}
+.ti:nth-child(1) h4{color:var(--sky)}
+.ti:nth-child(2) h4{color:var(--emerald)}
+.ti:nth-child(3) h4{color:var(--violet)}
+
+/* ────── FAQ ────── */
+.faq{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.fi{
+  background:#ffffff;border:1px solid var(--card-border);border-radius:var(--r);
+  padding:11px 14px;
+  box-shadow:0 4px 12px var(--card-shadow);
+}
+.fq{font-size:11px;font-weight:700;color:var(--purple)}
+.fa{font-size:9.5px;color:var(--text-sub);line-height:1.65;font-family:'Inter',sans-serif}
+.fa b{color:var(--text-main);font-weight:600}
+
+/* ────── CTA ────── */
+.cta{
+  border-radius:var(--r2);padding:22px 24px;text-align:center;
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(139,92,246,.06),rgba(20,184,166,.05),rgba(249,115,22,.04));
+  border:1px solid rgba(139,92,246,.15);
+  box-shadow:0 10px 30px var(--card-shadow);
+}
+.cta::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(139,92,246,.08) 0%,transparent 70%);
+}
+.cta::after{
+  content:'';position:absolute;bottom:-40px;left:-40px;
+  width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle,rgba(20,184,166,.06) 0%,transparent 70%);
+}
+.cta h3{font-size:18px;font-weight:800;color:var(--text-main);margin-bottom:8px}
+.cta p{font-size:10.5px;color:var(--text-sub);line-height:1.75;margin-bottom:16px;font-family:'Inter',sans-serif}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 30px;border-radius:40px;font-size:10.5px;font-weight:900;
+  letter-spacing:.5px;text-decoration:none;color:#fff;
+  background:linear-gradient(135deg,var(--violet),var(--teal) 60%,var(--emerald));
+  box-shadow:0 6px 20px rgba(139,92,246,.25);
+}
+
+/* ────── PROJECT CARDS ────── */
+.proj{
+  background:#ffffff;
+  border:1px solid var(--card-border);border-radius:var(--r);
+  padding:13px;position:relative;overflow:hidden;
+  box-shadow:0 6px 16px var(--card-shadow);
+}
+.proj::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px}
+.proj-num{font-size:8.5px;font-weight:700;letter-spacing:1px;margin-bottom:3px}
+.proj-ico{font-size:20px;line-height:1;margin-bottom:5px}
+.proj h3{font-size:11.5px;font-weight:700;margin-bottom:4px;color:var(--text-main)}
+.proj p{font-size:9px;color:var(--text-sub);line-height:1.6;font-family:'Inter',sans-serif}
+
+/* 9 individual project colors in light theme */
+.p1::before{background:linear-gradient(90deg,var(--violet),transparent)} .p1 .proj-num,.p1 h3{color:var(--violet)}
+.p2::before{background:linear-gradient(90deg,var(--sky),transparent)}    .p2 .proj-num,.p2 h3{color:var(--sky)}
+.p3::before{background:linear-gradient(90deg,var(--emerald),transparent)} .p3 .proj-num,.p3 h3{color:var(--emerald)}
+.p4::before{background:linear-gradient(90deg,var(--gold),transparent)}   .p4 .proj-num,.p4 h3{color:var(--gold)}
+.p5::before{background:linear-gradient(90deg,var(--orange),transparent)} .p5 .proj-num,.p5 h3{color:var(--orange)}
+.p6::before{background:linear-gradient(90deg,var(--teal),transparent)}   .p6 .proj-num,.p6 h3{color:var(--teal)}
+.p7::before{background:linear-gradient(90deg,var(--rose),transparent)}   .p7 .proj-num,.p7 h3{color:var(--rose)}
+.p8::before{background:linear-gradient(90deg,var(--amber),transparent)}  .p8 .proj-num,.p8 h3{color:var(--amber)}
+.p9::before{background:linear-gradient(90deg,var(--purple),transparent)} .p9 .proj-num,.p9 h3{color:var(--purple)}
+
+/* ────── TWO COL ────── */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:16px}
+
+/* ────── PAGE FOOTER ────── */
+.pf{
+  position:absolute;bottom:9mm;left:14mm;right:14mm;
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:7px;border-top:1px solid rgba(226,232,240,0.8);
+  font-size:8px;color:var(--text-muted);
+}
+.pf-pg{display:flex;align-items:center;gap:5px}
+.pf-pg::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--page-accent,var(--gold))}
+
+/* ────── PILL BADGES ────── */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:8px;font-weight:700;letter-spacing:.3px;border:1px solid;margin-top:9px}
+.p-gold{background:rgba(212,168,67,.08);color:var(--gold);border-color:rgba(212,168,67,.15)}
+.p-green{background:rgba(16,185,129,.08);color:var(--emerald);border-color:rgba(16,185,129,.15)}
+.p-blue{background:rgba(14,165,233,.08);color:var(--sky);border-color:rgba(14,165,233,.15)}
+.p-rose{background:rgba(244,63,94,.08);color:var(--rose);border-color:rgba(244,63,94,.15)}
+.p-violet{background:rgba(139,92,246,.08);color:var(--violet);border-color:rgba(139,92,246,.15)}
+.p-teal{background:rgba(20,184,166,.08);color:var(--teal);border-color:rgba(20,184,166,.15)}
+.p-orange{background:rgba(249,115,22,.08);color:var(--orange);border-color:rgba(249,115,22,.15)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ COVER ═══════════ -->
+<div class="cover">
+  <div class="cv-bg"></div>
+  <div class="cv-grid"></div>
+  <div class="cv-glow"></div>
+  <div class="cv-rings">
+    <div class="cr cr1"></div>
+    <div class="cr cr2"></div>
+    <div class="cr cr3"></div>
+    <div class="cr cr4"></div>
+  </div>
+
+  <div class="cv-emblem">
+    <div class="cv-emblem-inner"><span>GW</span></div>
+  </div>
+
+  <div class="cv-badge"><span class="cv-dot"></span>Member Introduction Guide &nbsp;·&nbsp; 2026</div>
+  <h1>GoldenWay<br>International</h1>
+  <div class="cv-tag">Earn · Grow · Prosper Together</div>
+  <div class="cv-line"></div>
+
+  <p class="cv-desc">
+    Welcome to <b>GoldenWay International</b> — a trusted global community where your network becomes your net worth. Earn daily in <b>USDT</b> through multiple income streams, simply by growing your team.
+  </p>
+
+  <div class="cv-stats">
+    <div class="cs"><div class="cs-val">4</div><div class="cs-lbl">Income Streams</div></div>
+    <div class="cs"><div class="cs-val">USDT</div><div class="cs-lbl">Daily Earnings</div></div>
+    <div class="cs"><div class="cs-val">2×</div><div class="cs-lbl">Return Cap</div></div>
+    <div class="cs"><div class="cs-val">5</div><div class="cs-lbl">Reward Levels</div></div>
+    <div class="cs"><div class="cs-val">9</div><div class="cs-lbl">Business Sectors</div></div>
+  </div>
+
+  <div class="cv-foot">
+    <span>GoldenWay International</span><span class="sep">|</span>
+    <span>Building Wealth Together</span><span class="sep">|</span>
+    <span>Est. 2024</span>
+  </div>
+</div>
+
+
+<!-- ═══════════ PAGE 1 — WELCOME ═══════════ -->
+<div class="page pa-violet">
+  <div class="ph"><span class="ph-brand">GoldenWay International</span><span class="ph-chap">Welcome</span></div>
+
+  <div class="sh">
+    <div class="sh-eye">About Us</div>
+    <h2>What is <em>GoldenWay International?</em></h2>
+    <p>A global community platform that rewards you for building your network</p>
+  </div>
+
+  <div class="hl">
+    <b>GoldenWay International</b> is a <b>community-driven wealth platform</b> that allows members to earn daily income in <b>USDT (a globally recognised stable digital currency)</b> by subscribing to a plan and growing their network. The more your community grows — on both your Left and Right teams — the more you earn. Our system is transparent, automated, and rewarding.
+  </div>
+
+  <div class="g3 cv-violet">
+    <div class="card"><span class="card-ico">🌍</span><h3>Global Community</h3><p>Join thousands of members worldwide building financial freedom together through a trusted binary network.</p></div>
+    <div class="card c-teal"><span class="card-ico">💰</span><h3>Daily USDT Income</h3><p>Earn in USDT — a stable digital dollar — credited directly to your account wallet every single day.</p><span class="pill p-teal">Every Day</span></div>
+    <div class="card c-emerald"><span class="card-ico">🔐</span><h3>Transparent &amp; Secure</h3><p>Every transaction is recorded and visible on your dashboard. No hidden fees, no surprises.</p><span class="pill p-green">100% Clear</span></div>
+  </div>
+
+  <div class="sh" style="margin-top:6px">
+    <div class="sh-eye">Why Join Us</div>
+    <h2>Your <em>Key Benefits</em></h2>
+    <p>What makes GoldenWay International different</p>
+  </div>
+
+  <div class="two">
+    <ul class="cl">
+      <li>Earn daily income without active work once your team is built</li>
+      <li>Multiple income streams — not dependent on one single source</li>
+      <li>Get paid in USDT — globally accepted stable digital currency</li>
+      <li>Easy-to-use dashboard accessible on mobile and desktop</li>
+      <li>Track every earning with full transaction history</li>
+    </ul>
+    <ul class="cl">
+      <li>Refer just 2 people to activate your binary income</li>
+      <li>Earn from up to 5 levels of your downline network</li>
+      <li>Reinvest your earnings to compound your income</li>
+      <li>Withdraw directly to your USDT wallet anytime</li>
+      <li>24/7 customer support through the in-app helpdesk</li>
+    </ul>
+  </div>
+
+  <div class="ss">
+    <div class="si"><div class="sv">5%</div><div class="sl">Instant Referral</div></div>
+    <div class="si"><div class="sv">10%</div><div class="sl">Daily Binary</div></div>
+    <div class="si"><div class="sv">0.5%</div><div class="sl">Daily Staking</div></div>
+    <div class="si"><div class="sv">1%×5</div><div class="sl">Level Income</div></div>
+    <div class="si"><div class="sv">2×</div><div class="sl">ROI Cap</div></div>
+  </div>
+
+  <div class="pf"><span>GoldenWay International · Member Guide</span><div class="pf-pg">Page 1 of 7</div></div>
+</div>
+
+
+<!-- ═══════════ PAGE 2 — HOW TO JOIN ═══════════ -->
+<div class="page pa-teal">
+  <div class="ph"><span class="ph-brand">GoldenWay International</span><span class="ph-chap">How to Join</span></div>
+
+  <div class="sh">
+    <div class="sh-eye">Getting Started</div>
+    <h2>How to <em>Join &amp; Get Started</em></h2>
+    <p>Becoming a member is simple — follow these 6 easy steps</p>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="sn sn-1">1</div><div><h4>Get Your Referral Link from a Sponsor</h4><p>Every new member must be invited by an existing GoldenWay member. Ask your sponsor for their personal referral link. This link automatically places you in their Left or Right team.</p></div></div>
+    <div class="step"><div class="sn sn-2">2</div><div><h4>Register Your Account</h4><p>Click the referral link and fill in your details — name, email, phone number, and a secure password. Your sponsor's information is captured automatically.</p></div></div>
+    <div class="step"><div class="sn sn-3">3</div><div><h4>Verify Your Email</h4><p>An activation email will be sent to you. Click the confirmation link in the email to activate your account. This protects your account and ensures only you can access it.</p></div></div>
+    <div class="step"><div class="sn sn-4">4</div><div><h4>Login to Your Dashboard</h4><p>Once activated, log in using your email and password. You will see your personal dashboard with your wallet, community tree, income summary, and all your account details.</p></div></div>
+    <div class="step"><div class="sn sn-5">5</div><div><h4>Add USDT to Your Wallet</h4><p>Deposit USDT into your GoldenWay wallet. You can send from any crypto exchange or wallet to your unique GoldenWay deposit address shown in your dashboard.</p></div></div>
+    <div class="step"><div class="sn sn-6">6</div><div><h4>Subscribe to a Plan &amp; Start Earning!</h4><p>Use your wallet balance to subscribe to a membership plan. Once subscribed, you are now an <b style="color:var(--teal2)">Active Member</b> — all income streams activate and your earnings begin immediately.</p></div></div>
+  </div>
+
+  <div class="hl">
+    💡 <b>Tip:</b> The sooner you subscribe and start building your team, the faster your income grows. Your Left and Right team businesses directly determine your daily binary income — balance both sides for maximum reward.
+  </div>
+
+  <div class="pf"><span>GoldenWay International · Member Guide</span><div class="pf-pg">Page 2 of 7</div></div>
+</div>
+
+
+<!-- ═══════════ PAGE 3 — INCOME STREAMS ═══════════ -->
+<div class="page pa-rose">
+  <div class="ph"><span class="ph-brand">GoldenWay International</span><span class="ph-chap">Income Streams</span></div>
+
+  <div class="sh">
+    <div class="sh-eye">Earnings Plan</div>
+    <h2>Your <em>4 Income Streams</em></h2>
+    <p>Multiple ways to earn — every day, from every level of your community</p>
+  </div>
+
+  <div class="g2">
+    <div class="inc inc-referral">
+      <div class="inc-rate">5%</div>
+      <div class="inc-unit">of your direct referral's plan amount</div>
+      <div class="inc-name">🤝 Referral Income</div>
+      <div class="inc-desc">Every time someone you personally invited joins and subscribes to a plan, you earn <b style="color:var(--violet2)">5% of their plan amount instantly</b>. No waiting — credited the moment they activate.</div>
+      <div class="inc-tag">⚡ Instant — no waiting</div>
+    </div>
+    <div class="inc inc-binary">
+      <div class="inc-rate">10%</div>
+      <div class="inc-unit">of your weaker team's daily business volume</div>
+      <div class="inc-name">⚖️ Binary Team Income</div>
+      <div class="inc-desc">Build a Left team and a Right team. Every day, GoldenWay compares both teams' business. You earn <b style="color:var(--teal2)">10% of whichever side is smaller</b>. This encourages balanced growth and generous daily rewards.</div>
+      <div class="inc-tag">📅 Credited every day</div>
+    </div>
+    <div class="inc inc-stake">
+      <div class="inc-rate">0.5%</div>
+      <div class="inc-unit">per day on your total staked amount</div>
+      <div class="inc-name">📈 Daily Staking Income</div>
+      <div class="inc-desc">Every amount you invest in a staking plan earns you <b style="color:var(--emerald2)">0.5% every single day</b>. This is your passive income — it keeps growing automatically as long as you have active stakes, without needing to do anything.</div>
+      <div class="inc-tag">📅 Paid daily, automatically</div>
+    </div>
+    <div class="inc inc-level">
+      <div class="inc-rate">1%</div>
+      <div class="inc-unit">per level × 5 levels deep in your network</div>
+      <div class="inc-name">🎖️ Level Sponsorship Income</div>
+      <div class="inc-desc">When anyone in your network (up to 5 levels deep) subscribes to a plan, you earn <b style="color:var(--orange2)">1% of their plan amount</b>. The deeper your network grows, the more people trigger this income — even people you've never directly met.</div>
+      <div class="inc-tag">⚡ Instant on downline activation</div>
+    </div>
+  </div>
+
+  <div class="hl">
+    <b>🏆 Guaranteed Return:</b> GoldenWay guarantees every member earns up to <b>2× their total investment</b>. Once you've earned double what you invested, you graduate to a new cycle — keeping the system fair and sustainable for everyone.
+  </div>
+
+  <div class="pf"><span>GoldenWay International · Member Guide</span><div class="pf-pg">Page 3 of 7</div></div>
+</div>
+
+
+<!-- ═══════════ PAGE 4 — WALLET ═══════════ -->
+<div class="page pa-sky">
+  <div class="ph"><span class="ph-brand">GoldenWay International</span><span class="ph-chap">Wallet &amp; Community</span></div>
+
+  <div class="sh">
+    <div class="sh-eye">Your Wallet</div>
+    <h2>Managing Your <em>USDT Wallet</em></h2>
+    <p>Your digital wallet is the heart of your GoldenWay account</p>
+  </div>
+
+  <div class="g2" style="margin-bottom:14px">
+    <div class="card c-sky"><span class="card-ico">📥</span><h3>Deposit USDT</h3><p>Send USDT to your unique wallet address shown on your dashboard. Deposits are confirmed by our team within a few hours. Once confirmed, it's instantly available to invest.</p><span class="pill p-blue">Secure Deposit</span></div>
+    <div class="card c-emerald"><span class="card-ico">💸</span><h3>Withdraw Your Earnings</h3><p>Request to withdraw your USDT earnings to your personal crypto wallet at any time from the dashboard. Withdrawals are processed and approved promptly.</p><span class="pill p-green">Anytime Access</span></div>
+    <div class="card c-violet"><span class="card-ico">🔄</span><h3>Reinvest &amp; Compound</h3><p>Choose to reinvest your earned balance back into new plans to compound your returns. Smart reinvestment is the fastest way to grow your income to the 2× cap.</p><span class="pill p-violet">Grow Faster</span></div>
+    <div class="card c-teal"><span class="card-ico">🔁</span><h3>Transfer to Members</h3><p>Send funds internally to any other GoldenWay member by entering their Member ID. Instant and fee-free within the platform.</p><span class="pill p-teal">Instant Transfer</span></div>
+  </div>
+
+  <div class="sh">
+    <div class="sh-eye">Community Tree</div>
+    <h2>Your <em>Community Network</em> Visualised</h2>
+    <p>See your entire team and track their status in one view</p>
+  </div>
+
+  <div class="hl">
+    Your <b>Community Tree</b> shows you a live visual map of your Left and Right teams. You can see each member's status (active or inactive), their subscription amount, and whether positions are vacant — with a direct link to invite new members into open slots.
+  </div>
+
+  <div class="g3">
+    <div class="card c-sky"><span class="card-ico">🌲</span><h3>Left &amp; Right Teams</h3><p>Your tree has two branches — Left and Right. You directly place members or let your sponsor help fill positions to balance your teams.</p></div>
+    <div class="card c-violet"><span class="card-ico">📊</span><h3>Business Volume Summary</h3><p>Instantly see the total subscription and staking volumes of both your Left and Right teams — so you know which side to strengthen.</p></div>
+    <div class="card c-teal"><span class="card-ico">➕</span><h3>Fill Vacant Slots</h3><p>Empty positions in your tree show a register button. Click it to invite new members directly into that position with your referral link.</p></div>
+  </div>
+
+  <div class="pf"><span>GoldenWay International · Member Guide</span><div class="pf-pg">Page 4 of 7</div></div>
+</div>
+
+
+<!-- ═══════════ PAGE 5 — FEATURES ═══════════ -->
+<div class="page pa-orange">
+  <div class="ph"><span class="ph-brand">GoldenWay International</span><span class="ph-chap">Platform Features</span></div>
+
+  <div class="sh">
+    <div class="sh-eye">More to Earn</div>
+    <h2>Extra Ways to <em>Grow &amp; Benefit</em></h2>
+    <p>GoldenWay offers more than just network income</p>
+  </div>
+
+  <div class="g2" style="margin-bottom:14px">
+    <div class="card c-violet"><span class="card-ico">🏊</span><h3>Auto-Pool Rewards</h3><p>Participate in our exclusive <b>Auto-Pool</b> program. Members contribute to a shared pool, and when the pool fills up, all eligible participants share in the reward automatically — no action required from you.</p><span class="pill p-violet">Auto Distributed</span></div>
+    <div class="card c-amber"><span class="card-ico">🎰</span><h3>Lottery Rewards</h3><p>GoldenWay members can participate in exciting periodic lotteries for a chance to win additional USDT prizes. Lottery history and results are fully transparent on your dashboard.</p><span class="pill p-gold">Bonus Prizes</span></div>
+    <div class="card c-sky"><span class="card-ico">📊</span><h3>Market Summary Dashboard</h3><p>Get a bird's-eye view of your entire business performance — total team subscription volume, staking totals, your left vs. right team comparison, and your income breakdown — all in one screen.</p></div>
+    <div class="card c-emerald"><span class="card-ico">🧮</span><h3>Earnings Calculator</h3><p>Use our free <b>ROI Calculator</b> available on the website to estimate how much you could earn based on your subscription amount and team size — before you even join!</p><span class="pill p-green">Free Tool</span></div>
+  </div>
+
+  <div class="sh" style="margin-top:4px">
+    <div class="sh-eye">Member Support</div>
+    <h2>We're Always <em>Here for You</em></h2>
+    <p>Dedicated support system for every member</p>
+  </div>
+
+  <div class="g3" style="margin-bottom:13px">
+    <div class="card c-teal"><span class="card-ico">💬</span><h3>In-App Support</h3><p>Raise a support ticket directly from your dashboard anytime. Describe your query and our team responds promptly.</p></div>
+    <div class="card c-orange"><span class="card-ico">🔔</span><h3>Instant Notifications</h3><p>Get real-time push notifications on your phone whenever you earn income, a withdrawal is processed, or a deposit is confirmed.</p></div>
+    <div class="card c-purple"><span class="card-ico">📋</span><h3>Full Transaction History</h3><p>Every deposit, withdrawal, income credit, and transfer is permanently recorded. View your complete earning history anytime.</p></div>
+  </div>
+
+  <div class="sh" style="margin-top:2px">
+    <div class="sh-eye">Security</div>
+    <h2>Your Money is <em>Safe With Us</em></h2>
+  </div>
+
+  <div class="trust">
+    <div class="ti"><div class="ti-ico">🔐</div><h4>Encrypted Accounts</h4><p>Your password is encrypted. No one — not even our team — can see it.</p></div>
+    <div class="ti"><div class="ti-ico">📧</div><h4>Email Verification</h4><p>Every account requires email confirmation before becoming active.</p></div>
+    <div class="ti"><div class="ti-ico">👁️</div><h4>Transparent Ledger</h4><p>Every transaction is recorded and visible in your account at all times.</p></div>
+  </div>
+
+  <div class="pf"><span>GoldenWay International · Member Guide</span><div class="pf-pg">Page 5 of 7</div></div>
+</div>
+
+
+<!-- ═══════════ PAGE 6 — PROJECTS ═══════════ -->
+<div class="page pa-emerald">
+  <div class="ph"><span class="ph-brand">GoldenWay International</span><span class="ph-chap">Our Business Portfolio</span></div>
+
+  <div class="sh">
+    <div class="sh-eye">What We Do</div>
+    <h2>Our <em>9 Business Verticals</em></h2>
+    <p>GoldenWay generates returns across a diversified global portfolio — your earnings are never tied to a single market</p>
+  </div>
+
+  <div class="hl">
+    Your investment in GoldenWay is backed by <b>9 real-world income-generating businesses</b> spanning digital assets, commodities, real estate, agriculture, and global trade — creating a truly diversified, resilient portfolio for every member.
+  </div>
+
+  <div class="g3" style="gap:9px;margin-bottom:13px">
+    <div class="proj p1"><div class="proj-num">01</div><div class="proj-ico">🪙</div><h3>Crypto Staking</h3><p>We stake leading proof-of-stake cryptocurrencies across multiple blockchain networks, generating passive validator rewards with high liquidity and security.</p></div>
+    <div class="proj p2"><div class="proj-num">02</div><div class="proj-ico">✈️</div><h3>Tourism</h3><p>Our global tourism portfolio connects premium travel experiences across Asia, the Middle East, and Europe through hospitality partnerships and destination management.</p></div>
+    <div class="proj p3"><div class="proj-num">03</div><div class="proj-ico">📉</div><h3>Forex Trading</h3><p>Using AI-assisted quantitative strategies, our Forex desk trades major and emerging market currency pairs around the clock — delivering consistent, low-drawdown returns.</p></div>
+    <div class="proj p4"><div class="proj-num">04</div><div class="proj-ico">🥇</div><h3>Gold Trading</h3><p>We participate in physical and digital gold markets, leveraging commodity price movements and safe-haven demand cycles — a time-tested hedge against financial uncertainty.</p></div>
+    <div class="proj p5"><div class="proj-num">05</div><div class="proj-ico">🏢</div><h3>Real Estate</h3><p>Our real estate arm invests in high-yield residential and commercial properties across key growth markets — generating rental income and long-term capital appreciation.</p></div>
+    <div class="proj p6"><div class="proj-num">06</div><div class="proj-ico">⛓️</div><h3>Blockchain Technology</h3><p>We build custom smart contracts, decentralized protocols, and Web3 infrastructure — generating returns through tokenized asset programs and validator networks.</p></div>
+    <div class="proj p7"><div class="proj-num">07</div><div class="proj-ico">🌾</div><h3>Agriculture Farming</h3><p>GWI invests in large-scale sustainable farming operations, cultivating staple and cash crops — delivering inflation-resistant, real-asset backed returns from global food demand.</p></div>
+    <div class="proj p8"><div class="proj-num">08</div><div class="proj-ico">🚢</div><h3>Export &amp; Import</h3><p>Our trade division facilitates movement of high-demand commodities across global markets — creating diversified revenue through strategic trade partnerships and logistics.</p></div>
+    <div class="proj p9"><div class="proj-num">09</div><div class="proj-ico">🤖</div><h3>Agro Technology</h3><p>We invest in precision agriculture — drone farming, IoT soil sensors, and AI-driven crop management — revolutionizing food production and delivering technology-backed returns.</p></div>
+  </div>
+
+  <div class="hl" style="margin-bottom:0">
+    🌐 <b>Diversification is our strength.</b> By operating across 9 independent sectors, GoldenWay ensures that no single market downturn impacts your total returns — your income is always protected and growing.
+  </div>
+
+  <div class="pf"><span>GoldenWay International · Member Guide</span><div class="pf-pg">Page 6 of 7</div></div>
+</div>
+
+
+<!-- ═══════════ PAGE 7 — FAQ ═══════════ -->
+<div class="page pa-purple">
+  <div class="ph"><span class="ph-brand">GoldenWay International</span><span class="ph-chap">FAQ &amp; Get Started</span></div>
+
+  <div class="sh">
+    <div class="sh-eye">Common Questions</div>
+    <h2>Frequently Asked <em>Questions</em></h2>
+  </div>
+
+  <div class="faq">
+    <div class="fi"><div class="fq">❓ What is USDT and why do we use it?</div><div class="fa">USDT (Tether) is a <b>stable digital currency</b> that is always equal to 1 US Dollar. It never loses value like other cryptocurrencies. GoldenWay uses USDT so your earnings are always stable, predictable, and globally accessible.</div></div>
+    <div class="fi"><div class="fq">❓ How much do I need to start?</div><div class="fa">You can start with any subscription amount. The more you invest, the higher your binary volume and stake income. Our earnings calculator on the website can show you projections before you commit.</div></div>
+    <div class="fi"><div class="fq">❓ When do I receive my daily income?</div><div class="fa">Binary income and staking income are credited automatically to your account every day. Referral and level incomes are credited instantly the moment your downline subscribes to a plan — no waiting.</div></div>
+    <div class="fi"><div class="fq">❓ What is the 2× Return Cap?</div><div class="fa">The 2× cap means you are guaranteed to earn <b>double your total subscription investment</b>. For example, if you subscribe with 500 USDT, you will earn 1,000 USDT total across all income types. This makes the platform fair and sustainable for everyone.</div></div>
+    <div class="fi"><div class="fq">❓ Do I need to refer people to earn?</div><div class="fa">You earn staking income (0.5%/day) even without referring anyone. However, referring members greatly increases your binary income and level income — the more your team grows, the more you earn every day.</div></div>
+    <div class="fi"><div class="fq">❓ How do I withdraw my earnings?</div><div class="fa">Go to your dashboard, click Withdraw, enter the amount and your USDT wallet address, and submit. Our team processes and approves withdrawal requests promptly — typically within 24 hours.</div></div>
+  </div>
+
+  <div class="sh" style="margin-top:4px">
+    <div class="sh-eye">Quick Summary</div>
+    <h2>Everything You Get as a <em>GoldenWay Member</em></h2>
+  </div>
+
+  <div class="g3" style="margin-bottom:12px">
+    <div class="card c-violet"><h3>✅ Referral Income</h3><p>Earn 5% instantly when you bring in new members</p></div>
+    <div class="card c-teal"><h3>✅ Binary Daily Income</h3><p>10% of your weaker team volume, every day</p></div>
+    <div class="card c-emerald"><h3>✅ Daily Stake Returns</h3><p>0.5% per day passive income on your investment</p></div>
+    <div class="card c-orange"><h3>✅ 5-Level Depth Income</h3><p>Earn from 5 levels of your community</p></div>
+    <div class="card c-sky"><h3>✅ Auto-Pool Bonuses</h3><p>Automatic pool rewards for participants</p></div>
+    <div class="card c-rose"><h3>✅ Lottery Prizes</h3><p>Periodic bonus prize draws for members</p></div>
+  </div>
+
+  <div class="cta">
+    <h3>🚀 Ready to Start Your Journey?</h3>
+    <p>Join GoldenWay International today and begin earning daily USDT income.<br>Ask your sponsor for their referral link and register in under 5 minutes.</p>
+    <a class="cta-btn" href="https://goldenway-international.com">Join GoldenWay International &nbsp;→</a>
+  </div>
+
+  <div class="pf"><span>GoldenWay International · Member Guide · 2026</span><div class="pf-pg">Page 7 of 7</div></div>
+</div>
+
+</body>
+</html>
