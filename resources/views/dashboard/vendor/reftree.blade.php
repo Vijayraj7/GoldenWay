@@ -132,6 +132,13 @@ if ($refintid < $myintid) {
                         $rightCount = count($rightIds);
                         $rightSub = $rightCount > 0 ? DB::table('customer_subs')->whereIn('csId', $rightIds)->sum('sub_amount') : 0;
                         $rightStake = $rightCount > 0 ? DB::table('customer_plans')->whereIn('csId', $rightIds)->sum('pamount') : 0;
+
+                        // Today's new subscriptions from 5 AM Indian Standard Time (IST)
+                        $today5amObj = new \DateTime('today 05:00:00', new \DateTimeZone('Asia/Kolkata'));
+                        $today5amObj->setTimezone(new \DateTimeZone(config('app.timezone', 'Asia/Dubai')));
+                        $today5am = $today5amObj->format('Y-m-d H:i:s');
+                        $leftTodaySub = $leftCount > 0 ? DB::table('customer_subs')->whereIn('csId', $leftIds)->where('created_at', '>=', $today5am)->sum('sub_amount') : 0;
+                        $rightTodaySub = $rightCount > 0 ? DB::table('customer_subs')->whereIn('csId', $rightIds)->where('created_at', '>=', $today5am)->sum('sub_amount') : 0;
                         @endphp
                         <!-- Control Panel -->
                         <div class="tree-control-panel mb-4">
@@ -162,7 +169,7 @@ if ($refintid < $myintid) {
                         <!-- Downline Team Stats Widgets -->
                         <div class="row g-4 mb-4">
                             <!-- Left Team Stats Card -->
-                            <div class="col-md-6">
+                            <div class="col-xl-3 col-md-6 d-flex">
                                 <div class="team-stats-card left-team-card">
                                     <div class="team-stats-header">
                                         <div class="stats-icon-wrapper left-icon-bg">
@@ -188,8 +195,29 @@ if ($refintid < $myintid) {
                                 </div>
                             </div>
 
+                            <!-- Left Today's New Subs Card -->
+                            <div class="col-xl-3 col-md-6 d-flex">
+                                <div class="team-stats-card left-team-card" style="border-top: 4px solid #f1c40f !important; background: linear-gradient(145deg, #13221a, #0c2018) !important;">
+                                    <div class="team-stats-header">
+                                        <div class="stats-icon-wrapper" style="background: rgba(241, 196, 15, 0.1); border: 1px solid rgba(241, 196, 15, 0.25); border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="bx bx-time-five" style="font-size: 20px; color: #f1c40f;"></i>
+                                        </div>
+                                        <div class="stats-title-area">
+                                            <h5 class="stats-heading" style="color: #f1c40f !important;">Left Today New</h5>
+                                            <span class="badge" style="background: rgba(241, 196, 15, 0.15); color: #f1c40f; border: 1px solid rgba(241, 196, 15, 0.3);">Since 5 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="team-stats-body mt-3">
+                                        <div class="stats-metric-row">
+                                            <span class="metric-label" style="color: rgba(255,255,255,0.7);">Today's New Subs</span>
+                                            <span class="metric-value text-warning" style="font-weight: 700; font-size: 1.25rem;">{{ number_format($leftTodaySub, 2) }} USDT</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Right Team Stats Card -->
-                            <div class="col-md-6">
+                            <div class="col-xl-3 col-md-6 d-flex">
                                 <div class="team-stats-card right-team-card">
                                     <div class="team-stats-header">
                                         <div class="stats-icon-wrapper right-icon-bg">
@@ -214,12 +242,38 @@ if ($refintid < $myintid) {
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Right Today's New Subs Card -->
+                            <div class="col-xl-3 col-md-6 d-flex">
+                                <div class="team-stats-card right-team-card" style="border-top: 4px solid #f1c40f !important; background: linear-gradient(145deg, #13221a, #0c2018) !important;">
+                                    <div class="team-stats-header">
+                                        <div class="stats-icon-wrapper" style="background: rgba(241, 196, 15, 0.1); border: 1px solid rgba(241, 196, 15, 0.25); border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;">
+                                            <i class="bx bx-time-five" style="font-size: 20px; color: #f1c40f;"></i>
+                                        </div>
+                                        <div class="stats-title-area">
+                                            <h5 class="stats-heading" style="color: #f1c40f !important;">Right Today New</h5>
+                                            <span class="badge" style="background: rgba(241, 196, 15, 0.15); color: #f1c40f; border: 1px solid rgba(241, 196, 15, 0.3);">Since 5 AM</span>
+                                        </div>
+                                    </div>
+                                    <div class="team-stats-body mt-3">
+                                        <div class="stats-metric-row">
+                                            <span class="metric-label" style="color: rgba(255,255,255,0.7);">Today's New Subs</span>
+                                            <span class="metric-value text-warning" style="font-weight: 700; font-size: 1.25rem;">{{ number_format($rightTodaySub, 2) }} USDT</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Tree UI Controls Header -->
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="text-white mb-0" style="font-weight: 600; font-size: 15px; letter-spacing: 0.5px;">Referral Tree View
-                            </h5>
+                            <div>
+                                <h5 class="text-white mb-0" style="font-weight: 600; font-size: 15px; letter-spacing: 0.5px;">Referral Tree View</h5>
+                                <div class="d-flex gap-2 mt-1">
+                                    <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); text-transform: none; font-weight: 600; font-size: 11px; letter-spacing: normal; padding: 0.35rem 0.5rem;">L: {{ number_format($leftSub, 2) }} USDT</span>
+                                    <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); text-transform: none; font-weight: 600; font-size: 11px; letter-spacing: normal; padding: 0.35rem 0.5rem;">R: {{ number_format($rightSub, 2) }} USDT</span>
+                                </div>
+                            </div>
                             <div class="tree-zoom-dock">
                                 <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(1.1)" title="Zoom In"><i class="bx bx-zoom-in"></i></button>
                                 <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(0.9)" title="Zoom Out"><i class="bx bx-zoom-out"></i></button>
@@ -281,6 +335,13 @@ if ($refintid < $myintid) {
                                     ->where('csId', $user->id)
                                     ->sum('pamount');
 
+                                    // Compute left/right downline subscription totals
+                                    global $customersMap;
+                                    $downlineLeftIds = getDownlineIds($user->left, $customersMap);
+                                    $downlineRightIds = getDownlineIds($user->right, $customersMap);
+                                    $downlineLeftSub = count($downlineLeftIds) > 0 ? DB::table('customer_subs')->whereIn('csId', $downlineLeftIds)->sum('sub_amount') : 0;
+                                    $downlineRightSub = count($downlineRightIds) > 0 ? DB::table('customer_subs')->whereIn('csId', $downlineRightIds)->sum('sub_amount') : 0;
+
                                     $isActive = $pltot > 0;
                                     $cardClass = $isActive ? 'active-card' : 'inactive-card';
                                     $statusClass = $isActive ? 'status-active' : 'status-inactive';
@@ -291,6 +352,17 @@ if ($refintid < $myintid) {
                                             echo ' <a href="/dashboard/reftree/' . $user->id . '" class="tree-card-link">';
                                                 echo ' <div class="tree-card ' . $cardClass . '">';
 
+                                                    $downlineTextList = [];
+                                                    if ($downlineLeftSub > 0) {
+                                                        $downlineTextList[] = 'L: ' . number_format($downlineLeftSub, 0) . ' USDT';
+                                                    }
+                                                    if ($downlineRightSub > 0) {
+                                                        $downlineTextList[] = 'R: ' . number_format($downlineRightSub, 0) . ' USDT';
+                                                    }
+                                                    if (!empty($downlineTextList)) {
+                                                        echo '<span class="badge badge-downline" style="background-color: rgba(241, 196, 15, 0.12); color: #f1c40f; border: 1px solid rgba(241, 196, 15, 0.25); text-transform: none; letter-spacing: normal; display: block; margin-bottom: 8px; font-size: 8.5px;">' . implode(' | ', $downlineTextList) . '</span>';
+                                                    }
+
                                                     // Avatar picture with status halo
                                                     echo ' <div class="avatar-wrapper ' . $avatarBorder . '">';
                                                         echo ' <img src="/tst/goldenlogo.png" alt="Avatar" />';
@@ -300,10 +372,6 @@ if ($refintid < $myintid) {
                                                     // Name, ID, Phone details
                                                     echo ' <h6 class="member-name" style="display:none">' . htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8') . '</h6>';
                                                     echo ' <p class="member-name">ID ' . htmlspecialchars($user->uid, ENT_QUOTES, 'UTF-8') . ' <span onclick="copyUid(event, \'' . htmlspecialchars($user->uid, ENT_QUOTES, 'UTF-8') . '\'); event.stopPropagation(); event.preventDefault(); return false;" class="copy-uid-btn" style="cursor: pointer; margin-left: 5px; color: #ffd700; transition: color 0.2s;" onmouseover="this.style.color=\'#fff\'" onmouseout="this.style.color=\'#ffd700\'" title="Copy ID"><i class="bx bx-copy"></i></span></p>';
-
-                                                    // if ($currentDepth <= 1 && !empty($user->phone)) {
-                                                        // echo ' <p class="member-phone"><i class="bx bx-phone"></i> ' . htmlspecialchars($user->phone, ENT_QUOTES, 'UTF-8') . '</p>';
-                                                        // }
 
                                                         // Current user business volume plan total
                                                         if ($isActive) {
@@ -426,6 +494,10 @@ if ($refintid < $myintid) {
                                 padding: 1.5rem !important;
                                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
                                 transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+                                height: 100% !important;
+                                width: 100% !important;
+                                display: flex !important;
+                                flex-direction: column !important;
                             }
 
                             .team-stats-card:hover {
