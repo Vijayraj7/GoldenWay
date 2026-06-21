@@ -22,6 +22,10 @@ class StakeIncomeController extends Controller
 
     public function stakeincome()
     {
+        if (Carbon::now()->isSaturday() || Carbon::now()->isSunday()) {
+            return "stake";
+        }
+
         $users = DB::table('customers')->get();
         foreach ($users as $user) {
             $stake_amount = DB::table('customer_plans')->where('csId', $user->id)->sum('pamount');
@@ -45,6 +49,16 @@ class StakeIncomeController extends Controller
                             continue;
                         }
                         $newCreatedAt = $lastDate->addHours(24);
+                    }
+
+                    if ($newCreatedAt->isSaturday()) {
+                        $newCreatedAt->addDays(2);
+                    } elseif ($newCreatedAt->isSunday()) {
+                        $newCreatedAt->addDays(1);
+                    }
+
+                    if ($newCreatedAt->gt(Carbon::now())) {
+                        $newCreatedAt = Carbon::now();
                     }
 
                     DB::table('customer_transactions')
