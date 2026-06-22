@@ -855,14 +855,15 @@ $i = 0;
                                             <th>Rank</th>
                                             <th>User ID</th>
                                             <th>Status</th>
+                                            <th>Sub (USDT)</th>
                                             <th>Staked (USDT)</th>
                                             <th>Phone</th>
                                             <th>Profit</th>
                                             <th>Balance</th>
                                             <th>Total Income</th>
-                                            <th>Mined</th>
+                                            {{-- <th>Mined</th>
                                             <th>Ref Mined</th>
-                                            <th>Ref Reward</th>
+                                            <th>Ref Reward</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -939,6 +940,14 @@ $i = 0;
 
                                             <td>
                                                 @if($ttpamnt > 0)
+                                                <span class="c-gold">{{ number_format(DB::table('customer_subs')->where('csId',$cstomer->id)->where('wStatus','0')->sum('sub_amount'), 2) }}</span>
+                                                @else
+                                                <span class="c-muted">0.00</span>
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if($ttpamnt > 0)
                                                 <span class="c-gold">{{ number_format($ttpamnt, 2) }}</span>
                                                 @else
                                                 <span class="c-muted">0.00</span>
@@ -956,9 +965,9 @@ $i = 0;
                                             <td><span class="c-orange">{{ number_format($profit, 2) }}</span></td>
                                             <td><span class="c-blue">{{ number_format($balance, 2) }}</span></td>
                                             <td><span class="c-green">{{ number_format($totalInc, 2) }}</span></td>
-                                            <td><span class="c-purple">{{ number_format($mined, 8) }}</span></td>
+                                            {{-- <td><span class="c-purple">{{ number_format($mined, 8) }}</span></td>
                                             <td><span class="c-blue">{{ number_format($refMined, 2) }}</span></td>
-                                            <td><span class="c-gold">{{ number_format($refReward, 2) }}</span></td>
+                                            <td><span class="c-gold">{{ number_format($refReward, 2) }}</span></td> --}}
                                         </tr>
                                         @endif
                                         @endforeach
