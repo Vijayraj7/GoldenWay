@@ -1486,6 +1486,7 @@ updateBalances();
         // dd($prs);
         $musr = DB::table('customers')->where('id', $csId)->first();
         $total_sub_amount = DB::table('customer_subs')->where('csId', $csId)->sum('sub_amount');
+        $amnt = isset($prs['pamount']) ? (float) $prs['pamount'] : 0.0;
         if (
             isset($prs['pname'])
             // && isset($prs['pamount'])
@@ -1612,9 +1613,14 @@ updateBalances();
                 // 'password' => 'Wrong password',
             ]);
         }
-        $wallet_balance = (float) $rqs->input('wallet_balance', 0);
-        $wlt_amount = min($amnt, $wallet_balance);
-        $credit_paid = $amnt - $wlt_amount;
+        if (isset($prs['pname'])) {
+            $wallet_balance = (float) $rqs->input('wallet_balance', 0);
+            $wlt_amount = min($amnt, $wallet_balance);
+            $credit_paid = $amnt - $wlt_amount;
+        } else {
+            $wlt_amount = $amnt;
+            $credit_paid = 0.0;
+        }
         if ($credit_paid > 0  && isSubDomainAdmin() == false) {
             $transferCreditBalance = DB::table('customer_transfers')
                 ->where('csId', $csId)
