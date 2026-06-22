@@ -940,7 +940,7 @@ $i = 0;
 
                                             <td>
                                                 @if($ttpamnt > 0)
-                                                <span class="c-gold">{{ number_format(DB::table('customer_subs')->where('csId',$cstomer->id)->where('wStatus','0')->sum('sub_amount'), 2) }}</span>
+                                                <span class="c-gold">{{ number_format(DB::table('customer_subs')->where('csId',$cstomer->id)->where('status','completed')->sum('sub_amount'), 2) }}</span>
                                                 @else
                                                 <span class="c-muted">0.00</span>
                                                 @endif
