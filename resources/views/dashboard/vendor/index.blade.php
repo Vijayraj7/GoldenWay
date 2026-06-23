@@ -350,6 +350,13 @@ if (count($plans) == 0) {
                                             </a>
                                             @endif
 
+
+                                            @if(true)
+                                            <a id="downldapp_pdf" href="/pdf/goldenway.pdf" download="goldenway.pdf" target="_blank" class="btn btn-light shr-referral">
+                                                Download Pdf
+                                            </a>
+                                            @endif
+
                                             @if (DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') > 0)
                                             <button type="button" id="shcopyButton" class="btn btn-light shr-referral" data-bs-toggle="modal" data-bs-target="#referralDirectionModal">
                                                 Share Referral
