@@ -354,7 +354,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <button
-                                        {{-- onclick="return confirmLogin()" --}}
+                                        onclick="return confirmLogin()"
                                         class="btn btn-primary d-grid w-100"
                                         type="submit"
                                     >Sign in</button>
