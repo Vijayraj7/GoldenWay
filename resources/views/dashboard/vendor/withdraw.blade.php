@@ -625,7 +625,7 @@ ini_set('display_errors', 1);
                                                     </div>
                                                     <div class="wth-info-row">
                                                         <span class="wth-info-key">Min Withdrawal</span>
-                                                        <span class="wth-info-value highlight">10 USDT</span>
+                                                        <span class="wth-info-value highlight">20 USDT</span>
                                                     </div>
                                                 </div>
                                             </div>
