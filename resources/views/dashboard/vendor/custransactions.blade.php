@@ -514,7 +514,7 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
                                     <ul class="dropdown-menu dropdown-menu-end" style="background-color: #0c2820 !important; border: 1px solid rgba(249, 168, 38, 0.25) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.6) !important; border-radius: 10px !important;">
                                         <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=all">All</a></li>
                                         <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=refincome">Referral Income</a></li>
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=pincome">Profit Income</a></li>
+                                        {{-- <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=pincome">Profit Income</a></li> --}}
                                         <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=stake_income">Stake Income</a></li>
                                         <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=sub_income">Subscription Income</a></li>
                                         <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome">All Level Income</a></li>

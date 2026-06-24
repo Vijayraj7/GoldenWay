@@ -116,12 +116,12 @@
         {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Withdraw</span>
         </li> --}}
-        {{-- <li class="menu-item @if($r == 'transactions') active @endif">
+        <li class="menu-item @if($r == 'transactions') active @endif">
             <a href="/admin/transactions/all" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
-                <div data-i18n="Basic">Transaction History</div>
+                <div data-i18n="Basic">Credit History</div>
             </a>
-        </li> --}}
+        </li>
         <li class="menu-item @if($r == 'credittransactions') active @endif">
             <a href="/admin/transactions/all?typ=trnsfr" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
