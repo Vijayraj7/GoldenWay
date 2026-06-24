@@ -456,7 +456,7 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
                                         </div>
                                     </div>
                                     <div class="mt-3">
-                                        <a href="/dashboard/status/deposit" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(168, 85, 247, 0.15) !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #a855f7 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
+                                        <a href="/dashboard/status/transactions?type=stake_income" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(168, 85, 247, 0.15) !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #a855f7 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
                                             <i class="bx bx-history"></i> History
                                         </a>
                                     </div>
