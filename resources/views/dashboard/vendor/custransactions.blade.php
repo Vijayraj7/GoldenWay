@@ -490,47 +490,53 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
                         <!-- Transactions Table -->
                         <div class="card premium-card" style="background: linear-gradient(135deg, rgba(20, 22, 28, 0.95) 0%, rgba(10, 11, 15, 0.98) 100%) !important; border: 1px solid rgba(249, 168, 38, 0.18) !important; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden;">
                             <div style="padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(249, 168, 38, 0.12);" class="card-header bg-transparent d-flex flex-column flex-md-row gap-3">
-                                <h5 class="mb-0 text-white" style="font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px;">
-                                    <i class="bx bx-list-ul" style="color: #f9a826; font-size: 20px;"></i>
-                                    @if(isset($_GET['pnm']))
-                                    {{ getPname($_GET['pnm']) }}
+                                <div class="d-flex align-items-center flex-wrap gap-3">
+                                    <h5 class="mb-0 text-white" style="font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px;">
+                                        <i class="bx bx-list-ul" style="color: #f9a826; font-size: 20px;"></i>
+                                        @if(isset($_GET['pnm']))
+                                        {{ getPname($_GET['pnm']) }}
+                                        @endif
+                                        @if(isset($_GET['typ']))
+                                        Transfer Credit
+                                        @else
+                                        Transaction
+                                        @endif
+                                        History
+                                    </h5>
+
+                                    @if(!isset($_GET['typ']))
+                                    <div class="dropdown">
+                                        <button style="background: rgba(249, 168, 38, 0.12) !important; border: 1px solid rgba(249, 168, 38, 0.3) !important; color: #f9a826 !important; padding: 6px 16px !important; font-size: 13px !important; border-radius: 8px !important; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bx bx-filter-alt"></i> {{ $btnTxt }}
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-start" style="background-color: #0c2820 !important; border: 1px solid rgba(249, 168, 38, 0.25) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.6) !important; border-radius: 10px !important;">
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=all">All</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=refincome">Referral Income</a></li>
+                                            {{-- <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=pincome">Profit Income</a></li> --}}
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=stake_income">Stake Income</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=sub_income">Subscription Income</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome">All Level Income</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider" style="border-top: 1px solid rgba(249, 168, 38, 0.12) !important;" />
+                                            </li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=1">First Level</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=2">Second Level</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=3">Third Level</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=4">Fourth Level</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=5">Fifth Level</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider" style="border-top: 1px solid rgba(249, 168, 38, 0.12) !important;" />
+                                            </li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=allincome">Withdrawals</a></li>
+                                        </ul>
+                                    </div>
                                     @endif
-                                    @if(isset($_GET['typ']))
-                                    Transfer Credit
-                                    @else
-                                    Transaction
-                                    @endif
-                                    History
-                                </h5>
+                                </div>
 
                                 <div class="d-flex align-items-center gap-2">
-                                    @if(!isset($_GET['typ']))
-                                    <span style="font-size: 11px; color: rgba(255,255,255,0.6);">Filter:</span>
-                                    <button style="background-color: #0c2820 !important; border: 1px solid rgba(249, 168, 38, 0.25) !important; color: #fff !important; padding: 6px 16px !important; font-size: 13px !important; border-radius: 8px !important;" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{ $btnTxt }}
-                                    </button>
-                                    @endif
-
-                                    <ul class="dropdown-menu dropdown-menu-end" style="background-color: #0c2820 !important; border: 1px solid rgba(249, 168, 38, 0.25) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.6) !important; border-radius: 10px !important;">
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=all">All</a></li>
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=refincome">Referral Income</a></li>
-                                        {{-- <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=pincome">Profit Income</a></li> --}}
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=stake_income">Stake Income</a></li>
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=sub_income">Subscription Income</a></li>
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome">All Level Income</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider" style="border-top: 1px solid rgba(249, 168, 38, 0.12) !important;" />
-                                        </li>
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=1">First Level</a></li>
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=2">Second Level</a></li>
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=3">Third Level</a></li>
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=4">Fourth Level</a></li>
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=5">Fifth Level</a></li>
-                                        <li>
-                                            <hr class="dropdown-divider" style="border-top: 1px solid rgba(249, 168, 38, 0.12) !important;" />
-                                        </li>
-                                        <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=allincome">Withdrawals</a></li>
-                                    </ul>
+                                    <span style="font-size: 11px; background: rgba(249, 168, 38, 0.1) !important; border: 1px solid rgba(249, 168, 38, 0.2) !important; color: #f9a826 !important; border-radius: 30px; padding: 4px 12px; font-weight: 700; letter-spacing: 0.5px;">
+                                        {{ count($transtins) }} Records
+                                    </span>
                                 </div>
                             </div>
 
@@ -653,6 +659,12 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
             </div>
         </div>
     </div>
+
+    <style>
+        .card-header {
+            background-color: #34250cff !important;
+        }
+    </style>
 
     <!-- Core JS -->
     <script src="/assets/vendor/libs/jquery/jquery.js"></script>
