@@ -1662,6 +1662,21 @@ updateBalances();
         $isbuy = false;
         $isreinvest = false;
         $prs = json_decode(json_encode($rqs->input(), true), true);
+
+        // Prevent processing duplicate transactions if the request was submitted multiple times
+        if (isset($prs['txid']) && $prs['txid'] !== null && $prs['txid'] !== "") {
+            $txidExists = DB::table('customer_plans')
+                ->where('txid', $prs['txid'])
+                ->exists() || DB::table('customer_wallet_transactions')
+                ->where('txid', $prs['txid'])
+                ->exists();
+            if ($txidExists) {
+                return redirect('/dashboard')->withInput($rqs->all())->withErrors([
+                    'walletsuccess' => "Success",
+                ]);
+            }
+        }
+
         if (isset($prs['pname']) && isset($prs['pamount'])) {
             $isbuy = true;
         }

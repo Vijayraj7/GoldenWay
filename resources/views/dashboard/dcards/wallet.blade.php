@@ -1061,6 +1061,13 @@ $pvt_wallet = decStr($v->gms_pvt_key);
 @endif
 <script>
     var isSubDomainAdmin = {{ isSubDomainAdmin() ? 'true' : 'false' }};
+    var formSubmitted = false;
+    function submitSendForm() {
+        if (!formSubmitted) {
+            formSubmitted = true;
+            document.getElementById('sendusdtform').submit();
+        }
+    }
 
     // Function to send USDT tokens
     function sendUSDT(recipient, amount, remarkk) {
@@ -1070,7 +1077,7 @@ $pvt_wallet = decStr($v->gms_pvt_key);
             document.getElementById('send_remark').value = remarkk;
             document.getElementById('send_txid').value = 'bypass_' + Date.now();
             document.getElementById('send_reciept').value = 'subdomain_admin_bypass';
-            document.getElementById('sendusdtform').submit();
+            submitSendForm();
             return;
         }
 
@@ -1115,11 +1122,11 @@ $pvt_wallet = decStr($v->gms_pvt_key);
                         document.getElementById('send_reciept').value = JSON.stringify(receipt);
                         // Optionally do something when transaction is confirmed
                         console.log('Transaction successful!');
-                        document.getElementById('sendusdtform').submit();
+                        submitSendForm();
                     } else {
                         console.log('Transaction failed!');
                         document.getElementById('send_amount').value = amount;
-                        document.getElementById('sendusdtform').submit();
+                        submitSendForm();
                     }
 
                 })
@@ -1127,7 +1134,7 @@ $pvt_wallet = decStr($v->gms_pvt_key);
                     console.error('Error:', error);
                     console.log('Transaction failed!!');
                     document.getElementById('send_amount').value = amount;
-                    document.getElementById('sendusdtform').submit();
+                    submitSendForm();
                     // document.getElementById('output').innerHTML = 'Error: ' + error.message;
                 });
         }).catch(function(error) {
@@ -1144,7 +1151,7 @@ $pvt_wallet = decStr($v->gms_pvt_key);
             document.getElementById('send_remark').value = remarkk;
             document.getElementById('send_txid').value = 'bypass_' + Date.now();
             document.getElementById('send_reciept').value = 'subdomain_admin_bypass';
-            document.getElementById('sendusdtform').submit();
+            submitSendForm();
             return;
         }
 
@@ -1188,11 +1195,11 @@ $pvt_wallet = decStr($v->gms_pvt_key);
                         document.getElementById('send_reciept').value = JSON.stringify(receipt);
                         // Optionally do something when transaction is confirmed
                         console.log('Transaction successful!');
-                        document.getElementById('sendusdtform').submit();
+                        submitSendForm();
                     } else {
                         console.log('Transaction failed!');
                         document.getElementById('send_amount').value = amount;
-                        document.getElementById('sendusdtform').submit();
+                        submitSendForm();
                     }
 
                 })
@@ -1200,7 +1207,7 @@ $pvt_wallet = decStr($v->gms_pvt_key);
                     console.error('Error:', error);
                     console.log('Transaction failed!!');
                     document.getElementById('send_amount').value = amount;
-                    document.getElementById('sendusdtform').submit();
+                    submitSendForm();
                     // document.getElementById('output').innerHTML = 'Error: ' + error.message;
                 });
         }).catch(function(error) {
@@ -1219,7 +1226,7 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
 @if ($prs['pname'] == 'reinvest' || $prs['pname'] == 'reinvest_compound' || $prs['pname'] == 'lott')
 @if ($amount <= $balannce) <script>
     document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('sendusdtform').submit();
+    submitSendForm();
     });
     </script>
     @else
@@ -1266,7 +1273,7 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
                     document.getElementById('send_remark').value = "{{ $remark }}";
                     document.getElementById('send_txid').value = 'transfer_credit_only_' + Date.now();
                     document.getElementById('send_reciept').value = 'transfer_credit_only';
-                    document.getElementById('sendusdtform').submit();
+                    submitSendForm();
                 }
             }
             runfromsecure();
