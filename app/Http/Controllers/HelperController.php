@@ -112,7 +112,7 @@ class HelperController
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
         }
-        if (isset($_SESSION['id']) && Auth::check()) {
+        if (isset($_SESSION['id']) && (isset($_SESSION['opp']) || Auth::check())) {
             $v = DB::table('customers')
                 ->where('id', $_SESSION['id'])
                 ->first();

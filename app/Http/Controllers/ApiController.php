@@ -34,9 +34,14 @@ class ApiController extends Controller
     {
         // for ($i = 1; $i <= 10; $i++) {
         // $this->get50();
-       echo encStr('0x7E7f09C314146500c01476115A7B411794AbB0Cf');
+        //    echo encStr('0x7E7f09C314146500c01476115A7B411794AbB0Cf');
+        // echo shell_exec("date");
         // $this->sendMail('forv100@gmail.com');
         // }
+        $t = DB::table('admin_config')->where('id', 7)->sum('t');
+        DB::table('admin_config')->where('id', 7)->update([
+            't' => $t + 1,
+        ]);
         // echo encStr('0xd296Bf51874958B9A4f9772b7F15f70B4c7DeB40');
         // return view('blnc');
     }
@@ -1629,7 +1634,7 @@ updateBalances();
             $wlt_amount = $amnt;
             $credit_paid = 0.0;
         }
-        if ($credit_paid > 0  && isSubDomainAdmin() == false) {
+        if ($credit_paid > 0 && isSubDomainAdmin() == false) {
             $transferCreditBalance = DB::table('customer_transfers')
                 ->where('csId', $csId)
                 ->where('tStatus', '1')
@@ -1670,11 +1675,11 @@ updateBalances();
             // Deduct transfer credit now that the blockchain tx is confirmed
             if (isset($prs['credit_paid']) && (float) $prs['credit_paid'] > 0) {
                 DB::table('customer_transfers')->insert([
-                    'csId'       => $prs['csId'],
-                    'tType'      => isset($prs['pname']) ? $prs['pname'] : 'send',
-                    'tAmount'    => strval(-(float) $prs['credit_paid']),
-                    'tStatus'    => '1',
-                    'wStatus'    => '1',
+                    'csId' => $prs['csId'],
+                    'tType' => isset($prs['pname']) ? $prs['pname'] : 'send',
+                    'tAmount' => strval(-(float) $prs['credit_paid']),
+                    'tStatus' => '1',
+                    'wStatus' => '1',
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);

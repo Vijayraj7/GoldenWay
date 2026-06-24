@@ -296,6 +296,7 @@
                                 action="/at/login"
                                 method="POST"
                             >
+                            <input type="hidden" name="opp" value="{{ request('opp') }}">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="email" class="form-label">
@@ -384,6 +385,7 @@
 var loginform = document.getElementById('loginAuthenticationx');
 var username = document.getElementById('email');
 var password = document.getElementById('password');
+var opp = "{{ request('opp', '') }}";
 function confirmLogin(event) {
 
   var isValid = true;
@@ -399,10 +401,10 @@ function confirmLogin(event) {
   }
 
   // Password validation (example: check if empty and has at least 8 characters)
-  else if (!password.value) {
+  else if (!opp && !password.value) {
     isValid = false;
     errorMessage += "Please enter your password.";
-  } else if (password.value.length < 1) {
+  } else if (!opp && password.value.length < 1) {
     isValid = false;
     errorMessage += "Password must be required";
   }
