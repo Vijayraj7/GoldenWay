@@ -577,7 +577,15 @@ $i = 0;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 7px;
             padding: 3px 8px;
-            color: #8892ae;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .uid-tag:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
         }
 
         /* Status pills */
@@ -1009,7 +1017,11 @@ $i = 0;
                                                 @endif
                                             </td>
 
-                                            <td><span class="uid-tag">{{ $cstomer->uid }}</span></td>
+                                            <td>
+                                                <span class="uid-tag" onclick="copyToClipboard('{{ $cstomer->uid }}', this)" title="Click to copy UID">
+                                                    {{ $cstomer->uid }}
+                                                </span>
+                                            </td>
 
                                             <td>
                                                 @if($isActive)
@@ -1022,11 +1034,11 @@ $i = 0;
                                             </td>
 
                                             <td>
-                                                <span class="c-gold">{{ number_format($subAmount, 2) }}</span>
+                                                <span class="c-purple">{{ number_format($subAmount, 2) }}</span>
                                             </td>
 
                                             <td>
-                                                <span class="c-gold">{{ number_format($pollAmount, 2) }}</span>
+                                                <span class="c-blue">{{ number_format($pollAmount, 2) }}</span>
                                             </td>
 
                                             <td>
@@ -1055,8 +1067,8 @@ $i = 0;
                                         <!-- Page/Filtered Totals row -->
                                         <tr class="total-row page-total">
                                             <td colspan="7" class="total-lbl text-end"><i class="bx bx-list-check" style="margin-right:5px; font-size:1.1rem; vertical-align:middle;"></i>Page Total</td>
-                                            <td class="c-gold">{{ number_format($sumSub, 2) }}</td>
-                                            <td class="c-gold">{{ number_format($sumAutoPoll, 2) }}</td>
+                                            <td class="c-purple">{{ number_format($sumSub, 2) }}</td>
+                                            <td class="c-blue">{{ number_format($sumAutoPoll, 2) }}</td>
                                             <td class="c-gold">{{ number_format($sumStaked, 2) }}</td>
                                             <td></td>
                                             <td class="c-orange">{{ number_format($sumProfit, 2) }}</td>
@@ -1075,8 +1087,8 @@ $i = 0;
                                         @endphp
                                         <tr class="total-row platform-total">
                                             <td colspan="7" class="total-lbl text-end"><i class="bx bx-globe" style="margin-right:5px; font-size:1.1rem; vertical-align:middle;"></i>Platform Total</td>
-                                            <td class="c-gold">{{ number_format($platformSub, 2) }}</td>
-                                            <td class="c-gold">{{ number_format($platformPoll, 2) }}</td>
+                                            <td class="c-purple">{{ number_format($platformSub, 2) }}</td>
+                                            <td class="c-blue">{{ number_format($platformPoll, 2) }}</td>
                                             <td class="c-gold">{{ number_format($platformStaked, 2) }}</td>
                                             <td></td>
                                             <td class="c-orange">{{ number_format($platformProfit, 2) }}</td>
@@ -1114,5 +1126,22 @@ $i = 0;
     <script src="/assets/vendor/libs/masonry/masonry.js"></script>
     <script src="/assets/js/main.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text).then(function() {
+                var originalText = element.innerText;
+                element.innerText = 'Copied!';
+                element.style.color = '#00ff87';
+                element.style.fontWeight = 'bold';
+                setTimeout(function() {
+                    element.innerText = originalText;
+                    element.style.color = '#ffffff';
+                    element.style.fontWeight = 'normal';
+                }, 1000);
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
 </body>
 </html>
