@@ -1274,10 +1274,18 @@ updateBalances();
                 ]);
             }
         }
-        if ($amnt < 9.5) {
-            return redirect()->back()->withInput($rqs->all())->withErrors([
-                'image' => "Min USDT is 10",
-            ]);
+        if ($prs['pname'] == 'pollincome') {
+            if ($amnt < 9.5) {
+                return redirect()->back()->withInput($rqs->all())->withErrors([
+                    'image' => "Min USDT is 10",
+                ]);
+            }
+        } else {
+            if ($amnt < 19.5) {
+                return redirect()->back()->withInput($rqs->all())->withErrors([
+                    'image' => "Min USDT is 20",
+                ]);
+            }
         }
         $maxmnt = 0;
         if ($prs['pname'] == 'pincome') {

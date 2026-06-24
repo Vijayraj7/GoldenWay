@@ -579,7 +579,7 @@ ini_set('display_errors', 1);
                                                 <label class="wth-label">Withdrawal Amount</label>
                                                 <div class="wth-input-group">
                                                     <span class="wth-input-prefix">USDT</span>
-                                                    <input type="number" min="10" step="any" max="{{ $withrawable }}" required aria-required="true" id="input_amount_element" class="wth-input-inner" placeholder="Min 10 — Max {{ $withrawable }}" />
+                                                    <input type="number" min="20" step="any" max="{{ $withrawable }}" required aria-required=\"true\" id="input_amount_element" class="wth-input-inner" placeholder="Min 20 — Max {{ $withrawable }}" />
                                                 </div>
                                             </div>
 
@@ -653,7 +653,7 @@ ini_set('display_errors', 1);
                                         <i class="bx bx-error-circle" style="color:#ff4d4d; font-size:1.4rem;"></i>
                                         <div>
                                             <div style="color:#ff4d4d; font-weight:700; font-size:0.9rem;">Insufficient Balance</div>
-                                            <div style="color:#5a6480; font-size:0.78rem; margin-top:2px;">You need at least 10 USDT to make a withdrawal.</div>
+                                            <div style="color:#5a6480; font-size:0.78rem; margin-top:2px;">You need at least 20 USDT to make a withdrawal.</div>
                                         </div>
                                     </div>
                                     @endif
@@ -736,8 +736,8 @@ ini_set('display_errors', 1);
             }
             var amo = Number(am);
             var max = Number('{{ $withrawable }}');
-            if (amo < 10) {
-                alert('Minimum withdrawal is 10 USDT');
+            if (amo < 20) {
+                alert('Minimum withdrawal is 20 USDT');
                 return;
             }
             if (amo > max) {
