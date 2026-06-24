@@ -1712,12 +1712,12 @@ if (count($plans) == 0) {
 
                         @if ($isnotExpired)
                         <div class="modal fade" style="z-index: 2000 !important;" id="modalCenter" tabindex="-1" aria-hidden="true">
-                            <div style="margin-bottom: 40px !important;" class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content" style="margin-top:50px;">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
 
-                                    <div style="height: 70px; display:flex; align-items:center; padding-left:25px; background-color: #8d6900; border-radius:7px 7px 0px 0px;" id="modal_header" class="modal-header">
-                                        <h5 class="modal-title" style="color: #fff; text-transform: uppercase;" style="text-transform:uppercase;" id="seilver_title_text">Stake</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div id="modal_header" class="modal-header">
+                                        <h5 class="modal-title" id="seilver_title_text">Stake</h5>
+                                        <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">&times;</button>
                                     </div>
                                     <?php
                                             $total_transfer_amount = DB::table('customer_transfers')->where('csId', $v->id)->where('tStatus', '1')->get()->sum('tAmount');
@@ -1729,202 +1729,306 @@ if (count($plans) == 0) {
                                         <input type="hidden" name="ptype" value="1">
                                         <input type="hidden" name="tuserid" value="0">
                                         <input type="hidden" name="pstatus" value="0">
-
                                         <input type="hidden" name="csId" value="{{ $v->id }}">
+                                        <input type="hidden" name="msg" value="{{ old('msg') }}">
 
                                         <style>
+                                            #modalCenter .modal-dialog {
+                                                margin: 1.75rem auto !important;
+                                            }
                                             @media (min-width: 576px) {
-                                                .modal-dialog {
-                                                    max-width: 25rem;
-                                                }
-
-                                                .waletext {
-                                                    font-size: 13px !important;
+                                                #modalCenter .modal-dialog {
+                                                    max-width: 28rem;
                                                 }
                                             }
-
-                                            .form-label {
-                                                margin-top: 8px;
-                                            }
-
-                                            .formrow {
-                                                flex-direction: column;
-                                            }
-
-                                            .silform {
-                                                padding: 20px;
-                                            }
-
-                                            @media (min-width: 576px) {
-                                                .formrow .col-sm-2 {
-                                                    flex: 0 0 auto;
-                                                    width: auto !important;
-                                                }
-
-                                                .formrow .col-sm-10 {
-                                                    flex: 0 0 auto;
-                                                    width: auto !important;
-                                                }
-                                            }
-
-                                            @media (max-width:700px) {
-                                                .waletext {
-                                                    font-size: 10px !important;
-                                                }
-                                            }
-
-                                            @media (max-width: 576px) {
-                                                .modal-dialog {
-                                                    margin: 1.75rem auto !important;
-                                                }
-                                            }
-
                                             @media (max-width: 767.98px) {
-                                                .modal .modal-dialog:not(.modal-fullscreen) {
-                                                    padding: 0 0rem !important;
-                                                    padding-left: 0rem !important;
+                                                #modalCenter .modal-dialog:not(.modal-fullscreen) {
+                                                    padding: 0 !important;
                                                 }
                                             }
-
-                                            .dropdown-menu {
+                                            #modalCenter .modal-content {
+                                                background: linear-gradient(145deg, #0d2c22 0%, #051410 100%);
+                                                border: 1px solid rgba(249, 168, 38, 0.25);
+                                                border-radius: 20px;
+                                                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+                                                color: #ffffff;
+                                                overflow: hidden;
+                                                font-family: 'Public Sans', sans-serif;
+                                            }
+                                            #modalCenter .modal-header {
+                                                background: linear-gradient(90deg, #c59b27 0%, #8d6900 100%);
+                                                border-bottom: 1px solid rgba(249, 168, 38, 0.2);
+                                                padding: 20px 25px;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: space-between;
+                                                height: auto;
+                                            }
+                                            #modalCenter .modal-title {
+                                                color: #ffffff;
+                                                font-size: 1.25rem;
+                                                font-weight: 700;
+                                                letter-spacing: 1.5px;
+                                                text-transform: uppercase;
+                                                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+                                                margin: 0;
+                                            }
+                                            #modalCenter .btn-close-custom {
+                                                background: none;
+                                                border: none;
+                                                color: rgba(255, 255, 255, 0.8);
+                                                font-size: 2rem;
+                                                line-height: 0.5;
+                                                padding: 8px;
+                                                margin: -8px;
+                                                transition: all 0.3s ease;
+                                                cursor: pointer;
+                                                outline: none;
+                                            }
+                                            #modalCenter .btn-close-custom:hover {
+                                                color: #ffffff;
+                                                transform: rotate(90deg);
+                                            }
+                                            #modalCenter .silform {
+                                                padding: 25px;
+                                            }
+                                            #modalCenter .balance-card {
+                                                background: rgba(249, 168, 38, 0.04);
+                                                border: 1px solid rgba(249, 168, 38, 0.15);
+                                                border-radius: 12px;
+                                                padding: 16px;
+                                                margin-bottom: 20px;
+                                            }
+                                            #modalCenter .balance-card-header {
+                                                display: flex;
+                                                align-items: center;
+                                                gap: 8px;
+                                                font-size: 0.75rem;
+                                                text-transform: uppercase;
+                                                letter-spacing: 0.7px;
+                                                color: #f9a826;
+                                                margin-bottom: 6px;
+                                                font-weight: 600;
+                                            }
+                                            #modalCenter .balance-icon {
+                                                font-size: 1rem;
+                                            }
+                                            #modalCenter .balance-amount-wrapper {
+                                                display: flex;
+                                                align-items: baseline;
+                                                gap: 6px;
+                                                margin-bottom: 12px;
+                                            }
+                                            #modalCenter .balance-number {
+                                                font-size: 1.8rem;
+                                                font-weight: 700;
+                                                color: #00D094;
+                                                letter-spacing: -0.5px;
+                                            }
+                                            #modalCenter .balance-denom {
+                                                font-size: 0.9rem;
+                                                font-weight: 600;
+                                                color: rgba(255, 255, 255, 0.6);
+                                            }
+                                            #modalCenter .balance-split {
+                                                display: flex;
+                                                justify-content: space-between;
+                                                align-items: center;
+                                                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                                                padding-top: 10px;
+                                            }
+                                            #modalCenter .split-item {
+                                                display: flex;
+                                                flex-direction: column;
+                                                gap: 2px;
+                                            }
+                                            #modalCenter .split-label {
+                                                font-size: 0.65rem;
+                                                color: rgba(255, 255, 255, 0.4);
+                                                text-transform: uppercase;
+                                                letter-spacing: 0.5px;
+                                            }
+                                            #modalCenter .split-value {
+                                                font-size: 0.85rem;
+                                                font-weight: 600;
+                                                color: #ffffff;
+                                            }
+                                            #modalCenter .split-divider {
+                                                width: 1px;
+                                                height: 24px;
+                                                background-color: rgba(255, 255, 255, 0.08);
+                                            }
+                                            #modalCenter .input-label-custom {
+                                                color: #f9a826;
+                                                font-size: 0.75rem;
+                                                font-weight: 600;
+                                                text-transform: uppercase;
+                                                letter-spacing: 1px;
+                                                margin-bottom: 8px;
+                                                display: block;
+                                            }
+                                            #modalCenter .input-group-custom {
+                                                display: flex;
+                                                position: relative;
+                                                border-radius: 10px;
+                                                overflow: hidden;
+                                                border: 1px solid rgba(255, 255, 255, 0.1);
+                                                background: rgba(0, 0, 0, 0.25);
+                                                transition: all 0.3s ease;
+                                            }
+                                            #modalCenter .input-group-custom:focus-within {
+                                                border-color: #f9a826;
+                                                box-shadow: 0 0 0 3px rgba(249, 168, 38, 0.15);
+                                            }
+                                            #modalCenter .input-icon-custom {
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                width: 46px;
+                                                background: rgba(0, 0, 0, 0.2);
+                                                color: #f9a826;
+                                                font-size: 1.2rem;
+                                                border-right: 1px solid rgba(255, 255, 255, 0.08);
+                                            }
+                                            #modalCenter .input-field-custom {
+                                                flex: 1;
+                                                background: transparent;
+                                                border: none;
+                                                padding: 12px 16px;
+                                                color: #ffffff;
+                                                font-size: 0.95rem;
+                                                outline: none;
+                                                width: 100%;
+                                            }
+                                            #modalCenter .input-field-custom::placeholder {
+                                                color: rgba(255, 255, 255, 0.35);
+                                            }
+                                            #modalCenter .input-action-custom {
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                width: 46px;
+                                                color: rgba(255, 255, 255, 0.5);
+                                                font-size: 1.2rem;
+                                                cursor: pointer;
+                                                transition: color 0.2s;
+                                                user-select: none;
+                                            }
+                                            #modalCenter .input-action-custom:hover {
+                                                color: #ffffff;
+                                            }
+                                            #modalCenter .btn-cancel-custom {
+                                                background: transparent;
+                                                border: 1px solid rgba(255, 255, 255, 0.15);
+                                                color: rgba(255, 255, 255, 0.7);
+                                                padding: 12px 24px;
+                                                font-size: 0.875rem;
+                                                font-weight: 600;
+                                                border-radius: 10px;
+                                                transition: all 0.3s ease;
+                                                cursor: pointer;
+                                                text-transform: uppercase;
+                                                letter-spacing: 0.5px;
+                                                outline: none;
+                                            }
+                                            #modalCenter .btn-cancel-custom:hover {
+                                                background: rgba(255, 255, 255, 0.05);
+                                                color: #ffffff;
+                                                border-color: rgba(255, 255, 255, 0.3);
+                                            }
+                                            #modalCenter .btn-confirm-custom {
+                                                background: linear-gradient(135deg, #f9a826 0%, #c59b27 100%);
+                                                border: none;
+                                                color: #051410;
+                                                padding: 12px 28px;
+                                                font-size: 0.875rem;
+                                                font-weight: 700;
+                                                border-radius: 10px;
+                                                box-shadow: 0 4px 15px rgba(249, 168, 38, 0.3);
+                                                transition: all 0.3s ease;
+                                                cursor: pointer;
+                                                text-transform: uppercase;
+                                                letter-spacing: 0.5px;
+                                                outline: none;
+                                            }
+                                            #modalCenter .btn-confirm-custom:hover {
+                                                transform: translateY(-2px);
+                                                box-shadow: 0 6px 20px rgba(249, 168, 38, 0.5);
+                                                background: linear-gradient(135deg, #ffb83d 0%, #d8ab3a 100%);
+                                            }
+                                            #modalCenter .btn-confirm-custom:active {
+                                                transform: translateY(0);
+                                            }
+                                            #modalCenter .dropdown-menu {
                                                 background-color: var(--secondary-color);
                                             }
-
-                                            .dropdown-item:hover,
-                                            .dropdown-item:focus {
+                                            #modalCenter .dropdown-item:hover,
+                                            #modalCenter .dropdown-item:focus {
                                                 background-color: rgb(10 109 23 / 70%);
                                             }
-
-                                            .dropdown-menu a {
+                                            #modalCenter .dropdown-menu a {
                                                 color: #fff !important;
                                             }
-
                                         </style>
 
-                                        @error('image')
-                                        <div class="form-text" style="color: red;">{{ $message }}</div>
-                                        @enderror
-
-                                        <script>
-                                            document.getElementById('copyWallet').addEventListener('click', function() {
-                                                var url = "{{ $adminconfig->wallet }}";
-
-                                                navigator.clipboard.writeText(url)
-                                                    .then(function() {
-                                                        // Inform the user that the URL has been copied
-                                                        alert('Copied to clipboard: ' + url);
-                                                    })
-                                                    .catch(function(error) {
-                                                        // Handle errors
-                                                        console.error('Could not copy URL: ', error);
-                                                        alert('Could not copy URL. Please try again.');
-                                                    });
-                                            });
-
-                                        </script>
-                                        <div class="formrow row mb-3">
-                                            <label style="margin-top: 7px;" class="col-sm-2 form-label" for="basic-icon-default-message">Type</label>
-                                            <div class="col-sm-10">
-
-                                                <select class="form-select" name="pname" id="slctplans">
-
-                                                    <option selected id="modalselct_trade" value="normal">
-                                                        Normal</option>
-
-
-                                                </select>
-                                            </div>
+                                        <div style="display: none !important;">
+                                            <select name="pname" id="slctplans">
+                                                <option selected id="modalselct_trade" value="normal">Normal</option>
+                                            </select>
                                         </div>
 
-
-                                        <div id="diam_amnt_container" class="formrow row mb-3">
-                                            <label style="margin-top: 7px;" class="col-sm-2 form-label" for="basic-icon-default-message">Amount</label>
-                                            <div class="col-sm-10">
-                                                <div class="input-group input-group-merge">
-                                                    <span id="basic-icon-default-message2" class="input-group-text"><i class="bx bx-dollar"></i></span>
-                                                    <input type="text" name="pamount" value="{{ old('pamount') }}" id="sil_amnt" class="form-control phone-mask" placeholder="Max {{ number_format(DB::table('customer_subs')->where('csId',$v->id)->sum('sub_amount') * 10,2)}}" aria-label="Min 100 USDT or 50 USDT" aria-describedby="sil_amnt" />
+                                        <!-- Available Balance Display Card -->
+                                        <div class="balance-card">
+                                            <div class="balance-card-header">
+                                                <i class="bx bx-wallet-alt balance-icon"></i>
+                                                <span>Available Balance</span>
+                                            </div>
+                                            <div class="balance-amount-wrapper">
+                                                <span class="balance-number" id="stake_available_balance">0.00</span>
+                                                <span class="balance-denom">USDT</span>
+                                            </div>
+                                            <div class="balance-split">
+                                                <div class="split-item">
+                                                    <span class="split-label">Wallet</span>
+                                                    <span class="split-value"><span id="stake_wallet_balance">0.00</span> USDT</span>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="formrow row mb-3">
-                                             <div class="col-sm-10 offset-sm-2">
-                                                 <p style="margin:0; color:#ddd;">Available Balance: <strong id="stake_available_balance">0.00</strong> USDT (Wallet: <span id="stake_wallet_balance">0.00</span> USDT + Transfer Credit: <span id="stake_credit_balance">0.00</span> USDT)</p>
-                                             </div>
-                                         </div>
-
-
-                                        <div class="formrow mb-3">
-                                            <label class="col-sm-2 form-label" for="stake_tpassword">Transaction password</label>
-                                            <div class="col-sm-10">
-                                                <div class="input-group input-group-merge">
-                                                    <span class="input-group-text">
-                                                        <img src="https://cdn-icons-png.freepik.com/512/10204/10204254.png" style="height: 14px;">
-                                                    </span>
-                                                    <input type="password" name="tpassword" value="{{ old('tpassword') }}" id="stake_tpassword" class="form-control" placeholder="Transaction password" aria-label="Transaction password" />
-                                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('stake_tpassword', this)">
-                                                        <i class="bx bx-hide"></i>
-                                                    </span>
+                                                <div class="split-divider"></div>
+                                                <div class="split-item">
+                                                    <span class="split-label">Transfer Credit</span>
+                                                    <span class="split-value"><span id="stake_credit_balance">0.00</span> USDT</span>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <!-- <div class="formrow mb-3">
-                                                    <label
-                                                        class="col-sm-2 form-label"
-                                                        for="basic-icon-default-message">TxID</label>
-                                                    <div class="col-sm-10">
-                                                        <div
-                                                            class="input-group input-group-merge">
-                                                            <span
-                                                                id="basic-icon-default-message2"
-                                                                class="input-group-text">
-                                                                <img src="https://cdn-icons-png.freepik.com/512/10204/10204254.png" style="height: 14px;">
-                                                            </span>
-                                                            <input
-                                                                type="text"
-                                                                name="txid"
-                                                                value="{{ old('txid') }}"
-                                                                id="basic-icon-default-message2"
-                                                                class="form-control phone-mask"
-                                                                placeholder="TXID"
-                                                                aria-label="TXID"
-                                                                aria-describedby="basic-icon-default-message2" />
-                                                        </div>
-                                                    </div>
-                                                </div> -->
+                                        <!-- Amount Field -->
+                                        <div id="diam_amnt_container" class="mb-4">
+                                            <label class="input-label-custom" for="sil_amnt">Amount</label>
+                                            <div class="input-group-custom">
+                                                <div class="input-icon-custom">
+                                                    <i class="bx bx-dollar"></i>
+                                                </div>
+                                                <input type="text" name="pamount" value="{{ old('pamount') }}" id="sil_amnt" class="input-field-custom" placeholder="Max {{ number_format(DB::table('customer_subs')->where('csId',$v->id)->sum('sub_amount') * 10,2)}}" aria-label="Amount" />
+                                            </div>
+                                        </div>
 
-
-                                        <!-- <div class="formrow row mb-3">
-                                                    <label
-                                                        class="col-sm-2 col-form-label"
-                                                        for="basic-icon-default-screenshot">Payment
-                                                        Screenshot</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="file"
-                                                            name="image"
-                                                            id="basic-icon-default-screenshot"
-                                                            class="form-control"
-                                                            accept="image/*">
-                                                    </div>
-                                                </div> -->
-                                        <div style="height:20px"></div>
-                                        <div class="formrow row mb-3" style="display:none;">
-                                            <label class="col-sm-2 form-label" for="basic-icon-default-message">Remark</label>
-                                            <div class="col-sm-10">
-                                                <div class="input-group input-group-merge">
-                                                    <span id="basic-icon-default-message2" class="input-group-text">
-                                                        <!-- <i class="bx bx-comment"></i> -->
-                                                        <img src="https://cdn-icons-png.flaticon.com/512/2593/2593491.png" style="height: 14px;">
-                                                    </span>
-                                                    <input type="text" name="msg" value="{{ old('msg') }}" id="basic-icon-default-message2" class="form-control phone-mask" placeholder="Remark" aria-label="Remark" aria-describedby="basic-icon-default-message2" />
+                                        <!-- Transaction Password Field -->
+                                        <div class="mb-4">
+                                            <label class="input-label-custom" for="stake_tpassword">Transaction Password</label>
+                                            <div class="input-group-custom">
+                                                <div class="input-icon-custom">
+                                                    <i class="bx bx-lock-alt"></i>
+                                                </div>
+                                                <input type="password" name="tpassword" value="{{ old('tpassword') }}" id="stake_tpassword" class="input-field-custom" placeholder="Enter Transaction password" aria-label="Transaction Password" />
+                                                <div class="input-action-custom cursor-pointer" onclick="togglePasswordVisibility('stake_tpassword', this)">
+                                                    <i class="bx bx-hide"></i>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row justify-content-end">
-                                            <div class="" style="display: flex; justify-content: end;">
-                                                <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-secondary">Cancel</button>
-                                                <button style="margin-left: 10px;" type="submit" class="btn btn-primary">Confirm</button>
-                                            </div>
+
+                                        <!-- Form Buttons -->
+                                        <div class="d-flex justify-content-end gap-2 mt-4 pt-2">
+                                            <button type="button" data-bs-dismiss="modal" aria-label="Close" class="btn-cancel-custom">Cancel</button>
+                                            <button type="submit" class="btn-confirm-custom">Confirm</button>
                                         </div>
                                     </form>
                                 </div>

@@ -248,7 +248,12 @@ if (count($nplans) == 0) {
         }
 
         .welcome-title {
+            display: block;
             font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 160px;
         }
 
         .welcome-title .username {
@@ -257,6 +262,10 @@ if (count($nplans) == 0) {
 
         .time-badge {
             padding: 4px 10px;
+        }
+
+        .nav-center {
+            margin: 0 8px;
         }
     }
 
@@ -322,8 +331,8 @@ if (count($nplans) == 0) {
             </a>
         </div>
 
-        <!-- Center Section: Welcome message (Desktop and tablet) -->
-        <div class="nav-center d-none d-md-flex">
+        <!-- Center Section: Welcome message -->
+        <div class="nav-center d-flex">
             <div class="welcome-box">
                 <span class="welcome-title">Hi <span class="username">{{ $v->name }}</span>,</span>
                 <span class="welcome-subtitle">We're excited to have you as part of our community</span>

@@ -26,19 +26,19 @@ $i = 0;
 
     <style>
         :root {
-            --bg-deep: #080a12;
-            --bg-card: #0e1120;
-            --bg-card2: #111525;
-            --border: rgba(255, 255, 255, 0.06);
-            --gold: #f5c518;
-            --gold2: #ff8c00;
-            --green: #22d17a;
-            --blue: #4fa3f7;
-            --purple: #b97aff;
-            --red: #ff5f5f;
-            --text-main: #e8edf8;
-            --text-sub: #8892ae;
-            --text-muted: #5a6480;
+            --bg-deep: #05060b;
+            --bg-card: #0c0e1a;
+            --bg-card2: #101322;
+            --border: rgba(255, 255, 255, 0.08);
+            --gold: #ffd700;
+            --gold2: #ff9f43;
+            --green: #00ff87;
+            --blue: #38bdf8;
+            --purple: #d783ff;
+            --red: #ff6b6b;
+            --text-main: #ffffff;
+            --text-sub: #cbd5e1;
+            --text-muted: #94a3b8;
         }
 
         * {
@@ -471,13 +471,13 @@ $i = 0;
         }
 
         .data-table tbody tr:hover {
-            background: rgba(245, 197, 24, 0.025);
+            background: rgba(255, 255, 255, 0.04) !important;
         }
 
         .data-table td {
             padding: 14px 16px;
             font-size: 0.8rem;
-            color: #8892ae;
+            color: var(--text-sub);
             white-space: nowrap;
             vertical-align: middle;
             border: none !important;
@@ -485,7 +485,7 @@ $i = 0;
 
         /* Cells */
         .cell-num {
-            color: #5a6480;
+            color: var(--text-muted);
             font-size: 0.7rem;
             font-weight: 700;
             text-align: center;
@@ -497,13 +497,13 @@ $i = 0;
         }
 
         .cell-date .d1 {
-            color: #c2cce8;
+            color: #ffffff;
             font-size: 0.78rem;
             font-weight: 600;
         }
 
         .cell-date .d2 {
-            color: #8892ae;
+            color: var(--text-sub);
             font-size: 0.68rem;
         }
 
@@ -538,7 +538,7 @@ $i = 0;
         }
 
         .mem-link {
-            color: #c2cce8;
+            color: #ffffff;
             font-weight: 600;
             font-size: 0.83rem;
             text-decoration: none;
@@ -547,15 +547,16 @@ $i = 0;
 
         .mem-link:hover {
             color: var(--gold);
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
         }
 
         .ref-cell {
-            color: #8892ae;
+            color: var(--text-sub);
             font-size: 0.76rem;
         }
 
         .ref-cell .ref-name {
-            color: #aab4cc;
+            color: #e2e8f0;
             font-weight: 500;
         }
 
@@ -683,25 +684,87 @@ $i = 0;
 
         /* Phone */
         .phone-v {
+            background: rgba(34, 209, 122, 0.08);
+            border: 1px solid rgba(34, 209, 122, 0.2);
+            padding: 4px 8px;
+            border-radius: 6px;
             color: var(--green);
-            font-size: 0.75rem;
+            font-weight: 500;
+            font-size: 0.72rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .phone-u {
+            background: rgba(79, 163, 247, 0.08);
+            border: 1px solid rgba(79, 163, 247, 0.2);
+            padding: 4px 8px;
+            border-radius: 6px;
             color: var(--blue);
-            font-size: 0.75rem;
+            font-weight: 500;
+            font-size: 0.72rem;
+            display: inline-flex;
+            align-items: center;
         }
 
-        /* Total row */
-        .total-row td {
-            background: rgba(245, 197, 24, 0.04) !important;
-            border-top: 2px solid rgba(245, 197, 24, 0.12) !important;
+        /* ── Totals Row CSS ── */
+        .data-table tr.total-row td {
+            background: rgba(255, 255, 255, 0.015) !important;
+            font-weight: 800 !important;
+            padding: 16px;
+            font-size: 0.82rem;
+            vertical-align: middle;
+            border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .data-table tr.page-total td {
+            background: rgba(79, 163, 247, 0.03) !important;
+            border-top: 2px solid rgba(79, 163, 247, 0.2) !important;
+            border-bottom: 1px solid rgba(79, 163, 247, 0.1) !important;
+        }
+
+        .data-table tr.page-total .total-lbl {
+            color: var(--blue) !important;
+        }
+
+        .data-table tr.platform-total td {
+            background: rgba(245, 197, 24, 0.03) !important;
+            border-top: 1px solid rgba(245, 197, 24, 0.1) !important;
+            border-bottom: 2px solid rgba(245, 197, 24, 0.25) !important;
+        }
+
+        .data-table tr.platform-total .total-lbl {
+            color: var(--gold) !important;
         }
 
         .total-lbl {
-            color: var(--gold) !important;
             font-weight: 800 !important;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-size: 0.78rem !important;
+        }
+
+        .text-end {
+            text-align: right !important;
+        }
+
+        /* Scrollbar styling for table container */
+        .data-table-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        .data-table-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        .data-table-scroll::-webkit-scrollbar-thumb {
+            background: rgba(245, 197, 24, 0.12);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .data-table-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(245, 197, 24, 0.3);
         }
 
         /* Table footer bar */
@@ -856,6 +919,7 @@ $i = 0;
                                             <th>User ID</th>
                                             <th>Status</th>
                                             <th>Sub (USDT)</th>
+                                            <th>AutoPoll (USDT)</th>
                                             <th>Staked (USDT)</th>
                                             <th>Phone</th>
                                             <th>Profit</th>
@@ -867,6 +931,15 @@ $i = 0;
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                        $sumSub = 0;
+                                        $sumAutoPoll = 0;
+                                        $sumStaked = 0;
+                                        $sumProfit = 0;
+                                        $sumBalance = 0;
+                                        $sumTotalInc = 0;
+                                        @endphp
+
                                         @foreach($customers as $cstomer)
                                         @if($cstomer->email != 'forvcom000@gmail.com')
                                         @php
@@ -888,6 +961,16 @@ $i = 0;
                                         $profit = DB::table('customer_transactions')->where('csId',$cstomer->id)->where('tType','pincome')->sum('tAmount');
                                         $balance = DB::table('customer_transactions')->where('csId',$cstomer->id)->where('wStatus','0')->sum('tAmount');
                                         $totalInc = DB::table('customer_transactions')->where('csId',$cstomer->id)->sum('tAmount');
+
+                                        $subAmount = DB::table('customer_subs')->where('csId',$cstomer->id)->where('status','completed')->sum('sub_amount');
+                                        $pollAmount = DB::table('customer_autopolls')->where('csId',$cstomer->id)->where('status','completed')->sum('poll_amount');
+
+                                        $sumSub += $subAmount;
+                                        $sumAutoPoll += $pollAmount;
+                                        $sumStaked += $ttpamnt;
+                                        $sumProfit += $profit;
+                                        $sumBalance += $balance;
+                                        $sumTotalInc += $totalInc;
                                         @endphp
                                         <tr>
                                             <td class="cell-num">{{ $i }}</td>
@@ -939,11 +1022,11 @@ $i = 0;
                                             </td>
 
                                             <td>
-                                                @if($ttpamnt > 0)
-                                                <span class="c-gold">{{ number_format(DB::table('customer_subs')->where('csId',$cstomer->id)->where('status','completed')->sum('sub_amount'), 2) }}</span>
-                                                @else
-                                                <span class="c-muted">0.00</span>
-                                                @endif
+                                                <span class="c-gold">{{ number_format($subAmount, 2) }}</span>
+                                            </td>
+
+                                            <td>
+                                                <span class="c-gold">{{ number_format($pollAmount, 2) }}</span>
                                             </td>
 
                                             <td>
@@ -965,25 +1048,40 @@ $i = 0;
                                             <td><span class="c-orange">{{ number_format($profit, 2) }}</span></td>
                                             <td><span class="c-blue">{{ number_format($balance, 2) }}</span></td>
                                             <td><span class="c-green">{{ number_format($totalInc, 2) }}</span></td>
-                                            {{-- <td><span class="c-purple">{{ number_format($mined, 8) }}</span></td>
-                                            <td><span class="c-blue">{{ number_format($refMined, 2) }}</span></td>
-                                            <td><span class="c-gold">{{ number_format($refReward, 2) }}</span></td> --}}
                                         </tr>
                                         @endif
                                         @endforeach
 
-                                        <!-- Totals row -->
-                                        <tr class="total-row">
-                                            <td colspan="3"></td>
-                                            <td colspan="2" class="total-lbl"><i class="bx bx-sigma" style="margin-right:5px;"></i>Platform Total</td>
-                                            <td class="c-gold" style="font-weight:800;">
-                                                {{ number_format(DB::table('customer_plans')->where('pstatus','1')->sum('pamount'), 2) }} USDT
-                                            </td>
-                                            <td colspan="6"></td>
-                                            <td class="c-purple" style="font-size:0.7rem;">
-                                                {{ number_format(DB::table('customer_transactions')->where('tType','mine_amount')->sum('tAmount'), 8) }}
-                                            </td>
-                                            <td colspan="2"></td>
+                                        <!-- Page/Filtered Totals row -->
+                                        <tr class="total-row page-total">
+                                            <td colspan="7" class="total-lbl text-end"><i class="bx bx-list-check" style="margin-right:5px; font-size:1.1rem; vertical-align:middle;"></i>Page Total</td>
+                                            <td class="c-gold">{{ number_format($sumSub, 2) }}</td>
+                                            <td class="c-gold">{{ number_format($sumAutoPoll, 2) }}</td>
+                                            <td class="c-gold">{{ number_format($sumStaked, 2) }}</td>
+                                            <td></td>
+                                            <td class="c-orange">{{ number_format($sumProfit, 2) }}</td>
+                                            <td class="c-blue">{{ number_format($sumBalance, 2) }}</td>
+                                            <td class="c-green">{{ number_format($sumTotalInc, 2) }}</td>
+                                        </tr>
+
+                                        <!-- Platform/Overall Totals row -->
+                                        @php
+                                        $platformSub = DB::table('customer_subs')->where('status','completed')->sum('sub_amount');
+                                        $platformPoll = DB::table('customer_autopolls')->where('status','completed')->sum('poll_amount');
+                                        $platformStaked = DB::table('customer_plans')->where('pstatus','1')->sum('pamount');
+                                        $platformProfit = DB::table('customer_transactions')->where('tType','pincome')->sum('tAmount');
+                                        $platformBalance = DB::table('customer_transactions')->where('wStatus','0')->sum('tAmount');
+                                        $platformTotalInc = DB::table('customer_transactions')->sum('tAmount');
+                                        @endphp
+                                        <tr class="total-row platform-total">
+                                            <td colspan="7" class="total-lbl text-end"><i class="bx bx-globe" style="margin-right:5px; font-size:1.1rem; vertical-align:middle;"></i>Platform Total</td>
+                                            <td class="c-gold">{{ number_format($platformSub, 2) }}</td>
+                                            <td class="c-gold">{{ number_format($platformPoll, 2) }}</td>
+                                            <td class="c-gold">{{ number_format($platformStaked, 2) }}</td>
+                                            <td></td>
+                                            <td class="c-orange">{{ number_format($platformProfit, 2) }}</td>
+                                            <td class="c-blue">{{ number_format($platformBalance, 2) }}</td>
+                                            <td class="c-green">{{ number_format($platformTotalInc, 2) }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

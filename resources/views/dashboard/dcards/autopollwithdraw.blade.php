@@ -40,7 +40,7 @@
 
                     <div class="mb-3">
                         <label for="poll_wth_gross_amount" class="form-label text-white">Withdrawal Amount (USDT)</label>
-                        <input id="poll_wth_gross_amount" type="number" min="10" step="any" max="{{ $available_poll_withdraw }}" class="form-control" style="background-color: #222; border: 1px solid #444; color: #fff;" placeholder="Max: {{ number_format($available_poll_withdraw, 2) }}" required>
+                        <input id="poll_wth_gross_amount" type="number" min="10" step="any" max="{{ $available_poll_withdraw }}" class="form-control" style="background-color: #222; border: 1px solid #444; color: #fff;" placeholder="Min: 10 & Max: {{ number_format($available_poll_withdraw, 2) }}" required>
                     </div>
 
                     <div class="row mb-3">
