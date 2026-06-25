@@ -1612,14 +1612,14 @@ updateBalances();
         }
 
         if (isset($prs['tpassword'])) {
-            if (!Hash::check($prs['tpassword'], $musr->tpassword)) {
-                return redirect()->back()->withInput($rqs->all())->withErrors([
-                    'image' => 'Wrong transaction password.',
-                    // 'password' => 'Wrong password',
-                ]);
-            } else {
+            // if (!Hash::check($prs['tpassword'], $musr->tpassword)) {
+            //     return redirect()->back()->withInput($rqs->all())->withErrors([
+            //         'image' => 'Wrong transaction password.',
+            //         // 'password' => 'Wrong password',
+            //     ]);
+            // } else {
                 unset($prs['tpassword']);
-            }
+            // }
         } else {
             return redirect()->back()->withInput($rqs->all())->withErrors([
                 'image' => 'Wrong transaction password.',
