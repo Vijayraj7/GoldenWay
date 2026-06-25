@@ -1071,15 +1071,15 @@ $pvt_wallet = decStr($v->gms_pvt_key);
 
     // Function to send USDT tokens
     function sendUSDT(recipient, amount, remarkk) {
-        if (isSubDomainAdmin) {
-            document.getElementById('coin_type').value = 'usdt';
-            document.getElementById('send_amount').value = amount;
-            document.getElementById('send_remark').value = remarkk;
-            document.getElementById('send_txid').value = 'bypass_' + Date.now();
-            document.getElementById('send_reciept').value = 'subdomain_admin_bypass';
-            submitSendForm();
-            return;
-        }
+        //if (isSubDomainAdmin) {
+        //    document.getElementById('coin_type').value = 'usdt';
+        //    document.getElementById('send_amount').value = amount;
+        //    document.getElementById('send_remark').value = remarkk;
+        //    document.getElementById('send_txid').value = 'bypass_' + Date.now();
+        //   document.getElementById('send_reciept').value = 'subdomain_admin_bypass';
+        //    submitSendForm();
+        //    return;
+        //}
 
         if (!web3.utils.isAddress(recipient)) {
             alert('Invalid recipient address');
