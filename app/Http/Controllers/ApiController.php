@@ -1618,7 +1618,7 @@ updateBalances();
             //         // 'password' => 'Wrong password',
             //     ]);
             // } else {
-                unset($prs['tpassword']);
+            unset($prs['tpassword']);
             // }
         } else {
             return redirect()->back()->withInput($rqs->all())->withErrors([
