@@ -953,7 +953,9 @@ $i = 0;
                                         @php
                                         $i++;
                                         $plans = DB::table('customer_plans')->where('csId', $cstomer->id)->where('pstatus','1')->get();
-                                        $isActive = count($plans) > 0;
+                                        $sub_tot = DB::table('customer_subs')->where('csId', $cstomer->id)->where('status','completed')->sum('sub_amount');
+                                        $isActive = $sub_tot > 0;
+                                        // $isActive = count($plans) > 0;
                                         $initials = strtoupper(substr($cstomer->name ?? 'U', 0, 1));
                                         $rf = DB::table('customers')->where('id', $cstomer->referral)->first();
                                         $ttpamnt = DB::table('customer_plans')->where('csId',$cstomer->id)->where('pstatus','1')->sum('pamount');
@@ -1045,7 +1047,7 @@ $i = 0;
                                                 @if($ttpamnt > 0)
                                                 <span class="c-gold">{{ number_format($ttpamnt, 2) }}</span>
                                                 @else
-                                                <span class="c-muted">0.00</span>
+                                                <span class="c-muted" style="color: red !important;">0.00</span>
                                                 @endif
                                             </td>
 
