@@ -1036,11 +1036,19 @@ $i = 0;
                                             </td>
 
                                             <td>
+                                                @if($subAmount == 0 && $pollAmount == 0)
+                                                <span class="c-red">{{ number_format($subAmount, 2) }}</span>
+                                                @else
                                                 <span class="c-purple">{{ number_format($subAmount, 2) }}</span>
+                                                @endif
                                             </td>
 
                                             <td>
+                                                @if($subAmount == 0 && $pollAmount == 0)
+                                                <span class="c-red">{{ number_format($pollAmount, 2) }}</span>
+                                                @else
                                                 <span class="c-blue">{{ number_format($pollAmount, 2) }}</span>
+                                                @endif
                                             </td>
 
                                             <td>
