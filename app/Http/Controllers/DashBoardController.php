@@ -187,6 +187,12 @@ class DashBoardController extends Controller
         return $h->getboth('dashboard.vendor.reftree', ['refid' => $id]);
     }
 
+    public function myreferrals()
+    {
+        $h = new HelperController;
+        return $h->getboth('dashboard.vendor.myreferrals');
+    }
+
     public function addproduct()
     {
         $h = new HelperController;

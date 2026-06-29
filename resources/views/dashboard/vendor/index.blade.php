@@ -1340,7 +1340,7 @@ if (count($plans) == 0) {
                                                             <i class="bx bx-dots-vertical-rounded" style="font-size: 20px;"></i>
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOptDirectVol" style="background-color: #0c2820; border: 1px solid rgba(249, 168, 38, 0.25);">
-                                                            <a class="dropdown-item text-white" href="/dashboard/reftree/{{ $v->id }}">View</a>
+                                                            <a class="dropdown-item text-white" href="/dashboard/myreferrals">View</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1439,7 +1439,7 @@ if (count($plans) == 0) {
                                                             <i class="bx bx-dots-vertical-rounded" style="font-size: 20px;"></i>
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOptTotalVol" style="background-color: #0c2820; border: 1px solid rgba(249, 168, 38, 0.25);">
-                                                            <a class="dropdown-item text-white" href="/dashboard/reftree/{{ $v->id }}">View</a>
+                                                            <a class="dropdown-item text-white" href="/dashboard/myreferrals">View</a>
                                                         </div>
                                                     </div>
                                                 </div>

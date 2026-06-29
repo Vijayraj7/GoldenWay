@@ -225,6 +225,12 @@
                 <div data-i18n="Basic">Community</div>
             </a>
         </li>
+        <li class="menu-item @if($r == 'my_referrals') active @endif">
+            <a href="/dashboard/myreferrals" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div data-i18n="Basic">My Referrals</div>
+            </a>
+        </li>
         <li class="menu-item @if($r == 'marketsummary') active @endif">
             <a href="/dashboard/market/summary" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-stats"></i>

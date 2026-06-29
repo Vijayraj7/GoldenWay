@@ -110,6 +110,7 @@ Route::get('/dashboard/refincome', 'App\Http\Controllers\DashBoardController@ref
 Route::get('/dashboard/levincome/{lev}', 'App\Http\Controllers\DashBoardController@levincome');
 Route::get('/dashboard/profile', 'App\Http\Controllers\DashBoardController@profile');
 Route::get('/dashboard/reftree', 'App\Http\Controllers\DashBoardController@reftree');
+Route::get('/dashboard/myreferrals', 'App\Http\Controllers\DashBoardController@myreferrals');
 Route::get('/dashboard/customer/support', 'App\Http\Controllers\DashBoardController@support');
 Route::get('/dashboard/reftree/{id}', 'App\Http\Controllers\DashBoardController@reftreep');
 Route::get('/dashboard/profile/vendor', 'App\Http\Controllers\DashBoardController@vendorprofile');
