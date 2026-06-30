@@ -86,6 +86,36 @@
             color: #ffd700 !important;
         }
 
+        .input-group-merge .form-control {
+            border-right: none !important;
+            border-top-right-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+        }
+
+        .input-group-merge .input-group-text {
+            border-left: none !important;
+            border-top-left-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border-top-right-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;
+            cursor: pointer;
+        }
+
+        .input-group:focus-within {
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.3) !important;
+            border-radius: 8px !important;
+        }
+
+        .input-group:focus-within .form-control {
+            border-color: #ffd700 !important;
+            box-shadow: none !important;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: #ffd700 !important;
+            background-color: rgba(5, 20, 16, 0.8) !important;
+        }
+
         .btn-primary,
         button[type="submit"],
         .btn-submit {
@@ -150,25 +180,45 @@
                             <!-- Login Password Input -->
                             <div class="mb-3">
                                 <label for="password" class="form-label">New Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required placeholder="New Login Password" style="padding: 12px 16px;">
+                                <div class="input-group input-group-merge">
+                                    <input type="password" class="form-control" id="password" name="password" required placeholder="New Login Password" style="padding: 12px 16px;">
+                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('password', this)">
+                                        <i class="bx bx-hide"></i>
+                                    </span>
+                                </div>
                             </div>
 
                             <!-- Confirm Login Password Input -->
                             <div class="mb-3">
                                 <label for="spassword" class="form-label">Confirm New Password</label>
-                                <input type="password" class="form-control" id="spassword" name="spassword" required placeholder="Confirm New Login Password" style="padding: 12px 16px;">
+                                <div class="input-group input-group-merge">
+                                    <input type="password" class="form-control" id="spassword" name="spassword" required placeholder="Confirm New Login Password" style="padding: 12px 16px;">
+                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('spassword', this)">
+                                        <i class="bx bx-hide"></i>
+                                    </span>
+                                </div>
                             </div>
 
                             <!-- Transaction Password Input -->
                             <div class="mb-3">
                                 <label for="tpassword" class="form-label">New Transaction Password</label>
-                                <input type="password" class="form-control" id="tpassword" name="tpassword" required placeholder="New Transaction Password" style="padding: 12px 16px;">
+                                <div class="input-group input-group-merge">
+                                    <input type="password" class="form-control" id="tpassword" name="tpassword" required placeholder="New Transaction Password" style="padding: 12px 16px;">
+                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('tpassword', this)">
+                                        <i class="bx bx-hide"></i>
+                                    </span>
+                                </div>
                             </div>
 
                             <!-- Confirm Transaction Password Input -->
                             <div class="mb-4">
                                 <label for="stpassword" class="form-label">Confirm Transaction Password</label>
-                                <input type="password" class="form-control" id="stpassword" name="stpassword" required placeholder="Confirm Transaction Password" style="padding: 12px 16px;">
+                                <div class="input-group input-group-merge">
+                                    <input type="password" class="form-control" id="stpassword" name="stpassword" required placeholder="Confirm Transaction Password" style="padding: 12px 16px;">
+                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('stpassword', this)">
+                                        <i class="bx bx-hide"></i>
+                                    </span>
+                                </div>
                             </div>
 
                             @error("password")
@@ -186,6 +236,21 @@
             </div>
         </div>
     </div>
+    <script>
+        function togglePasswordVisibility(id, btn) {
+            var input = document.getElementById(id);
+            var icon = btn.querySelector('i');
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove('bx-hide');
+                icon.classList.add('bx-show');
+            } else {
+                input.type = "password";
+                icon.classList.remove('bx-show');
+                icon.classList.add('bx-hide');
+            }
+        }
+    </script>
 </body>
 </html>
 @elseif($st == 'after')
