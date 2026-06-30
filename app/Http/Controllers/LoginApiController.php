@@ -121,7 +121,7 @@ class LoginApiController extends Controller
         $nuser = User::firstOrCreate(
             ['uid' => $uid],
             [
-                'email' => $rqd->email,
+                'email' => $uid,
                 'name' => $rqd->name,
                 'password' => $pas,
             ]
