@@ -167,7 +167,7 @@ class LoginApiController extends Controller
         }
 
         // $credentials = $rqs->only('email', 'password');
-        if (Auth::attempt(['email' => $rqd->email, 'password' => $pas])) {
+        if (Auth::attempt(['email' => $uid, 'password' => $pas])) {
             $rqs->session()->regenerate();
             session_start();
             $_SESSION["mail"] = $rqd->email;
