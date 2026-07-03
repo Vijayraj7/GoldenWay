@@ -35,7 +35,7 @@
         <li class="menu-item @if($r == 'incomeanalytics') active @endif">
             <a href="/admin/customers/income" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-dollar-circle"></i>
-                <div data-i18n="Analytics">Income Analytics</div>
+                <div data-i18n="Analytics">Business Analytics</div>
             </a>
         </li>
         <li class="menu-item @if($r == 'referraltree') active @endif">
