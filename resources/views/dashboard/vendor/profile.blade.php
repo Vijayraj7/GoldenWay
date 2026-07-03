@@ -432,7 +432,8 @@ if (isset($_GET['prfid'])) {
                           <div class="col-md-6 info-field">
                             <div class="info-field-label">Sponsor</div>
                             <div class="info-field-value">
-                              <a href="/dashboard/profile?prfid={{$susr->id}}">{{ $susr->name }}</a>
+                              <!-- <a href="/dashboard/profile?prfid={{$susr->id}}">{{ $susr->name }}</a> -->
+                              <span>{{ $susr->name }}</span>
                               <span style="font-size: 0.8rem; color: rgba(255,255,255,0.4);">ID: {{ $susr->id }}</span>
                               <button class="copy-icon-btn" onclick="copyToClipboard('{{ $susr->id }}', this)"
                                 title="Copy Sponsor ID">
