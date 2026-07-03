@@ -4,6 +4,9 @@ ini_set('display_errors', 1);
 use Carbon\Carbon;
 
 $fromDate = $_GET['from_date'] ?? '';
+if ($fromDate == '' || strtotime($fromDate) < strtotime('2026-06-17')) {
+    $fromDate = '2026-06-17';
+}
 $toDate = $_GET['to_date'] ?? '';
 if (isset($_GET['today']) && $_GET['today'] == '1') {
     $fromDate = date('Y-m-d');
