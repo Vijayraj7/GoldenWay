@@ -10,180 +10,59 @@ if (isset($_GET['today']) && $_GET['today'] == '1') {
     $toDate = date('Y-m-d');
 }
 
-// Function to conditionally apply date filters to builders
-$applyDateFilter = function($query, $dateColumn = 'created_at') use ($fromDate, $toDate) {
-    if ($fromDate != '') {
-        $query->where($dateColumn, '>=', $fromDate . ' 00:00:00');
-    }
-    if ($toDate != '') {
-        $query->where($dateColumn, '<=', $toDate . ' 23:59:59');
-    }
-    return $query;
-};
-
-// Get list of customer IDs that have completed subscriptions
-$subscribedCustomerIds = DB::table('customer_subs')->where('status', 'completed')->pluck('csId')->unique()->toArray();
-
-// Fetch customers based on search query
-if (isset($_GET['srch']) && $_GET['srch'] != '') {
-    $srch = $_GET['srch'];
-    $customers = DB::table('customers')
-        ->where('email', '!=', 'forvcom000@gmail.com')
-        ->whereIn('id', $subscribedCustomerIds)
-        ->where(function($q) use ($srch) {
-            $q->where('name', 'like', "%$srch%")
-              ->orWhere('uid', 'like', "%$srch%");
-        })
-        ->get();
-} elseif (isset($_GET['cid'])) {
-    $customers = DB::table('customers')
-        ->where('email', '!=', 'forvcom000@gmail.com')
-        ->whereIn('id', $subscribedCustomerIds)
-        ->where('id', $_GET['cid'])
-        ->get();
-} else {
-    $customers = DB::table('customers')
-        ->where('email', '!=', 'forvcom000@gmail.com')
-        ->whereIn('id', $subscribedCustomerIds)
-        ->get();
+// 1. Subscription Daily Totals
+$subsQuery = DB::table('customer_subs')->where('status', 'completed');
+if ($fromDate != '') {
+    $subsQuery->where('created_at', '>=', $fromDate . ' 00:00:00');
 }
-
-$totalCount = $customers->count();
-
-// Pre-fetch all financial sums per customer csId to optimize performance
-$refIncomesQuery = DB::table('customer_transactions')->where('tType', 'refincome')->where('wStatus', '0');
-$applyDateFilter($refIncomesQuery);
-$refIncomes = $refIncomesQuery->groupBy('csId')->pluck(DB::raw('SUM(tAmount)'), 'csId');
-
-$levelIncomesQuery = DB::table('customer_transactions')->where('tType', 'levincome')->where('wStatus', '0');
-$applyDateFilter($levelIncomesQuery);
-$levelIncomes = $levelIncomesQuery->groupBy('csId')->pluck(DB::raw('SUM(tAmount)'), 'csId');
-
-$stakeIncomesQuery = DB::table('customer_transactions')->whereIn('tType', ['pincome', 'stake_income'])->where('wStatus', '0');
-$applyDateFilter($stakeIncomesQuery);
-$stakeIncomes = $stakeIncomesQuery->groupBy('csId')->pluck(DB::raw('SUM(tAmount)'), 'csId');
-
-$subIncomesQuery = DB::table('customer_transactions')->where('tType', 'sub_income')->where('wStatus', '0');
-$applyDateFilter($subIncomesQuery);
-$subIncomes = $subIncomesQuery->groupBy('csId')->pluck(DB::raw('SUM(tAmount)'), 'csId');
-
-$autopollIncomesQuery = DB::table('customer_poll_transactions')->where('tType', 'pollincome')->where('wStatus', '0');
-$applyDateFilter($autopollIncomesQuery);
-$autopollIncomes = $autopollIncomesQuery->groupBy('csId')->pluck(DB::raw('SUM(tamount)'), 'csId');
-
-// Fetch all customers map and calculate user total incomes map for downline analytics
-$customersMap = DB::table('customers')->select('id', 'left', 'right')->get()->keyBy('id');
-
-$userTotalIncomesMap = [];
-foreach ($customersMap as $cid => $c) {
-    $sum = (float) ($refIncomes[$cid] ?? 0.0) +
-           (float) ($levelIncomes[$cid] ?? 0.0) +
-           (float) ($stakeIncomes[$cid] ?? 0.0) +
-           (float) ($subIncomes[$cid] ?? 0.0) +
-           (float) ($autopollIncomes[$cid] ?? 0.0);
-    $userTotalIncomesMap[$cid] = $sum;
+if ($toDate != '') {
+    $subsQuery->where('created_at', '<=', $toDate . ' 23:59:59');
 }
+$subsDaily = $subsQuery->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(sub_amount) as total'))
+    ->groupBy('date')
+    ->pluck('total', 'date');
 
-if (!function_exists('getDownlineIds')) {
-    function getDownlineIds($startId, $customersMap)
-    {
-        if (!$startId || !isset($customersMap[$startId])) {
-            return [];
-        }
-        $ids = [];
-        $queue = [$startId];
-        while (!empty($queue)) {
-            $currId = array_shift($queue);
-            $ids[] = $currId;
-            $curr = $customersMap[$currId] ?? null;
-            if ($curr) {
-                if ($curr->left && isset($customersMap[$curr->left])) {
-                    $queue[] = $curr->left;
-                }
-                if ($curr->right && isset($customersMap[$curr->right])) {
-                    $queue[] = $curr->right;
-                }
-            }
-        }
-        return $ids;
-    }
+// 2. Staking/Plans Daily Totals
+$plansQuery = DB::table('customer_plans');
+if ($fromDate != '') {
+    $plansQuery->where('created_at', '>=', $fromDate . ' 00:00:00');
 }
-
-// Staking Active Plans
-$stakedSumsQuery = DB::table('customer_plans')->where('pstatus', '1');
-$applyDateFilter($stakedSumsQuery);
-$stakedSums = $stakedSumsQuery->groupBy('csId')->pluck(DB::raw('SUM(pamount)'), 'csId');
-
-// Autopoll Entry Spending
-$autopollSpendQuery = DB::table('customer_autopolls')->where('status', 'completed');
-$applyDateFilter($autopollSpendQuery);
-$autopollSpend = $autopollSpendQuery->groupBy('csId')->pluck(DB::raw('SUM(poll_amount)'), 'csId');
-
-// Subscription Entry Spending
-$subSpendQuery = DB::table('customer_subs')->where('status', 'completed');
-$applyDateFilter($subSpendQuery);
-$subSpend = $subSpendQuery->groupBy('csId')->pluck(DB::raw('SUM(sub_amount)'), 'csId');
-
-
-
-// Calculate grand totals of the filtered customers
-$totalSumRef = 0;
-$totalSumLevel = 0;
-$totalSumStake = 0;
-$totalSumPoll = 0;
-$totalSumSub = 0;
-$totalSumActiveStake = 0;
-$totalSumPollSpent = 0;
-$totalSumSubSpent = 0;
-$totalSumEarnings = 0;
-$totalSumLeftDlIncome = 0;
-$totalSumRightDlIncome = 0;
-
-foreach ($customers as $customer) {
-    $refAmt = (float) ($refIncomes[$customer->id] ?? 0.0);
-    $levAmt = (float) ($levelIncomes[$customer->id] ?? 0.0);
-    $stkAmt = (float) ($stakeIncomes[$customer->id] ?? 0.0);
-    $subAmt = (float) ($subIncomes[$customer->id] ?? 0.0);
-    $pollAmt = (float) ($autopollIncomes[$customer->id] ?? 0.0);
-    
-    $activeStk = (float) ($stakedSums[$customer->id] ?? 0.0);
-    $pollSpent = (float) ($autopollSpend[$customer->id] ?? 0.0);
-    $subSpent = (float) ($subSpend[$customer->id] ?? 0.0);
-    
-    $userTotalEarnings = $refAmt + $levAmt + $stkAmt + $subAmt + $pollAmt;
-    
-    $downlineLeftIds = getDownlineIds($customer->left, $customersMap);
-    $downlineRightIds = getDownlineIds($customer->right, $customersMap);
-    
-    $userLeftDlIncome = 0;
-    foreach ($downlineLeftIds as $dlId) {
-        $userLeftDlIncome += $userTotalIncomesMap[$dlId] ?? 0.0;
-    }
-    
-    $userRightDlIncome = 0;
-    foreach ($downlineRightIds as $drId) {
-        $userRightDlIncome += $userTotalIncomesMap[$drId] ?? 0.0;
-    }
-    
-    $totalSumRef += $refAmt;
-    $totalSumLevel += $levAmt;
-    $totalSumStake += $stkAmt;
-    $totalSumPoll += $pollAmt;
-    $totalSumSub += $subAmt;
-    $totalSumActiveStake += $activeStk;
-    $totalSumPollSpent += $pollSpent;
-    $totalSumSubSpent += $subSpent;
-    $totalSumEarnings += $userTotalEarnings;
-    $totalSumLeftDlIncome += $userLeftDlIncome;
-    $totalSumRightDlIncome += $userRightDlIncome;
+if ($toDate != '') {
+    $plansQuery->where('created_at', '<=', $toDate . ' 23:59:59');
 }
+$plansDaily = $plansQuery->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(pamount) as total'))
+    ->groupBy('date')
+    ->pluck('total', 'date');
 
-$platformRef = $totalSumRef;
-$platformLevel = $totalSumLevel;
-$platformStake = $totalSumStake;
-$platformSub = $totalSumSub;
-$platformPoll = $totalSumPoll;
-$platformTotalIncome = $totalSumEarnings;
+// 3. Autopoll Daily Totals
+$pollsQuery = DB::table('customer_autopolls')->where('status', 'completed');
+if ($fromDate != '') {
+    $pollsQuery->where('created_at', '>=', $fromDate . ' 00:00:00');
+}
+if ($toDate != '') {
+    $pollsQuery->where('created_at', '<=', $toDate . ' 23:59:59');
+}
+$pollsDaily = $pollsQuery->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(poll_amount) as total'))
+    ->groupBy('date')
+    ->pluck('total', 'date');
+
+// Merge all unique dates
+$allDates = array_unique(array_merge(
+    array_keys($subsDaily->toArray()),
+    array_keys($plansDaily->toArray()),
+    array_keys($pollsDaily->toArray())
+));
+
+// Sort the dates in descending order (newest first)
+rsort($allDates);
+
+// Calculate totals for the summary / statistics cards
+$platformSub = $subsDaily->sum();
+$platformStake = $plansDaily->sum();
+$platformPoll = $pollsDaily->sum();
+$platformTotalIncome = $platformSub + $platformStake + $platformPoll;
+
+$totalCount = count($allDates);
 
 // Build query parameter string for preserving filter state in navigation
 $queryParams = request()->only(['from_date', 'to_date']);
@@ -747,11 +626,11 @@ $i = 0;
                         <div class="hero-header">
                             <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
                                 <div>
-                                    <h1 class="hero-title">Income Analytics</h1>
-                                    <p class="hero-sub">Platform-wide customer earnings, investments and autopool distribution tracking</p>
+                                    <h1 class="hero-title">Daily Business Volume</h1>
+                                    <p class="hero-sub">Day-by-day volume tracking of subscriptions, staking plans and autopolls</p>
                                 </div>
                                 <span class="hero-badge">
-                                    <i class="bx bx-analyse"></i> Live Financial Auditing
+                                    <i class="bx bx-analyse"></i> Live Business Auditing
                                 </span>
                             </div>
                         </div>
@@ -760,27 +639,27 @@ $i = 0;
                         <div class="stat-grid">
                             <div class="stat-card s-gold">
                                 <div class="stat-icon-wrap"><i class="bx bx-wallet"></i></div>
-                                <div class="stat-label">Total Platform Income</div>
+                                <div class="stat-label">Total Platform Volume</div>
                                 <div class="stat-value">{{ number_format($platformTotalIncome, 2) }}<span class="stat-unit">USDT</span></div>
                                 <div class="stat-hint">Combined revenue streams</div>
                             </div>
                             <div class="stat-card s-blue">
                                 <div class="stat-icon-wrap"><i class="bx bx-trending-up"></i></div>
-                                <div class="stat-label">Auto Pool Incomes</div>
-                                <div class="stat-value">{{ number_format($platformPoll, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Distributed autopool shares</div>
+                                <div class="stat-label">Total Subscriptions</div>
+                                <div class="stat-value">{{ number_format($platformSub, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">Completed sub purchases</div>
                             </div>
                             <div class="stat-card s-green">
                                 <div class="stat-icon-wrap"><i class="bx bx-git-pull-request"></i></div>
-                                <div class="stat-label">Referral Incomes</div>
-                                <div class="stat-value">{{ number_format($platformRef, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Direct member rewards</div>
+                                <div class="stat-label">Total Staking</div>
+                                <div class="stat-value">{{ number_format($platformStake, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">Deposited stake plans</div>
                             </div>
                             <div class="stat-card s-purple">
                                 <div class="stat-icon-wrap"><i class="bx bx-group"></i></div>
-                                <div class="stat-label">Level Incomes</div>
-                                <div class="stat-value">{{ number_format($platformLevel, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Multilevel network payouts</div>
+                                <div class="stat-label">Total AutoPoll</div>
+                                <div class="stat-value">{{ number_format($platformPoll, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">Autopoll entries volume</div>
                             </div>
                         </div>
 
@@ -788,32 +667,26 @@ $i = 0;
                         <div class="filter-panel">
                             <form method="GET" action="{{ request()->url() }}" id="filterForm">
                                 <div class="row g-3 align-items-center">
-                                    <div class="col-12 col-lg-4">
-                                        <div class="search-field">
-                                            <i class="bx bx-search"></i>
-                                            <input type="search" name="srch" class="search-input" placeholder="Search customer by name or UID..." value="{{ $_GET['srch'] ?? '' }}" />
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-5">
                                         <div class="d-flex align-items-center gap-2">
                                             <span style="font-size: 12px; color: var(--text-sub); min-width: 40px;">From:</span>
                                             <input type="date" name="from_date" class="form-control" value="{{ $fromDate }}" style="background: rgba(0, 0, 0, 0.3) !important; border: 1.5px solid rgba(255,255,255,0.07) !important; color: #fff !important; color-scheme: dark; border-radius: 12px; padding: 10px 14px; font-size: 13px;">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-3">
+                                    <div class="col-12 col-md-5">
                                         <div class="d-flex align-items-center gap-2">
                                             <span style="font-size: 12px; color: var(--text-sub); min-width: 30px;">To:</span>
                                             <input type="date" name="to_date" class="form-control" value="{{ $toDate }}" style="background: rgba(0, 0, 0, 0.3) !important; border: 1.5px solid rgba(255,255,255,0.07) !important; color: #fff !important; color-scheme: dark; border-radius: 12px; padding: 10px 14px; font-size: 13px;">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-2 d-flex gap-2 justify-content-end">
+                                    <div class="col-12 col-md-2 d-flex gap-2 justify-content-end">
                                         <button type="button" onclick="setTodayFilter()" class="btn btn-sm btn-clear" style="padding: 11px 16px;">
                                             Today
                                         </button>
                                         <button type="submit" class="btn-search">
                                             Apply
                                         </button>
-                                        @if($fromDate != '' || $toDate != '' || isset($_GET['srch']))
+                                        @if($fromDate != '' || $toDate != '')
                                             <a href="{{ request()->url() }}" class="btn-clear" style="padding: 11px 16px;">
                                                 <i class="bx bx-reset"></i> Reset
                                             </a>
@@ -837,152 +710,56 @@ $i = 0;
                             </div>
 
                             <div class="table-totals-strip">
-                                <div class="strip-item"><span class="strip-dot" style="background:#ff9f43;"></span><span class="strip-label">Ref:</span> <span class="strip-val">{{ number_format($totalSumRef, 2) }}</span></div>
-                                <div class="strip-item"><span class="strip-dot" style="background:#54a0ff;"></span><span class="strip-label">Level:</span> <span class="strip-val">{{ number_format($totalSumLevel, 2) }}</span></div>
-                                <div class="strip-item"><span class="strip-dot" style="background:#d783ff;"></span><span class="strip-label">Stake:</span> <span class="strip-val">{{ number_format($totalSumStake, 2) }}</span></div>
-                                <div class="strip-item"><span class="strip-dot" style="background:#ff7675;"></span><span class="strip-label">AutoPool:</span> <span class="strip-val">{{ number_format($totalSumPoll, 2) }}</span></div>
-                                <div class="strip-item"><span class="strip-dot" style="background:#00d2d3;"></span><span class="strip-label">Sub:</span> <span class="strip-val">{{ number_format($totalSumSub, 2) }}</span></div>
-                                <div class="strip-item"><span class="strip-dot" style="background:#00ff87;"></span><span class="strip-label">Active Stake:</span> <span class="strip-val">{{ number_format($totalSumActiveStake, 2) }}</span></div>
-                                <div class="strip-item"><span class="strip-dot" style="background:#ff6b6b;"></span><span class="strip-label">Poll Spent:</span> <span class="strip-val">{{ number_format($totalSumPollSpent, 2) }}</span></div>
-                                <div class="strip-item"><span class="strip-dot" style="background:#ff4757;"></span><span class="strip-label">Sub Spent:</span> <span class="strip-val">{{ number_format($totalSumSubSpent, 2) }}</span></div>
-                                <div class="strip-item"><span class="strip-dot" style="background:#1dd1a1;"></span><span class="strip-label">Left DL:</span> <span class="strip-val">{{ number_format($totalSumLeftDlIncome, 2) }}</span></div>
-                                <div class="strip-item"><span class="strip-dot" style="background:#e056fd;"></span><span class="strip-label">Right DL:</span> <span class="strip-val">{{ number_format($totalSumRightDlIncome, 2) }}</span></div>
-                                <div class="strip-item total-glow"><span class="strip-dot" style="background:#ffd700;"></span><span class="strip-label" style="color:#ffd700;">Total Earnings:</span> <span class="strip-val" style="color:#ffd700; font-weight:800;">{{ number_format($totalSumEarnings, 2) }}</span></div>
+                                <div class="strip-item"><span class="strip-dot" style="background:#00d2d3;"></span><span class="strip-label">Total Subscriptions:</span> <span class="strip-val">{{ number_format($platformSub, 2) }}</span></div>
+                                <div class="strip-item"><span class="strip-dot" style="background:#00ff87;"></span><span class="strip-label">Total Staking:</span> <span class="strip-val">{{ number_format($platformStake, 2) }}</span></div>
+                                <div class="strip-item"><span class="strip-dot" style="background:#ff7675;"></span><span class="strip-label">Total AutoPoll:</span> <span class="strip-val">{{ number_format($platformPoll, 2) }}</span></div>
+                                <div class="strip-item total-glow"><span class="strip-dot" style="background:#ffd700;"></span><span class="strip-label" style="color:#ffd700;">Total Business Volume:</span> <span class="strip-val" style="color:#ffd700; font-weight:800;">{{ number_format($platformTotalIncome, 2) }}</span></div>
                             </div>
 
                             <div class="data-table-scroll">
                                 <table class="data-table">
                                     <thead>
                                         <tr>
-                                            <th style="text-align:center;">#</th>
-                                            <th>Joined Date</th>
-                                            <th>Member</th>
-                                            <th>User ID</th>
-                                            <th>Referral Inc</th>
-                                            <th>Level Inc</th>
-                                            <th>Stake Inc</th>
-                                            <th>AutoPool Inc</th>
-                                            <th>Sub Inc</th>
-                                            <th>Active Stake</th>
-                                            <th>Autopoll Spent</th>
-                                            <th>Sub Spent</th>
-                                            <th>Total Earnings</th>
-                                            <th>Left DL Inc</th>
-                                            <th>Right DL Inc</th>
+                                            <th style="text-align:center; width: 60px;">#</th>
+                                            <th>Date</th>
+                                            <th>Subscription Volume</th>
+                                            <th>Staking Volume</th>
+                                            <th>AutoPoll Volume</th>
+                                            <th>Total Daily Volume</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @php
-                                        $totalSumRef = 0;
-                                        $totalSumLevel = 0;
-                                        $totalSumStake = 0;
-                                        $totalSumPoll = 0;
-                                        $totalSumSub = 0;
-                                        $totalSumActiveStake = 0;
-                                        $totalSumPollSpent = 0;
-                                        $totalSumSubSpent = 0;
-                                        $totalSumEarnings = 0;
-                                        $totalSumLeftDlIncome = 0;
-                                        $totalSumRightDlIncome = 0;
+                                        $i = 0;
                                         @endphp
-                                        @foreach($customers as $customer)
+                                        @foreach($allDates as $date)
                                             @php
                                             $i++;
-                                            $initials = strtoupper(substr($customer->name, 0, 2));
-                                            
-                                            // Get customer stats from pre-fetched arrays
-                                            $refAmt = (float) ($refIncomes[$customer->id] ?? 0.0);
-                                            $levAmt = (float) ($levelIncomes[$customer->id] ?? 0.0);
-                                            $stkAmt = (float) ($stakeIncomes[$customer->id] ?? 0.0);
-                                            $subAmt = (float) ($subIncomes[$customer->id] ?? 0.0);
-                                            $pollAmt = (float) ($autopollIncomes[$customer->id] ?? 0.0);
-                                            
-                                            $activeStk = (float) ($stakedSums[$customer->id] ?? 0.0);
-                                            $pollSpent = (float) ($autopollSpend[$customer->id] ?? 0.0);
-                                            $subSpent = (float) ($subSpend[$customer->id] ?? 0.0);
-                                            
-                                            $userTotalEarnings = $refAmt + $levAmt + $stkAmt + $subAmt + $pollAmt;
-                                            
-                                            // Compute left/right downline total incomes
-                                            $downlineLeftIds = getDownlineIds($customer->left, $customersMap);
-                                            $downlineRightIds = getDownlineIds($customer->right, $customersMap);
-                                            
-                                            $userLeftDlIncome = 0;
-                                            foreach ($downlineLeftIds as $dlId) {
-                                                $userLeftDlIncome += $userTotalIncomesMap[$dlId] ?? 0.0;
-                                            }
-                                            
-                                            $userRightDlIncome = 0;
-                                            foreach ($downlineRightIds as $drId) {
-                                                $userRightDlIncome += $userTotalIncomesMap[$drId] ?? 0.0;
-                                            }
-                                            
-                                            // Accumulate page totals
-                                            $totalSumRef += $refAmt;
-                                            $totalSumLevel += $levAmt;
-                                            $totalSumStake += $stkAmt;
-                                            $totalSumPoll += $pollAmt;
-                                            $totalSumSub += $subAmt;
-                                            $totalSumActiveStake += $activeStk;
-                                            $totalSumPollSpent += $pollSpent;
-                                            $totalSumSubSpent += $subSpent;
-                                            $totalSumEarnings += $userTotalEarnings;
-                                            $totalSumLeftDlIncome += $userLeftDlIncome;
-                                            $totalSumRightDlIncome += $userRightDlIncome;
+                                            $subVol = (float) ($subsDaily[$date] ?? 0.0);
+                                            $planVol = (float) ($plansDaily[$date] ?? 0.0);
+                                            $pollVol = (float) ($pollsDaily[$date] ?? 0.0);
+                                            $dailyTotal = $subVol + $planVol + $pollVol;
                                             @endphp
                                             <tr>
                                                 <td class="cell-num">{{ $i }}</td>
-                                                <td class="cell-date">
-                                                    <div class="d1">{{ date('d M Y', strtotime($customer->created_at)) }}</div>
-                                                    <div class="d2">{{ date('h:i A', strtotime($customer->created_at)) }}</div>
+                                                <td class="cell-date" style="font-weight: 700; color: #fff;">
+                                                    {{ date('d M Y', strtotime($date)) }}
                                                 </td>
-                                                <td>
-                                                    <div class="member-wrap">
-                                                        @if($customer->img)
-                                                            <img src="{{ $customer->img }}" class="mem-avatar" alt="avatar" style="width: 32px; height: 32px; border-radius: 50%;">
-                                                        @else
-                                                            <div class="mem-initial">{{ $initials }}</div>
-                                                        @endif
-                                                        <a href="/admin/user/{{ $customer->id }}" class="mem-link">{{ $customer->name }}</a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <span class="uid-tag">{{ $customer->uid }}</span>
-                                                </td>
-                                                <!-- Earnings columns -->
-                                                <td class="c-col-ref">{{ $refAmt > 0 ? number_format($refAmt, 2) : '—' }}</td>
-                                                <td class="c-col-level">{{ $levAmt > 0 ? number_format($levAmt, 2) : '—' }}</td>
-                                                <td class="c-col-stake">{{ $stkAmt > 0 ? number_format($stkAmt, 2) : '—' }}</td>
-                                                <td class="c-col-autopool">{{ $pollAmt > 0 ? number_format($pollAmt, 2) : '—' }}</td>
-                                                <td class="c-col-sub">{{ $subAmt > 0 ? number_format($subAmt, 2) : '—' }}</td>
-                                                
-                                                <!-- Investments columns -->
-                                                <td class="c-col-active-stake">{{ $activeStk > 0 ? number_format($activeStk, 2) : '—' }}</td>
-                                                <td class="c-col-autopoll-spent">{{ $pollSpent > 0 ? number_format($pollSpent, 2) : '—' }}</td>
-                                                <td class="c-col-sub-spent">{{ $subSpent > 0 ? number_format($subSpent, 2) : '—' }}</td>
-                                                
-                                                <!-- Total -->
-                                                <td class="c-col-total-earnings">{{ number_format($userTotalEarnings, 2) }}</td>
-                                                <td class="c-col-left-dl-inc">{{ $userLeftDlIncome > 0 ? number_format($userLeftDlIncome, 2) : '—' }}</td>
-                                                <td class="c-col-right-dl-inc">{{ $userRightDlIncome > 0 ? number_format($userRightDlIncome, 2) : '—' }}</td>
+                                                <td class="c-col-sub">{{ $subVol > 0 ? number_format($subVol, 2) : '—' }}</td>
+                                                <td class="c-col-active-stake">{{ $planVol > 0 ? number_format($planVol, 2) : '—' }}</td>
+                                                <td class="c-col-autopool">{{ $pollVol > 0 ? number_format($pollVol, 2) : '—' }}</td>
+                                                <td class="c-col-total-earnings" style="font-weight: 800;">{{ number_format($dailyTotal, 2) }}</td>
                                             </tr>
                                         @endforeach
                                         
                                         @if($totalCount > 0)
                                             <!-- Summary Totals Row -->
                                             <tr style="background: rgba(255, 255, 255, 0.03); border-top: 2px solid rgba(255,255,255,0.1); font-weight: 700;">
-                                                <td colspan="4" style="text-align: right; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #fff;">Grand Totals:</td>
-                                                <td class="c-col-ref">{{ number_format($totalSumRef, 2) }}</td>
-                                                <td class="c-col-level">{{ number_format($totalSumLevel, 2) }}</td>
-                                                <td class="c-col-stake">{{ number_format($totalSumStake, 2) }}</td>
-                                                <td class="c-col-autopool">{{ number_format($totalSumPoll, 2) }}</td>
-                                                <td class="c-col-sub">{{ number_format($totalSumSub, 2) }}</td>
-                                                <td class="c-col-active-stake">{{ number_format($totalSumActiveStake, 2) }}</td>
-                                                <td class="c-col-autopoll-spent">{{ number_format($totalSumPollSpent, 2) }}</td>
-                                                <td class="c-col-sub-spent">{{ number_format($totalSumSubSpent, 2) }}</td>
-                                                <td class="c-col-total-earnings" style="font-size:0.9rem; border-bottom: 2px double var(--gold) !important;">{{ number_format($totalSumEarnings, 2) }}</td>
-                                                <td class="c-col-left-dl-inc">{{ number_format($totalSumLeftDlIncome, 2) }}</td>
-                                                <td class="c-col-right-dl-inc">{{ number_format($totalSumRightDlIncome, 2) }}</td>
+                                                <td colspan="2" style="text-align: right; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #fff;">Grand Totals:</td>
+                                                <td class="c-col-sub">{{ number_format($platformSub, 2) }}</td>
+                                                <td class="c-col-active-stake">{{ number_format($platformStake, 2) }}</td>
+                                                <td class="c-col-autopool">{{ number_format($platformPoll, 2) }}</td>
+                                                <td class="c-col-total-earnings" style="font-size:0.9rem; border-bottom: 2px double var(--gold) !important;">{{ number_format($platformTotalIncome, 2) }}</td>
                                             </tr>
                                         @endif
                                     </tbody>
