@@ -80,15 +80,7 @@ $subSpendQuery = DB::table('customer_subs')->where('status', 'completed');
 $applyDateFilter($subSpendQuery);
 $subSpend = $subSpendQuery->groupBy('csId')->pluck(DB::raw('SUM(sub_amount)'), 'csId');
 
-// Mined Sum (unlocked)
-$minedSumQuery = DB::table('customer_transactions')->where('tType', 'mine_amount')->where('wStatus', '0');
-$applyDateFilter($minedSumQuery);
-$minedSum = $minedSumQuery->groupBy('csId')->pluck(DB::raw('SUM(tAmount)'), 'csId');
 
-// Mined Sum (locked)
-$minedLockedSumQuery = DB::table('customer_locked_transactions')->where('tType', 'mine_amount')->where('wStatus', '0');
-$applyDateFilter($minedLockedSumQuery);
-$minedLockedSum = $minedLockedSumQuery->groupBy('csId')->pluck(DB::raw('SUM(tAmount)'), 'csId');
 
 // Calculate grand totals across the platform (based on active date filter)
 $platformRef = $refIncomes->sum();
@@ -704,7 +696,6 @@ $i = 0;
                                             <th>Stake Inc</th>
                                             <th>AutoPool Inc</th>
                                             <th>Sub Inc</th>
-                                            <th>Mining Inc</th>
                                             <th>Active Stake</th>
                                             <th>Autopoll Spent</th>
                                             <th>Sub Spent</th>
@@ -718,7 +709,6 @@ $i = 0;
                                         $totalSumStake = 0;
                                         $totalSumPoll = 0;
                                         $totalSumSub = 0;
-                                        $totalSumMined = 0;
                                         $totalSumActiveStake = 0;
                                         $totalSumPollSpent = 0;
                                         $totalSumSubSpent = 0;
@@ -740,10 +730,6 @@ $i = 0;
                                             $pollSpent = (float) ($autopollSpend[$customer->id] ?? 0.0);
                                             $subSpent = (float) ($subSpend[$customer->id] ?? 0.0);
                                             
-                                            $minedUnlk = (float) ($minedSum[$customer->id] ?? 0.0);
-                                            $minedLckd = (float) ($minedLockedSum[$customer->id] ?? 0.0);
-                                            $minedTotal = $minedUnlk + $minedLckd;
-                                            
                                             $userTotalEarnings = $refAmt + $levAmt + $stkAmt + $subAmt + $pollAmt;
                                             
                                             // Accumulate page totals
@@ -752,7 +738,6 @@ $i = 0;
                                             $totalSumStake += $stkAmt;
                                             $totalSumPoll += $pollAmt;
                                             $totalSumSub += $subAmt;
-                                            $totalSumMined += $minedTotal;
                                             $totalSumActiveStake += $activeStk;
                                             $totalSumPollSpent += $pollSpent;
                                             $totalSumSubSpent += $subSpent;
@@ -783,7 +768,6 @@ $i = 0;
                                                 <td class="c-green">{{ $stkAmt > 0 ? number_format($stkAmt, 2) : '—' }}</td>
                                                 <td class="c-blue">{{ $pollAmt > 0 ? number_format($pollAmt, 2) : '—' }}</td>
                                                 <td class="c-green">{{ $subAmt > 0 ? number_format($subAmt, 2) : '—' }}</td>
-                                                <td class="c-purple">{{ $minedTotal > 0 ? number_format($minedTotal, 4) : '—' }}</td>
                                                 
                                                 <!-- Investments columns -->
                                                 <td class="c-gold">{{ $activeStk > 0 ? number_format($activeStk, 2) : '—' }}</td>
@@ -804,7 +788,6 @@ $i = 0;
                                                 <td class="c-green">{{ number_format($totalSumStake, 2) }}</td>
                                                 <td class="c-blue">{{ number_format($totalSumPoll, 2) }}</td>
                                                 <td class="c-green">{{ number_format($totalSumSub, 2) }}</td>
-                                                <td class="c-purple">{{ number_format($totalSumMined, 4) }}</td>
                                                 <td class="c-gold">{{ number_format($totalSumActiveStake, 2) }}</td>
                                                 <td class="c-red">{{ number_format($totalSumPollSpent, 2) }}</td>
                                                 <td class="c-red">{{ number_format($totalSumSubSpent, 2) }}</td>
