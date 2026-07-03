@@ -576,6 +576,17 @@ $i = 0;
         .c-purple { color: var(--purple); font-weight: 700; }
         .c-red { color: var(--red); font-weight: 700; }
         .c-muted { color: var(--text-muted); }
+
+        /* Unique Column Colors */
+        .c-col-ref { color: #ff9f43; font-weight: 700; }       /* Warm Orange-Gold */
+        .c-col-level { color: #54a0ff; font-weight: 700; }     /* Sky Blue */
+        .c-col-stake { color: #d783ff; font-weight: 700; }     /* Purple */
+        .c-col-autopool { color: #ff7675; font-weight: 700; }  /* Sunset Rose */
+        .c-col-sub { color: #00d2d3; font-weight: 700; }       /* Cyan / Teal */
+        .c-col-active-stake { color: #00ff87; font-weight: 700; } /* Neon Green */
+        .c-col-autopoll-spent { color: #ff6b6b; font-weight: 700; } /* Coral Red */
+        .c-col-sub-spent { color: #ff4757; font-weight: 700; }  /* Soft Red */
+        .c-col-total-earnings { color: #ffd700; font-weight: 800; text-shadow: 0 0 8px rgba(255, 215, 0, 0.15); } /* Bright Gold */
     </style>
 </head>
 <body>
@@ -763,19 +774,19 @@ $i = 0;
                                                     <span class="uid-tag">{{ $customer->uid }}</span>
                                                 </td>
                                                 <!-- Earnings columns -->
-                                                <td class="c-green">{{ $refAmt > 0 ? number_format($refAmt, 2) : '—' }}</td>
-                                                <td class="c-green">{{ $levAmt > 0 ? number_format($levAmt, 2) : '—' }}</td>
-                                                <td class="c-green">{{ $stkAmt > 0 ? number_format($stkAmt, 2) : '—' }}</td>
-                                                <td class="c-blue">{{ $pollAmt > 0 ? number_format($pollAmt, 2) : '—' }}</td>
-                                                <td class="c-green">{{ $subAmt > 0 ? number_format($subAmt, 2) : '—' }}</td>
+                                                <td class="c-col-ref">{{ $refAmt > 0 ? number_format($refAmt, 2) : '—' }}</td>
+                                                <td class="c-col-level">{{ $levAmt > 0 ? number_format($levAmt, 2) : '—' }}</td>
+                                                <td class="c-col-stake">{{ $stkAmt > 0 ? number_format($stkAmt, 2) : '—' }}</td>
+                                                <td class="c-col-autopool">{{ $pollAmt > 0 ? number_format($pollAmt, 2) : '—' }}</td>
+                                                <td class="c-col-sub">{{ $subAmt > 0 ? number_format($subAmt, 2) : '—' }}</td>
                                                 
                                                 <!-- Investments columns -->
-                                                <td class="c-gold">{{ $activeStk > 0 ? number_format($activeStk, 2) : '—' }}</td>
-                                                <td class="c-red">{{ $pollSpent > 0 ? number_format($pollSpent, 2) : '—' }}</td>
-                                                <td class="c-red">{{ $subSpent > 0 ? number_format($subSpent, 2) : '—' }}</td>
+                                                <td class="c-col-active-stake">{{ $activeStk > 0 ? number_format($activeStk, 2) : '—' }}</td>
+                                                <td class="c-col-autopoll-spent">{{ $pollSpent > 0 ? number_format($pollSpent, 2) : '—' }}</td>
+                                                <td class="c-col-sub-spent">{{ $subSpent > 0 ? number_format($subSpent, 2) : '—' }}</td>
                                                 
                                                 <!-- Total -->
-                                                <td class="c-gold" style="font-weight:800;">{{ number_format($userTotalEarnings, 2) }}</td>
+                                                <td class="c-col-total-earnings">{{ number_format($userTotalEarnings, 2) }}</td>
                                             </tr>
                                         @endforeach
                                         
@@ -783,15 +794,15 @@ $i = 0;
                                             <!-- Summary Totals Row -->
                                             <tr style="background: rgba(255, 255, 255, 0.03); border-top: 2px solid rgba(255,255,255,0.1); font-weight: 700;">
                                                 <td colspan="4" style="text-align: right; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #fff;">Grand Totals:</td>
-                                                <td class="c-green">{{ number_format($totalSumRef, 2) }}</td>
-                                                <td class="c-green">{{ number_format($totalSumLevel, 2) }}</td>
-                                                <td class="c-green">{{ number_format($totalSumStake, 2) }}</td>
-                                                <td class="c-blue">{{ number_format($totalSumPoll, 2) }}</td>
-                                                <td class="c-green">{{ number_format($totalSumSub, 2) }}</td>
-                                                <td class="c-gold">{{ number_format($totalSumActiveStake, 2) }}</td>
-                                                <td class="c-red">{{ number_format($totalSumPollSpent, 2) }}</td>
-                                                <td class="c-red">{{ number_format($totalSumSubSpent, 2) }}</td>
-                                                <td class="c-gold" style="font-size:0.9rem; font-weight:800; border-bottom: 2px double var(--gold) !important;">{{ number_format($totalSumEarnings, 2) }}</td>
+                                                <td class="c-col-ref">{{ number_format($totalSumRef, 2) }}</td>
+                                                <td class="c-col-level">{{ number_format($totalSumLevel, 2) }}</td>
+                                                <td class="c-col-stake">{{ number_format($totalSumStake, 2) }}</td>
+                                                <td class="c-col-autopool">{{ number_format($totalSumPoll, 2) }}</td>
+                                                <td class="c-col-sub">{{ number_format($totalSumSub, 2) }}</td>
+                                                <td class="c-col-active-stake">{{ number_format($totalSumActiveStake, 2) }}</td>
+                                                <td class="c-col-autopoll-spent">{{ number_format($totalSumPollSpent, 2) }}</td>
+                                                <td class="c-col-sub-spent">{{ number_format($totalSumSubSpent, 2) }}</td>
+                                                <td class="c-col-total-earnings" style="font-size:0.9rem; border-bottom: 2px double var(--gold) !important;">{{ number_format($totalSumEarnings, 2) }}</td>
                                             </tr>
                                         @endif
                                     </tbody>
