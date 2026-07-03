@@ -985,26 +985,105 @@ if (isset($_GET['page'])) {
             color: #0d0e12 !important;
         }
 
+        @keyframes watch-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 193, 7, 0), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+        }
+
         .watch-video-btn {
-            background: rgba(255, 255, 255, 0.1) !important;
+            background: rgba(15, 18, 26, 0.6) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
             color: #fff !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border: 1px solid rgba(212, 175, 55, 0.4) !important;
             border-radius: 30px !important;
-            transition: all 0.3s ease !important;
+            padding: 12px 28px !important;
+            font-weight: 600 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+            position: relative !important;
+            overflow: hidden !important;
+            animation: watch-pulse 2s infinite !important;
+            text-decoration: none !important;
         }
 
         .watch-video-btn:hover {
-            background: rgba(255, 255, 255, 0.2) !important;
-            border-color: rgba(255, 255, 255, 0.4) !important;
-            color: #fff !important;
+            background: rgba(212, 175, 55, 0.15) !important;
+            border-color: #FFC107 !important;
+            color: #FFC107 !important;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* Gold play icon styles */
+        .watch-svg {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            position: relative !important;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+        }
+
+        .watch-video-btn:hover .watch-svg {
+            transform: scale(1.1) rotate(5deg) !important;
+        }
+
+        .watch-svg svg {
+            width: 28px !important;
+            height: 28px !important;
         }
 
         .watch-svg svg g path {
-            stroke: #fff !important;
+            fill: #FFC107 !important;
+            stroke: #FFC107 !important;
+            transition: all 0.4s ease !important;
         }
 
         .watch-svg svg rect {
+            stroke: #FFC107 !important;
+            fill: rgba(212, 175, 55, 0.1) !important;
+            transition: all 0.4s ease !important;
+        }
+        
+        .watch-video-btn:hover .watch-svg svg g path {
+            fill: #fff !important;
             stroke: #fff !important;
+        }
+
+        .watch-video-btn:hover .watch-svg svg rect {
+            stroke: #fff !important;
+            fill: rgba(255, 255, 255, 0.2) !important;
+        }
+
+        /* Pulse glow indicator */
+        .watch-video-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: rgba(212, 175, 55, 0.4);
+            border-radius: 30px;
+            transform: translate(-50%, -50%) scale(0.9);
+            opacity: 0;
+            z-index: -1;
+            transition: all 0.6s ease;
+        }
+
+        .watch-video-btn:hover::after {
+            transform: translate(-50%, -50%) scale(1.15);
+            opacity: 0;
+            filter: blur(12px);
         }
 
         /* Glassmorphic Section Cards with subtle gold border & glow */
@@ -1548,6 +1627,24 @@ if (isset($_GET['page'])) {
                                                         </span>
                                                         Watch Video
                                                     </a> --}}
+
+                                                    <a href="/videos/intro/intro.mp4" class="watch-video-btn trk-btn trk-btn--outline22" data-fslightbox>
+                                                        <span class="style1 watch-svg">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                                <g clip-path="url(#clip0_1397_814)">
+                                                                    <path d="M10.5547 7.03647C9.89015 6.59343 9 7.06982 9 7.86852V16.1315C9 16.9302 9.89015 17.4066 10.5547 16.9635L16.7519 12.8321C17.3457 12.4362 17.3457 11.5638 16.7519 11.1679L10.5547 7.03647Z" stroke="#0A4FD5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                                </g>
+                                                                <rect x="-0.75" y="0.75" width="22.5" height="22.5" rx="11.25" transform="matrix(-1 0 0 1 22.5 0)" stroke="#0A4FD5" stroke-width="1.5" />
+                                                                <defs>
+                                                                    <clipPath id="clip0_1397_814">
+                                                                        <rect width="24" height="24" fill="white" />
+                                                                    </clipPath>
+                                                                </defs>
+                                                            </svg>
+                                                        </span>
+                                                        Watch Video
+                                                    </a>
+
                                                     <!-- <img
                                                             decoding="async"
                                                             style="height: 140px;"
@@ -4595,7 +4692,7 @@ if (isset($_GET['page'])) {
                                                                 <div class="feature__item">
                                                                     <div class="feature__item-inner">
                                                                         <div class="feature__item-content">
-                                                                            <h6>Team Building Bonus (1%)</h6>
+                                                                            <h6>Team Building Bonus (10%)</h6>
                                                                         </div>
                                                                     </div>
                                                                 </div>
