@@ -578,15 +578,15 @@ $i = 0;
         .c-muted { color: var(--text-muted); }
 
         /* Unique Column Colors */
-        .c-col-ref { color: #ff9f43; font-weight: 700; }       /* Warm Orange-Gold */
-        .c-col-level { color: #54a0ff; font-weight: 700; }     /* Sky Blue */
-        .c-col-stake { color: #d783ff; font-weight: 700; }     /* Purple */
-        .c-col-autopool { color: #ff7675; font-weight: 700; }  /* Sunset Rose */
-        .c-col-sub { color: #00d2d3; font-weight: 700; }       /* Cyan / Teal */
-        .c-col-active-stake { color: #00ff87; font-weight: 700; } /* Neon Green */
-        .c-col-autopoll-spent { color: #ff6b6b; font-weight: 700; } /* Coral Red */
-        .c-col-sub-spent { color: #ff4757; font-weight: 700; }  /* Soft Red */
-        .c-col-total-earnings { color: #ffd700; font-weight: 800; text-shadow: 0 0 8px rgba(255, 215, 0, 0.15); } /* Bright Gold */
+        .c-col-ref { color: #ff9f43 !important; font-weight: 700; }       /* Warm Orange-Gold */
+        .c-col-level { color: #54a0ff !important; font-weight: 700; }     /* Sky Blue */
+        .c-col-stake { color: #d783ff !important; font-weight: 700; }     /* Purple */
+        .c-col-autopool { color: #ff7675 !important; font-weight: 700; }  /* Sunset Rose */
+        .c-col-sub { color: #00d2d3 !important; font-weight: 700; }       /* Cyan / Teal */
+        .c-col-active-stake { color: #00ff87 !important; font-weight: 700; } /* Neon Green */
+        .c-col-autopoll-spent { color: #ff6b6b !important; font-weight: 700; } /* Coral Red */
+        .c-col-sub-spent { color: #ff4757 !important; font-weight: 700; }  /* Soft Red */
+        .c-col-total-earnings { color: #ffd700 !important; font-weight: 800; text-shadow: 0 0 8px rgba(255, 215, 0, 0.15); } /* Bright Gold */
     </style>
 </head>
 <body>
