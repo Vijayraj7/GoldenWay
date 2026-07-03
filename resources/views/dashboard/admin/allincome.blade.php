@@ -637,12 +637,6 @@ $i = 0;
 
                         <!-- Stat Grid -->
                         <div class="stat-grid">
-                            <div class="stat-card s-gold">
-                                <div class="stat-icon-wrap"><i class="bx bx-wallet"></i></div>
-                                <div class="stat-label">Total Platform Volume</div>
-                                <div class="stat-value">{{ number_format($platformTotalIncome, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Combined revenue streams</div>
-                            </div>
                             <div class="stat-card s-blue">
                                 <div class="stat-icon-wrap"><i class="bx bx-trending-up"></i></div>
                                 <div class="stat-label">Total Subscriptions</div>
@@ -660,6 +654,12 @@ $i = 0;
                                 <div class="stat-label">Total AutoPoll</div>
                                 <div class="stat-value">{{ number_format($platformPoll, 2) }}<span class="stat-unit">USDT</span></div>
                                 <div class="stat-hint">Autopoll entries volume</div>
+                            </div>
+                            <div class="stat-card s-gold">
+                                <div class="stat-icon-wrap"><i class="bx bx-wallet"></i></div>
+                                <div class="stat-label">Total Platform Volume</div>
+                                <div class="stat-value">{{ number_format($platformTotalIncome, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">Combined revenue streams</div>
                             </div>
                         </div>
 
