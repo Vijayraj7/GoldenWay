@@ -8,34 +8,63 @@ $tTableName = "customer_transactions";
 $btnTxt = "All";
 
 // Fetching transactions based on filters
+$fromDate = $_GET['from_date'] ?? '';
+$toDate = $_GET['to_date'] ?? '';
+
+if (isset($_GET['today']) && $_GET['today'] == '1') {
+    $fromDate = date('Y-m-d');
+    $toDate = date('Y-m-d');
+}
+
+$queryParams = request()->only(['from_date', 'to_date']);
+$queryString = count($queryParams) > 0 ? '&' . http_build_query($queryParams) : '';
+
 if (isset($_GET['typ'])) {
     $tTableName = "customer_transfers";
-    $transtins = DB::table($tTableName)->where('csId', $v->id)->whereNot('tType', 'transfer')->get();
+    $query = DB::table($tTableName)->where('csId', $v->id)->whereNot('tType', 'transfer');
 } else if (isset($_GET['type'])) {
     $type = $_GET['type'];
     if ($type == "all") {
-        $transtins = DB::table('customer_transactions')->where('csId', $v->id)->get();
+        $query = DB::table('customer_transactions')->where('csId', $v->id);
     } elseif ($type == "levincome") {
         if (isset($_GET['lev'])) {
             $lvl = $_GET['lev'];
             $btnTxt = "$lvl Level";
-            $transtins = DB::table('customer_transactions')->where('tType', 'levincome')->where('levl', $lvl)->where('csId', $v->id)->get();
+            $query = DB::table('customer_transactions')->where('tType', 'levincome')->where('levl', $lvl)->where('csId', $v->id);
         } else {
             $btnTxt = "Level Income";
-            $transtins = DB::table('customer_transactions')->where('tType', 'levincome')->where('csId', $v->id)->get();
+            $query = DB::table('customer_transactions')->where('tType', 'levincome')->where('csId', $v->id);
         }
     } else {
         $btnTxt = getPname($type);
-        $transtins = DB::table('customer_transactions')->where('tType', $type)->where('csId', $v->id)->get();
+        $query = DB::table('customer_transactions')->where('tType', $type)->where('csId', $v->id);
     }
 } elseif (isset($_GET['pnm'])) {
-    $transtins = DB::table($tTableName)->where('csId', $v->id)->where('tType', $_GET['pnm'])->get();
+    $query = DB::table($tTableName)->where('csId', $v->id)->where('tType', $_GET['pnm']);
 } else {
-    $transtins = DB::table('customer_transactions')->where('csId', $v->id)->get();
+    $query = DB::table('customer_transactions')->where('csId', $v->id);
 }
 
-// Global income sums for user (overall totals, ignoring active table filters)
-$all_transactions_for_sums = DB::table('customer_transactions')->where('csId', $v->id)->get();
+// Apply date range filters if set
+if ($fromDate != '') {
+    $query->where('created_at', '>=', $fromDate . ' 00:00:00');
+}
+if ($toDate != '') {
+    $query->where('created_at', '<=', $toDate . ' 23:59:59');
+}
+
+$transtins = $query->get();
+
+// Global income sums for user (filtered by date if filters are active)
+$sums_query = DB::table('customer_transactions')->where('csId', $v->id);
+if ($fromDate != '') {
+    $sums_query->where('created_at', '>=', $fromDate . ' 00:00:00');
+}
+if ($toDate != '') {
+    $sums_query->where('created_at', '<=', $toDate . ' 23:59:59');
+}
+$all_transactions_for_sums = $sums_query->get();
+
 $total_ref_income = (float) $all_transactions_for_sums->where('tType', 'refincome')->where('wStatus', '0')->sum('tAmount');
 $total_lev_income = (float) $all_transactions_for_sums->where('tType', 'levincome')->where('wStatus', '0')->sum('tAmount');
 $total_stake_income = (float) $all_transactions_for_sums->whereIn('tType', ['pincome', 'stake_income'])->where('wStatus', '0')->sum('tAmount');
@@ -455,8 +484,8 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
                                             <img src="/tst/goldenlogo.png" alt="icon" style="height: 22px; width: 22px; object-fit: contain;">
                                         </div>
                                     </div>
-                                    <div class="mt-3">
-                                        <a href="/dashboard/status/transactions?type=stake_income" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(168, 85, 247, 0.15) !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #a855f7 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
+                                                                   <div class="mt-3">
+                                        <a href="/dashboard/status/transactions?type=stake_income{{ $queryString }}" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(168, 85, 247, 0.15) !important; border: 1px solid rgba(168, 85, 247, 0.3) !important; color: #a855f7 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
                                             <i class="bx bx-history"></i> History
                                         </a>
                                     </div>
@@ -479,7 +508,7 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
                                         </div>
                                     </div>
                                     <div class="mt-3">
-                                        <a href="/dashboard/status/transactions?type=sub_income" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(0, 208, 148, 0.15) !important; border: 1px solid rgba(0, 208, 148, 0.3) !important; color: #00D094 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
+                                        <a href="/dashboard/status/transactions?type=sub_income{{ $queryString }}" class="btn btn-sm w-100 text-center" style="padding: 6px 12px; font-size: 11px; background: rgba(0, 208, 148, 0.15) !important; border: 1px solid rgba(0, 208, 148, 0.3) !important; color: #00D094 !important; border-radius: 8px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.3s ease; text-decoration: none;">
                                             <i class="bx bx-history"></i> History
                                         </a>
                                     </div>
@@ -510,24 +539,24 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
                                             <i class="bx bx-filter-alt"></i> {{ $btnTxt }}
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-start" style="background-color: #0c2820 !important; border: 1px solid rgba(249, 168, 38, 0.25) !important; box-shadow: 0 10px 40px rgba(0,0,0,0.6) !important; border-radius: 10px !important;">
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=all">All</a></li>
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=refincome">Referral Income</a></li>
-                                            {{-- <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=pincome">Profit Income</a></li> --}}
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=stake_income">Stake Income</a></li>
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=sub_income">Subscription Income</a></li>
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome">All Level Income</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=all{{ $queryString }}">All</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=refincome{{ $queryString }}">Referral Income</a></li>
+                                            {{-- <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=pincome{{ $queryString }}">Profit Income</a></li> --}}
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=stake_income{{ $queryString }}">Stake Income</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=sub_income{{ $queryString }}">Subscription Income</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome{{ $queryString }}">All Level Income</a></li>
                                             <li>
                                                 <hr class="dropdown-divider" style="border-top: 1px solid rgba(249, 168, 38, 0.12) !important;" />
                                             </li>
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=1">First Level</a></li>
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=2">Second Level</a></li>
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=3">Third Level</a></li>
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=4">Fourth Level</a></li>
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=5">Fifth Level</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=1{{ $queryString }}">First Level</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=2{{ $queryString }}">Second Level</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=3{{ $queryString }}">Third Level</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=4{{ $queryString }}">Fourth Level</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=levincome&lev=5{{ $queryString }}">Fifth Level</a></li>
                                             <li>
                                                 <hr class="dropdown-divider" style="border-top: 1px solid rgba(249, 168, 38, 0.12) !important;" />
                                             </li>
-                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=allincome">Withdrawals</a></li>
+                                            <li><a class="dropdown-item text-white" href="/dashboard/status/transactions?type=allincome{{ $queryString }}">Withdrawals</a></li>
                                         </ul>
                                     </div>
                                     @endif
@@ -538,6 +567,51 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
                                         {{ count($transtins) }} Records
                                     </span>
                                 </div>
+                            </div>
+
+                            <!-- Date Filter Panel -->
+                            <div style="padding: 1.2rem 1.5rem; background: rgba(255, 255, 255, 0.01); border-bottom: 1px solid rgba(249, 168, 38, 0.08);">
+                                <form method="GET" action="{{ request()->url() }}" class="row g-3 align-items-center">
+                                    <!-- Preserve existing filters -->
+                                    @if(isset($_GET['type']))
+                                        <input type="hidden" name="type" value="{{ $_GET['type'] }}">
+                                    @endif
+                                    @if(isset($_GET['lev']))
+                                        <input type="hidden" name="lev" value="{{ $_GET['lev'] }}">
+                                    @endif
+                                    @if(isset($_GET['pnm']))
+                                        <input type="hidden" name="pnm" value="{{ $_GET['pnm'] }}">
+                                    @endif
+                                    @if(isset($_GET['typ']))
+                                        <input type="hidden" name="typ" value="{{ $_GET['typ'] }}">
+                                    @endif
+
+                                    <div class="col-12 col-md-3">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span style="font-size: 12px; color: rgba(255, 255, 255, 0.6); min-width: 40px;">From:</span>
+                                            <input type="date" name="from_date" class="form-control" value="{{ $fromDate }}" style="background: rgba(0, 0, 0, 0.3) !important; border: 1px solid rgba(249, 168, 38, 0.2) !important; color: #fff !important; color-scheme: dark; border-radius: 8px; padding: 6px 12px; font-size: 13px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span style="font-size: 12px; color: rgba(255, 255, 255, 0.6); min-width: 30px;">To:</span>
+                                            <input type="date" name="to_date" class="form-control" value="{{ $toDate }}" style="background: rgba(0, 0, 0, 0.3) !important; border: 1px solid rgba(249, 168, 38, 0.2) !important; color: #fff !important; color-scheme: dark; border-radius: 8px; padding: 6px 12px; font-size: 13px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 d-flex gap-2 justify-content-md-end justify-content-start flex-wrap">
+                                        <button type="button" onclick="setTodayFilter()" class="btn btn-sm" style="background: rgba(249, 168, 38, 0.08) !important; border: 1px solid rgba(249, 168, 38, 0.2) !important; color: #ffd700 !important; font-weight: 600; padding: 6px 14px; border-radius: 8px; font-size: 12px; transition: all 0.2s;">
+                                            <i class="bx bx-time-five" style="margin-right: 4px;"></i> Today
+                                        </button>
+                                        <button type="submit" class="btn btn-sm" style="background: linear-gradient(135deg, #f9a826, #d88000) !important; border: none; color: #000; font-weight: 700; padding: 6px 16px; border-radius: 8px; font-size: 12px;">
+                                            <i class="bx bx-filter-alt" style="margin-right: 4px;"></i> Apply Filter
+                                        </button>
+                                        @if($fromDate != '' || $toDate != '')
+                                            <a href="{{ request()->url() }}?{{ http_build_query(request()->except(['from_date', 'to_date', 'today'])) }}" class="btn btn-sm" style="background: rgba(239, 68, 68, 0.08) !important; border: 1px solid rgba(239, 68, 68, 0.2) !important; color: #ef4444 !important; font-weight: 600; padding: 6px 14px; border-radius: 8px; font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                                <i class="bx bx-reset"></i> Clear
+                                            </a>
+                                        @endif
+                                    </div>
+                                </form>
                             </div>
 
                             <div class="table-responsive text-nowrap" style="padding: 10px 20px 20px 20px; min-height: 500px;">
@@ -678,5 +752,20 @@ $pct_sub = $grand_total_income > 0 ? ($total_sub_income / $grand_total_income) *
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script>
+        function setTodayFilter() {
+            // Get today's date in local time YYYY-MM-DD
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const todayStr = `${year}-${month}-${day}`;
+            
+            document.querySelector('input[name="from_date"]').value = todayStr;
+            document.querySelector('input[name="to_date"]').value = todayStr;
+            document.querySelector('input[name="from_date"]').form.submit();
+        }
+    </script>
 </body>
 </html>
