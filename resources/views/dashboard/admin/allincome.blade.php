@@ -4,8 +4,8 @@ ini_set('display_errors', 1);
 use Carbon\Carbon;
 
 $fromDate = $_GET['from_date'] ?? '';
-if ($fromDate == '' || strtotime($fromDate) < strtotime('2026-06-16 23:00:00')) {
-    $fromDate = '2026-06-16 23:00:00';
+if ($fromDate == '' || strtotime($fromDate) < strtotime('2026-06-11 23:00:00')) {
+    $fromDate = '2026-06-11 23:00:00';
 }
 $toDate = $_GET['to_date'] ?? '';
 if (isset($_GET['today']) && $_GET['today'] == '1') {
