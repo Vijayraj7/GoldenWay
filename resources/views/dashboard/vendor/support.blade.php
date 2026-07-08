@@ -103,66 +103,25 @@ ini_set('display_errors', 1);
 
                             <!-- Basic Layout & Basic with Icons -->
                             <div class="row">
-                                <!-- Basic with Icons -->
-                                <div class="col-xxl" style="display: flex; justify-content: start;">
-                                    <div class="card spcard mb-4" style="width: 60%;">
-                                        <div
-                                            class="card-header d-flex align-items-center justify-content-start">
+                                <!-- Create Support Ticket Form -->
+                                <div class="col-lg-5 col-12 mb-4">
+                                    <div class="card mb-4">
+                                        <div class="card-header d-flex align-items-center justify-content-start">
                                             <img style="height: 40px; margin-right: 15px !important;" src="https://www.ebeamsinfotech.com/wp-content/uploads/2020/07/ebeamsinfotech-web-support.png" alt="">
                                             <h5 class="mb-0">Support</h5>
                                         </div>
                                         <div class="card-body">
-                                            <style>
-                                                /* .hnot{
-                                                    width: 100%;
-                                                } */
-                                                @media (max-width:900px) {
-                                                .hnot{
-                                                    width: auto !important;
-                                                }
-                                                .spcard{
-                                                    width: 100% !important;
-                                                }
-                                                }
-                                            </style>
-                                            <form action="/customer/support"
-                                                method="POST"
-                                                enctype="multipart/form-data">
+                                            <form action="/customer/support" method="POST" enctype="multipart/form-data">
                                                 @csrf
+                                                <input type="hidden" name="csId" value="{{$v->id}}">
 
+                                                @error("image")
+                                                <div class="form-text mb-3" style="color: red;">{{$message}}</div>
+                                                @enderror
 
-                                                <input type="hidden"
-                                                    name="csId"
-                                                    value="{{$v->id}}">
-
-                                                <!-- <div class="row mb-3">
-                                                    <label
-                                                        class="col-sm-2 col-form-label hnot"
-                                                        for="basic-icon-default-fullname">Product</label>
-                                                    <div class="col-sm-10 hnot">
-                                                        <p class="form-control"
-                                                            style="border: none !important;"
-                                                            id="basic-icon-default-fullname">HIGH
-                                                            RISK</p>
-                                                    </div>
-                                                </div> -->
-                                                    @error("image")
-                                                    <div class="form-text"
-                                                        style="color: red;">{{$message}}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="row mb-3" style="padding-left: 15px; padding-right: 15px;">
-                                                    <!-- <label
-                                                        style="margin-top: 7px;"
-                                                        class="col-sm-2 form-label"
-                                                        for="basic-icon-default-message">Subject</label> -->
-                                                    <div class="col-sm-10">
-                                                        <div
-                                                            class="input-group input-group-merge">
-                                                            <!-- <span
-                                                                id="basic-icon-default-message2"
-                                                                class="input-group-text">USDT</span> -->
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group input-group-merge">
                                                             <input
                                                                 type="text"
                                                                 name="subject"
@@ -177,17 +136,10 @@ ini_set('display_errors', 1);
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row mb-3" style="padding-left: 15px;  padding-right: 15px;">
-                                                    <!-- <label
-                                                        style="margin-top: 7px;"
-                                                        class="col-sm-2 form-label"
-                                                        for="basic-icon-default-message">Comments</label> -->
-                                                    <div class="col-sm-10">
-                                                        <div
-                                                            class="input-group input-group-merge">
-                                                            <!-- <span
-                                                                id="basic-icon-default-message2"
-                                                                class="input-group-text">USDT</span> -->
+
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group input-group-merge">
                                                             <textarea
                                                                 type="text"
                                                                 name="comment"
@@ -203,21 +155,71 @@ ini_set('display_errors', 1);
                                                     </div>
                                                 </div>
 
-                                                <div
-                                                    class="row justify-content-start" style="padding-left: 15px;  padding-right: 15px; margin-bottom: 20px;">
-                                                   
-                                                <div class="form-text"
-                                                style="color: red;">Note: Reply will be in your mail ({{$v->email}}) within 24hr</div>
-
-                                                    <div class="col-sm-10">
-                                                        <button type="submit"
-                                                            class="btn btn-primary">Submit</button>
+                                                <div class="row justify-content-start mb-3">
+                                                    <div class="form-text mb-2" style="color: red; font-size: 11px;">Note: Reply will be in your mail ({{$v->email}}) within 24hr</div>
+                                                    <div class="col-sm-12">
+                                                        <button type="submit" class="btn btn-primary w-100">Submit</button>
                                                     </div>
                                                 </div>
-
-                                            </div>
+                                            </form>
                                         </div>
-                                        <!-- / Content -->
+                                    </div>
+                                </div>
+
+                                <!-- Tickets History List -->
+                                <div class="col-lg-7 col-12 mb-4">
+                                    <div class="card">
+                                        <h5 style="padding: 1.125rem 1.25rem !important;" class="card-header">Your Tickets</h5>
+                                        <div class="table-responsive text-nowrap">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Subject & Message</th>
+                                                        <th>Status & Reply</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
+                                                    @php
+                                                        $mySupports = DB::table('customer_support')->where('csId', $v->id)->orderBy('created_at', 'desc')->get();
+                                                    @endphp
+                                                    @if($mySupports->isEmpty())
+                                                        <tr>
+                                                            <td colspan="3" class="text-center text-secondary py-4" style="white-space: normal !important;">No support tickets found.</td>
+                                                        </tr>
+                                                    @else
+                                                        @foreach($mySupports as $support)
+                                                            <tr>
+                                                                <td style="font-size: 12px; white-space: normal !important; min-width: 110px; color: #697a8d;">
+                                                                    {{ date('d M Y, h:i a', strtotime($support->created_at)) }}
+                                                                </td>
+                                                                <td style="white-space: normal !important; min-width: 200px;">
+                                                                    <div class="fw-semibold text-dark">{{ $support->subject }}</div>
+                                                                    <div class="text-secondary small mt-1" style="font-size: 11px; line-height: 1.4; color: #697a8d !important;">
+                                                                        {{ $support->comment }}
+                                                                    </div>
+                                                                </td>
+                                                                <td style="white-space: normal !important; min-width: 200px;">
+                                                                    @if ($support->reply == null)
+                                                                        <span class="badge bg-label-warning mb-1">Pending</span>
+                                                                        <div class="small text-secondary" style="font-size: 11px; color: #697a8d !important;">Admin reply pending</div>
+                                                                    @else
+                                                                        <span class="badge bg-label-success mb-1">Answered</span>
+                                                                        <div class="small text-secondary" style="font-size: 11px; line-height: 1.3; color: #697a8d !important;">
+                                                                            <strong class="text-dark">Reply:</strong> {{ $support->reply }}
+                                                                        </div>
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / Content -->
 
                                         <div
                                             class="content-backdrop fade"></div>

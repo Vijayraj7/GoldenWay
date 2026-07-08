@@ -100,6 +100,16 @@ $i = 0;
                                     /</span>
                                 Chats</h4>
 
+                            @if ($errors->any())
+                            <div class="alert alert-danger mb-4" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; border-radius: 8px; padding: 12px; font-weight: 600; font-size: 13px;">
+                                <ul class="mb-0 px-3">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+
                             <!-- Basic Bootstrap Table -->
                             <div class="card">
                                 <h5
@@ -112,8 +122,8 @@ $i = 0;
                                                 <th>No</th>
                                                 <th>Date</th>
                                                 <th>Name</th>
-                                                <th>Subject</th>
-                                                <th>Reply Status</th>
+                                                <th>Subject & Message</th>
+                                                <th>Reply Status / Action</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
@@ -130,7 +140,7 @@ if (isset($_GET['plnid'])) {
                                 $i++;
     $usr =
         DB::table('customers')->where('id', $support->csId)->first();
-                                            @endphp
+                                             @endphp
                                             <tr>
                                                 <td>{{$i}}</td>
                                                 <td>
@@ -160,16 +170,42 @@ if (isset($_GET['plnid'])) {
                                                         <a href="/admin/user/{{$usr->id}}">
                                                         {{ $usr->name }}
                                                         </a>
+                                                        {{ $usr->uid }}
                                                     </ul>
                                                 </td>
-                                                <td>{{ $support->subject }}</td>
-                                                <td>
+                                                <td style="white-space: normal !important; min-width: 250px;">
+                                                    <div class="fw-semibold text-dark">{{ $support->subject }}</div>
+                                                    <div class="text-secondary small" style="font-size: 11px; margin-top: 4px; line-height: 1.4; color: #697a8d !important;">
+                                                        {{ $support->comment }}
+                                                    </div>
+                                                </td>
+                                                <td style="white-space: normal !important;">
                                                     @if ($support->reply == null)
-                                                    <span
-                                                        class="badge bg-label-warning me-1">Pending</span>
+                                                        <span class="badge bg-label-warning mb-2">Pending</span>
+                                                        <form action="/customer/support" method="POST" class="d-flex flex-column gap-1" style="width: 220px;">
+                                                            @csrf
+                                                            <input type="hidden" name="id" value="{{$support->id}}">
+                                                            <div class="d-flex gap-1">
+                                                                <textarea name="reply" required minlength="5" class="form-control form-control-sm" placeholder="Reply..." rows="1" style="font-size: 11px; background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff; padding: 4px 8px; resize: none;"></textarea>
+                                                                <button type="submit" class="btn btn-xs btn-primary px-2" style="font-size: 10px; height: 30px;">Send</button>
+                                                            </div>
+                                                        </form>
                                                     @else
-                                                    <span
-                                                        class="badge bg-label-success me-1">Success</span>
+                                                        <span class="badge bg-label-success mb-1">Success</span>
+                                                        <div class="small text-secondary" style="max-width: 220px; font-size: 11px; line-height: 1.3; color: #697a8d !important;">
+                                                            <strong class="text-dark">Reply:</strong> {{ $support->reply }}
+                                                        </div>
+                                                        <button class="btn btn-sm btn-link p-0 mt-1 text-primary" style="font-size: 11px; text-decoration: none;" onclick="event.preventDefault(); document.getElementById('edit-form-{{$support->id}}').classList.toggle('d-none');">
+                                                            <i class="bx bx-edit-alt"></i> Edit
+                                                        </button>
+                                                        <form id="edit-form-{{$support->id}}" action="/customer/support" method="POST" class="d-none mt-2" style="width: 220px;">
+                                                            @csrf
+                                                            <input type="hidden" name="id" value="{{$support->id}}">
+                                                            <div class="d-flex gap-1">
+                                                                <textarea name="reply" required minlength="5" class="form-control form-control-sm" rows="1" style="font-size: 11px; background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff; padding: 4px 8px; resize: none;">{{ $support->reply }}</textarea>
+                                                                <button type="submit" class="btn btn-xs btn-primary px-2" style="font-size: 10px; height: 30px;">Save</button>
+                                                            </div>
+                                                        </form>
                                                     @endif
                                                 </td>
                                                 <td>
