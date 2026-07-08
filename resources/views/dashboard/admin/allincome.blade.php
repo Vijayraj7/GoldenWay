@@ -4,8 +4,8 @@ ini_set('display_errors', 1);
 use Carbon\Carbon;
 
 $fromDate = $_GET['from_date'] ?? '';
-if ($fromDate == '' || strtotime($fromDate) < strtotime('2026-06-17 03:00:00')) {
-    $fromDate = '2026-06-17 03:00:00';
+if ($fromDate == '' || strtotime($fromDate) < strtotime('2026-06-16 23:00:00')) {
+    $fromDate = '2026-06-16 23:00:00';
 }
 $toDate = $_GET['to_date'] ?? '';
 if (isset($_GET['today']) && $_GET['today'] == '1') {
@@ -18,36 +18,36 @@ $fromDateTime = (strlen($fromDate) > 10) ? $fromDate : $fromDate . ' 00:00:00';
 // 1. Subscription Daily Totals
 $subsQuery = DB::table('customer_subs')->where('status', 'completed');
 if ($fromDate != '') {
-    $subsQuery->where('created_at', '>=', $fromDateTime);
+    $subsQuery->where('updated_at', '>=', $fromDateTime);
 }
 if ($toDate != '') {
-    $subsQuery->where('created_at', '<=', $toDate . ' 23:59:59');
+    $subsQuery->where('updated_at', '<=', $toDate . ' 23:59:59');
 }
-$subsDaily = $subsQuery->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(sub_amount) as total'))
+$subsDaily = $subsQuery->select(DB::raw('DATE(updated_at) as date'), DB::raw('SUM(sub_amount) as total'))
     ->groupBy('date')
     ->pluck('total', 'date');
 
 // 2. Staking/Plans Daily Totals
 $plansQuery = DB::table('customer_plans');
 if ($fromDate != '') {
-    $plansQuery->where('created_at', '>=', $fromDateTime);
+    $plansQuery->where('updated_at', '>=', $fromDateTime);
 }
 if ($toDate != '') {
-    $plansQuery->where('created_at', '<=', $toDate . ' 23:59:59');
+    $plansQuery->where('updated_at', '<=', $toDate . ' 23:59:59');
 }
-$plansDaily = $plansQuery->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(pamount) as total'))
+$plansDaily = $plansQuery->select(DB::raw('DATE(updated_at) as date'), DB::raw('SUM(pamount) as total'))
     ->groupBy('date')
     ->pluck('total', 'date');
 
 // 3. Autopoll Daily Totals
 $pollsQuery = DB::table('customer_autopolls')->where('status', 'completed');
 if ($fromDate != '') {
-    $pollsQuery->where('created_at', '>=', $fromDateTime);
+    $pollsQuery->where('updated_at', '>=', $fromDateTime);
 }
 if ($toDate != '') {
-    $pollsQuery->where('created_at', '<=', $toDate . ' 23:59:59');
+    $pollsQuery->where('updated_at', '<=', $toDate . ' 23:59:59');
 }
-$pollsDaily = $pollsQuery->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(poll_amount) as total'))
+$pollsDaily = $pollsQuery->select(DB::raw('DATE(updated_at) as date'), DB::raw('SUM(poll_amount) as total'))
     ->groupBy('date')
     ->pluck('total', 'date');
 
