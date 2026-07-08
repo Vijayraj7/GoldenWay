@@ -9,18 +9,18 @@ $myintid = (int)$v->id;
 
 // Fetch level users
 $level1 = getlevusers('1', $v);
-$level2 = getlevusers('2', $v);
-$level3 = getlevusers('3', $v);
-$level4 = getlevusers('4', $v);
-$level5 = getlevusers('5', $v);
+$level2 = collect([]);
+$level3 = collect([]);
+$level4 = collect([]);
+$level5 = collect([]);
 
 $level1Ids = $level1->pluck('id')->toArray();
-$level2Ids = $level2->pluck('id')->toArray();
-$level3Ids = $level3->pluck('id')->toArray();
-$level4Ids = $level4->pluck('id')->toArray();
-$level5Ids = $level5->pluck('id')->toArray();
+$level2Ids = [];
+$level3Ids = [];
+$level4Ids = [];
+$level5Ids = [];
 
-$allIds = array_merge($level1Ids, $level2Ids, $level3Ids, $level4Ids, $level5Ids);
+$allIds = $level1Ids;
 
 // Preload Staking
 $userStakes = empty($allIds) ? [] : DB::table('customer_plans')
@@ -498,7 +498,7 @@ foreach ($allIds as $id) {
                         <!-- Top Metric Cards -->
                         <div class="row mb-4 g-3">
                             <!-- Direct Referrals -->
-                            <div class="col-xl-3 col-sm-6">
+                            <div class="col-md-6 col-12 mb-4">
                                 <div class="card premium-card h-100">
                                     <div class="card-body d-flex flex-column justify-content-between">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
@@ -517,28 +517,8 @@ foreach ($allIds as $id) {
                                 </div>
                             </div>
 
-                            <!-- Total Network -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="card premium-card h-100">
-                                    <div class="card-body d-flex flex-column justify-content-between">
-                                        <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <span class="card-title text-muted text-uppercase mb-0" style="font-size: 11px; letter-spacing: 0.5px; font-weight:700;">Total Team (L1-L5)</span>
-                                            <div class="metric-icon-box">
-                                                <i class="bx bx-group"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h3 class="mb-1 text-white" style="font-size: 26px; font-weight:700;">{{ $totalTeamCount }}</h3>
-                                            <p class="mb-0 text-success" style="font-size: 12px; font-weight: 600;">
-                                                Active Subscribers: {{ $totalActiveCount }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- Direct Volume -->
-                            <div class="col-xl-3 col-sm-6">
+                            <div class="col-md-6 col-12 mb-4">
                                 <div class="card premium-card h-100">
                                     <div class="card-body d-flex flex-column justify-content-between">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
@@ -558,28 +538,6 @@ foreach ($allIds as $id) {
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Total Team Volume -->
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="card premium-card h-100">
-                                    <div class="card-body d-flex flex-column justify-content-between">
-                                        <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <span class="card-title text-muted text-uppercase mb-0" style="font-size: 11px; letter-spacing: 0.5px; font-weight:700;">Total Team Volume</span>
-                                            <div class="metric-icon-box" style="background: rgba(0, 208, 148, 0.1) !important; border-color: rgba(0, 208, 148, 0.2) !important;">
-                                                <i class="bx bx-globe" style="color: #00D094;"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h3 class="mb-1 text-white" style="font-size: 26px; font-weight:700;">
-                                                {{ number_format($totalTeamVol, 2) }}
-                                            </h3>
-                                            <p class="mb-0 text-muted" style="font-size: 11px;">
-                                                Stake: {{ number_format($totalStakeVol, 2) }} | Sub: {{ number_format($totalSubVol, 2) }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <!-- Search, Filter & Tabs Card -->
@@ -589,7 +547,7 @@ foreach ($allIds as $id) {
                                 <div class="col-lg-4 col-md-5">
                                     <div class="search-input-group d-flex align-items-center">
                                         <i class="bx bx-search"></i>
-                                        <input type="text" id="referralSearch" class="form-control" placeholder="Search name, email, phone or UID..." />
+                                        <input type="text" id="referralSearch" class="form-control" placeholder="Search name or UID..." />
                                     </div>
                                 </div>
 
@@ -604,7 +562,7 @@ foreach ($allIds as $id) {
                             </div>
 
                             <!-- Level Tabs -->
-                            <div class="mt-4 border-top pt-3 border-gold">
+                            <div class="mt-4 border-top pt-3 border-gold" style="display: none !important;">
                                 <ul class="nav nav-pills custom-nav-pills" id="levelTabs" role="tablist">
                                     <li class="nav-item">
                                         <button class="nav-link active" data-level="all">
@@ -722,11 +680,6 @@ foreach ($allIds as $id) {
                                                                 <button class="copy-btn" onclick="copyToClipboard('{{ $u->uid }}')" title="Copy UID">
                                                                     <i class="bx bx-copy"></i>
                                                                 </button>
-                                                            </div>
-                                                            <div style="font-size: 11px; color: rgba(255,255,255,0.45)">{{ $u->email }}</div>
-                                                            @if(!empty($u->phone))
-                                                                <div style="font-size: 11px; color: rgba(255,255,255,0.45)">{{ $u->phone }}</div>
-                                                            @endif
                                                         </div>
                                                     </div>
                                                 </td>
