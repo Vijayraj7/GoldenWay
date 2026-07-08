@@ -38,10 +38,11 @@ class ApiController extends Controller
         // echo shell_exec("date");
         // $this->sendMail('forv100@gmail.com');
         // }
-        $t = DB::table('admin_config')->where('id', 7)->sum('t');
-        DB::table('admin_config')->where('id', 7)->update([
-            't' => $t + 1,
-        ]);
+        // $t = DB::table('admin_config')->where('id', 7)->sum('t');
+        // DB::table('admin_config')->where('id', 7)->update([
+        //     't' => $t + 1,
+        // ]);
+        echo Carbon::now();
         // echo encStr('0xd296Bf51874958B9A4f9772b7F15f70B4c7DeB40');
         // return view('blnc');
     }

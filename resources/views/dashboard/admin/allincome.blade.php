@@ -16,19 +16,19 @@ if (isset($_GET['today']) && $_GET['today'] == '1') {
 $fromDateTime = (strlen($fromDate) > 10) ? $fromDate : $fromDate . ' 00:00:00';
 
 // 1. Subscription Daily Totals
-$subsQuery = DB::table('customer_subs')->where('status', 'completed');
+$subsQuery = DB::table('customer_subs')->where('status', 'completed')->where('id', '>=', 69);
 if ($fromDate != '') {
-    $subsQuery->where('updated_at', '>=', $fromDateTime);
+    $subsQuery->where(DB::raw('DATE_ADD(updated_at, INTERVAL 90 MINUTE)'), '>=', $fromDateTime);
 }
 if ($toDate != '') {
-    $subsQuery->where('updated_at', '<=', $toDate . ' 23:59:59');
+    $subsQuery->where(DB::raw('DATE_ADD(updated_at, INTERVAL 90 MINUTE)'), '<=', $toDate . ' 23:59:59');
 }
-$subsDaily = $subsQuery->select(DB::raw('DATE(updated_at) as date'), DB::raw('SUM(sub_amount) as total'))
+$subsDaily = $subsQuery->select(DB::raw('DATE(DATE_ADD(updated_at, INTERVAL 90 MINUTE)) as date'), DB::raw('SUM(sub_amount) as total'))
     ->groupBy('date')
     ->pluck('total', 'date');
 
 // 2. Staking/Plans Daily Totals
-$plansQuery = DB::table('customer_plans');
+$plansQuery = DB::table('customer_plans')->where('id', '>=', 271);
 if ($fromDate != '') {
     $plansQuery->where('updated_at', '>=', $fromDateTime);
 }
@@ -40,14 +40,14 @@ $plansDaily = $plansQuery->select(DB::raw('DATE(updated_at) as date'), DB::raw('
     ->pluck('total', 'date');
 
 // 3. Autopoll Daily Totals
-$pollsQuery = DB::table('customer_autopolls')->where('status', 'completed');
+$pollsQuery = DB::table('customer_autopolls')->where('status', 'completed')->where('id', '>=', 39);
 if ($fromDate != '') {
-    $pollsQuery->where('updated_at', '>=', $fromDateTime);
+    $pollsQuery->where(DB::raw('DATE_ADD(updated_at, INTERVAL 90 MINUTE)'), '>=', $fromDateTime);
 }
 if ($toDate != '') {
-    $pollsQuery->where('updated_at', '<=', $toDate . ' 23:59:59');
+    $pollsQuery->where(DB::raw('DATE_ADD(updated_at, INTERVAL 90 MINUTE)'), '<=', $toDate . ' 23:59:59');
 }
-$pollsDaily = $pollsQuery->select(DB::raw('DATE(updated_at) as date'), DB::raw('SUM(poll_amount) as total'))
+$pollsDaily = $pollsQuery->select(DB::raw('DATE(DATE_ADD(updated_at, INTERVAL 90 MINUTE)) as date'), DB::raw('SUM(poll_amount) as total'))
     ->groupBy('date')
     ->pluck('total', 'date');
 
