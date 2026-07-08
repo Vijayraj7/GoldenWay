@@ -4,8 +4,8 @@ ini_set('display_errors', 1);
 use Carbon\Carbon;
 
 $fromDate = $_GET['from_date'] ?? '';
-if ($fromDate == '' || strtotime($fromDate) < strtotime('2026-06-17')) {
-    $fromDate = '2026-06-17';
+if ($fromDate == '' || strtotime($fromDate) < strtotime('2026-06-17 03:00:00')) {
+    $fromDate = '2026-06-17 03:00:00';
 }
 $toDate = $_GET['to_date'] ?? '';
 if (isset($_GET['today']) && $_GET['today'] == '1') {
@@ -13,10 +13,12 @@ if (isset($_GET['today']) && $_GET['today'] == '1') {
     $toDate = date('Y-m-d');
 }
 
+$fromDateTime = (strlen($fromDate) > 10) ? $fromDate : $fromDate . ' 00:00:00';
+
 // 1. Subscription Daily Totals
 $subsQuery = DB::table('customer_subs')->where('status', 'completed');
 if ($fromDate != '') {
-    $subsQuery->where('created_at', '>=', $fromDate . ' 00:00:00');
+    $subsQuery->where('created_at', '>=', $fromDateTime);
 }
 if ($toDate != '') {
     $subsQuery->where('created_at', '<=', $toDate . ' 23:59:59');
@@ -28,7 +30,7 @@ $subsDaily = $subsQuery->select(DB::raw('DATE(created_at) as date'), DB::raw('SU
 // 2. Staking/Plans Daily Totals
 $plansQuery = DB::table('customer_plans');
 if ($fromDate != '') {
-    $plansQuery->where('created_at', '>=', $fromDate . ' 00:00:00');
+    $plansQuery->where('created_at', '>=', $fromDateTime);
 }
 if ($toDate != '') {
     $plansQuery->where('created_at', '<=', $toDate . ' 23:59:59');
@@ -40,7 +42,7 @@ $plansDaily = $plansQuery->select(DB::raw('DATE(created_at) as date'), DB::raw('
 // 3. Autopoll Daily Totals
 $pollsQuery = DB::table('customer_autopolls')->where('status', 'completed');
 if ($fromDate != '') {
-    $pollsQuery->where('created_at', '>=', $fromDate . ' 00:00:00');
+    $pollsQuery->where('created_at', '>=', $fromDateTime);
 }
 if ($toDate != '') {
     $pollsQuery->where('created_at', '<=', $toDate . ' 23:59:59');
@@ -673,7 +675,7 @@ $i = 0;
                                     <div class="col-12 col-md-5">
                                         <div class="d-flex align-items-center gap-2">
                                             <span style="font-size: 12px; color: var(--text-sub); min-width: 40px;">From:</span>
-                                            <input type="date" name="from_date" class="form-control" value="{{ $fromDate }}" style="background: rgba(0, 0, 0, 0.3) !important; border: 1.5px solid rgba(255,255,255,0.07) !important; color: #fff !important; color-scheme: dark; border-radius: 12px; padding: 10px 14px; font-size: 13px;">
+                                            <input type="date" name="from_date" class="form-control" value="{{ substr($fromDate, 0, 10) }}" style="background: rgba(0, 0, 0, 0.3) !important; border: 1.5px solid rgba(255,255,255,0.07) !important; color: #fff !important; color-scheme: dark; border-radius: 12px; padding: 10px 14px; font-size: 13px;">
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-5">
