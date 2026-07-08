@@ -83,6 +83,7 @@ Route::get('/admin/customer/support/status', 'App\Http\Controllers\AdminDashboar
 Route::get('/admin/transferfund/free', 'App\Http\Controllers\AdminDashboard@transferFundFree');
 Route::get('/admin/autopool/history', 'App\Http\Controllers\AdminDashboard@adminAutopoolHistory');
 Route::get('/admin/subscription/history', 'App\Http\Controllers\AdminDashboard@adminSubscriptionHistory');
+Route::post('/admin/customer/change-password', 'App\Http\Controllers\AdminDashboard@changePassword');
 
 //dashboard
 Route::get('/dashboard', 'App\Http\Controllers\DashBoardController@dashboard');

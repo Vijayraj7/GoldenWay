@@ -152,4 +152,41 @@ class AdminDashboard extends Controller
         return $h->getboth('dashboard.admin.subscriptionhistory');
     }
 
+    public function changePassword(Request $rqs)
+    {
+        checkadmin();
+        $rqs->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'password_type' => 'required|in:login,transaction',
+            'new_password' => 'required|min:4'
+        ]);
+
+        $customerId = $rqs->input('customer_id');
+        $type = $rqs->input('password_type');
+        $newPass = $rqs->input('new_password');
+
+        $ve = DB::table("customers")->where('id', $customerId)->first();
+        if ($ve == null) {
+            return redirect()->back()->withErrors(['error' => 'Customer not found.']);
+        }
+
+        $h = new HelperController;
+
+        if ($type === 'login') {
+            $h->toTableupdate("customers", ['id' => $ve->id, 'password' => \Illuminate\Support\Facades\Hash::make($newPass)]);
+            // Update laravel user password as well if user exists
+            $user = \App\Models\User::where('email', $ve->email)->first();
+            if ($user != null) {
+                $user->password = $newPass;
+                $user->save();
+            }
+            $message = 'Login password updated successfully!';
+        } else {
+            $h->toTableupdate("customers", ['id' => $ve->id, 'tpassword' => \Illuminate\Support\Facades\Hash::make($newPass)]);
+            $message = 'Transaction password updated successfully!';
+        }
+
+        return redirect()->back()->withErrors(['success' => $message]);
+    }
+
 }

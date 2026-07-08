@@ -115,7 +115,7 @@ $i = 0;
                                 <h5
                                     style="padding: 1.125rem 1.25rem !important;"
                                     class="card-header">Chats</h5>
-                                <div class="table-responsive text-nowrap">
+                                <div class="table-responsive text-nowrap" style="overflow: visible !important;">
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -210,14 +210,26 @@ if (isset($_GET['plnid'])) {
                                                 </td>
                                                 <td>
                                                     <div class="dropdown">
-
-                                                        <a
-                                                            class="dropdown-item"
-                                                            style="padding: 0 !important;"
-                                                            href="/admin/customer/support/status/?sprtid={{$support->id}}"><i
-                                                                class="bx bxs-contact me-1"></i>
-                                                            View</a>
-
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" style="border: none; background: transparent; color: #697a8d;">
+                                                            <i class="bx bx-dots-vertical-rounded" style="font-size: 20px;"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li>
+                                                                <a class="dropdown-item" href="/admin/customer/support/status/?sprtid={{$support->id}}">
+                                                                    <i class="bx bxs-contact me-1"></i> View Detail
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="javascript:void(0);" onclick="openChangePasswordModal({{ $usr->id }}, '{{ addslashes($usr->name) }}', 'login')">
+                                                                    <i class="bx bx-key me-1"></i> Change Login Password
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item" href="javascript:void(0);" onclick="openChangePasswordModal({{ $usr->id }}, '{{ addslashes($usr->name) }}', 'transaction')">
+                                                                    <i class="bx bx-lock-alt me-1"></i> Change Transaction Password
+                                                                </a>
+                                                            </li>
+                                                        </ul>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -457,5 +469,50 @@ $tpamount = $plans->sum('pamount');
 <!-- Page JS -->
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background-color: #0c2b21; border: 1px solid rgba(255, 215, 0, 0.3);">
+            <div class="modal-header">
+                <h5 class="modal-title text-white" id="changePasswordModalTitle">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
+            </div>
+            <form action="/admin/customer/change-password" method="POST">
+                @csrf
+                <input type="hidden" name="customer_id" id="modal_customer_id">
+                <input type="hidden" name="password_type" id="modal_password_type">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="new_password" class="form-label text-warning" id="modal_password_label">New Password</label>
+                            <input type="password" name="new_password" id="new_password" required minlength="4" class="form-control" placeholder="Enter new password" style="background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff;">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="color: rgba(255, 255, 255, 0.7); border-color: rgba(255, 255, 255, 0.3);">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function openChangePasswordModal(userId, userName, type) {
+    document.getElementById('modal_customer_id').value = userId;
+    document.getElementById('modal_password_type').value = type;
+    document.getElementById('new_password').value = '';
+    
+    const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
+    document.getElementById('changePasswordModalTitle').innerText = 'Change ' + capitalizedType + ' Password';
+    document.getElementById('modal_password_label').innerText = 'New ' + capitalizedType + ' Password for ' + userName;
+    document.getElementById('new_password').placeholder = 'Enter new ' + type + ' password';
+    
+    var myModal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+    myModal.show();
+}
+</script>
     </body>
 </html>
