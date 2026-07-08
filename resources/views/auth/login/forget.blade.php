@@ -177,47 +177,72 @@
                             <input type="hidden" name="id" value="{{$id}}">
                             <input type="hidden" name="code" value="{{$code}}">
 
-                            <!-- Login Password Input -->
-                            <div class="mb-3">
-                                <label for="password" class="form-label">New Password</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" class="form-control" id="password" name="password" required placeholder="New Login Password" style="padding: 12px 16px;">
-                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('password', this)">
-                                        <i class="bx bx-hide"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Confirm Login Password Input -->
-                            <div class="mb-3">
-                                <label for="spassword" class="form-label">Confirm New Password</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" class="form-control" id="spassword" name="spassword" required placeholder="Confirm New Login Password" style="padding: 12px 16px;">
-                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('spassword', this)">
-                                        <i class="bx bx-hide"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Transaction Password Input -->
-                            <div class="mb-3">
-                                <label for="tpassword" class="form-label">New Transaction Password</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" class="form-control" id="tpassword" name="tpassword" required placeholder="New Transaction Password" style="padding: 12px 16px;">
-                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('tpassword', this)">
-                                        <i class="bx bx-hide"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Confirm Transaction Password Input -->
+                            <!-- Password Options Selector -->
                             <div class="mb-4">
-                                <label for="stpassword" class="form-label">Confirm Transaction Password</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" class="form-control" id="stpassword" name="stpassword" required placeholder="Confirm Transaction Password" style="padding: 12px 16px;">
-                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('stpassword', this)">
-                                        <i class="bx bx-hide"></i>
-                                    </span>
+                                <label class="form-label d-block mb-2">Select Passwords to Change</label>
+                                <div style="display: flex; gap: 15px;">
+                                    <label id="login_pass_label" class="custom-checkbox-container" style="flex: 1; cursor: pointer; border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 8px; padding: 12px; display: flex; align-items: center; justify-content: center; background-color: rgba(5, 20, 16, 0.6); transition: all 0.3s ease; text-align: center; user-select: none;">
+                                        <input type="checkbox" id="change_login_pass" checked style="display: none;">
+                                        <span style="font-weight: 600; color: #ffd700; display: flex; align-items: center; gap: 8px;">
+                                            <i id="login_pass_icon" class="bx bx-check-square" style="font-size: 18px;"></i> Login Password
+                                        </span>
+                                    </label>
+                                    <label id="trans_pass_label" class="custom-checkbox-container" style="flex: 1; cursor: pointer; border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 8px; padding: 12px; display: flex; align-items: center; justify-content: center; background-color: rgba(5, 20, 16, 0.6); transition: all 0.3s ease; text-align: center; user-select: none;">
+                                        <input type="checkbox" id="change_trans_pass" checked style="display: none;">
+                                        <span style="font-weight: 600; color: #ffd700; display: flex; align-items: center; gap: 8px;">
+                                            <i id="trans_pass_icon" class="bx bx-check-square" style="font-size: 18px;"></i> Transaction Password
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Login Password Fields Container -->
+                            <div id="login_password_fields">
+                                <!-- Login Password Input -->
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">New Password</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" class="form-control" id="password" name="password" required placeholder="New Login Password" style="padding: 12px 16px;">
+                                        <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('password', this)">
+                                            <i class="bx bx-hide"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Confirm Login Password Input -->
+                                <div class="mb-3">
+                                    <label for="spassword" class="form-label">Confirm New Password</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" class="form-control" id="spassword" name="spassword" required placeholder="Confirm New Login Password" style="padding: 12px 16px;">
+                                        <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('spassword', this)">
+                                            <i class="bx bx-hide"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Transaction Password Fields Container -->
+                            <div id="trans_password_fields">
+                                <!-- Transaction Password Input -->
+                                <div class="mb-3">
+                                    <label for="tpassword" class="form-label">New Transaction Password</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" class="form-control" id="tpassword" name="tpassword" required placeholder="New Transaction Password" style="padding: 12px 16px;">
+                                        <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('tpassword', this)">
+                                            <i class="bx bx-hide"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Confirm Transaction Password Input -->
+                                <div class="mb-4">
+                                    <label for="stpassword" class="form-label">Confirm Transaction Password</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" class="form-control" id="stpassword" name="stpassword" required placeholder="Confirm Transaction Password" style="padding: 12px 16px;">
+                                        <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('stpassword', this)">
+                                            <i class="bx bx-hide"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -250,6 +275,93 @@
                 icon.classList.add('bx-hide');
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const changeLoginPass = document.getElementById('change_login_pass');
+            const changeTransPass = document.getElementById('change_trans_pass');
+            
+            const loginPassLabel = document.getElementById('login_pass_label');
+            const transPassLabel = document.getElementById('trans_pass_label');
+            
+            const loginPassIcon = document.getElementById('login_pass_icon');
+            const transPassIcon = document.getElementById('trans_pass_icon');
+            
+            const loginFields = document.getElementById('login_password_fields');
+            const transFields = document.getElementById('trans_password_fields');
+            
+            const passInput = document.getElementById('password');
+            const spassInput = document.getElementById('spassword');
+            const tpassInput = document.getElementById('tpassword');
+            const stpassInput = document.getElementById('stpassword');
+            
+            const form = document.getElementById('changePasswordForm');
+            const submitBtn = form.querySelector('button[type="submit"]');
+
+            function updateUI() {
+                // Update Login Password section
+                if (changeLoginPass.checked) {
+                    loginPassLabel.style.borderColor = '#ffd700';
+                    loginPassLabel.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
+                    loginPassIcon.className = 'bx bx-check-square';
+                    loginFields.style.display = 'block';
+                    passInput.disabled = false;
+                    passInput.required = true;
+                    spassInput.disabled = false;
+                    spassInput.required = true;
+                } else {
+                    loginPassLabel.style.borderColor = 'rgba(255, 215, 0, 0.2)';
+                    loginPassLabel.style.backgroundColor = 'rgba(5, 20, 16, 0.6)';
+                    loginPassIcon.className = 'bx bx-square';
+                    loginFields.style.display = 'none';
+                    passInput.disabled = true;
+                    passInput.required = false;
+                    spassInput.disabled = true;
+                    spassInput.required = false;
+                    passInput.value = '';
+                    spassInput.value = '';
+                }
+
+                // Update Transaction Password section
+                if (changeTransPass.checked) {
+                    transPassLabel.style.borderColor = '#ffd700';
+                    transPassLabel.style.backgroundColor = 'rgba(255, 215, 0, 0.1)';
+                    transPassIcon.className = 'bx bx-check-square';
+                    transFields.style.display = 'block';
+                    tpassInput.disabled = false;
+                    tpassInput.required = true;
+                    stpassInput.disabled = false;
+                    stpassInput.required = true;
+                } else {
+                    transPassLabel.style.borderColor = 'rgba(255, 215, 0, 0.2)';
+                    transPassLabel.style.backgroundColor = 'rgba(5, 20, 16, 0.6)';
+                    transPassIcon.className = 'bx bx-square';
+                    transFields.style.display = 'none';
+                    tpassInput.disabled = true;
+                    tpassInput.required = false;
+                    stpassInput.disabled = true;
+                    stpassInput.required = false;
+                    tpassInput.value = '';
+                    stpassInput.value = '';
+                }
+
+                // Disable submit button if neither option is checked
+                if (!changeLoginPass.checked && !changeTransPass.checked) {
+                    submitBtn.disabled = true;
+                    submitBtn.style.opacity = '0.5';
+                    submitBtn.style.cursor = 'not-allowed';
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.style.cursor = 'pointer';
+                }
+            }
+
+            changeLoginPass.addEventListener('change', updateUI);
+            changeTransPass.addEventListener('change', updateUI);
+            
+            // Initial call
+            updateUI();
+        });
     </script>
 </body>
 </html>

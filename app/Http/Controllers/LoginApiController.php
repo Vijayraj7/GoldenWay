@@ -588,38 +588,44 @@ class LoginApiController extends Controller
             return 'something error..';
         }
 
-        if (isset($rqd->password) && isset($rqd->tpassword)) {
-            if ($rqd->password == $rqd->tpassword) {
+        if (!$rqs->filled('password') && !$rqs->filled('tpassword')) {
+            return redirect()->back()->withInput()->withErrors([
+                'password' => 'Please select and fill in at least one password to change.',
+            ]);
+        }
+
+        if ($rqs->filled('password') && $rqs->filled('tpassword')) {
+            if ($rqs->input('password') == $rqs->input('tpassword')) {
                 return redirect()->back()->withInput()->withErrors([
                     'password' => 'Password and Transaction Password cannot be the same',
                 ]);
             }
         }
-        if (isset($rqd->password)) {
-            if ($rqd->password != $rqd->spassword) {
+        if ($rqs->filled('password')) {
+            if ($rqs->input('password') != $rqs->input('spassword')) {
                 return redirect()->back()->withInput()->withErrors([
                     'password' => 'Passwords do not match',
                 ]);
             }
         }
-        if (isset($rqd->tpassword)) {
-            if ($rqd->tpassword != $rqd->stpassword) {
+        if ($rqs->filled('tpassword')) {
+            if ($rqs->input('tpassword') != $rqs->input('stpassword')) {
                 return redirect()->back()->withInput()->withErrors([
                     'password' => 'Transaction passwords do not match',
                 ]);
             }
         }
 
-        if (isset($rqd->password)) {
-            $h->toTableupdate("customers", ['id' => $ve->id, 'password' => Hash::make($rqd->password)]);
+        if ($rqs->filled('password')) {
+            $h->toTableupdate("customers", ['id' => $ve->id, 'password' => Hash::make($rqs->input('password'))]);
             $user = User::where('email', $ve->email)->first();
             if ($user != null) {
-                $user->password = $rqd->password;
+                $user->password = $rqs->input('password');
                 $user->save();
             }
         }
-        if (isset($rqd->tpassword)) {
-            $h->toTableupdate("customers", ['id' => $ve->id, 'tpassword' => Hash::make($rqd->tpassword)]);
+        if ($rqs->filled('tpassword')) {
+            $h->toTableupdate("customers", ['id' => $ve->id, 'tpassword' => Hash::make($rqs->input('tpassword'))]);
         }
 
         // Reset the fcode field to clear the reset session
