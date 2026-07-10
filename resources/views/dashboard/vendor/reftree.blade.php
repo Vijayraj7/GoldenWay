@@ -157,7 +157,7 @@ if ($refintid < $myintid) {
                             <div class="control-search">
                                 <form onsubmit="searchMember(event)" class="search-form">
                                     <div class="input-group">
-                                        <input type="number" id="searchMemberId" class="form-control form-control-sm search-input" placeholder="Search Member ID..." required min="{{ $myintid }}">
+                                        <input type="text" id="searchMemberId" class="form-control form-control-sm search-input" placeholder="Search Member ID..." required min="{{ $myintid }}">
                                         <button type="submit" class="btn btn-primary btn-sm search-btn">
                                             <i class="bx bx-search"></i> Search
                                         </button>
