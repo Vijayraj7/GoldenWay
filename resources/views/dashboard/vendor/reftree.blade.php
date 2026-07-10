@@ -8,9 +8,19 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $myintid = (int) $v->id;
-$refintid = (int) $refid;
+$refid = $refid ?? $myintid;
 
-if ($refintid < $myintid) {
+// Query the database for the user by ID or UID
+$refuser = DB::table('customers')
+    ->where('id', $refid)
+    ->orWhere('uid', $refid)
+    ->first();
+
+if (!$refuser) {
+    abort(404);
+}
+
+if ($refuser->id < $myintid) {
     abort(404);
 }
 
@@ -81,8 +91,6 @@ if ($refintid < $myintid) {
                         </h4>
 
                         @php
-                        $refuser = DB::table('customers')->where('id', $refid)->first();
-
                         // Query binary parent for hierarchical layout up-level navigation
                         $binaryParent = null;
                         if ($refuser && $refuser->id !== $myintid) {
@@ -157,7 +165,7 @@ if ($refintid < $myintid) {
                             <div class="control-search">
                                 <form onsubmit="searchMember(event)" class="search-form">
                                     <div class="input-group">
-                                        <input type="text" id="searchMemberId" class="form-control form-control-sm search-input" placeholder="Search Member ID..." required min="{{ $myintid }}">
+                                        <input type="text" id="searchMemberId" class="form-control form-control-sm search-input" placeholder="Search Member ID or UID..." required>
                                         <button type="submit" class="btn btn-primary btn-sm search-btn">
                                             <i class="bx bx-search"></i> Search
                                         </button>
@@ -1219,24 +1227,23 @@ if ($refintid < $myintid) {
         function searchMember(event) {
             event.preventDefault();
             const input = document.getElementById('searchMemberId');
-            const searchId = parseInt(input.value.trim(), 10);
-            const myId = {
-                {
-                    $myintid
+            const searchVal = input.value.trim();
+
+            if (!searchVal) {
+                alert('Please enter a valid Member ID or UID.');
+                return;
+            }
+
+            if (/^\d+$/.test(searchVal)) {
+                const searchId = parseInt(searchVal, 10);
+                const myId = {{ $myintid }};
+                if (searchId < myId) {
+                    alert(`You can only search for members within your downline (ID must be ${myId} or higher).`);
+                    return;
                 }
-            };
-
-            if (isNaN(searchId)) {
-                alert('Please enter a valid numeric ID.');
-                return;
             }
 
-            if (searchId < myId) {
-                alert(`You can only search for members within your downline (ID must be ${myId} or higher).`);
-                return;
-            }
-
-            window.location.href = `/dashboard/reftree/${searchId}`;
+            window.location.href = `/dashboard/reftree/${searchVal}`;
         }
 
         // Copy User ID utility with propagation stop and HTTP clipboard fallback
