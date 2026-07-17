@@ -105,7 +105,7 @@ function checkadmin(): bool
     session_start();
     if (isset($_SESSION['mail'])) {
         if (
-            strtoupper($_SESSION['mail']) == 'GW874374' ||
+            // strtoupper($_SESSION['mail']) == 'GW874374' ||
             strtoupper($_SESSION['mail']) == 'GW644810' ||
             strtoupper($_SESSION['mail']) == 'GW476342' ||
             strtoupper($_SESSION['mail']) == 'GW243457' ||
@@ -130,7 +130,7 @@ function isAdmin(): bool
     // dd($_SESSION['id']);
     if (isset($_SESSION['mail'])) {
         if (
-            strtoupper($_SESSION['mail']) == 'GW874374' ||
+            // strtoupper($_SESSION['mail']) == 'GW874374' ||
             strtoupper($_SESSION['mail']) == 'GW644810' ||
             strtoupper($_SESSION['mail']) == 'GW476342' ||
             strtoupper($_SESSION['mail']) == 'GW243457' ||
