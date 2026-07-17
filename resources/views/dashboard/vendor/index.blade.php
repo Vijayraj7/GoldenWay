@@ -344,8 +344,8 @@ if (count($plans) == 0) {
                                                 Community
                                             </a>
 
-                                            @if(false)
-                                            <a id="downldapp_btn" href="https://play.google.com/store/apps/details?id=com.forv.globalmarketstars" target="_blank" class="btn btn-light shr-referral">
+                                            @if(true)
+                                            <a id="downldapp_pdf" href="/apk/goldenway.apk" download="goldenway.apk" target="_blank" class="btn btn-light shr-referral">
                                                 Download App
                                             </a>
                                             @endif
