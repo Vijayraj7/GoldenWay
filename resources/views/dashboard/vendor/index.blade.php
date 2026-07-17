@@ -353,7 +353,7 @@ if (count($plans) == 0) {
 
                                             @if(true)
                                             <a id="downldapp_pdf" href="/pdf/goldenway.pdf" download="goldenway.pdf" target="_blank" class="btn btn-light shr-referral">
-                                                Download Pdf
+                                                Pdf
                                             </a>
                                             @endif
 
