@@ -38,6 +38,12 @@
                 <div data-i18n="Analytics">Business Analytics</div>
             </a>
         </li>
+        <li class="menu-item @if($r == 'detailedincome') active @endif">
+            <a href="/admin/income/detailed" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div data-i18n="DetailedIncome">Detailed Income</div>
+            </a>
+        </li>
         <li class="menu-item @if($r == 'referraltree') active @endif">
             <a href="/admin/referral/tree?refid=1111" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>

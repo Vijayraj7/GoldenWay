@@ -75,6 +75,7 @@ Route::get('/admin/referral/tree', 'App\Http\Controllers\AdminDashboard@reftree'
 Route::get('/admin/creditadd/requests', 'App\Http\Controllers\AdminDashboard@creditrequests');
 Route::get('/admin/customers/all', 'App\Http\Controllers\AdminDashboard@customers');
 Route::get('/admin/customers/income', 'App\Http\Controllers\AdminDashboard@incomeAnalytics');
+Route::get('/admin/income/detailed', 'App\Http\Controllers\AdminDashboard@detailedIncome');
 Route::get('/admin/product/requests/{id}', 'App\Http\Controllers\AdminDashboard@productrequestsview');
 Route::get('/admin/creditadd/requests/{id}', 'App\Http\Controllers\AdminDashboard@creditaddrequestsview');
 Route::get('/admin/withdraw/requests', 'App\Http\Controllers\AdminDashboard@withdrawrequests');

@@ -40,6 +40,12 @@ class AdminDashboard extends Controller
         $h = new HelperController;
         return $h->getboth('dashboard.admin.allincome');
     }
+    public function detailedIncome()
+    {
+        checkadmin();
+        $h = new HelperController;
+        return $h->getboth('dashboard.admin.detailedincome');
+    }
     public function productrequests()
     {
         checkadmin();
