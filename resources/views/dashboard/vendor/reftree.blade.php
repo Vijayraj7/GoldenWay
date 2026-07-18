@@ -17,7 +17,7 @@ $refuser = DB::table('customers')
     ->first();
 
 if (!$refuser) {
-    abort(404);
+ //   abort(404);
 }
 
 if ($refuser->id < $myintid) {
