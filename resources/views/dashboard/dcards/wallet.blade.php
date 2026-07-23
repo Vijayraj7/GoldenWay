@@ -209,7 +209,7 @@ $pvt_wallet = decStr($v->gms_pvt_key);
                             <button type="button" class="btn premium-btn" onclick="onWalletSend()" style="width: 100%; {{ isset($small) && $small ? 'padding: 10px !important; font-size: 13px !important;' : 'padding: 10px !important; font-size: 12px !important;' }}">
                                 <i class="fas fa-paper-plane me-1"></i> Send
                             </button>
-                            <button type="button" class="btn premium-btn" onclick="onWalleRecieve()" style="width: 100%; {{ isset($small) && $small ? 'padding: 10px !important; font-size: 13px !important;' : 'padding: 10px !important; font-size: 12px !important;' }} background: linear-gradient(135deg, #475569, #334155) !important; box-shadow: none !important;">
+                            <button type="button" class="btn premium-btn" onclick="onWalleRecieve()" style="width: 100%; {{ isset($small) && $small ? 'padding: 10px !important; font-size: 13px !important;' : 'padding: 10px !important; font-size: 12px !important;' }} background: linear-gradient(135deg, #10b981, #047857) !important; box-shadow: none !important;">
                                 <i class="fas fa-arrow-down me-1"></i> Receive
                             </button>
                         </div>
