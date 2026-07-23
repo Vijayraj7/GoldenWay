@@ -923,7 +923,7 @@ $i = 0;
                                             <th>Joined</th>
                                             <th>Member</th>
                                             <th>Referred By</th>
-                                            <th>Rank</th>
+                                            {{-- <th>Rank</th> --}}
                                             <th>User ID</th>
                                             <th>Status</th>
                                             <th>Sub (USDT)</th>
@@ -1009,7 +1009,7 @@ $i = 0;
                                                 @endif
                                             </td>
 
-                                            <td>
+                                            {{-- <td>
                                                 @if($rankName)
                                                 <span class="rank-tag" style="background:{{ $rankColor }}18;color:{{ $rankColor }};border:1px solid {{ $rankColor }}30;">
                                                     {{ $rankName }}
@@ -1017,7 +1017,7 @@ $i = 0;
                                                 @else
                                                 <span class="c-muted">—</span>
                                                 @endif
-                                            </td>
+                                            </td> --}}
 
                                             <td>
                                                 <span class="uid-tag" onclick="copyToClipboard('{{ $cstomer->uid }}', this)" title="Click to copy UID">
