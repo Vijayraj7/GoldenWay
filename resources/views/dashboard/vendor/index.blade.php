@@ -1683,7 +1683,8 @@ if (count($plans) == 0) {
                         <script>
                             var pnm = "{{ old('pname') }}";
                             $(document).ready(function() {
-                                if ("{{ old('coin_type') }}" == '') {
+                                // Exclude withdrawal transaction types from opening the stake modal
+                                if ("{{ old('coin_type') }}" == '' && pnm != 'pollincome' && pnm != 'pincome' && pnm != 'levincome' && pnm != 'refincome' && pnm != 'allincome' && pnm != 'transfer') {
                                     $('#modalCenter').modal('show');
                                     if (pnm == 'normal') {
                                         onModalSilver();

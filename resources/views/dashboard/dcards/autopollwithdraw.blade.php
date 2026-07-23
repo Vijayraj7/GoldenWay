@@ -121,7 +121,7 @@
 @if(old('pname') == 'pollincome')
     @error('image')
         <script>
-            $(document).ready(function() {
+            window.addEventListener('load', function() {
                 $('#autopollWithdrawModal').modal('show');
             });
         </script>
@@ -150,7 +150,7 @@
         </div>
     </div>
     <script>
-        $(document).ready(function() {
+        window.addEventListener('load', function() {
             $('#success_wth_modal').modal('show');
         });
     </script>

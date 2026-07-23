@@ -701,7 +701,7 @@ ini_set('display_errors', 1);
         </div>
     </div>
     <script>
-        $(document).ready(function() {
+        window.addEventListener('load', function() {
             $('#success_tic').modal('show');
         });
 
