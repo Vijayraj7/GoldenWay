@@ -88,7 +88,7 @@
     <!-- <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" /> -->
 </head>
 
-<body onload="initializeGoogleSignIn()" style="background-color: #8d6900 !important;">
+<body onload="initializeGoogleSignIn()">
 
 
     <div class="modal fade" id="otpVerifyModel" style="z-index: 2000 !important;" tabindex="-1" aria-hidden="true">
@@ -196,14 +196,65 @@
     <section class="container">
 
         <style>
+            /* Google Fonts import */
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+            body {
+                background: radial-gradient(circle at 10% 20%, rgba(12, 40, 32, 1) 0%, rgba(6, 21, 17, 1) 90%) !important;
+                font-family: 'Poppins', 'Inter', sans-serif !important;
+                color: #e0e0e0 !important;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0;
+                padding: 20px;
+                overflow-x: hidden;
+                position: relative;
+            }
+
+            .container {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                max-width: 1000px !important;
+            }
+
+            body::before {
+                content: '';
+                position: absolute;
+                width: 400px;
+                height: 400px;
+                background: radial-gradient(circle, rgba(249, 168, 38, 0.15) 0%, rgba(249, 168, 38, 0) 70%);
+                top: -100px;
+                left: -100px;
+                z-index: 0;
+                pointer-events: none;
+            }
+
+            body::after {
+                content: '';
+                position: absolute;
+                width: 400px;
+                height: 400px;
+                background: radial-gradient(circle, rgba(0, 208, 148, 0.12) 0%, rgba(0, 208, 148, 0) 70%);
+                bottom: -100px;
+                right: -100px;
+                z-index: 0;
+                pointer-events: none;
+            }
+
             .page-row {
                 display: flex;
                 gap: 0px !important;
                 align-items: stretch;
                 justify-content: center;
                 flex-wrap: wrap;
-                max-width: 1100px;
+                max-width: 1000px;
                 margin: 0 auto;
+                position: relative;
+                z-index: 1;
             }
 
             .banner-column,
@@ -218,10 +269,11 @@
             .banner-column img {
                 width: 100%;
                 height: 100%;
-                min-height: 700px;
-                border-radius: 18px;
+                border-radius: 20px;
                 object-fit: cover;
                 display: block;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+                border: 1px solid rgba(249, 168, 38, 0.15);
             }
 
             .form-column {
@@ -229,17 +281,21 @@
             }
 
             .form-card {
-                background: rgba(255, 255, 255, 0.95);
-                border-radius: 18px;
-                padding: 30px;
-                box-shadow: 0 18px 60px rgba(0, 0, 0, 0.16);
+                background: rgba(12, 40, 32, 0.6) !important;
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(249, 168, 38, 0.2) !important;
+                border-radius: 20px !important;
+                padding: 30px 24px !important;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
                 width: 100%;
                 box-sizing: border-box;
+                position: relative;
             }
 
             @media (min-width: 992px) {
                 .page-row {
-                    gap: 40px;
+                    gap: 30px;
                 }
 
                 .banner-column,
@@ -248,57 +304,267 @@
                 }
 
                 .banner-column {
-                    display: block;
+                    display: flex !important;
+                    order: 2;
                 }
 
                 .form-column {
                     flex: 0 0 calc(50% - 15px);
+                    order: 1;
                 }
 
                 .container {
-                    max-width: 1100px;
+                    max-width: 1000px;
                 }
             }
 
-            @media (min-width: 1200px) {
-                .container {
-                    max-width: 1100px;
-                }
+            /* Main Form Elements styling (Compact version) */
+            .form-card header {
+                font-size: 1.45rem;
+                font-weight: 700;
+                color: #fff !important;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 3px;
             }
 
-            .image-carousel img {
-                height: 200px !important;
+            .form-card h4 {
+                text-align: center;
+                color: rgba(255, 255, 255, 0.5) !important;
+                font-size: 0.9rem;
+                margin-bottom: 20px;
+                font-weight: 400;
             }
 
-            .carousel-container {
+            .form .input-box {
+                margin-top: 12px;
+            }
+
+            .input-box label {
+                font-size: 0.8rem;
+                font-weight: 500;
+                color: rgba(255, 255, 255, 0.75) !important;
+                margin-bottom: 4px !important;
+                display: block;
+            }
+
+            .form :where(.input-box input, .select-box, .password-input-container) {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                border-radius: 8px !important;
+                height: 38px !important;
+                color: #fff !important;
+                font-size: 0.85rem;
+                padding: 0 12px;
+                transition: all 0.3s ease;
+                width: 100%;
+                outline: none;
+            }
+
+            .form :where(.input-box input:focus, .select-box:focus-within, .password-input-container:focus-within) {
+                border-color: #f9a826 !important;
+                box-shadow: 0 0 8px rgba(249, 168, 38, 0.2) !important;
+                background: rgba(255, 255, 255, 0.08) !important;
+            }
+
+            .form .input-group input {
+                border-top-right-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                border-right: none !important;
+            }
+
+            .form .input-group:focus-within input {
+                border-color: #f9a826 !important;
+            }
+
+            .form .input-group:focus-within .input-group-append button {
+                border-color: #f9a826 !important;
+            }
+
+            .select-box select {
+                background: transparent !important;
+                border: none !important;
+                color: #fff !important;
+                outline: none !important;
+                cursor: pointer;
+                width: 100%;
+                height: 100%;
+                padding-left: 0;
+            }
+
+            .select-box select option {
+                background-color: #0c2820 !important;
+                color: #fff !important;
+            }
+
+            /* Password input alignment */
+            .password-input-container {
                 position: relative;
                 display: flex;
-                margin-bottom: 20px;
                 align-items: center;
+                padding-right: 0px !important;
+                overflow: hidden;
             }
 
-            .image-carousel {
-                position: relative;
+            .password-input-container input {
+                border: none !important;
+                background: transparent !important;
+                flex: 1;
+                height: 100% !important;
+                padding: 0 12px;
+                color: #fff !important;
+                margin-top: 0 !important;
+            }
+
+            .password-input-container .suffix-icon {
+                padding: 0 12px;
+                cursor: pointer;
+                color: rgba(255, 255, 255, 0.6);
+                transition: color 0.3s ease;
+                display: flex;
+                align-items: center;
+                height: 100%;
+            }
+
+            .password-input-container .suffix-icon:hover {
+                color: #f9a826;
+            }
+
+            .form button[type="submit"] {
+                height: 42px !important;
+                background: linear-gradient(135deg, #f9a826, #d48c1b) !important;
+                border: none !important;
+                border-radius: 8px !important;
+                color: #000 !important;
+                font-weight: 700 !important;
+                font-size: 0.9rem !important;
+                letter-spacing: 0.5px;
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+                box-shadow: 0 4px 15px rgba(249, 168, 38, 0.3) !important;
+                margin-top: 24px;
                 width: 100%;
-                height: 200px;
-                /* Adjust height as needed */
             }
 
-            .image-carousel img {
-                position: absolute;
+            .form button[type="submit"]:hover {
+                background: linear-gradient(135deg, #ffd073, #f9a826) !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(249, 168, 38, 0.5) !important;
+            }
+
+            .form button[type="submit"]:active {
+                transform: translateY(0);
+                box-shadow: 0 4px 10px rgba(249, 168, 38, 0.3) !important;
+            }
+
+            /* Custom styling for Verify group */
+            .input-group {
+                display: flex;
+                align-items: center;
                 width: 100%;
-                height: 200px;
-                top: 0;
-                left: 0;
-                opacity: 0;
-                transition: opacity 1s ease-in-out;
-                /* Adjust transition duration as needed */
             }
 
-            .image-carousel img.active {
-                opacity: 1;
+            .input-group input {
+                flex: 1;
+                border-top-right-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
             }
 
+            .input-group-append {
+                display: flex;
+            }
+
+            .input-group-append button {
+                height: 38px !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                border-left: none !important;
+                background: rgba(249, 168, 38, 0.15) !important;
+                color: #f9a826 !important;
+                border-top-right-radius: 8px !important;
+                border-bottom-right-radius: 8px !important;
+                font-weight: 600;
+                padding: 0 12px;
+                font-size: 0.8rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 0 !important;
+                width: auto !important;
+            }
+
+            .input-group-append button:hover {
+                background: rgba(249, 168, 38, 0.3) !important;
+                color: #fff !important;
+            }
+
+            /* Modal Styling */
+            .modal-content {
+                background: rgba(12, 40, 32, 0.95) !important;
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(249, 168, 38, 0.25) !important;
+                border-radius: 15px !important;
+                color: #fff !important;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
+            }
+
+            .modal-content .card {
+                background: rgba(12, 40, 32, 0.95) !important;
+                border: 1px solid rgba(249, 168, 38, 0.25) !important;
+                border-radius: 12px !important;
+                color: #fff !important;
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5) !important;
+            }
+
+            .modal-content .card-header {
+                background: rgba(0, 208, 148, 0.1) !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+                border-top-left-radius: 12px !important;
+                border-top-right-radius: 12px !important;
+            }
+
+            .modal-content .card-body {
+                padding: 24px !important;
+            }
+
+            .modal-content label {
+                color: rgba(255, 255, 255, 0.7) !important;
+                font-weight: 500;
+            }
+
+            .modal-header {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            }
+
+            .modal-header h4 {
+                color: #fff !important;
+                font-weight: 600;
+            }
+
+            .modal-body label {
+                color: rgba(255, 255, 255, 0.7) !important;
+            }
+
+            .modal-body .form-control {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                color: #fff !important;
+                border-radius: 8px !important;
+            }
+
+            .modal-body .form-control:focus {
+                border-color: #f9a826 !important;
+                box-shadow: 0 0 8px rgba(249, 168, 38, 0.2) !important;
+            }
+
+            .makewrong {
+                background: transparent !important;
+                border: none !important;
+                color: #fff !important;
+                margin-top: 0 !important;
+                height: 100% !important;
+            }
         </style>
 
         <div class="page-row">
@@ -370,10 +636,16 @@
                         <input type="hidden" name="type" value="{{ strtolower($cn) }}">
 
                         @if ($errors->any())
-                        @foreach ($errors->all() as $error)
-                        <p style="color: red; margin-bottom:20px;">{{ $error }}</p>
-                        @endforeach
+                        <div class="alert alert-danger" style="background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.3); color: #ff6b7d; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;">
+                            @foreach ($errors->all() as $error)
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    <span>{{ $error }}</span>
+                                </div>
+                            @endforeach
+                        </div>
                         @endif
+                        
                         <div class="input-box">
                             <label>{{ $cn }} Name</label>
                             <input value="{{ old('name') }}" name="name" type="text" placeholder="Enter full name" required />
@@ -381,21 +653,29 @@
 
                         <div class="input-box">
                             <label>Email Address</label>
-                            <input value="{{ old('email') }}" style="color: green !important;" name="email" id="email" type="text" placeholder="Email" required />
+                            <div class="input-group">
+                                <input value="{{ old('email') }}" name="email" id="email" type="text" placeholder="Email" required />
+                                <div class="input-group-append">
+                                    <button type="button" onclick="$('#otpVerifyModel').modal('show')">
+                                        <i class="fab fa-google" style="margin-right: 5px;"></i> Verify
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+                        @error('email')
+                        <p class="text-danger mt-1" style="font-size: 0.8rem; font-weight: 500;"><i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}</p>
+                        @enderror
 
-
-                        <div style="padding-top: 30px !important;" class="column">
-                            <label style="width: 200px; margin-top: 20px;">Country Code</label>
+                        <div class="input-box">
+                            <label>Country Code</label>
                             <div class="select-box">
                                 <select name="country_code" required>
-                                    <!-- <option hidden>Select Country Code</option> -->
                                     <option value="+1">+1 (United States)</option>
                                     <option value="+44">+44 (United Kingdom)</option>
                                     <option value="+61">+61 (Australia)</option>
                                     <option value="+86">+86 (China)</option>
                                     <option value="+49">+49 (Germany)</option>
-                                    <option value="+91">+91 (India)</option>
+                                    <option value="+91" selected>+91 (India)</option>
                                     <option value="+33">+33 (France)</option>
                                     <option value="+7">+7 (Russia)</option>
                                     <option value="+81">+81 (Japan)</option>
@@ -403,9 +683,7 @@
                                     <option value="+39">+39 (Italy)</option>
                                     <option value="+34">+34 (Spain)</option>
                                     <option value="+82">+82 (South Korea)</option>
-                                    <option value="+61">+61 (Australia)</option>
-                                    <option value="+971">+971 (United Arab
-                                        Emirates)</option>
+                                    <option value="+971">+971 (United Arab Emirates)</option>
                                     <option value="+52">+52 (Mexico)</option>
                                     <option value="+63">+63 (Philippines)</option>
                                     <option value="+65">+65 (Singapore)</option>
@@ -435,49 +713,27 @@
                                     <option value="+973">+973 (Bahrain)</option>
                                     <option value="+968">+968 (Oman)</option>
                                     <option value="+974">+974 (Qatar)</option>
-                                    <option value="+962">+962 (Jordan)</option>
-                                    <option value="+962">+962 (Jordan)</option>
                                     <option value="+963">+963 (Syria)</option>
-                                    <option value="+961">+961 (Lebanon)</option>
                                     <option value="+964">+964 (Iraq)</option>
-                                    <option value="+20">+20 (Egypt)</option>
                                     <option value="+967">+967 (Yemen)</option>
-                                    <option value="+968">+968 (Oman)</option>
                                 </select>
                             </div>
                         </div>
 
-
-                        <div class="column">
-                            <div class="input-box">
-                                <label>Phone Number</label>
-                                <input value="{{ old('phone') }}" type="number" name="phone" placeholder="Mobile number" required />
-                            </div>
-
+                        <div class="input-box">
+                            <label>Phone Number</label>
+                            <input value="{{ old('phone') }}" type="number" name="phone" placeholder="Mobile number" required />
                         </div>
                         @error('phone')
-                        <p style="color: red; margin-bottom:20px;">{{ $message }}</p>
+                        <p class="text-danger mt-1" style="font-size: 0.8rem; font-weight: 500;"><i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}</p>
                         @enderror
-
-
-                        <!-- <div class="input-box">
-                <label>Re Enter Email Address</label>
-                <input id="remail" name="remail" type="text" placeholder="Re Enter email address" required />
-            </div> -->
-
-                        @error('email')
-                        <p style="color: red; margin-bottom:20px;">{{ $message }}</p>
-                        @enderror
-
-
 
                         <div class="input-box">
                             <label>Referral</label>
                             <input value="{{ $_GET['ref'] ?? old('referral') }}" {{ isset($_GET['ref']) ? 'readonly' : '' }} name="referral" type="text" placeholder="Enter Referral Id" required />
                         </div>
-
                         @error('referral')
-                        <p style="color: red; margin-bottom:20px;">no user exists</p>
+                        <p class="text-danger mt-1" style="font-size: 0.8rem; font-weight: 500;"><i class="fas fa-exclamation-triangle mr-1"></i>No user exists</p>
                         @enderror
 
                         <div class="input-box">
@@ -499,9 +755,8 @@
                                 </span>
                             </div>
                         </div>
-
                         @error('password')
-                        <p style="color: red; margin-bottom:20px;">{{ $message }}</p>
+                        <p class="text-danger mt-1" style="font-size: 0.8rem; font-weight: 500;"><i class="fas fa-exclamation-triangle mr-1"></i>{{ $message }}</p>
                         @enderror
 
                         <div class="input-box">
@@ -526,9 +781,7 @@
 
                         <script>
                             function onpass(el, inputid) {
-                                // var inputId = this.getAttribute("id");
                                 var input = document.getElementById(inputid);
-
                                 if (input.type === "password") {
                                     input.type = "text";
                                     el.classList.remove("fa-eye");
@@ -539,34 +792,7 @@
                                     el.classList.add("fa-eye");
                                 }
                             }
-
                         </script>
-
-                        <style>
-                            .password-input-container {
-                                position: relative;
-                                display: flex;
-                                align-items: center;
-                                padding-right: 15px;
-                                width: 100%;
-                                outline: none;
-                                font-size: 1rem;
-                                color: #707070;
-                                margin-top: 8px;
-                                border: 1px solid #ddd;
-                                border-radius: 6px;
-                            }
-
-                            .makewrong {
-                                position: relative;
-                                height: 50px;
-                                font-size: 1rem;
-                                color: #707070;
-                                margin-top: 0px !important;
-                                border: 0px solid transparent !important;
-                            }
-
-                        </style>
 
                         <script>
                             function validateForm() {
@@ -583,26 +809,12 @@
                                     alert("Transaction Passwords do not match");
                                     return false;
                                 }
-                                // if (emailReceived) {
-                                //     if (verified_mail.length > 10) {
-                                // alert("Please sign in with same account..");
-                                // event.preventDefault(); // Prevent form submission if email is not received
-                                // google.accounts.id.prompt() // Simulate Google Sign-In button click
-                                return true; // Return false to prevent form submission
-                                //     } else {
-                                //         alert("Something wrong " + verified_mail.length);
-                                //     }
-                                // } else {
-                                //     alert("Click Sign in with google to continue");
-                                // }
-                                // return false;
+                                return true;
                             }
-
                         </script>
 
                         <input type="hidden" name="img" value="{{ old('img') }}" id="img">
                         <input type="hidden" name="gender" value="nil">
-
                         <input type="hidden" name="birth" value="nil">
                         <input type="hidden" name="address" value="nil">
                         <input type="hidden" name="country" value="nil">
@@ -618,22 +830,16 @@
         </div>
     </section>
 
-
 </body>
 
 </html>
 
 <style>
     body {
-        font-size: 0.8rem !important;
-    }
-
-    .form :where(.input-box input, .select-box) {
-        height: 35px !important;
+        font-size: 0.85rem !important;
     }
 
     label {
-        margin-bottom: 2px !important;
+        margin-bottom: 4px !important;
     }
-
 </style>

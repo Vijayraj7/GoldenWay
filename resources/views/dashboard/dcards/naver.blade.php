@@ -278,6 +278,58 @@ if (count($nplans) == 0) {
         background: linear-gradient(rgba(141, 105, 0, 0.31) 41%, rgba(141, 105, 0, 0.11) 95%, rgba(141, 105, 0, 0.05)) !important;
     }
 
+    .profile-trigger {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-decoration: none !important;
+        padding: 0 !important;
+    }
+
+    .profile-nav-text {
+        font-size: 10px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: color 0.3s ease;
+    }
+
+    .profile-trigger:hover .profile-nav-text {
+        color: #f9a826;
+    }
+
+    .profile-modal-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        color: #fff !important;
+        text-decoration: none !important;
+        transition: all 0.3s ease;
+    }
+
+    .profile-modal-item:hover {
+        background: rgba(249, 168, 38, 0.08);
+        border-color: rgba(249, 168, 38, 0.3);
+        transform: translateY(-1px);
+    }
+
+    .logout-modal-btn:hover {
+        background: rgba(239, 68, 68, 0.3) !important;
+        color: #fff !important;
+    }
+
+    #modalCopyIdBtn:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border-color: rgba(249, 168, 38, 0.3) !important;
+        color: #fff !important;
+    }
+
     @if(isSubDomain()) .test-banner {
         background: linear-gradient(90deg, #d1fae5, #a7f3d0) !important;
         color: #065f46 !important;
@@ -349,83 +401,79 @@ if (count($nplans) == 0) {
 
             <!-- Profile dropdown -->
             <div class="nav-item navbar-dropdown dropdown-user dropdown">
-                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                <a class="nav-link profile-trigger" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#profileModal">
                     <div class="avatar avatar-online avatar-onliner">
                         <img src="{{ $v->img ? $v->img . '?t=' . time() : '/tst/goldenlogo.png' }}" alt="avatar" class="avatar-image">
                     </div>
+                    <span class="profile-nav-text">Profile</span>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li id="copyidButton" class="dropdown-user-header">
-                        <a class="dropdown-item" href="javascript:void(0);">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
-                                    <div class="avatar avatar-online">
-                                        <img style="height: 100%; width: 100%;" src="{{ $v->img ? $v->img . '?t=' . time() : '/tst/goldenlogo.png' }}" alt="user avatar" class="rounded-circle">
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1">
-                                    <span class="dropdown-username d-block">{{ $v->name }}</span>
-                                    <small class="dropdown-uid">
-                                        Copy ID: #{{ $v->uid }}
-                                        <i class="bx bx-copy ms-1" style="color: #ffd700; font-size: 12px;"></i>
-                                    </small>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="/dashboard/profile">
-                            <i class="bx bx-user me-2"></i>
-                            <span class="align-middle">Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="/dashboard/profile/edit">
-                            <i class="bx bx-edit me-2"></i>
-                            <span class="align-middle">Edit Profile</span>
-                        </a>
-                    </li>
-                    @if(DB::table('customer_plans')->where('csId',$v->id)->where('pstatus','1')->sum('pamount')>0)
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#referralDirectionModalNavbar">
-                            <i class="bx bx-share-alt me-2"></i>
-                            <span class="align-middle">Share Referral Url</span>
-                        </a>
-                    </li>
-                    @endif
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item logout-item" href="/logout">
-                            <i class="bx bx-power-off me-2"></i>
-                            <span class="align-middle">Log Out</span>
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
 </nav>
 
-<!-- Referral Direction Modal Navbar -->
-<div class="modal fade" id="referralDirectionModalNavbar" tabindex="-1" aria-hidden="true" style="z-index:2050;">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" style="padding: 1.5rem; background-color: #111; color: #fff; border-radius: 15px; border: 1px solid rgba(249, 168, 38, 0.2);">
-            <div class="modal-header" style="border-bottom:none;">
-                <h5 class="modal-title" style="color: #fff; font-weight: 600;">Select Referral Direction</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Profile Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true" style="z-index: 2040;">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+        <div class="modal-content" style="background: rgba(12, 40, 32, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(249, 168, 38, 0.25); border-radius: 20px; color: #fff; box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
+            <div class="modal-header" style="border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding: 20px 24px;">
+                <h5 class="modal-title" style="color: #fff; font-weight: 700; font-size: 1.15rem; display: flex; align-items: center; gap: 8px;">
+                    <i class="bx bx-user-circle" style="color: #f9a826; font-size: 1.4rem;"></i> Account Profile
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="box-shadow: none;"></button>
             </div>
-            <div class="modal-body">
-                <p style="color: rgba(255, 255, 255, 0.8);">Choose which side to send your referral link:</p>
+            <div class="modal-body" style="padding: 24px;">
+                <!-- User Info Header -->
+                <div class="text-center mb-4">
+                    <div style="position: relative; display: inline-block;">
+                        <img src="{{ $v->img ? $v->img . '?t=' . time() : '/tst/goldenlogo.png' }}" alt="avatar" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid rgba(249, 168, 38, 0.3); object-fit: cover; box-shadow: 0 8px 24px rgba(0,0,0,0.4);">
+                        <span style="position: absolute; bottom: 3px; right: 3px; width: 14px; height: 14px; background: #00d094; border: 2px solid #0c2820; border-radius: 50%;"></span>
+                    </div>
+                    <h4 style="color: #fff; font-weight: 600; font-size: 1.2rem; margin-top: 15px; margin-bottom: 4px;">{{ $v->name }}</h4>
+                    
+                    <button id="modalCopyIdBtn" class="btn" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; color: rgba(255, 255, 255, 0.7); font-size: 0.8rem; padding: 4px 14px; cursor: pointer; transition: all 0.3s;" onclick="copyUserIdModal('{{ $v->uid }}')">
+                        ID: #{{ $v->uid }} <i class="bx bx-copy ms-1" style="color: #f9a826;"></i>
+                    </button>
+                </div>
+
+                <!-- Navigation List -->
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="/dashboard/profile" class="profile-modal-item">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="bx bx-user" style="font-size: 1.15rem;"></i>
+                            <span>View Profile</span>
+                        </div>
+                        <i class="bx bx-chevron-right" style="opacity: 0.5;"></i>
+                    </a>
+                    
+                    <a href="/dashboard/profile/edit" class="profile-modal-item">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <i class="bx bx-edit" style="font-size: 1.15rem;"></i>
+                            <span>Edit Profile</span>
+                        </div>
+                        <i class="bx bx-chevron-right" style="opacity: 0.5;"></i>
+                    </a>
+
+                    @if(DB::table('customer_plans')->where('csId',$v->id)->where('pstatus','1')->sum('pamount')>0)
+                    <div style="margin-top: 10px; padding: 12px 16px; background: rgba(249, 168, 38, 0.04); border: 1px solid rgba(249, 168, 38, 0.15); border-radius: 12px;">
+                        <span style="font-size: 0.75rem; text-transform: uppercase; color: rgba(249, 168, 38, 0.8); font-weight: 600; display: block; margin-bottom: 8px; letter-spacing: 0.5px;">Referral Links</span>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-sm" style="flex: 1; background: rgba(249, 168, 38, 0.12); border: 1px solid rgba(249, 168, 38, 0.25); color: #f9a826; border-radius: 8px; font-weight: 600; font-size: 0.75rem; padding: 6px;" onclick="copyReferralLinkModal('left', '{{ $v->id }}', '{{ $v->name }}')">
+                                <i class="bx bx-left-arrow-alt me-1"></i> Left Side
+                            </button>
+                            <button class="btn btn-sm" style="flex: 1; background: rgba(249, 168, 38, 0.12); border: 1px solid rgba(249, 168, 38, 0.25); color: #f9a826; border-radius: 8px; font-weight: 600; font-size: 0.75rem; padding: 6px;" onclick="copyReferralLinkModal('right', '{{ $v->id }}', '{{ $v->name }}')">
+                                Right Side <i class="bx bx-right-arrow-alt ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    @endif
+                </div>
             </div>
-            <div class="modal-footer" style="border-top:none;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 8px;">Close</button>
-                <button type="button" class="btn btn-primary" style="background-color: #8d6900; border-color: #8d6900; border-radius: 8px;" onclick="shareReferralWithDirectionNavbar('left', '{{ $v->id }}', '{{ $v->name }}')">Left Team</button>
-                <button type="button" class="btn btn-success" style="background-color: #8d6900; border-color: #8d6900; border-radius: 8px;" onclick="shareReferralWithDirectionNavbar('right', '{{ $v->id }}', '{{ $v->name }}')">Right Team</button>
+            <div class="modal-footer" style="border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;">
+                <button type="button" class="btn" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-size: 0.85rem; font-weight: 600; padding: 8px 16px; cursor: pointer; transition: all 0.3s;" data-bs-dismiss="modal">Close</button>
+                <a href="/logout" class="btn logout-modal-btn" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; color: #ef4444; font-size: 0.85rem; font-weight: 600; padding: 8px 16px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s;">
+                    <i class="bx bx-power-off"></i> Log Out
+                </a>
             </div>
         </div>
     </div>
@@ -433,9 +481,7 @@ if (count($nplans) == 0) {
 
 <script>
     // Copy User ID to Clipboard listener
-    document.getElementById('copyidButton').addEventListener('click', function(e) {
-        e.preventDefault();
-        var uid = "{{ $v->uid }}";
+    function copyUserIdModal(uid) {
         navigator.clipboard.writeText(uid)
             .then(function() {
                 alert('User ID copied to clipboard: #' + uid);
@@ -443,18 +489,15 @@ if (count($nplans) == 0) {
             .catch(function(error) {
                 console.error('Could not copy User ID: ', error);
             });
-    });
+    }
 
     // Share Referral Link with Direction handler
-    function shareReferralWithDirectionNavbar(direction, userId, userName) {
+    function copyReferralLinkModal(direction, userId, userName) {
         var url = "https://" + window.location.host + "/register?ref=" + userId + "&dir=" + direction + "&name=" + userName;
 
         navigator.clipboard.writeText(url)
             .then(function() {
                 alert('Referral link copied to clipboard!');
-                var modalEl = document.getElementById('referralDirectionModalNavbar');
-                var modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-                modal.hide();
             })
             .catch(function(error) {
                 console.error('Could not copy URL: ', error);

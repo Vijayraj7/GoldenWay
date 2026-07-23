@@ -454,7 +454,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-premium-close" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn-premium-submit">Add</button>
+                    <button type="submit" class="btn-premium-submit">Subscribe</button>
                 </div>
             </form>
         </div>

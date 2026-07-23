@@ -839,6 +839,40 @@ if (count($plans) == 0) {
                                     </style>
 
                                     <div class="dashboard-grid-container" style="container-type: inline-size; width: 100%;">
+                                        @php
+                                            if (!isset($get_gradient_color)) {
+                                                $get_gradient_color = function($percentage) {
+                                                    $stops = [
+                                                        ['p' => 0.0, 'r' => 0, 'g' => 208, 'b' => 148],
+                                                        ['p' => 33.33, 'r' => 255, 'g' => 215, 'b' => 0],
+                                                        ['p' => 66.67, 'r' => 249, 'g' => 168, 'b' => 38],
+                                                        ['p' => 100.0, 'r' => 185, 'g' => 28, 'b' => 28]
+                                                    ];
+                                                    if ($percentage <= 0) return '#00D094';
+                                                    if ($percentage >= 100) return '#b91c1c';
+                                                    for ($i = 0; $i < count($stops) - 1; $i++) {
+                                                        $curr = $stops[$i];
+                                                        $next = $stops[$i+1];
+                                                        if ($percentage >= $curr['p'] && $percentage <= $next['p']) {
+                                                            $diff = $next['p'] - $curr['p'];
+                                                            $factor = ($percentage - $curr['p']) / $diff;
+                                                            $r = round($curr['r'] + ($next['r'] - $curr['r']) * $factor);
+                                                            $g = round($curr['g'] + ($next['g'] - $curr['g']) * $factor);
+                                                            $b = round($curr['b'] + ($next['b'] - $curr['b']) * $factor);
+                                                            return sprintf("#%02x%02x%02x", $r, $g, $b);
+                                                        }
+                                                    }
+                                                    return '#b91c1c';
+                                                };
+                                            }
+
+                                            $totplanafterdiamond = DB::table('customer_plans')
+                                                ->where('pstatus', '1')
+                                                ->where('csId', $v->id)
+                                                ->where('created_at', '>=', \Carbon\Carbon::create(2024, 8, 13))
+                                                ->get()
+                                                ->sum('pamount');
+                                        @endphp
                                         <div class="dashboard-grid top-dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 30px;">
                                             <!-- Subscription Card 1 -->
                                             <div class="card premium-card" style="height: 100%;">
@@ -847,12 +881,6 @@ if (count($plans) == 0) {
                                                         <div>
                                                             @php
                                                             $sub_amount = (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount');
-                                                            $total_sub_earned = (float) DB::table('customer_transactions')->where('csId', $v->id)->where('wStatus', '0')->sum('tAmount');
-                                                            $total_sub_earned = max(0.0, $total_sub_earned);
-                                                            $staked_amount = (float) DB::table('customer_plans')->where('csId', $v->id)->where('pstatus', '1')->sum('pamount');
-                                                            $max_sub_cap = 2 * $staked_amount;
-                                                            $sub_progress_percentage = $max_sub_cap > 0 ? min(100, ($total_sub_earned / $max_sub_cap) * 100) : 0;
-                                                            $is_2x_complete = ($max_sub_cap > 0 && $total_sub_earned >= $max_sub_cap);
                                                             @endphp
                                                             <div style="flex-direction: column;" class="card-title d-flex align-items-center justify-content-around">
                                                                 <div style="display: flex; align-items: center; gap: 8px;">
@@ -865,40 +893,8 @@ if (count($plans) == 0) {
                                                                             {{ number_format($sub_amount, 2) }}
                                                                             <span style="font-size: 14px; font-weight: 600; color: #f9a826 !important; padding-left: 2px;">USDT</span>
                                                                         </h3>
-                                                                        @if($is_2x_complete)
-                                                                        <div style="margin-top: 4px;">
-                                                                            <span style="font-size: 10px; font-weight: 700; color: #3b82f6; padding: 2px 8px; border-radius: 12px; background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); display: inline-flex; align-items: center; gap: 4px;">
-                                                                                <i class="bx bxs-check-shield" style="font-size: 12px;"></i> 2X Complete
-                                                                            </span>
-                                                                        </div>
-                                                                        @endif
                                                                     </div>
                                                                 </div>
-                                                                @php
-                                                                use Carbon\Carbon;
-                                                                $totplanafterdiamond = DB::table('customer_plans')
-                                                                ->where('pstatus', '1')
-                                                                ->where('csId', $v->id)
-                                                                ->where('created_at', '>=', Carbon::create(2024, 8, 13))
-                                                                ->get()
-                                                                ->sum('pamount');
-                                                                @endphp
-                                                                @if ($totplanafterdiamond >= 1000 && false)
-                                                                <div style="display: flex; align-items: center; margin-top: 8px;">
-                                                                    <span class="crd-title" style="margin-right: 4px; font-size:11px !important;"></span>
-                                                                    <h3 class="card-title" style="color:rgb(255, 0, 255) !important; margin-bottom: 0px !important; font-weight:600; font-size:15px !important;">
-                                                                        @if ($totplanafterdiamond >= 10000)
-                                                                        Diamond 4
-                                                                        @elseif($totplanafterdiamond >= 5000)
-                                                                        Diamond 3
-                                                                        @elseif($totplanafterdiamond >= 3000)
-                                                                        Diamond 2
-                                                                        @elseif($totplanafterdiamond >= 1000)
-                                                                        Diamond 1
-                                                                        @endif
-                                                                    </h3>
-                                                                </div>
-                                                                @endif
                                                             </div>
                                                             <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px; padding: 0 10px; width: 100%;">
                                                                 <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(249, 168, 38, 0.15); padding: 8px 12px; border-radius: 10px; box-shadow: inset 0 0 8px rgba(0,0,0,0.2);">
@@ -911,63 +907,6 @@ if (count($plans) == 0) {
                                                                         <span style="color: #f9a826; font-weight: 600; font-size: 11px;">USDT</span>
                                                                     </h6>
                                                                 </div>
-                                                                <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(249, 168, 38, 0.15); padding: 8px 12px; border-radius: 10px; box-shadow: inset 0 0 8px rgba(0,0,0,0.2); margin-top: 8px;">
-                                                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                                                        <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #00D094;"></div>
-                                                                        <span class="crd-title" style="font-size: 11px !important; font-weight: 600; color: rgba(255,255,255,0.7) !important; letter-spacing: 0.5px; text-transform: uppercase;">Staked Amount</span>
-                                                                    </div>
-                                                                    <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #fff !important; font-size: 13px !important; text-shadow: none !important;">
-                                                                        {{ $capital }}
-                                                                        <span style="color: #f9a826; font-weight: 600; font-size: 11px;">USDT</span>
-                                                                    </h6>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- 2X Cap Progress Linear Design -->
-                                                        @php
-                                                             if (!isset($get_gradient_color)) {
-                                                                 $get_gradient_color = function($percentage) {
-                                                                     $stops = [
-                                                                         ['p' => 0.0, 'r' => 0, 'g' => 208, 'b' => 148],
-                                                                         ['p' => 33.33, 'r' => 255, 'g' => 215, 'b' => 0],
-                                                                         ['p' => 66.67, 'r' => 249, 'g' => 168, 'b' => 38],
-                                                                         ['p' => 100.0, 'r' => 185, 'g' => 28, 'b' => 28]
-                                                                     ];
-                                                                     if ($percentage <= 0) return '#00D094';
-                                                                     if ($percentage >= 100) return '#b91c1c';
-                                                                     for ($i = 0; $i < count($stops) - 1; $i++) {
-                                                                         $curr = $stops[$i];
-                                                                         $next = $stops[$i+1];
-                                                                         if ($percentage >= $curr['p'] && $percentage <= $next['p']) {
-                                                                             $diff = $next['p'] - $curr['p'];
-                                                                             $factor = ($percentage - $curr['p']) / $diff;
-                                                                             $r = round($curr['r'] + ($next['r'] - $curr['r']) * $factor);
-                                                                             $g = round($curr['g'] + ($next['g'] - $curr['g']) * $factor);
-                                                                             $b = round($curr['b'] + ($next['b'] - $curr['b']) * $factor);
-                                                                             return sprintf("#%02x%02x%02x", $r, $g, $b);
-                                                                         }
-                                                                     }
-                                                                     return '#b91c1c';
-                                                                 };
-                                                             }
-                                                             $sub_progress_text = number_format($sub_progress_percentage, 1) . '%';
-                                                             $sub_progress_color = $get_gradient_color($sub_progress_percentage);
-                                                             if ($sub_progress_percentage >= 100) {
-                                                                 $sub_progress_text = 'Completed';
-                                                             }
-                                                        @endphp
-                                                        <div class="w-100" style="margin-top: 15px; margin-bottom: 5px; padding: 0 15px;">
-                                                            <div style="display: flex; align-items: center; gap: 10px; width: 100%; margin-bottom: 5px;">
-                                                                <span style="font-size: 11px; color: rgba(255,255,255,0.7); white-space: nowrap; font-weight: 600;">2X Progress</span>
-                                                                <div style="flex: 1; height: 10px; background-color: #222; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
-                                                                    <div style="width: {{ $sub_progress_percentage }}%; height: 100%; background: linear-gradient(90deg, #00D094, #ffd700, #f9a826, #b91c1c) no-repeat; background-size: {{ $sub_progress_percentage > 0 ? (100 / $sub_progress_percentage) * 100 : 100 }}% 100%; border-radius: 10px; transition: width 0.5s ease-in-out;"></div>
-                                                                </div>
-                                                                <span style="font-size: 11px; font-weight: 700; color: {{ $sub_progress_color }}; white-space: nowrap; min-width: 60px; text-align: right;">{{ $sub_progress_text }}</span>
-                                                            </div>
-                                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 10px; color: rgba(255,255,255,0.5);">
-                                                                <span>Earned: {{ number_format($total_sub_earned, 2) }} U</span>
-                                                                <span>Limit: {{ number_format($max_sub_cap, 2) }} U</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1118,7 +1057,6 @@ if (count($plans) == 0) {
                                                         <div style="display: flex; align-items: center; gap: 8px;">
                                                             <div class="wlt">
                                                                 <img src="/tst/goldenlogo.png" alt="chart success" class="rounded">
-                                                                <!-- <img src="/assets/img/icons/unicons/wallet.png" alt="chart success" class="rounded"> -->
                                                             </div>
                                                             <span class="crd-title">Stake Amount</span>
                                                         </div>
@@ -1140,10 +1078,59 @@ if (count($plans) == 0) {
                                                         <i class="bx bx-up-arrow-alt" style="font-size: 16px;"></i>
                                                         <span>+0.5%</span>
                                                     </small>
+
+                                                    @php
+                                                        $sub_amount = (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount');
+                                                        $total_sub_earned = (float) DB::table('customer_transactions')->where('csId', $v->id)->where('wStatus', '0')->sum('tAmount');
+                                                        $total_sub_earned = max(0.0, $total_sub_earned);
+                                                        $staked_amount = (float) DB::table('customer_plans')->where('csId', $v->id)->where('pstatus', '1')->sum('pamount');
+                                                        $max_sub_cap = 2 * $staked_amount;
+                                                        $sub_progress_percentage = $max_sub_cap > 0 ? min(100, ($total_sub_earned / $max_sub_cap) * 100) : 0;
+                                                        $is_2x_complete = ($max_sub_cap > 0 && $total_sub_earned >= $max_sub_cap);
+
+                                                        $sub_progress_text = number_format($sub_progress_percentage, 1) . '%';
+                                                        $sub_progress_color = $get_gradient_color($sub_progress_percentage);
+                                                        if ($sub_progress_percentage >= 100) {
+                                                            $sub_progress_text = 'Completed';
+                                                        }
+                                                    @endphp
+
+                                                    <!-- Max Stake Design -->
+                                                    <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                                                        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(249, 168, 38, 0.15); padding: 8px 12px; border-radius: 10px; box-shadow: inset 0 0 8px rgba(0,0,0,0.2);">
+                                                            <div style="display: flex; align-items: center; gap: 8px;">
+                                                                <div style="width: 8px; height: 8px; border-radius: 50%; background-color: #ffd700;"></div>
+                                                                <span class="crd-title" style="font-size: 11px !important; font-weight: 600; color: rgba(255,255,255,0.7) !important; letter-spacing: 0.5px; text-transform: uppercase;">Max Stake</span>
+                                                            </div>
+                                                            <h6 class="card-title" style="margin-bottom: 0px !important; font-weight: 700; color: #fff !important; font-size: 13px !important; text-shadow: none !important;">
+                                                                {{ number_format($sub_amount * 10, 2) }}
+                                                                <span style="color: #f9a826; font-weight: 600; font-size: 11px;">USDT</span>
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Stake Progress (2X Progress) -->
+                                                    <div class="w-100" style="margin-top: 15px; margin-bottom: 5px;">
+                                                        <div style="display: flex; align-items: center; gap: 10px; width: 100%; margin-bottom: 5px;">
+                                                            <span style="font-size: 11px; color: rgba(255,255,255,0.7); white-space: nowrap; font-weight: 600;">
+                                                                2X Progress
+                                                                @if($is_2x_complete)
+                                                                <span style="font-size: 9px; font-weight: 700; color: #3b82f6; padding: 1px 6px; border-radius: 10px; background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); margin-left: 5px; display: inline-flex; align-items: center; gap: 2px;">
+                                                                    <i class="bx bxs-check-shield" style="font-size: 10px;"></i> Complete
+                                                                </span>
+                                                                @endif
+                                                            </span>
+                                                            <div style="flex: 1; height: 10px; background-color: #222; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05);">
+                                                                <div style="width: {{ $sub_progress_percentage }}%; height: 100%; background: linear-gradient(90deg, #00D094, #ffd700, #f9a826, #b91c1c) no-repeat; background-size: {{ $sub_progress_percentage > 0 ? (100 / $sub_progress_percentage) * 100 : 100 }}% 100%; border-radius: 10px; transition: width 0.5s ease-in-out;"></div>
+                                                            </div>
+                                                            <span style="font-size: 11px; font-weight: 700; color: {{ $sub_progress_color }}; white-space: nowrap; min-width: 60px; text-align: right;">{{ $sub_progress_text }}</span>
+                                                        </div>
+                                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 10px; color: rgba(255,255,255,0.5);">
+                                                            <span>Earned: {{ number_format($total_sub_earned, 2) }} U</span>
+                                                            <span>Limit: {{ number_format($max_sub_cap, 2) }} U</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                @php
-                                                    $sub_amount = (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount');
-                                                @endphp
                                                 @if($sub_amount > 0)
                                                 <div style="margin-top: 15px;">
                                                     <button type="button" data-bs-toggle="modal" data-bs-target="#modalCenter" onclick="onModalSilver()" class="btn premium-btn w-100">
