@@ -310,6 +310,7 @@ ini_set('display_errors', 1);
                                                     <div class="input-group">
                                                         <span class="input-group-text">USDT</span>
                                                         <input type="number" step="any" name="amount" required aria-required="true" value="{{old('amount')}}" id="amount_input" class="form-control" placeholder="Enter amount (Min 10 USDT)" oninput="calculateFee(this)" />
+                                                        <button class="btn btn-outline-warning" type="button" onclick="setMaxAmount()" style="border-color: rgba(249, 168, 38, 0.4); color: #f9a826; font-weight: 600;">Max</button>
                                                     </div>
                                                     <div id="fee_display_box" class="mt-2" style="display: none; font-size: 13px; color: rgba(255, 255, 255, 0.75); padding: 8px 12px; background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(249, 168, 38, 0.2); border-radius: 8px;">
                                                         <div>Admin Fee (10%): <span id="admin_fee" style="color: #ffd700; font-weight: 600;">0.00</span> USDT</div>
@@ -444,6 +445,19 @@ ini_set('display_errors', 1);
                 feeBox.style.display = 'block';
             } else {
                 feeBox.style.display = 'none';
+            }
+        }
+
+        function setMaxAmount() {
+            var rawWithdrawable = parseFloat("{{ $withrawable }}");
+            if (!isNaN(rawWithdrawable) && rawWithdrawable > 0) {
+                var feePercent = 0.10;
+                var maxAmount = rawWithdrawable / (1.0 + feePercent);
+                maxAmount = Math.floor(maxAmount * 100) / 100;
+                
+                var input = document.getElementById('amount_input');
+                input.value = maxAmount;
+                calculateFee(input);
             }
         }
 
