@@ -156,7 +156,7 @@ class DashBoardController extends Controller
     public function withdrawhistory()
     {
         $h = new HelperController;
-        if (request()->query('typ') === 'trnsfr') {
+        if (request()->query('typ') === 'trnsfr' || request()->query('typ') === 'trnsfrpoll') {
             return $h->getboth('dashboard.vendor.transferhistory');
         }
         return $h->getboth('dashboard.vendor.withdrawhistory');

@@ -92,20 +92,36 @@ class TransferFundController extends Controller
             ]);
         }
 
-        $fee = $amnt * 0.10;
+        $isAutoPoll = (isset($prs['trnfrc']) && $prs['trnfrc'] == '2');
+        $feePercent = 0.10;
+        $fee = $amnt * $feePercent;
         $total_deducted = $amnt + $fee;
 
         // Compute sender balance limits
-        $tAllincome = DB::table('customer_transactions')
-            ->where('csId', $sender->id)
-            ->get();
-        $totBalance = $tAllincome->sum('tAmount');
-
         $maxmnt = 0;
-        if (isset($prs['trnfrc']) && $prs['trnfrc'] == '1') {
-            $maxmnt = DB::table('customer_transfers')->where('csId', $sender->id)->get()->sum('tAmount');
+        if ($isAutoPoll) {
+            $total_poll_income = \Illuminate\Support\Facades\Schema::hasTable('customer_poll_transactions') ? (float) DB::table('customer_poll_transactions')->where('csId', $sender->id)->where('tType', 'pollincome')->where('tamount', '>', 0)->sum('tamount') : 0.0;
+            $total_withdrawn_poll = DB::table('customer_withdraws')
+                ->where('csId', $sender->id)
+                ->where('pname', 'pollincome')
+                ->whereIn('status', ['0', '1'])
+                ->select(DB::raw('SUM(amount + fuel) as total'))
+                ->first()->total ?? 0.0;
+            $maxmnt = $total_poll_income - $total_withdrawn_poll;
+            if ($maxmnt < 0) {
+                $maxmnt = 0;
+            }
         } else {
-            $maxmnt = $totBalance + DB::table('customer_transfers')->where('csId', $sender->id)->get()->sum('tAmount');
+            $tAllincome = DB::table('customer_transactions')
+                ->where('csId', $sender->id)
+                ->get();
+            $totBalance = $tAllincome->sum('tAmount');
+
+            if (isset($prs['trnfrc']) && $prs['trnfrc'] == '1') {
+                $maxmnt = DB::table('customer_transfers')->where('csId', $sender->id)->get()->sum('tAmount');
+            } else {
+                $maxmnt = $totBalance + DB::table('customer_transfers')->where('csId', $sender->id)->get()->sum('tAmount');
+            }
         }
 
         if ($total_deducted > $maxmnt) {
@@ -114,7 +130,12 @@ class TransferFundController extends Controller
             ]);
         }
 
-
+        // Ensure wthId column exists in customer_poll_transactions before starting transaction (DDL implicitly commits transaction in MySQL)
+        if ($isAutoPoll && !\Illuminate\Support\Facades\Schema::hasColumn('customer_poll_transactions', 'wthId')) {
+            \Illuminate\Support\Facades\Schema::table('customer_poll_transactions', function ($table) {
+                $table->unsignedBigInteger('wthId')->nullable();
+            });
+        }
 
         DB::beginTransaction();
         try {
@@ -123,68 +144,96 @@ class TransferFundController extends Controller
             // ── ONE shared transfer record ──────────────────────────────────
             // fuserid = sender, tuserid = recipient, tAmount = credit amount.
             // Both parties see this via their fuserid / tuserid columns.
-            // csId is set to sender so their transfer-wallet balance is aware.
+            // csId is set to recipient so their transfer-wallet balance is aware.
             DB::table('customer_transfers')->insert([
                 'csId' => $recipient->id,
                 'tType' => 'transfer',
-                // 'fuserid' => $sender->id,
-                // 'tuserid' => $recipient->id,
+                'fuserid' => $sender->id,
+                'tuserid' => $recipient->id,
                 'tAmount' => strval($amnt),
+                'fee' => $isAutoPoll ? strval($fee) : null,
                 'tStatus' => '1',
                 'wStatus' => '0',
                 'created_at' => $thisdate,
                 'updated_at' => $thisdate,
             ]);
 
-            // ── Deduct total_deducted (amount + fee) from sender's balance ──
-            // First drain transfer wallet, then spill into transactions wallet.
-            $twalletAmnt = DB::table('customer_transfers')
-                ->where('csId', $sender->id)
-                ->where('tStatus', '1')
-                ->get()
-                ->sum('tAmount');
-
-            if ($total_deducted <= $twalletAmnt) {
-                // Enough in transfer wallet – deduct all from there
-                DB::table('customer_transfers')->insert([
+            if ($isAutoPoll) {
+                // Insert a completed withdraw record for pollincome
+                $wthId = DB::table('customer_withdraws')->insertGetId([
                     'csId' => $sender->id,
-                    'tType' => 'transfer_fee',
-                    'fuserid' => $sender->id,
-                    'tuserid' => $sender->id,
-                    'tAmount' => strval(-$total_deducted),
-                    'fee' => strval($fee),
+                    'pname' => 'pollincome',
+                    'amount' => strval($amnt),
+                    'fuel' => strval($fee),
+                    'type' => '1',
+                    'status' => '1', // completed immediately
+                    'msg' => $prs['msg'] ?? ('Auto Poll Transfer to User ' . $recipient->uid),
+                    'created_at' => $thisdate,
+                    'updated_at' => $thisdate,
+                ]);
+
+                // Insert negative record in customer_poll_transactions
+                DB::table('customer_poll_transactions')->insert([
+                    'wthId' => $wthId,
+                    'csId' => $sender->id,
+                    'tamount' => strval(-$total_deducted),
                     'tStatus' => '1',
                     'wStatus' => '1',
+                    'tType' => 'pollincome',
                     'created_at' => $thisdate,
                     'updated_at' => $thisdate,
                 ]);
             } else {
-                // Drain transfer wallet first
-                if ($twalletAmnt > 0) {
+                // ── Deduct total_deducted (amount + fee) from sender's balance ──
+                // First drain transfer wallet, then spill into transactions wallet.
+                $twalletAmnt = DB::table('customer_transfers')
+                    ->where('csId', $sender->id)
+                    ->where('tStatus', '1')
+                    ->get()
+                    ->sum('tAmount');
+
+                if ($total_deducted <= $twalletAmnt) {
+                    // Enough in transfer wallet – deduct all from there
                     DB::table('customer_transfers')->insert([
                         'csId' => $sender->id,
                         'tType' => 'transfer_fee',
                         'fuserid' => $sender->id,
                         'tuserid' => $sender->id,
-                        'tAmount' => strval(-$twalletAmnt),
+                        'tAmount' => strval(-$total_deducted),
                         'fee' => strval($fee),
                         'tStatus' => '1',
                         'wStatus' => '1',
                         'created_at' => $thisdate,
                         'updated_at' => $thisdate,
                     ]);
+                } else {
+                    // Drain transfer wallet first
+                    if ($twalletAmnt > 0) {
+                        DB::table('customer_transfers')->insert([
+                            'csId' => $sender->id,
+                            'tType' => 'transfer_fee',
+                            'fuserid' => $sender->id,
+                            'tuserid' => $sender->id,
+                            'tAmount' => strval(-$twalletAmnt),
+                            'fee' => strval($fee),
+                            'tStatus' => '1',
+                            'wStatus' => '1',
+                            'created_at' => $thisdate,
+                            'updated_at' => $thisdate,
+                        ]);
+                    }
+                    // Remainder from transactions wallet
+                    $remainder = $total_deducted - $twalletAmnt;
+                    DB::table('customer_transactions')->insert([
+                        'csId' => $sender->id,
+                        'tType' => 'transfer',
+                        'tAmount' => strval(-$remainder),
+                        'tStatus' => '1',
+                        'wStatus' => '1',
+                        'created_at' => $thisdate,
+                        'updated_at' => $thisdate,
+                    ]);
                 }
-                // Remainder from transactions wallet
-                $remainder = $total_deducted - $twalletAmnt;
-                DB::table('customer_transactions')->insert([
-                    'csId' => $sender->id,
-                    'tType' => 'transfer',
-                    'tAmount' => strval(-$remainder),
-                    'tStatus' => '1',
-                    'wStatus' => '1',
-                    'created_at' => $thisdate,
-                    'updated_at' => $thisdate,
-                ]);
             }
 
             DB::commit();

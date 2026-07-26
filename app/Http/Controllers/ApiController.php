@@ -1318,7 +1318,8 @@ updateBalances();
                 ->where('csId', $usid)
                 ->where('pname', 'pollincome')
                 ->whereIn('status', ['0', '1'])
-                ->sum('amount');
+                ->select(DB::raw('SUM(amount + fuel) as total'))
+                ->first()->total ?? 0.0;
             $available_gross = $total_poll_income - $total_withdrawn_poll;
             if ($available_gross < 0) {
                 $available_gross = 0;

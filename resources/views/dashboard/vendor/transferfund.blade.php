@@ -240,51 +240,68 @@ ini_set('display_errors', 1);
                                             <input type="hidden" name="lastid" value="{{$wwlastid}}">
                                             <input type="hidden" name="csId" value="{{$v->id}}">
 
-                                            @if(isset($trncc) && $trncc == '1')
-                                            <!-- Transfer Credit Amount Display -->
-                                            <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label">Transfer Credit Amount</label>
-                                                <div class="col-sm-10">
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">USDT</span>
-                                                        <input type="text" class="form-control" value="{{ number_format(DB::table('customer_transfers')->where('csId',$v->id)->get()->sum('tAmount'),2) }}" readonly style="color: #ffd700 !important; font-weight: 700;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @else
-                                            <!-- Transfer Credit Amount Display -->
-                                            <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label">Transfer Credit Amount</label>
-                                                <div class="col-sm-10">
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">USDT</span>
-                                                        <input type="text" class="form-control" value="{{ number_format(DB::table('customer_transfers')->where('csId',$v->id)->get()->sum('tAmount'),2) }}" readonly style="color: #ffd700 !important; font-weight: 700;">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            @if(isset($trncc) && $trncc == '2')
+                                             <!-- Auto Poll Balance Display -->
+                                             <div class="row mb-3">
+                                                 <label class="col-sm-2 col-form-label">Auto Poll Balance</label>
+                                                 <div class="col-sm-10">
+                                                     <div class="input-group">
+                                                         <span class="input-group-text">USDT</span>
+                                                         <input type="text" class="form-control" value="{{ number_format($withrawable,2) }}" readonly style="color: #ffd700 !important; font-weight: 700;">
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             @elseif(isset($trncc) && $trncc == '1')
+                                             <!-- Transfer Credit Amount Display -->
+                                             <div class="row mb-3">
+                                                 <label class="col-sm-2 col-form-label">Transfer Credit Amount</label>
+                                                 <div class="col-sm-10">
+                                                     <div class="input-group">
+                                                         <span class="input-group-text">USDT</span>
+                                                         <input type="text" class="form-control" value="{{ number_format(DB::table('customer_transfers')->where('csId',$v->id)->get()->sum('tAmount'),2) }}" readonly style="color: #ffd700 !important; font-weight: 700;">
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             @else
+                                             <!-- Transfer Credit Amount Display -->
+                                             <div class="row mb-3">
+                                                 <label class="col-sm-2 col-form-label">Transfer Credit Amount</label>
+                                                 <div class="col-sm-10">
+                                                     <div class="input-group">
+                                                         <span class="input-group-text">USDT</span>
+                                                         <input type="text" class="form-control" value="{{ number_format(DB::table('customer_transfers')->where('csId',$v->id)->get()->sum('tAmount'),2) }}" readonly style="color: #ffd700 !important; font-weight: 700;">
+                                                     </div>
+                                                 </div>
+                                             </div>
 
-                                            <!-- Withdrawable Amount Display -->
-                                            <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label">Withdrawable Amount</label>
-                                                <div class="col-sm-10">
-                                                    <div class="input-group">
-                                                        <span class="input-group-text">USDT</span>
-                                                        <input type="text" class="form-control" value="{{ number_format(DB::table('customer_transactions')->where('csId',$v->id)->get()->sum('tAmount'),2) }}" readonly style="color: #ffd700 !important; font-weight: 700;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endif
+                                             <!-- Withdrawable Amount Display -->
+                                             <div class="row mb-3">
+                                                 <label class="col-sm-2 col-form-label">Withdrawable Amount</label>
+                                                 <div class="col-sm-10">
+                                                     <div class="input-group">
+                                                         <span class="input-group-text">USDT</span>
+                                                         <input type="text" class="form-control" value="{{ number_format(DB::table('customer_transactions')->where('csId',$v->id)->get()->sum('tAmount'),2) }}" readonly style="color: #ffd700 !important; font-weight: 700;">
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             @endif
 
-                                            <!-- Available Amount Display -->
-                                            <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label">Available Amount</label>
-                                                <div class="col-sm-10">
-                                                    <div class="input-group" style="border-color: rgba(0, 208, 148, 0.4) !important;">
-                                                        <span class="input-group-text" style="color: #00D094 !important; border-right-color: rgba(0, 208, 148, 0.2) !important;">USDT</span>
-                                                        <input type="text" class="form-control" value="{{ number_format($withrawable,2) }}" readonly style="color: #00D094 !important; font-weight: 700; text-shadow: 0 0 8px rgba(0, 208, 148, 0.25);">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                             <!-- Available Amount Display -->
+                                             <div class="row mb-3">
+                                                 <label class="col-sm-2 col-form-label">
+                                                     @if(isset($trncc) && $trncc == '2')
+                                                     Available Auto Poll Amount
+                                                     @else
+                                                     Available Amount
+                                                     @endif
+                                                 </label>
+                                                 <div class="col-sm-10">
+                                                     <div class="input-group" style="border-color: rgba(0, 208, 148, 0.4) !important;">
+                                                         <span class="input-group-text" style="color: #00D094 !important; border-right-color: rgba(0, 208, 148, 0.2) !important;">USDT</span>
+                                                         <input type="text" class="form-control" value="{{ number_format($withrawable,2) }}" readonly style="color: #00D094 !important; font-weight: 700; text-shadow: 0 0 8px rgba(0, 208, 148, 0.25);">
+                                                     </div>
+                                                 </div>
+                                             </div>
 
                                             <!-- Amount Input -->
                                             <div class="row mb-3">
@@ -414,11 +431,13 @@ ini_set('display_errors', 1);
             }
         }
 
+        var trnccVal = "{{ $trncc ?? '0' }}";
         function calculateFee(input) {
             var val = parseFloat(input.value);
             var feeBox = document.getElementById('fee_display_box');
             if (!isNaN(val) && val > 0) {
-                var fee = val * 0.10;
+                var feePercent = 0.10;
+                var fee = val * feePercent;
                 var total = val + fee;
                 document.getElementById('admin_fee').innerText = fee.toFixed(2);
                 document.getElementById('total_deducted').innerText = total.toFixed(2);

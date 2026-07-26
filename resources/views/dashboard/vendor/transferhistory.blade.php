@@ -400,9 +400,9 @@ use Carbon\Carbon;
                                                     $ttuser = DB::table('customers')->where('id', $wthdraw->tuserid ?? 0)->first();
                                                     
                                                 }
-                                                if ($wthdraw->wStatus != '0') {
-                                                    $isDebit = true;
-                                                }
+                                                 if ($wthdraw->wStatus != '0' || $wthdraw->fuserid == $v->id) {
+                                                     $isDebit = true;
+                                                 }
 
                                                 ?>
                             <tr>
@@ -455,29 +455,41 @@ use Carbon\Carbon;
 
                                 @if($isDebit)
                                 <td style="font-weight: 600; color: #ef4444 !important;">
-                                    {{ number_format(abs($wthdraw->tAmount) - abs($wthdraw->fee), 2) }} USDT
+                                    @if($wthdraw->tType == 'transfer' && ($wthdraw->fee ?? 0) > 0)
+                                        {{ number_format(abs($wthdraw->tAmount), 2) }} USDT
+                                    @else
+                                        {{ number_format(abs($wthdraw->tAmount) - abs($wthdraw->fee ?? 0), 2) }} USDT
+                                    @endif
                                 </td>
                                 @else
                                 <td style="font-weight: 600; color: #fff !important;">
-                                    {{ number_format(abs($wthdraw->tAmount) - abs($wthdraw->fee), 2) }} USDT
+                                    @if($wthdraw->tType == 'transfer' && ($wthdraw->fee ?? 0) > 0)
+                                        {{ number_format(abs($wthdraw->tAmount), 2) }} USDT
+                                    @else
+                                        {{ number_format(abs($wthdraw->tAmount) - abs($wthdraw->fee ?? 0), 2) }} USDT
+                                    @endif
                                 </td>
                                 @endif
 
                                 <!-- Admin Fee (10% paid by sender) -->
                                 @if($isDebit)
                                 <td style="color: #ef4444 !important;">
-                                    {{ number_format($wthdraw->fee, 2) }} USDT
+                                    {{ number_format($wthdraw->fee ?? 0, 2) }} USDT
                                 </td>
                                 @else
                                 <td style="color: #fff !important;">
-                                    {{ number_format($wthdraw->fee, 2) }} USDT
+                                    {{ number_format($wthdraw->fee ?? 0, 2) }} USDT
                                 </td>
                                 @endif
 
                                 <!-- Total Credit (+) / Debit (-) -->
                                 @if($isDebit)
                                 <td style="color: #ef4444 !important; font-weight: 700; font-size: 0.9rem;">
-                                    {{ number_format(abs($wthdraw->tAmount), 2) }} USDT
+                                    @if($wthdraw->tType == 'transfer' && ($wthdraw->fee ?? 0) > 0)
+                                        {{ number_format(abs($wthdraw->tAmount) + abs($wthdraw->fee ?? 0), 2) }} USDT
+                                    @else
+                                        {{ number_format(abs($wthdraw->tAmount), 2) }} USDT
+                                    @endif
                                 </td>
                                 @else
                                 <td style="color: #00D094 !important; font-weight: 700; font-size: 0.9rem;">

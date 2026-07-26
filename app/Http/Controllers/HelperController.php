@@ -487,6 +487,27 @@ async function decryptWithPassword(encryptedValue, password) {
                         $dt['wwlastid'] = 0;
                     }
                     return view('dashboard.vendor.transferfund', $dt);
+                } elseif ($wtyp == 'trnsfrpoll') {
+                    $dt['wwname'] = 'Transfer Auto Poll';
+                    $dt['wwformname'] = 'transferpoll';
+                    $wfuel = 0;
+                    $dt['wfuel'] = 0;
+                    $dt['trncc'] = 2;
+                    $total_poll_income = Schema::hasTable('customer_poll_transactions') ? (float) DB::table('customer_poll_transactions')->where('csId', $v->id)->where('tType', 'pollincome')->where('tamount', '>', 0)->sum('tamount') : 0.0;
+                    $total_withdrawn_poll = DB::table('customer_withdraws')
+                        ->where('csId', $v->id)
+                        ->where('pname', 'pollincome')
+                        ->whereIn('status', ['0', '1'])
+                        ->select(DB::raw('SUM(amount + fuel) as total'))
+                        ->first()->total ?? 0.0;
+                    $available_poll_withdraw = $total_poll_income - $total_withdrawn_poll;
+                    if ($available_poll_withdraw < 0) {
+                        $available_poll_withdraw = 0;
+                    }
+                    $dt['withrawable'] = $available_poll_withdraw;
+                    $dt['wwfirstid'] = 0;
+                    $dt['wwlastid'] = 0;
+                    return view('dashboard.vendor.transferfund', $dt);
                 } else {
                     return abort(404);
                 }

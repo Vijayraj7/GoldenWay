@@ -673,13 +673,13 @@ if (count($plans) == 0) {
                                             }
                                         }
 
-                                        @container (max-width: 950px) {
+                                        @media (max-width: 950px) {
                                             .wallet-grid-card {
                                                 grid-column: span 2 !important;
                                             }
                                         }
 
-                                        @container (max-width: 750px) {
+                                        @media (max-width: 750px) {
                                             .top-dashboard-grid {
                                                 grid-template-columns: 1fr !important;
                                             }
@@ -927,8 +927,8 @@ if (count($plans) == 0) {
                                                             @php
                                                             $total_poll_amount = Schema::hasTable('customer_autopolls') ? (float) DB::table('customer_autopolls')->where('csId', $v->id)->where('status', 'completed')->sum('poll_amount') : 0.0;
                                                             $total_poll_earned = Schema::hasTable('customer_poll_transactions') ? (float) DB::table('customer_poll_transactions')->where('csId', $v->id)->where('tType', 'pollincome')->where('tamount', '>', 0)->sum('tamount') : 0.0;
-                                                            $total_poll_withdrawn = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname', 'pollincome')->where('status', '1')->sum('amount');
-                                                            $total_poll_pending = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname', 'pollincome')->where('status', '0')->sum('amount');
+                                                            $total_poll_withdrawn = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname', 'pollincome')->where('status', '1')->select(DB::raw('SUM(amount + fuel) as total'))->first()->total ?? 0.0;
+                                                            $total_poll_pending = DB::table('customer_withdraws')->where('csId', $v->id)->where('pname', 'pollincome')->where('status', '0')->select(DB::raw('SUM(amount + fuel) as total'))->first()->total ?? 0.0;
                                                             $is_3x_complete = ($total_poll_amount > 0 && $total_poll_earned >= 3 * $total_poll_amount);
                                                             $max_cap = 3 * $total_poll_amount;
                                                             $progress_percentage = $max_cap > 0 ? min(100, ($total_poll_earned / $max_cap) * 100) : 0;
@@ -1034,13 +1034,21 @@ if (count($plans) == 0) {
                                                     </div>
 
                                                     <div style="border-bottom: none !important; padding-top: 15px !important; margin-top: 15px !important; margin-bottom: 0px !important; gap: 10px; display: flex; width: 100%;" class="card-title d-flex align-items-center justify-content-center">
-                                                        <button type="button" onclick="openAutopollModal()" style="flex: 1; padding: 10px;" class="btn premium-btn">
-                                                            Add Auto Poll
-                                                        </button>
-                                                        <button type="button" onclick="openAutopollWithdrawModal()" style="flex: 1; padding: 10px;" class="btn premium-btn">
-                                                            Withdraw
-                                                        </button>
-                                                    </div>
+                                                         <button type="button" onclick="openAutopollModal()" style="flex: 1; padding: 10px;" class="btn premium-btn">
+                                                             Add Auto Poll
+                                                         </button>
+                                                         <div class="dropdown" style="flex: 1; display: flex;">
+                                                             <button class="btn premium-btn dropdown-toggle" type="button" id="autopollActionDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%; padding: 10px;">
+                                                                 Withdraw
+                                                             </button>
+                                                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="autopollActionDropdown" style="background-color: #0c2820; border: 1px solid rgba(249, 168, 38, 0.25); min-width: 100%;">
+                                                                 <li><a class="dropdown-item text-white" href="#" onclick="openAutopollWithdrawModal()">Withdraw to Wallet</a></li>
+                                                                 <li><a class="dropdown-item text-white" href="/dashboard/withdraw/trnsfrpoll">Internal Transfer</a></li>
+                                                                 <li><hr class="dropdown-divider" style="border-top: 1px solid rgba(249, 168, 38, 0.15);"></li>
+                                                                 <li><a class="dropdown-item text-white" href="/dashboard/status/withdraw?typ=trnsfrpoll">Transfer History</a></li>
+                                                             </ul>
+                                                         </div>
+                                                     </div>
                                                 </div>
                                             </div>
 
@@ -1189,9 +1197,7 @@ if (count($plans) == 0) {
                                                             <i class="bx bx-dots-vertical-rounded" style="font-size: 20px;"></i>
                                                         </button>
                                                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOptWithdraw" style="background-color: #0c2820; border: 1px solid rgba(249, 168, 38, 0.25);">
-                                                            {{-- <a class="dropdown-item text-white" href="/dashboard/lott">Purchase Bot</a> --}}
                                                             <a class="dropdown-item text-white" href="/dashboard/withdraw/all">Withdraw</a>
-                                                            {{-- <a class="dropdown-item text-white" href="/dashboard/products/reinvest">Restake</a> --}}
                                                             <a class="dropdown-item text-white" href="/dashboard/withdraw/trnsfr">Internal Transfer</a>
                                                             <a class="dropdown-item text-white" href="/dashboard/status/transactions">Credit History</a>
                                                             <a class="dropdown-item text-white" href="/dashboard/status/withdraw">Withdrawal History</a>

@@ -8,6 +8,9 @@ if (!function_exists('getPname')) {
                 return "Stake";
             case 'pollincome':
                 return "Auto Poll Withdraw";
+            case 'transferpoll':
+            case 'transfer_autopoll':
+                return "Auto Poll Transfer";
             case 'allincome':
                 return "Withdraw";
             case 'transfer':
