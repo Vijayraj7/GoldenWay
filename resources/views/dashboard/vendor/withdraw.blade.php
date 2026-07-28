@@ -576,10 +576,10 @@ ini_set('display_errors', 1);
 
                                             <div class="wth-field">
                                                 <label class="wth-label">Withdrawal Amount</label>
-                                                <div class="wth-input-group" style="position: relative;">
+                                                <div class="wth-input-group" style="display: flex; overflow: hidden; align-items: stretch;">
                                                     <span class="wth-input-prefix">USDT</span>
-                                                    <input type="number" min="20" step="any" max="{{ $withrawable_numeric }}" required id="input_amount_element" class="wth-input-inner" placeholder="Min 20 — Max {{ $withrawable }}" style="padding-right: 75px !important;" />
-                                                    <button type="button" id="max_withdraw_btn" class="btn btn-sm" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: rgba(245, 197, 24, 0.15); border: 1px solid rgba(245, 197, 24, 0.3); color: #f5c518; font-weight: 700; font-size: 0.72rem; padding: 4px 10px; border-radius: 8px; transition: all 0.2s ease; z-index: 10;">MAX</button>
+                                                    <input type="number" min="20" step="any" max="{{ $withrawable_numeric }}" required id="input_amount_element" class="wth-input-inner" placeholder="Min 20 — Max {{ $withrawable }}" />
+                                                    <button type="button" id="max_withdraw_btn" style="background: rgba(245, 197, 24, 0.15); border: none; border-left: 1px solid rgba(255, 255, 255, 0.08); color: #f5c518; font-weight: 700; font-size: 0.75rem; padding: 0 16px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap;">MAX</button>
                                                 </div>
                                             </div>
 

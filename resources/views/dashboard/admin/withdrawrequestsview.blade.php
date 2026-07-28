@@ -271,6 +271,10 @@ ini_set('display_errors', 1);
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{$withdraw->id}}">
 
+                                                @php
+                                                $usr = DB::table('customers')->where('id', $withdraw->csId)->first();
+                                                @endphp
+
                                                 <div class="row g-4">
                                                     <!-- Left Column: User Profile & Destination -->
                                                     <div class="col-md-6">
