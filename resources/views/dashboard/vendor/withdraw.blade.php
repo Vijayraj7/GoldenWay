@@ -506,14 +506,13 @@ ini_set('display_errors', 1);
                         </div>
 
                         <?php
-                            $withrawable = number_format(
-                                DB::table('customer_transactions')
-                                    ->where('csId', $v->id)
-                                    ->where('tStatus', '1')
-                                    ->get()
-                                    ->sum('tAmount'),
-                                2,
-                            );
+                            $withrawable_raw = DB::table('customer_transactions')
+                                ->where('csId', $v->id)
+                                ->where('tStatus', '1')
+                                ->get()
+                                ->sum('tAmount');
+                            $withrawable = number_format($withrawable_raw, 2);
+                            $withrawable_numeric = number_format($withrawable_raw, 2, '.', '');
                             ?>
 
                         <!-- Balance Banner -->
@@ -577,9 +576,10 @@ ini_set('display_errors', 1);
 
                                             <div class="wth-field">
                                                 <label class="wth-label">Withdrawal Amount</label>
-                                                <div class="wth-input-group">
+                                                <div class="wth-input-group" style="position: relative;">
                                                     <span class="wth-input-prefix">USDT</span>
-                                                    <input type="number" min="20" step="any" max="{{ $withrawable }}" required aria-required=\"true\" id="input_amount_element" class="wth-input-inner" placeholder="Min 20 — Max {{ $withrawable }}" />
+                                                    <input type="number" min="20" step="any" max="{{ $withrawable_numeric }}" required id="input_amount_element" class="wth-input-inner" placeholder="Min 20 — Max {{ $withrawable }}" style="padding-right: 75px !important;" />
+                                                    <button type="button" id="max_withdraw_btn" class="btn btn-sm" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: rgba(245, 197, 24, 0.15); border: 1px solid rgba(245, 197, 24, 0.3); color: #f5c518; font-weight: 700; font-size: 0.72rem; padding: 4px 10px; border-radius: 8px; transition: all 0.2s ease; z-index: 10;">MAX</button>
                                                 </div>
                                             </div>
 
@@ -726,6 +726,14 @@ ini_set('display_errors', 1);
             element_outvalue_hidden_amnt.value = receivable_amount.toString();
         });
 
+        // Max button click handler
+        document.getElementById('max_withdraw_btn').addEventListener('click', function() {
+            var maxVal = Number('{{ $withrawable_numeric }}');
+            element_inpamnt.value = maxVal;
+            var event = new Event('input', { bubbles: true });
+            element_inpamnt.dispatchEvent(event);
+        });
+
         // Submit handler
         function onsubmitwth() {
             var am = document.getElementById('input_amount_element').value;
@@ -735,7 +743,7 @@ ini_set('display_errors', 1);
                 return;
             }
             var amo = Number(am);
-            var max = Number('{{ $withrawable }}');
+            var max = Number('{{ $withrawable_numeric }}');
             if (amo < 20) {
                 alert('Minimum withdrawal is 20 USDT');
                 return;

@@ -41,7 +41,10 @@
 
                     <div class="mb-3">
                         <label for="poll_wth_gross_amount" class="form-label text-white">Withdrawal Amount (USDT)</label>
-                        <input id="poll_wth_gross_amount" type="number" min="10" step="any" max="{{ $available_poll_withdraw }}" class="form-control" style="background-color: #222; border: 1px solid #444; color: #fff;" placeholder="Min: 10 & Max: {{ number_format($available_poll_withdraw, 2) }}" required>
+                        <div class="input-group" style="position: relative; border: 1px solid #444; border-radius: 6px; overflow: hidden; background-color: #222;">
+                            <input id="poll_wth_gross_amount" type="number" min="10" step="any" max="{{ $available_poll_withdraw }}" class="form-control" style="background-color: transparent; border: none; color: #fff; padding-right: 75px;" placeholder="Min: 10 & Max: {{ number_format($available_poll_withdraw, 2) }}" required>
+                            <button type="button" id="poll_max_btn" class="btn" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: rgba(0, 208, 148, 0.15); border: 1px solid rgba(0, 208, 148, 0.3); color: #00D094; font-weight: 700; font-size: 0.72rem; padding: 4px 10px; border-radius: 4px; transition: all 0.2s ease; z-index: 10;">MAX</button>
+                        </div>
                     </div>
 
                     <div class="row mb-3">
@@ -100,6 +103,14 @@
         
         document.getElementById('poll_wth_hidden_fuel').value = fee.toString();
         document.getElementById('poll_wth_hidden_amount').value = receivable.toString();
+    });
+
+    document.getElementById('poll_max_btn').addEventListener('click', function() {
+        var maxVal = Number('{{ $available_poll_withdraw }}');
+        var inputElement = document.getElementById('poll_wth_gross_amount');
+        inputElement.value = maxVal;
+        var event = new Event('input', { bubbles: true });
+        inputElement.dispatchEvent(event);
     });
 
     document.getElementById('autopollWithdrawForm').addEventListener('submit', function(e) {
