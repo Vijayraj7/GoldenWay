@@ -707,8 +707,9 @@ if(isset($_GET['typ'])) {
                                                 <th>Date</th>
                                                 <th>Name</th>
                                                 <th>Type</th>
-                                                <th>Amount</th>
-                                                <th>Fuel</th>
+                                                <th>Total Amount (Gross)</th>
+                                                <th>Net Payout (Net)</th>
+                                                <th>Fee (Fuel)</th>
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -743,10 +744,13 @@ if(isset($_GET['typ'])) {
                                                     <span class="badge bg-label-secondary">{{ getPname($wth->pname ?? 'normal') }}</span>
                                                 </td>
                                                 <td class="fw-semibold text-white">
-                                                    USDT {{ $wth->amount }}
+                                                    USDT {{ number_format((float)$wth->amount + (float)$wth->fuel, 2) }}
+                                                </td>
+                                                <td class="text-white">
+                                                    USDT {{ number_format((float)$wth->amount, 2) }}
                                                 </td>
                                                 <td class="text-muted">
-                                                    USDT {{ $wth->fuel }}
+                                                    USDT {{ number_format((float)$wth->fuel, 2) }}
                                                 </td>
                                                 <td>
                                                     @if ($wth->status == '1')
