@@ -415,9 +415,42 @@ ini_set('display_errors', 1);
                                     return confirm("Are you sure you want to reject this request?");
                                 }
                                 function confirmSubmit() {
+                                    var txidInput = document.querySelector('input[name="atxid"]');
+                                    if (txidInput && txidInput.value.trim().length < 5) {
+                                        alert("Transaction Hash / TxID is required to approve the withdrawal.");
+                                        return false;
+                                    }
                                     return confirm("Are you sure you want to approve and credit this request?");
                                 }
                             </script>
+
+                            <!-- Success Modal -->
+                            @if(session('success'))
+                            <div id="success_modal" class="modal fade" role="dialog" style="z-index: 2050;">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content" style="padding: 1.5rem; background-color: #0c0e1a; color: #fff; border-radius: 20px; text-align: center; border: 1px solid rgba(0, 255, 135, 0.2);">
+                                        <div class="modal-body">
+                                            <div style="display: flex; justify-content: center; margin: 15px 0;">
+                                                <lottie-player src="https://lottie.host/41338084-a6b2-4f6a-a8df-f98e7d614724/M8az2MDYWk.json" background="transparent" speed="1" style="width: 150px; height: 150px" autoplay loop></lottie-player>
+                                            </div>
+                                            <h3 class="text-white" style="margin-top:10px; font-weight: 800;">Processed Successfully!</h3>
+                                            <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">{{ session('success') }}</p>
+                                        </div>
+                                        <div class="modal-footer" style="border-top:none; justify-content: center;">
+                                            <button class="btn btn-primary rounded-pill px-4" type="button" data-bs-dismiss="modal" style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%); border: none; color: #08090f; font-weight: 700;">OK</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                            <script>
+                                window.addEventListener('load', function() {
+                                    var successModal = new bootstrap.Modal(document.getElementById('success_modal'));
+                                    successModal.show();
+                                });
+                            </script>
+                            @endif
+
                             <!-- / Content -->
 
                             <!-- Footer -->

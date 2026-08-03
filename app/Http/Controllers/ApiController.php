@@ -1142,6 +1142,20 @@ updateBalances();
                 } else {
 
                     if ($sts == '1') {
+                        if ($wth->pname == 'allincome' || $wth->pname == 'pollincome') {
+                            if (isset($prs['atxid'])) {
+                                if (strlen($prs['atxid']) < 5) {
+                                    return redirect()->back()->withInput($rqs->all())->withErrors([
+                                        'image' => 'TxId is Required',
+                                    ]);
+                                }
+                            } else {
+                                return redirect()->back()->withInput($rqs->all())->withErrors([
+                                    'image' => 'TxId Required',
+                                ]);
+                            }
+                        }
+
                         if ($wth->pname == 'pollincome') {
                             if (!Schema::hasColumn('customer_poll_transactions', 'wthId')) {
                                 Schema::table('customer_poll_transactions', function ($table) {
@@ -1164,21 +1178,6 @@ updateBalances();
                                     ]
                                 );
                         } else {
-                            if ($wth->pname == 'allincome') {
-                                if (isset($prs['atxid'])) {
-                                    if (strlen($prs['atxid']) < 5) {
-                                        return redirect()->back()->withInput($rqs->all())->withErrors([
-                                            'image' => 'TxId is Required',
-                                            // 'password' => 'Wrong password',
-                                        ]);
-                                    }
-                                } else {
-                                    return redirect()->back()->withInput($rqs->all())->withErrors([
-                                        'image' => 'TxId Required',
-                                        // 'password' => 'Wrong password',
-                                    ]);
-                                }
-                            }
                             DB::table('customer_transactions')
                                 ->updateOrInsert(
                                     [
@@ -1227,7 +1226,7 @@ updateBalances();
                 }
                 // fcm close
 
-                return redirect('/admin/withdraw/requests');
+                return redirect()->back()->with('success', 'Request processed successfully!');
             }
         }
         // admin check withdrawal
