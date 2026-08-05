@@ -150,12 +150,18 @@ $i = 0;
         /* ── Stat grid ── */
         .stat-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 16px;
             margin-bottom: 24px;
         }
 
-        @media(max-width:900px) {
+        @media(max-width:1200px) {
+            .stat-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media(max-width:800px) {
             .stat-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -209,6 +215,10 @@ $i = 0;
             background: linear-gradient(90deg, var(--purple), #8b50f5);
         }
 
+        .stat-card.s-orange::after {
+            background: linear-gradient(90deg, #ff9f43, #ff6b6b);
+        }
+
         .stat-icon-wrap {
             width: 52px;
             height: 52px;
@@ -242,6 +252,12 @@ $i = 0;
             background: rgba(185, 122, 255, 0.12);
             color: var(--purple);
             box-shadow: 0 0 24px rgba(185, 122, 255, 0.12);
+        }
+
+        .s-orange .stat-icon-wrap {
+            background: rgba(255, 159, 67, 0.12);
+            color: #ff9f43;
+            box-shadow: 0 0 24px rgba(255, 159, 67, 0.15);
         }
 
         .stat-label {
@@ -835,8 +851,10 @@ $i = 0;
                         $filteredCustomers = $customers->filter(fn($c) => $c->email !== 'forvcom000@gmail.com');
                         $totalCount   = $filteredCustomers->count();
                         $activeCount  = 0;
+                        $subscribersCount = 0;
                         foreach ($filteredCustomers as $c) {
                             if (DB::table('customer_plans')->where('csId',$c->id)->where('pstatus','1')->count() > 0) $activeCount++;
+                            if (DB::table('customer_subs')->where('csId',$c->id)->where('status','completed')->count() > 0) $subscribersCount++;
                         }
                         $totalStaked  = DB::table('customer_plans')->where('pstatus','1')->sum('pamount');
                         $totalMined   = DB::table('customer_transactions')->where('tType','mine_amount')->sum('tAmount');
@@ -869,6 +887,12 @@ $i = 0;
                                 <div class="stat-label">Active Stakers</div>
                                 <div class="stat-value">{{ $activeCount }}</div>
                                 <div class="stat-hint">{{ $totalCount > 0 ? round($activeCount/$totalCount*100) : 0 }}% activation rate</div>
+                            </div>
+                            <div class="stat-card s-orange">
+                                <div class="stat-icon-wrap"><i class="bx bx-user-check"></i></div>
+                                <div class="stat-label">Total Subscribers</div>
+                                <div class="stat-value">{{ $subscribersCount }}</div>
+                                <div class="stat-hint">{{ $totalCount > 0 ? round($subscribersCount/$totalCount*100) : 0 }}% subscription rate</div>
                             </div>
                             <div class="stat-card s-blue">
                                 <div class="stat-icon-wrap"><i class="bx bx-coin-stack"></i></div>
