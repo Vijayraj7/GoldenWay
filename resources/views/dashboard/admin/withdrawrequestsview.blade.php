@@ -310,12 +310,16 @@ ini_set('display_errors', 1);
                                                         @endif
 
                                                         @if($withdraw->pname == 'allincome' || $withdraw->pname == 'pollincome')
-                                                            <div class="detail-item" style="cursor: pointer;" id="copyWalletBtn">
+                                                            <div class="detail-item" style="cursor: pointer; flex-direction: column; align-items: stretch; gap: 8px;" id="copyWalletBtn">
                                                                 <span class="detail-label">BEP-20 Wallet Address</span>
-                                                                <span class="detail-value" style="font-family: monospace; font-size: 0.85rem; color: var(--gold); display: flex; align-items: center; gap: 6px;">
+                                                                <div class="detail-value" style="font-family: monospace; font-size: 0.85rem; color: var(--gold); word-break: break-all; white-space: normal; width: 100%;">
                                                                     {{$withdraw->wallet ?? decStr($usr->gms_wallet)}}
-                                                                    <button type="button" class="copy-btn"><i class="bx bx-copy"></i></button>
-                                                                </span>
+                                                                </div>
+                                                                <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
+                                                                    <span class="btn btn-sm py-1 px-3" style="background: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.2); color: var(--gold); font-size: 0.72rem; font-weight: 600; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px;">
+                                                                        <i class="bx bx-copy"></i> Copy Address
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                             <script>
                                                                 document.getElementById('copyWalletBtn').addEventListener('click', function() {
