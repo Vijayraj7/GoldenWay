@@ -150,7 +150,7 @@ $i = 0;
         /* ── Stat grid ── */
         .stat-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
             margin-bottom: 24px;
         }
@@ -858,6 +858,25 @@ $i = 0;
                         }
                         $totalStaked  = DB::table('customer_plans')->where('pstatus','1')->sum('pamount');
                         $totalMined   = DB::table('customer_transactions')->where('tType','mine_amount')->sum('tAmount');
+
+                        // ── Subscribed Amount stats ──
+                        $totalSubscribedAmount = DB::table('customer_subs')->where('status', 'completed')->sum('sub_amount');
+                        $usedSubscribeCredit = abs(DB::table('customer_transfers')->where('tType', 'subscribe')->where('tAmount', '<', 0)->sum('tAmount'));
+                        $walletUsedSubscribe = $totalSubscribedAmount - $usedSubscribeCredit;
+
+                        // ── Autopoll Income stats ──
+                        $totalAutopollAmount = DB::table('customer_autopolls')->where('status', 'completed')->sum('poll_amount');
+                        $usedAutopollCredit = abs(DB::table('customer_transfers')->where('tType', 'autopoll')->where('tAmount', '<', 0)->sum('tAmount'));
+                        $walletUsedAutopoll = $totalAutopollAmount - $usedAutopollCredit;
+
+                        // ── Staked Amount stats ──
+                        $usedStakedCredit = abs(DB::table('customer_transfers')->where('tType', 'normal')->where('tAmount', '<', 0)->sum('tAmount'));
+                        $walletUsedStaked = $totalStaked - $usedStakedCredit;
+
+                        // ── Combined Grand Totals ──
+                        $grandTotalAmount = $totalSubscribedAmount + $totalAutopollAmount + $totalStaked;
+                        $grandUsedCredit = $usedSubscribeCredit + $usedAutopollCredit + $usedStakedCredit;
+                        $grandWalletUsed = $grandTotalAmount - $grandUsedCredit;
                         ?>
 
                         <!-- Hero Header -->
@@ -894,17 +913,47 @@ $i = 0;
                                 <div class="stat-value">{{ $subscribersCount }}</div>
                                 <div class="stat-hint">{{ $totalCount > 0 ? round($subscribersCount/$totalCount*100) : 0 }}% subscription rate</div>
                             </div>
-                            <div class="stat-card s-blue">
-                                <div class="stat-icon-wrap"><i class="bx bx-coin-stack"></i></div>
-                                <div class="stat-label">Total Staked</div>
-                                <div class="stat-value">{{ number_format($totalStaked, 0) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Active stake plans</div>
-                            </div>
                             <div class="stat-card s-purple">
                                 <div class="stat-icon-wrap"><i class="bx bx-trending-up"></i></div>
                                 <div class="stat-label">Total Mined</div>
                                 <div class="stat-value">{{ number_format($totalMined, 4) }}</div>
                                 <div class="stat-hint">Lifetime mining rewards</div>
+                            </div>
+                            <div class="stat-card s-blue">
+                                <div class="stat-icon-wrap"><i class="bx bx-coin-stack"></i></div>
+                                <div class="stat-label">Total Staked Amount</div>
+                                <div class="stat-value">{{ number_format($totalStaked, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">
+                                    Used Credit: {{ number_format($usedStakedCredit, 2) }} USDT<br/>
+                                    Wallet Used: {{ number_format($walletUsedStaked, 2) }} USDT
+                                </div>
+                            </div>
+                            <div class="stat-card s-green">
+                                <div class="stat-icon-wrap"><i class="bx bx-purchase-tag-alt"></i></div>
+                                <div class="stat-label">Total Subscribed Amount</div>
+                                <div class="stat-value">{{ number_format($totalSubscribedAmount, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">
+                                    Used Credit: {{ number_format($usedSubscribeCredit, 2) }} USDT<br/>
+                                    Wallet Used: {{ number_format($walletUsedSubscribe, 2) }} USDT
+                                </div>
+                            </div>
+                            <div class="stat-card s-orange">
+                                <div class="stat-icon-wrap"><i class="bx bx-line-chart"></i></div>
+                                <div class="stat-label">Total Autopoll Income</div>
+                                <div class="stat-value">{{ number_format($totalAutopollAmount, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">
+                                    Used Credit: {{ number_format($usedAutopollCredit, 2) }} USDT<br/>
+                                    Wallet Used: {{ number_format($walletUsedAutopoll, 2) }} USDT
+                                </div>
+                            </div>
+                            <div class="stat-card s-gold">
+                                <div class="stat-icon-wrap"><i class="bx bx-wallet"></i></div>
+                                <div class="stat-label">Total Combined Amount</div>
+                                <div class="stat-value">{{ number_format($grandTotalAmount, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">
+                                    Total Credit Used: {{ number_format($grandUsedCredit, 2) }} USDT<br/>
+                                    Total Wallet Used: {{ number_format($grandWalletUsed, 2) }} USDT
+                                </div>
                             </div>
                         </div>
 
