@@ -67,14 +67,44 @@ $platformStake = $plansDaily->sum();
 $platformPoll = $pollsDaily->sum();
 $platformTotalIncome = $platformSub + $platformStake + $platformPoll;
 
-// ── Used transfer credits with respective ID filters ──
-$usedSubscribeCredit = abs(DB::table('customer_transfers')->where('tType', 'subscribe')->where('tAmount', '<', 0)->where('id', '>=', 69)->sum('tAmount'));
+// ── Used transfer credits with respective ID and Date filters ──
+$subTransfersQuery = DB::table('customer_transfers')
+    ->where('tType', 'subscribe')
+    ->where('tAmount', '<', 0)
+    ->where('id', '>=', 69);
+if ($fromDate != '') {
+    $subTransfersQuery->where(DB::raw('DATE_ADD(updated_at, INTERVAL 90 MINUTE)'), '>=', $fromDateTime);
+}
+if ($toDate != '') {
+    $subTransfersQuery->where(DB::raw('DATE_ADD(updated_at, INTERVAL 90 MINUTE)'), '<=', $toDate . ' 23:59:59');
+}
+$usedSubscribeCredit = abs($subTransfersQuery->sum('tAmount'));
 $walletUsedSubscribe = $platformSub - $usedSubscribeCredit;
 
-$usedStakedCredit = abs(DB::table('customer_transfers')->where('tType', 'normal')->where('tAmount', '<', 0)->where('id', '>=', 271)->sum('tAmount'));
+$stakedTransfersQuery = DB::table('customer_transfers')
+    ->where('tType', 'normal')
+    ->where('tAmount', '<', 0)
+    ->where('id', '>=', 271);
+if ($fromDate != '') {
+    $stakedTransfersQuery->where('updated_at', '>=', $fromDateTime);
+}
+if ($toDate != '') {
+    $stakedTransfersQuery->where('updated_at', '<=', $toDate . ' 23:59:59');
+}
+$usedStakedCredit = abs($stakedTransfersQuery->sum('tAmount'));
 $walletUsedStaked = $platformStake - $usedStakedCredit;
 
-$usedAutopollCredit = abs(DB::table('customer_transfers')->where('tType', 'autopoll')->where('tAmount', '<', 0)->where('id', '>=', 39)->sum('tAmount'));
+$autopollTransfersQuery = DB::table('customer_transfers')
+    ->where('tType', 'autopoll')
+    ->where('tAmount', '<', 0)
+    ->where('id', '>=', 39);
+if ($fromDate != '') {
+    $autopollTransfersQuery->where(DB::raw('DATE_ADD(updated_at, INTERVAL 90 MINUTE)'), '>=', $fromDateTime);
+}
+if ($toDate != '') {
+    $autopollTransfersQuery->where(DB::raw('DATE_ADD(updated_at, INTERVAL 90 MINUTE)'), '<=', $toDate . ' 23:59:59');
+}
+$usedAutopollCredit = abs($autopollTransfersQuery->sum('tAmount'));
 $walletUsedAutopoll = $platformPoll - $usedAutopollCredit;
 
 $grandUsedCredit = $usedSubscribeCredit + $usedStakedCredit + $usedAutopollCredit;
