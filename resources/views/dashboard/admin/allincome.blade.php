@@ -67,6 +67,19 @@ $platformStake = $plansDaily->sum();
 $platformPoll = $pollsDaily->sum();
 $platformTotalIncome = $platformSub + $platformStake + $platformPoll;
 
+// ── Used transfer credits with respective ID filters ──
+$usedSubscribeCredit = abs(DB::table('customer_transfers')->where('tType', 'subscribe')->where('tAmount', '<', 0)->where('id', '>=', 69)->sum('tAmount'));
+$walletUsedSubscribe = $platformSub - $usedSubscribeCredit;
+
+$usedStakedCredit = abs(DB::table('customer_transfers')->where('tType', 'normal')->where('tAmount', '<', 0)->where('id', '>=', 271)->sum('tAmount'));
+$walletUsedStaked = $platformStake - $usedStakedCredit;
+
+$usedAutopollCredit = abs(DB::table('customer_transfers')->where('tType', 'autopoll')->where('tAmount', '<', 0)->where('id', '>=', 39)->sum('tAmount'));
+$walletUsedAutopoll = $platformPoll - $usedAutopollCredit;
+
+$grandUsedCredit = $usedSubscribeCredit + $usedStakedCredit + $usedAutopollCredit;
+$grandWalletUsed = $platformTotalIncome - $grandUsedCredit;
+
 $totalCount = count($allDates);
 
 // Build query parameter string for preserving filter state in navigation
@@ -646,25 +659,37 @@ $i = 0;
                                 <div class="stat-icon-wrap"><i class="bx bx-trending-up"></i></div>
                                 <div class="stat-label">Total Subscriptions</div>
                                 <div class="stat-value">{{ number_format($platformSub, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Completed sub purchases</div>
+                                <div class="stat-hint">
+                                    Used Credit: {{ number_format($usedSubscribeCredit, 2) }} USDT<br/>
+                                    Wallet Used: {{ number_format($walletUsedSubscribe, 2) }} USDT
+                                </div>
                             </div>
                             <div class="stat-card s-green">
                                 <div class="stat-icon-wrap"><i class="bx bx-git-pull-request"></i></div>
                                 <div class="stat-label">Total Staking</div>
                                 <div class="stat-value">{{ number_format($platformStake, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Deposited stake plans</div>
+                                <div class="stat-hint">
+                                    Used Credit: {{ number_format($usedStakedCredit, 2) }} USDT<br/>
+                                    Wallet Used: {{ number_format($walletUsedStaked, 2) }} USDT
+                                </div>
                             </div>
                             <div class="stat-card s-purple">
                                 <div class="stat-icon-wrap"><i class="bx bx-group"></i></div>
                                 <div class="stat-label">Total AutoPoll</div>
                                 <div class="stat-value">{{ number_format($platformPoll, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Autopoll entries volume</div>
+                                <div class="stat-hint">
+                                    Used Credit: {{ number_format($usedAutopollCredit, 2) }} USDT<br/>
+                                    Wallet Used: {{ number_format($walletUsedAutopoll, 2) }} USDT
+                                </div>
                             </div>
                             <div class="stat-card s-gold">
                                 <div class="stat-icon-wrap"><i class="bx bx-wallet"></i></div>
                                 <div class="stat-label">Total Platform Volume</div>
                                 <div class="stat-value">{{ number_format($platformTotalIncome, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Combined revenue streams</div>
+                                <div class="stat-hint">
+                                    Total Credit Used: {{ number_format($grandUsedCredit, 2) }} USDT<br/>
+                                    Total Wallet Used: {{ number_format($grandWalletUsed, 2) }} USDT
+                                </div>
                             </div>
                         </div>
 
