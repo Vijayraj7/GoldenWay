@@ -67,11 +67,17 @@ $platformStake = $plansDaily->sum();
 $platformPoll = $pollsDaily->sum();
 $platformTotalIncome = $platformSub + $platformStake + $platformPoll;
 
-// ── Used transfer credits with respective ID and Date filters ──
+// ── Used transfer credits with respective Date thresholds and filters ──
+$thresholdSubDate = DB::table('customer_subs')->where('id', 69)->value('created_at');
+$thresholdStakeDate = DB::table('customer_plans')->where('id', 271)->value('created_at');
+$thresholdPollDate = DB::table('customer_autopolls')->where('id', 39)->value('created_at');
+
 $subTransfersQuery = DB::table('customer_transfers')
     ->where('tType', 'subscribe')
-    ->where('tAmount', '<', 0)
-    ->where('id', '>=', 69);
+    ->where('tAmount', '<', 0);
+if ($thresholdSubDate) {
+    $subTransfersQuery->where('created_at', '>=', $thresholdSubDate);
+}
 if ($fromDate != '') {
     $subTransfersQuery->where(DB::raw('DATE_ADD(updated_at, INTERVAL 90 MINUTE)'), '>=', $fromDateTime);
 }
@@ -83,8 +89,10 @@ $walletUsedSubscribe = $platformSub - $usedSubscribeCredit;
 
 $stakedTransfersQuery = DB::table('customer_transfers')
     ->where('tType', 'normal')
-    ->where('tAmount', '<', 0)
-    ->where('id', '>=', 271);
+    ->where('tAmount', '<', 0);
+if ($thresholdStakeDate) {
+    $stakedTransfersQuery->where('created_at', '>=', $thresholdStakeDate);
+}
 if ($fromDate != '') {
     $stakedTransfersQuery->where('updated_at', '>=', $fromDateTime);
 }
@@ -96,8 +104,10 @@ $walletUsedStaked = $platformStake - $usedStakedCredit;
 
 $autopollTransfersQuery = DB::table('customer_transfers')
     ->where('tType', 'autopoll')
-    ->where('tAmount', '<', 0)
-    ->where('id', '>=', 39);
+    ->where('tAmount', '<', 0);
+if ($thresholdPollDate) {
+    $autopollTransfersQuery->where('created_at', '>=', $thresholdPollDate);
+}
 if ($fromDate != '') {
     $autopollTransfersQuery->where(DB::raw('DATE_ADD(updated_at, INTERVAL 90 MINUTE)'), '>=', $fromDateTime);
 }
