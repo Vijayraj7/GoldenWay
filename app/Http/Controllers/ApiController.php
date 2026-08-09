@@ -1279,14 +1279,15 @@ updateBalances();
                 ]);
             }
         }
+        $gross_amount = $amnt + (isset($prs['fuel']) ? (float)$prs['fuel'] : 0);
         if ($prs['pname'] == 'pollincome') {
-            if ($amnt < 9.5) {
+            if ($gross_amount < 10) {
                 return redirect()->back()->withInput($rqs->all())->withErrors([
                     'image' => "Min USDT is 10",
                 ]);
             }
         } else {
-            if ($amnt < 19.5) {
+            if ($gross_amount < 20) {
                 return redirect()->back()->withInput($rqs->all())->withErrors([
                     'image' => "Min USDT is 20",
                 ]);
