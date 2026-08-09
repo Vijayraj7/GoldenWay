@@ -469,6 +469,38 @@ ini_set('display_errors', 1);
             padding: 10px 28px;
         }
 
+        /* ── Error modal ── */
+        #error_tic .modal-content {
+            background: #151827;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            color: #e8eaf0;
+        }
+
+        #error_tic h3 {
+            color: #ef4444;
+            font-weight: 700;
+            margin: 10px 0 4px;
+        }
+
+        #error_tic p {
+            color: #6c7a96;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        #error_tic .btn {
+            margin-top: 16px;
+            background: #ef4444;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            padding: 10px 28px;
+        }
+
         /* ── Responsive ── */
         @media (max-width: 768px) {
             .balance-amount {
@@ -705,6 +737,27 @@ ini_set('display_errors', 1);
             $('#success_tic').modal('show');
         });
 
+    </script>
+    @enderror
+
+    <!-- Error Modal -->
+    @error('image')
+    <div id="error_tic" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" style="max-width:400px;">
+            <div class="modal-content">
+                <div style="width:80px; height:80px; background:rgba(239, 68, 68, 0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; margin: 24px auto 16px; color:#ef4444; font-size:2.5rem;">
+                    <i class="bx bx-error-circle"></i>
+                </div>
+                <h3>Request Failed</h3>
+                <p>{{ $message }}</p>
+                <button class="btn" type="button" data-bs-dismiss="modal">Try Again</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            $('#error_tic').modal('show');
+        });
     </script>
     @enderror
 
