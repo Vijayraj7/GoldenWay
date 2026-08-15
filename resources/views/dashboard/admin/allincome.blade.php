@@ -700,7 +700,7 @@ $i = 0;
                                 <div class="stat-label">Total Subscriptions</div>
                                 <div class="stat-value">{{ number_format($platformSub, 2) }}<span class="stat-unit">USDT</span></div>
                                 <div class="stat-hint">
-                                    Used Credit: {{ number_format($usedSubscribeCredit, 2) }} USDT<br/>
+                                    Used Transfer Credit: {{ number_format($usedSubscribeCredit, 2) }} USDT<br/>
                                     Wallet Used: {{ number_format($walletUsedSubscribe, 2) }} USDT
                                 </div>
                             </div>
@@ -709,7 +709,7 @@ $i = 0;
                                 <div class="stat-label">Total Staking</div>
                                 <div class="stat-value">{{ number_format($platformStake, 2) }}<span class="stat-unit">USDT</span></div>
                                 <div class="stat-hint">
-                                    Used Credit: {{ number_format($usedStakedCredit, 2) }} USDT<br/>
+                                    Used Transfer Credit: {{ number_format($usedStakedCredit, 2) }} USDT<br/>
                                     Wallet Used: {{ number_format($walletUsedStaked, 2) }} USDT
                                 </div>
                             </div>
@@ -718,7 +718,7 @@ $i = 0;
                                 <div class="stat-label">Total AutoPoll</div>
                                 <div class="stat-value">{{ number_format($platformPoll, 2) }}<span class="stat-unit">USDT</span></div>
                                 <div class="stat-hint">
-                                    Used Credit: {{ number_format($usedAutopollCredit, 2) }} USDT<br/>
+                                    Used Transfer Credit: {{ number_format($usedAutopollCredit, 2) }} USDT<br/>
                                     Wallet Used: {{ number_format($walletUsedAutopoll, 2) }} USDT
                                 </div>
                             </div>
@@ -727,7 +727,7 @@ $i = 0;
                                 <div class="stat-label">Total Platform Volume</div>
                                 <div class="stat-value">{{ number_format($platformTotalIncome, 2) }}<span class="stat-unit">USDT</span></div>
                                 <div class="stat-hint">
-                                    Total Credit Used: {{ number_format($grandUsedCredit, 2) }} USDT<br/>
+                                    Total Transfer Credit Used: {{ number_format($grandUsedCredit, 2) }} USDT<br/>
                                     Total Wallet Used: {{ number_format($grandWalletUsed, 2) }} USDT
                                 </div>
                             </div>
