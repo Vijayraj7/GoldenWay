@@ -702,62 +702,62 @@ $i = 0;
                                                 <div class="member-wrap">
                                                     @if($item->sender_name)
                                                         @if($item->sender_img)
-                                                        <img src="{{ $item->sender_img }}" class="mem-avatar" alt="avatar">
+                                                        <img src="{{ $item->sender_img }}" class="mem-avatar" alt="avatar" style="border-color: rgba(255, 159, 67, 0.4) !important;">
                                                         @else
-                                                        <div class="mem-initial">{{ $senderInitials }}</div>
+                                                        <div class="mem-initial" style="background: linear-gradient(135deg, #ff9f43, #d97706); color: #05060b; font-weight: 700;">{{ $senderInitials }}</div>
                                                         @endif
-                                                        <a href="/admin/user/{{ $item->fuserid }}" class="mem-link">{{ $item->sender_name }}</a>
+                                                        <a href="/admin/user/{{ $item->fuserid }}" class="mem-link" style="color: #ff9f43 !important;">{{ $item->sender_name }}</a>
                                                     @else
-                                                        <div class="mem-initial">S</div>
-                                                        <span style="color: var(--text-muted);">System / Admin</span>
+                                                        <div class="mem-initial" style="background: linear-gradient(135deg, #d783ff, #a855f7); color: #05060b; font-weight: 700;">S</div>
+                                                        <span style="color: #d783ff !important; font-weight: 600;">System / Admin</span>
                                                     @endif
                                                 </div>
                                             </td>
                                             <td>
                                                 @if($item->sender_uid)
-                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item->sender_uid }}', this)" title="Click to copy UID">
+                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item->sender_uid }}', this)" title="Click to copy UID" style="color: #ff9f43 !important; border-color: rgba(255, 159, 67, 0.2) !important; background: rgba(255, 159, 67, 0.05) !important;">
                                                     {{ $item->sender_uid }}
                                                 </span>
                                                 @else
-                                                <span style="color: var(--text-muted);">SYSTEM</span>
+                                                <span class="mem-uid" onclick="copyToClipboard('SYSTEM', this)" title="System action" style="color: #d783ff !important; border-color: rgba(215, 131, 255, 0.2) !important; background: rgba(215, 131, 255, 0.05) !important;">SYSTEM</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 <div class="member-wrap">
                                                     @if($item->receiver_name)
                                                         @if($item->receiver_img)
-                                                        <img src="{{ $item->receiver_img }}" class="mem-avatar" alt="avatar">
+                                                        <img src="{{ $item->receiver_img }}" class="mem-avatar" alt="avatar" style="border-color: rgba(56, 189, 248, 0.4) !important;">
                                                         @else
-                                                        <div class="mem-initial">{{ $receiverInitials }}</div>
+                                                        <div class="mem-initial" style="background: linear-gradient(135deg, #38bdf8, #0284c7); color: #05060b; font-weight: 700;">{{ $receiverInitials }}</div>
                                                         @endif
-                                                        <a href="/admin/user/{{ $item->tuserid }}" class="mem-link">{{ $item->receiver_name }}</a>
+                                                        <a href="/admin/user/{{ $item->tuserid }}" class="mem-link" style="color: #38bdf8 !important;">{{ $item->receiver_name }}</a>
                                                     @else
-                                                        <div class="mem-initial">S</div>
-                                                        <span style="color: var(--text-muted);">System / Admin</span>
+                                                        <div class="mem-initial" style="background: linear-gradient(135deg, #d783ff, #a855f7); color: #05060b; font-weight: 700;">S</div>
+                                                        <span style="color: #d783ff !important; font-weight: 600;">System / Admin</span>
                                                     @endif
                                                 </div>
                                             </td>
                                             <td>
                                                 @if($item->receiver_uid)
-                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item->receiver_uid }}', this)" title="Click to copy UID">
+                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item->receiver_uid }}', this)" title="Click to copy UID" style="color: #38bdf8 !important; border-color: rgba(56, 189, 248, 0.2) !important; background: rgba(56, 189, 248, 0.05) !important;">
                                                     {{ $item->receiver_uid }}
                                                 </span>
                                                 @else
-                                                <span style="color: var(--text-muted);">SYSTEM</span>
+                                                <span class="mem-uid" onclick="copyToClipboard('SYSTEM', this)" title="System action" style="color: #d783ff !important; border-color: rgba(215, 131, 255, 0.2) !important; background: rgba(215, 131, 255, 0.05) !important;">SYSTEM</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 <span class="amount-val positive">
-                                                    {{ number_format((float)$item->tAmount, 2) }} USDT
+                                                    {{ (float)$item->tAmount == 0 ? '--' : number_format((float)$item->tAmount, 2) . ' USDT' }}
                                                 </span>
                                             </td>
                                             <td>
-                                                @if(!empty($item->fee))
+                                                @if(!empty($item->fee) && (float)$item->fee != 0)
                                                 <span class="amount-val negative">
                                                     {{ number_format((float)$item->fee, 2) }} USDT
                                                 </span>
                                                 @else
-                                                <span style="color: var(--text-muted);">None</span>
+                                                <span style="color: var(--text-muted);">--</span>
                                                 @endif
                                             </td>
                                         </tr>

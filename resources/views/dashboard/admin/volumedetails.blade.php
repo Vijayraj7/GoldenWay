@@ -829,68 +829,68 @@ $i = 0;
                                             <!-- Subscriptions -->
                                             <td class="text-center" style="border-left: 1px solid var(--border); font-size: 0.78rem;">
                                                 <span style="color: {{ $item['sub_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['sub_vol'], 2) }}
+                                                    {{ $item['sub_vol'] == 0 ? '--' : number_format($item['sub_vol'], 2) }}
                                                 </span>
                                             </td>
                                             <td class="text-center" style="font-size: 0.78rem;">
                                                 <span style="color: {{ $item['sub_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['sub_cred'], 2) }}
+                                                    {{ $item['sub_cred'] == 0 ? '--' : number_format($item['sub_cred'], 2) }}
                                                 </span>
                                             </td>
                                             <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem;">
                                                 <span style="color: {{ $item['sub_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['sub_wallet'], 2) }}
+                                                    {{ $item['sub_wallet'] == 0 ? '--' : number_format($item['sub_wallet'], 2) }}
                                                 </span>
                                             </td>
                                             
                                             <!-- Staking -->
                                             <td class="text-center" style="font-size: 0.78rem;">
                                                 <span style="color: {{ $item['stake_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['stake_vol'], 2) }}
+                                                    {{ $item['stake_vol'] == 0 ? '--' : number_format($item['stake_vol'], 2) }}
                                                 </span>
                                             </td>
                                             <td class="text-center" style="font-size: 0.78rem;">
                                                 <span style="color: {{ $item['stake_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['stake_cred'], 2) }}
+                                                    {{ $item['stake_cred'] == 0 ? '--' : number_format($item['stake_cred'], 2) }}
                                                 </span>
                                             </td>
                                             <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem;">
                                                 <span style="color: {{ $item['stake_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['stake_wallet'], 2) }}
+                                                    {{ $item['stake_wallet'] == 0 ? '--' : number_format($item['stake_wallet'], 2) }}
                                                 </span>
                                             </td>
                                             
                                             <!-- AutoPoll -->
                                             <td class="text-center" style="font-size: 0.78rem;">
                                                 <span style="color: {{ $item['poll_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['poll_vol'], 2) }}
+                                                    {{ $item['poll_vol'] == 0 ? '--' : number_format($item['poll_vol'], 2) }}
                                                 </span>
                                             </td>
                                             <td class="text-center" style="font-size: 0.78rem;">
                                                 <span style="color: {{ $item['poll_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['poll_cred'], 2) }}
+                                                    {{ $item['poll_cred'] == 0 ? '--' : number_format($item['poll_cred'], 2) }}
                                                 </span>
                                             </td>
                                             <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem;">
                                                 <span style="color: {{ $item['poll_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['poll_wallet'], 2) }}
+                                                    {{ $item['poll_wallet'] == 0 ? '--' : number_format($item['poll_wallet'], 2) }}
                                                 </span>
                                             </td>
                                             
                                             <!-- Combined -->
                                             <td class="text-center" style="font-size: 0.78rem;">
                                                 <span style="color: {{ $item['comb_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['comb_vol'], 2) }}
+                                                    {{ $item['comb_vol'] == 0 ? '--' : number_format($item['comb_vol'], 2) }}
                                                 </span>
                                             </td>
                                             <td class="text-center" style="font-size: 0.78rem;">
                                                 <span style="color: {{ $item['comb_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['comb_cred'], 2) }}
+                                                    {{ $item['comb_cred'] == 0 ? '--' : number_format($item['comb_cred'], 2) }}
                                                 </span>
                                             </td>
                                             <td class="text-center" style="font-size: 0.78rem;">
                                                 <span style="color: {{ $item['comb_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
-                                                    {{ number_format($item['comb_wallet'], 2) }}
+                                                    {{ $item['comb_wallet'] == 0 ? '--' : number_format($item['comb_wallet'], 2) }}
                                                 </span>
                                             </td>
                                         </tr>
