@@ -58,6 +58,12 @@ class AdminDashboard extends Controller
         $h = new HelperController;
         return $h->getboth('dashboard.admin.p2ptransfers');
     }
+    public function allTransfers()
+    {
+        checkadmin();
+        $h = new HelperController;
+        return $h->getboth('dashboard.admin.alltransfers');
+    }
     public function productrequests()
     {
         checkadmin();

@@ -9,8 +9,8 @@ $i = 0;
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Customer P2P Transfers History | GoldenWay Admin</title>
-    <meta name="description" content="Admin panel – view all customer to customer peer-to-peer credit transfers." />
+    <title>All System & P2P Transfers History | GoldenWay Admin</title>
+    <meta name="description" content="Admin panel – view all customer transfers including P2P, Staking, Subscriptions and AutoPoll credit usages." />
     <link rel="icon" type="image/x-icon" href="/tst/goldenlogo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -96,7 +96,7 @@ $i = 0;
 
         .stat-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
             margin-bottom: 24px;
         }
@@ -129,6 +129,7 @@ $i = 0;
 
         .stat-card.s-gold::after { background: linear-gradient(90deg, var(--gold) 0%, var(--gold2) 100%); }
         .stat-card.s-purple::after { background: linear-gradient(90deg, var(--purple) 0%, #a855f7 100%); }
+        .stat-card.s-blue::after { background: linear-gradient(90deg, var(--blue) 0%, #0284c7 100%); }
 
         .stat-icon-wrap {
             width: 44px;
@@ -146,6 +147,7 @@ $i = 0;
 
         .s-gold .stat-icon-wrap { color: var(--gold); }
         .s-purple .stat-icon-wrap { color: var(--purple); }
+        .s-blue .stat-icon-wrap { color: var(--blue); }
 
         .stat-label {
             font-size: 0.8rem;
@@ -200,26 +202,24 @@ $i = 0;
         }
 
         .btn-search {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 100%);
-            color: #08090f;
+            background: linear-gradient(135deg, #f5c518 0%, #e2b20f 100%);
             border: none;
+            color: #05060b !important;
             border-radius: 12px;
-            padding: 12px 26px;
-            font-size: 0.88rem;
-            font-weight: 800;
+            padding: 12px 24px;
+            font-size: 0.82rem;
+            font-weight: 700;
             cursor: pointer;
-            white-space: nowrap;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 7px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 20px rgba(245, 197, 24, 0.28);
-            letter-spacing: 0.3px;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(245, 197, 24, 0.2);
         }
 
         .btn-search:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(245, 197, 24, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(245, 197, 24, 0.3);
         }
 
         .btn-clear {
@@ -263,50 +263,31 @@ $i = 0;
             flex-wrap: wrap;
         }
 
-        .table-header-left {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .table-header-icon {
-            width: 46px;
-            height: 46px;
-            background: linear-gradient(135deg, var(--gold), var(--gold2));
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: #08090f;
-            box-shadow: 0 6px 20px rgba(245, 197, 24, 0.3);
-            flex-shrink: 0;
-        }
-
         .table-header h5 {
             color: var(--text-main);
-            font-size: 1rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 0 0 4px 0;
         }
 
         .table-header p {
-            color: var(--text-sub);
-            font-size: 0.72rem;
-            margin-top: 2px;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin: 0;
         }
 
         .count-pill {
-            background: rgba(245, 197, 24, 0.1);
-            border: 1px solid rgba(245, 197, 24, 0.2);
+            background: rgba(245, 197, 24, 0.08);
+            border: 1px solid rgba(245, 197, 24, 0.25);
             color: var(--gold);
+            padding: 6px 14px;
             border-radius: 30px;
-            padding: 5px 16px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            letter-spacing: 0.3px;
+            font-size: 0.78rem;
+            font-weight: 700;
         }
 
         .data-table-scroll {
+            width: 100%;
             overflow-x: auto;
         }
 
@@ -338,7 +319,7 @@ $i = 0;
         }
 
         .data-table tbody tr:hover {
-            background: rgba(255, 255, 255, 0.035) !important;
+            background: rgba(255, 255, 255, 0.025) !important;
         }
 
         .data-table td {
@@ -357,7 +338,7 @@ $i = 0;
             width: 50px;
         }
 
-        .member-wrap {
+        .member-info {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -368,101 +349,89 @@ $i = 0;
             height: 32px;
             border-radius: 50%;
             object-fit: cover;
-            border: 1.5px solid rgba(245, 197, 24, 0.3);
-            flex-shrink: 0;
+            border: 1px solid var(--border);
         }
 
         .mem-initial {
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #1a2040, #242e50);
-            border: 1.5px solid rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
-            color: #fff;
+            font-size: 0.8rem;
             font-weight: 700;
-            flex-shrink: 0;
+            color: var(--text-sub);
         }
 
         .mem-link {
-            color: #fff;
+            font-weight: 700;
             text-decoration: none;
-            font-weight: 600;
             transition: color 0.15s;
         }
 
         .mem-link:hover {
-            color: var(--gold);
+            text-decoration: underline;
         }
 
         .mem-uid {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 6px;
             color: var(--text-muted);
-            font-family: monospace;
-            background: rgba(255, 255, 255, 0.04);
-            padding: 2px 6px;
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .mem-uid:hover {
-            color: var(--gold);
-            background: rgba(245, 197, 24, 0.08);
-            border-color: rgba(245, 197, 24, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-main);
         }
 
-        .amount-val {
-            font-size: 0.88rem;
-            font-weight: 700;
+        .badge-type {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 5px 10px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .amount-val.positive {
-            color: #00ff87;
-        }
-
-        .amount-val.negative {
-            color: #ff6b6b;
-        }
-
-        .c-muted {
-            color: var(--text-muted);
-        }
-
-        /* Pagination styles */
-        .pagination-container {
+        .table-footer {
+            padding: 20px 28px;
+            border-top: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 28px;
-            background: rgba(0,0,0,0.15);
-            border-top: 1px solid var(--border);
+            gap: 15px;
             flex-wrap: wrap;
-            gap: 12px;
         }
 
-        .pagination-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
+        .pg-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
             color: var(--text-sub);
             padding: 8px 16px;
-            border-radius: 8px;
-            text-decoration: none;
+            border-radius: 10px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
+            text-decoration: none;
             transition: all 0.2s;
         }
 
-        .pagination-btn:hover:not(.disabled) {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
+        .pg-btn:hover:not(.disabled) {
+            background: rgba(255, 255, 255, 0.09);
+            color: var(--text-main);
         }
 
-        .pagination-btn.disabled {
+        .pg-btn.disabled {
             opacity: 0.4;
             pointer-events: none;
             cursor: not-allowed;
@@ -484,14 +453,12 @@ $i = 0;
     @include('dashboard.dcards.naver')
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            @include('dashboard.admin.dcards.menu', ['r' => 'p2ptransfers'])
+            @include('dashboard.admin.dcards.menu', ['r' => 'alltransfers'])
 
             <div class="layout-page">
                 @include('dashboard.dcards.nav')
 
                 <div class="content-wrapper">
-                    {{-- @include('dashboard.dcards.wallet', ['snd' => false, 'adminwlt' => true]) --}}
-
                     <div class="container-xxl flex-grow-1 container-p-y">
 
                         <?php
@@ -499,11 +466,12 @@ $i = 0;
                         $toDate = $_GET['to_date'] ?? '';
                         $searchVal = $_GET['srch'] ?? '';
                         $customerFilterId = $_GET['customer_id'] ?? '';
+                        $selectedType = $_GET['type'] ?? 'all';
 
                         $fromDateTime = $fromDate ? $fromDate . ' 00:00:00' : '';
                         $toDateTime = $toDate ? $toDate . ' 23:59:59' : '';
 
-                        // Base query for P2P transfers
+                        // Base query for all types of transfers
                         $query = DB::table('customer_transfers')
                             ->leftJoin('customers as sender', 'customer_transfers.fuserid', '=', 'sender.id')
                             ->leftJoin('customers as receiver', 'customer_transfers.tuserid', '=', 'receiver.id')
@@ -517,14 +485,31 @@ $i = 0;
                                 'receiver.email as receiver_email',
                                 'receiver.uid as receiver_uid',
                                 'receiver.img as receiver_img'
-                            )
-                            ->where('customer_transfers.tType', 'transfer');
+                            );
+
+                        // Filter by selected transfer type
+                        if ($selectedType == 'p2p') {
+                            $query->where('customer_transfers.tType', 'transfer');
+                        } elseif ($selectedType == 'staking') {
+                            $query->where('customer_transfers.tType', 'normal');
+                        } elseif ($selectedType == 'subscriptions') {
+                            $query->where('customer_transfers.tType', 'subscribe');
+                        } elseif ($selectedType == 'autopoll') {
+                            $query->where('customer_transfers.tType', 'autopoll');
+                        } else {
+                            // Show all types
+                            $query->whereIn('customer_transfers.tType', ['transfer', 'normal', 'subscribe', 'autopoll']);
+                        }
 
                         // Filter by specific customer (sender or receiver)
                         if ($customerFilterId != '') {
                             $query->where(function($q) use ($customerFilterId) {
                                 $q->where('customer_transfers.fuserid', $customerFilterId)
-                                  ->orWhere('customer_transfers.tuserid', $customerFilterId);
+                                  ->orWhere(function($subQ) use ($customerFilterId) {
+                                      // Only check tuserid if type is transfer (since other types are system actions where tuserid is not a user)
+                                      $subQ->where('customer_transfers.tuserid', $customerFilterId)
+                                           ->where('customer_transfers.tType', 'transfer');
+                                  });
                             });
                         }
 
@@ -549,7 +534,17 @@ $i = 0;
                         // Clone to calculate totals
                         $allFilteredTransfers = $query->orderBy('customer_transfers.id', 'desc')->get();
                         $totalTransactionsCount = count($allFilteredTransfers);
-                        $totalVolumeSum = $allFilteredTransfers->sum(function($item) {
+
+                        // Volume sums for P2P vs System usages
+                        $p2pVolumeSum = $allFilteredTransfers->filter(function($item) {
+                            return $item->tType == 'transfer';
+                        })->sum(function($item) {
+                            return (float)$item->tAmount;
+                        });
+
+                        $systemVolumeSum = $allFilteredTransfers->filter(function($item) {
+                            return $item->tType != 'transfer';
+                        })->sum(function($item) {
                             return (float)$item->tAmount;
                         });
 
@@ -570,30 +565,30 @@ $i = 0;
                         }
                         ?>
 
-                        <!-- Hero Header -->
+                        <!-- Hero Header Card -->
                         <div class="hero-header">
-                            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
                                 <div>
-                                    <h1 class="hero-title">Customer to Customer Transfers</h1>
+                                    <h4 class="hero-title">All Transfers History</h4>
                                     <p class="hero-sub">
                                         @if($customerFilterId != '')
-                                        Showing credit transfer log for customer <strong>{{ $filterCustomerName }}</strong>
+                                        Showing credit usage and P2P transfers for customer <strong>{{ $filterCustomerName }}</strong>
                                         @else
-                                        Complete log of peer-to-peer credit balance transactions
+                                        Complete log of system staking, subscriptions, autopoll, and peer-to-peer transfers
                                         @endif
                                     </p>
                                 </div>
                                 <div class="d-flex gap-2">
                                     @if($customerFilterId != '')
-                                    <a href="/admin/transfers/p2p" class="btn btn-sm btn-clear" style="padding: 10px 18px;">
+                                    <a href="/admin/transfers/all" class="btn btn-sm btn-clear" style="padding: 10px 18px;">
                                         Show All Users
                                     </a>
-                                    <a href="/admin/transfers/all?customer_id={{ $customerFilterId }}" class="btn btn-sm btn-clear" style="padding: 10px 18px; border-color: rgba(215, 131, 255, 0.4); color: #d783ff !important;">
-                                        <i class="bx bx-collection"></i> View All Customer Transfers
+                                    <a href="/admin/transfers/p2p?customer_id={{ $customerFilterId }}" class="btn btn-sm btn-clear" style="padding: 10px 18px; border-color: rgba(56, 189, 248, 0.4); color: #38bdf8 !important;">
+                                        <i class="bx bx-group"></i> P2P Transfers Only
                                     </a>
                                     @else
-                                    <a href="/admin/transfers/all" class="btn btn-sm btn-clear" style="padding: 10px 18px; border-color: rgba(215, 131, 255, 0.4); color: #d783ff !important;">
-                                        <i class="bx bx-collection"></i> View All Transfers
+                                    <a href="/admin/transfers/p2p" class="btn btn-sm btn-clear" style="padding: 10px 18px; border-color: rgba(56, 189, 248, 0.4); color: #38bdf8 !important;">
+                                        <i class="bx bx-group"></i> P2P Transfers Only
                                     </a>
                                     @endif
                                     <a href="/admin/income/volume-details" class="btn btn-sm btn-clear" style="padding: 10px 18px;">
@@ -605,27 +600,45 @@ $i = 0;
 
                         <!-- Stats Grid -->
                         <div class="stat-grid">
-                            <div class="stat-card s-purple">
+                            <div class="stat-card s-blue">
                                 <div class="stat-icon-wrap"><i class="bx bx-transfer"></i></div>
                                 <div class="stat-label">Total Transactions</div>
                                 <div class="stat-value">{{ number_format($totalTransactionsCount) }}<span class="stat-unit">Transfers</span></div>
-                                <div class="stat-hint">P2P operations for selection</div>
+                                <div class="stat-hint">P2P & system usages combined</div>
                             </div>
                             <div class="stat-card s-gold">
+                                <div class="stat-icon-wrap"><i class="bx bx-group"></i></div>
+                                <div class="stat-label">P2P Volume Transferred</div>
+                                <div class="stat-value">{{ number_format($p2pVolumeSum, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">Customer-to-customer balance transfers</div>
+                            </div>
+                            <div class="stat-card s-purple">
                                 <div class="stat-icon-wrap"><i class="bx bx-purchase-tag-alt"></i></div>
-                                <div class="stat-label">Total Volume Transferred</div>
-                                <div class="stat-value">{{ number_format($totalVolumeSum, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Aggregated transfer credits</div>
+                                <div class="stat-label">System Credit Usages</div>
+                                <div class="stat-value">{{ number_format($systemVolumeSum, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">Staking, Subscriptions, and AutoPoll purchases</div>
                             </div>
                         </div>
 
                         <!-- Filters Panel -->
                         <div class="filter-panel" style="padding: 12px 18px; border-radius: 14px; margin-bottom: 20px;">
-                            <form method="GET" action="/admin/transfers/p2p" id="filterForm">
+                            <form method="GET" action="/admin/transfers/all" id="filterForm">
                                 <input type="hidden" name="customer_id" value="{{ $customerFilterId }}">
                                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
                                     <!-- Left: Filters & Search Inputs -->
                                     <div class="d-flex flex-wrap align-items-center gap-2">
+                                        <!-- Type Filter -->
+                                        <div class="d-flex align-items-center gap-1">
+                                            <span style="font-size: 11px; color: var(--text-muted);">Type:</span>
+                                            <select name="type" class="form-select form-select-sm" style="width: auto; height: 32px; font-size: 11px; padding: 4px 10px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" onchange="this.form.submit()">
+                                                <option value="all" @if($selectedType == 'all') selected @endif>All Transfers</option>
+                                                <option value="p2p" @if($selectedType == 'p2p') selected @endif>P2P Only</option>
+                                                <option value="staking" @if($selectedType == 'staking') selected @endif>Staking Only</option>
+                                                <option value="subscriptions" @if($selectedType == 'subscriptions') selected @endif>Subscriptions Only</option>
+                                                <option value="autopoll" @if($selectedType == 'autopoll') selected @endif>AutoPoll Only</option>
+                                            </select>
+                                        </div>
+
                                         <!-- Date range fields -->
                                         <div class="d-flex align-items-center gap-1">
                                             <span style="font-size: 11px; color: var(--text-muted);">From:</span>
@@ -652,8 +665,8 @@ $i = 0;
                                         <button type="submit" class="btn-search" style="padding: 6px 14px; font-size: 11px; height: 32px; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; box-shadow: none;">
                                             <i class="bx bx-filter-alt"></i> Apply
                                         </button>
-                                        @if(!empty($searchVal) || !empty($fromDate) || !empty($toDate) || $customerFilterId != '')
-                                        <a href="/admin/transfers/p2p" class="btn-clear" style="padding: 6px 12px; font-size: 11px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px;">
+                                        @if(!empty($searchVal) || !empty($fromDate) || !empty($toDate) || $customerFilterId != '' || $selectedType != 'all')
+                                        <a href="/admin/transfers/all" class="btn-clear" style="padding: 6px 12px; font-size: 11px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px;">
                                             <i class="bx bx-x-circle"></i> Clear
                                         </a>
                                         @endif
@@ -668,11 +681,11 @@ $i = 0;
                                 <div class="table-header-left">
                                     <div class="table-header-icon"><i class="bx bx-table"></i></div>
                                     <div>
-                                        <h5>Transfer Records</h5>
-                                        <p>Standard P2P credit balance routing logs</p>
+                                        <h5>Transfers Log List</h5>
+                                        <p>Staking, Subscriptions, AutoPoll, and P2P transfer logs</p>
                                     </div>
                                 </div>
-                                <span class="count-pill">{{ $totalTransactionsCount }} records</span>
+                                <span class="count-pill">{{ $totalTransactionsCount }} records found</span>
                             </div>
 
                             <div class="data-table-scroll">
@@ -680,13 +693,13 @@ $i = 0;
                                     <thead>
                                         <tr>
                                             <th class="cell-num">#</th>
+                                            <th>Sender / Initiator</th>
+                                            <th>Recipient / Destination</th>
+                                            <th>Transfer Type</th>
+                                            <th>Gross Amount</th>
+                                            <th>Admin Fee</th>
+                                            <th>Net Amount</th>
                                             <th>Date & Time</th>
-                                            <th>Sender Customer</th>
-                                            <th>Sender UID</th>
-                                            <th>Recipient Customer</th>
-                                            <th>Recipient UID</th>
-                                            <th>Transferred Amount</th>
-                                            <th>Fee / Charge</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -698,72 +711,110 @@ $i = 0;
                                         @endphp
                                         <tr>
                                             <td class="cell-num">{{ $offset + $i }}</td>
+                                            
+                                            <!-- Sender/Initiator -->
                                             <td>
-                                                <span class="text-muted"><i class="bx bx-calendar-alt me-1"></i>{{ \Carbon\Carbon::parse($item->created_at)->setTimezone('Asia/Dubai')->format('d M, Y') }}</span>
-                                                <br>
-                                                <span style="font-size: 11px; color: rgba(255,255,255,0.45);"><i class="bx bx-time-five me-1"></i>{{ \Carbon\Carbon::parse($item->created_at)->setTimezone('Asia/Dubai')->format('h:i a') }} <span style="font-size:9px;opacity:0.6;">GST</span></span>
-                                            </td>
-                                            <td>
-                                                <div class="member-wrap">
-                                                    @if($item->sender_name)
-                                                        @if($item->sender_img)
-                                                        <img src="{{ $item->sender_img }}" class="mem-avatar" alt="avatar" style="border-color: rgba(255, 159, 67, 0.4) !important;">
-                                                        @else
-                                                        <div class="mem-initial" style="background: linear-gradient(135deg, #ff9f43, #d97706); color: #05060b; font-weight: 700;">{{ $senderInitials }}</div>
-                                                        @endif
-                                                        <a href="/admin/user/{{ $item->fuserid }}" class="mem-link" style="color: #ff9f43 !important;">{{ $item->sender_name }}</a>
-                                                    @else
-                                                        <div class="mem-initial" style="background: linear-gradient(135deg, #d783ff, #a855f7); color: #05060b; font-weight: 700;">S</div>
-                                                        <span style="color: #d783ff !important; font-weight: 600;">System / Admin</span>
-                                                    @endif
+                                                @if(empty($item->fuserid) || empty($item->sender_name))
+                                                <div class="member-info">
+                                                    <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);">A</div>
+                                                    <span style="color: var(--purple); font-weight: 700;">System / Admin</span>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                @if($item->sender_uid)
-                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item->sender_uid }}', this)" title="Click to copy UID" style="color: #ff9f43 !important; border-color: rgba(255, 159, 67, 0.2) !important; background: rgba(255, 159, 67, 0.05) !important;">
-                                                    {{ $item->sender_uid }}
-                                                </span>
                                                 @else
-                                                <span class="mem-uid" onclick="copyToClipboard('SYSTEM', this)" title="System action" style="color: #d783ff !important; border-color: rgba(215, 131, 255, 0.2) !important; background: rgba(215, 131, 255, 0.05) !important;">SYSTEM</span>
+                                                <div class="member-info">
+                                                    @if($item->sender_img)
+                                                    <img src="{{ $item->sender_img }}" class="mem-avatar" alt="avatar">
+                                                    @else
+                                                    <div class="mem-initial" style="color: var(--gold2); border-color: rgba(255, 159, 67, 0.3);">{{ $senderInitials }}</div>
+                                                    @endif
+                                                    <div>
+                                                        <a href="/admin/user/{{ $item->fuserid }}" class="mem-link" style="color: var(--gold2);">{{ $item->sender_name }}</a>
+                                                        <div style="margin-top: 2px;">
+                                                            <span class="mem-uid" onclick="copyToClipboard('{{ $item->sender_uid }}', this)" title="Click to copy UID" style="font-size: 0.65rem; padding: 1px 4px;">{{ $item->sender_uid }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 @endif
                                             </td>
+
+                                            <!-- Recipient/Destination -->
                                             <td>
-                                                <div class="member-wrap">
-                                                    @if($item->receiver_name)
+                                                @if($item->tType == 'transfer')
+                                                    @if(empty($item->tuserid) || empty($item->receiver_name))
+                                                    <div class="member-info">
+                                                        <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);">S</div>
+                                                        <span style="color: var(--purple); font-weight: 700;">SYSTEM</span>
+                                                    </div>
+                                                    @else
+                                                    <div class="member-info">
                                                         @if($item->receiver_img)
-                                                        <img src="{{ $item->receiver_img }}" class="mem-avatar" alt="avatar" style="border-color: rgba(56, 189, 248, 0.4) !important;">
+                                                        <img src="{{ $item->receiver_img }}" class="mem-avatar" alt="avatar">
                                                         @else
-                                                        <div class="mem-initial" style="background: linear-gradient(135deg, #38bdf8, #0284c7); color: #05060b; font-weight: 700;">{{ $receiverInitials }}</div>
+                                                        <div class="mem-initial" style="color: var(--blue); border-color: rgba(56, 189, 248, 0.3);">{{ $receiverInitials }}</div>
                                                         @endif
-                                                        <a href="/admin/user/{{ $item->tuserid }}" class="mem-link" style="color: #38bdf8 !important;">{{ $item->receiver_name }}</a>
-                                                    @else
-                                                        <div class="mem-initial" style="background: linear-gradient(135deg, #d783ff, #a855f7); color: #05060b; font-weight: 700;">S</div>
-                                                        <span style="color: #d783ff !important; font-weight: 600;">System / Admin</span>
+                                                        <div>
+                                                            <a href="/admin/user/{{ $item->tuserid }}" class="mem-link" style="color: var(--blue);">{{ $item->receiver_name }}</a>
+                                                            <div style="margin-top: 2px;">
+                                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item->receiver_uid }}', this)" title="Click to copy UID" style="font-size: 0.65rem; padding: 1px 4px;">{{ $item->receiver_uid }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     @endif
+                                                @elseif($item->tType == 'normal')
+                                                <div class="member-info">
+                                                    <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-purchase-tag-alt"></i></div>
+                                                    <span style="color: var(--purple); font-weight: 700;">Staking Plan (System)</span>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                @if($item->receiver_uid)
-                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item->receiver_uid }}', this)" title="Click to copy UID" style="color: #38bdf8 !important; border-color: rgba(56, 189, 248, 0.2) !important; background: rgba(56, 189, 248, 0.05) !important;">
-                                                    {{ $item->receiver_uid }}
-                                                </span>
-                                                @else
-                                                <span class="mem-uid" onclick="copyToClipboard('SYSTEM', this)" title="System action" style="color: #d783ff !important; border-color: rgba(215, 131, 255, 0.2) !important; background: rgba(215, 131, 255, 0.05) !important;">SYSTEM</span>
+                                                @elseif($item->tType == 'subscribe')
+                                                <div class="member-info">
+                                                    <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-layer"></i></div>
+                                                    <span style="color: var(--purple); font-weight: 700;">Subscription (System)</span>
+                                                </div>
+                                                @elseif($item->tType == 'autopoll')
+                                                <div class="member-info">
+                                                    <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-trending-up"></i></div>
+                                                    <span style="color: var(--purple); font-weight: 700;">AutoPoll Slot (System)</span>
+                                                </div>
                                                 @endif
                                             </td>
+
+                                            <!-- Transfer Type Badge -->
                                             <td>
-                                                <span class="amount-val positive">
-                                                    {{ (float)$item->tAmount == 0 ? '--' : number_format((float)$item->tAmount, 2) . ' USDT' }}
+                                                @if($item->tType == 'transfer')
+                                                <span class="badge-type" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">P2P Transfer</span>
+                                                @elseif($item->tType == 'normal')
+                                                <span class="badge-type" style="background: rgba(0, 255, 135, 0.12); color: #00ff87; border: 1px solid rgba(0, 255, 135, 0.3);">Staking Transfer</span>
+                                                @elseif($item->tType == 'subscribe')
+                                                <span class="badge-type" style="background: rgba(255, 215, 0, 0.12); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3);">Subscription</span>
+                                                @elseif($item->tType == 'autopoll')
+                                                <span class="badge-type" style="background: rgba(215, 131, 255, 0.12); color: #d783ff; border: 1px solid rgba(215, 131, 255, 0.3);">AutoPoll</span>
+                                                @endif
+                                            </td>
+
+                                            <!-- Gross Amount -->
+                                            <td>
+                                                <span style="color: {{ (float)$item->tAmount == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 700;">
+                                                    {{ (float)$item->tAmount == 0 ? '--' : number_format($item->tAmount, 2) }}
                                                 </span>
                                             </td>
+
+                                            <!-- Admin Fee -->
                                             <td>
-                                                @if(!empty($item->fee) && (float)$item->fee != 0)
-                                                <span class="amount-val negative">
-                                                    {{ number_format((float)$item->fee, 2) }} USDT
+                                                <span style="color: {{ (float)$item->fee == 0 ? '#cbd5e1' : '#ff6b6b' }} !important; font-weight: 600;">
+                                                    {{ (float)$item->fee == 0 ? '--' : number_format($item->fee, 2) }}
                                                 </span>
-                                                @else
-                                                <span style="color: var(--text-muted);">--</span>
-                                                @endif
+                                            </td>
+
+                                            <!-- Net Amount -->
+                                            <td>
+                                                @php $netAmount = (float)$item->tAmount - (float)$item->fee; @endphp
+                                                <span style="color: {{ $netAmount == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 700;">
+                                                    {{ $netAmount == 0 ? '--' : number_format($netAmount, 2) }}
+                                                </span>
+                                            </td>
+
+                                            <!-- Date & Time -->
+                                            <td style="font-size: 0.78rem; color: var(--text-muted);">
+                                                {{ $item->created_at }}
                                             </td>
                                         </tr>
                                         @endforeach
@@ -778,85 +829,70 @@ $i = 0;
                                 </table>
                             </div>
 
-                            <!-- Pagination block -->
-                            @if($totalPages > 1)
-                            <div class="pagination-container">
-                                <span class="pagination-info">Showing Page {{ $page }} of {{ $totalPages }}</span>
+                            <!-- Table Footer / Pagination -->
+                            <div class="table-footer">
+                                <div class="pagination-info">
+                                    Showing {{ count($transfersList) }} records (Page {{ $page }} of {{ $totalPages }})
+                                </div>
                                 <div class="d-flex gap-2">
-                                    <a href="/admin/transfers/p2p?page={{ $page - 1 }}&from_date={{ $fromDate }}&to_date={{ $toDate }}&srch={{ $searchVal }}&customer_id={{ $customerFilterId }}" class="pagination-btn @if($page <= 1) disabled @endif">
-                                        &laquo; Prev
+                                    <a href="{{ $page > 1 ? '/admin/transfers/all?' . http_build_query(array_merge($_GET, ['page' => $page - 1])) : '#' }}" 
+                                       class="pg-btn {{ $page <= 1 ? 'disabled' : '' }}">
+                                        Previous
                                     </a>
-                                    <a href="/admin/transfers/p2p?page={{ $page + 1 }}&from_date={{ $fromDate }}&to_date={{ $toDate }}&srch={{ $searchVal }}&customer_id={{ $customerFilterId }}" class="pagination-btn @if($page >= $totalPages) disabled @endif">
-                                        Next &raquo;
+                                    <a href="{{ $page < $totalPages ? '/admin/transfers/all?' . http_build_query(array_merge($_GET, ['page' => $page + 1])) : '#' }}" 
+                                       class="pg-btn {{ $page >= $totalPages ? 'disabled' : '' }}">
+                                        Next
                                     </a>
                                 </div>
                             </div>
-                            @endif
                         </div>
 
                     </div>
-
-                    @include('dashboard.dcards.footer')
-                    <div class="content-backdrop fade"></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Scripts and functions -->
     <script>
-        function copyToClipboard(text, element) {
-            navigator.clipboard.writeText(text).then(function() {
-                var originalText = element.innerText;
-                element.innerText = "Copied!";
-                element.style.color = "#00ff87";
-                setTimeout(function() {
-                    element.innerText = originalText;
-                    element.style.color = "";
-                }, 1200);
-            }, function(err) {
-                console.error('Could not copy text: ', err);
-            });
-        }
-
         function setTodayFilter() {
-            const now = new Date();
-            const todayStr = formatDate(now);
-            document.querySelector('input[name="from_date"]').value = todayStr;
-            document.querySelector('input[name="to_date"]').value = todayStr;
+            const today = new Date().toISOString().substring(0, 10);
+            document.getElementsByName('from_date')[0].value = today;
+            document.getElementsByName('to_date')[0].value = today;
             document.getElementById('filterForm').submit();
         }
 
         function setYesterdayFilter() {
             const yesterday = new Date();
             yesterday.setDate(yesterday.getDate() - 1);
-            const yesterdayStr = formatDate(yesterday);
-            document.querySelector('input[name="from_date"]').value = yesterdayStr;
-            document.querySelector('input[name="to_date"]').value = yesterdayStr;
+            const yesterdayStr = yesterday.toISOString().substring(0, 10);
+            document.getElementsByName('from_date')[0].value = yesterdayStr;
+            document.getElementsByName('to_date')[0].value = yesterdayStr;
             document.getElementById('filterForm').submit();
         }
 
         function setLastWeekFilter() {
-            const now = new Date();
-            const lastWeekStart = new Date();
-            lastWeekStart.setDate(now.getDate() - 7);
-            document.querySelector('input[name="from_date"]').value = formatDate(lastWeekStart);
-            document.querySelector('input[name="to_date"]').value = formatDate(now);
+            const today = new Date();
+            const lastWeek = new Date();
+            lastWeek.setDate(today.getDate() - 7);
+            document.getElementsByName('from_date')[0].value = lastWeek.toISOString().substring(0, 10);
+            document.getElementsByName('to_date')[0].value = today.toISOString().substring(0, 10);
             document.getElementById('filterForm').submit();
         }
 
-        function formatDate(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text).then(function() {
+                const originalText = element.innerText;
+                element.innerText = "COPIED!";
+                element.style.color = "var(--green)";
+                setTimeout(function() {
+                    element.innerText = originalText;
+                    element.style.color = "";
+                }, 1000);
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+            });
         }
     </script>
-
-    <script src="/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/assets/vendor/js/bootstrap.js"></script>
-    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="/assets/vendor/js/menu.js"></script>
-    <script src="/assets/js/main.js"></script>
 </body>
 </html>

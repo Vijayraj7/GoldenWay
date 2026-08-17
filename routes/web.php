@@ -78,6 +78,7 @@ Route::get('/admin/customers/income', 'App\Http\Controllers\AdminDashboard@incom
 Route::get('/admin/income/detailed', 'App\Http\Controllers\AdminDashboard@detailedIncome');
 Route::get('/admin/income/volume-details', 'App\Http\Controllers\AdminDashboard@volumeDetails');
 Route::get('/admin/transfers/p2p', 'App\Http\Controllers\AdminDashboard@p2pTransfers');
+Route::get('/admin/transfers/all', 'App\Http\Controllers\AdminDashboard@allTransfers');
 Route::get('/admin/product/requests/{id}', 'App\Http\Controllers\AdminDashboard@productrequestsview');
 Route::get('/admin/creditadd/requests/{id}', 'App\Http\Controllers\AdminDashboard@creditaddrequestsview');
 Route::get('/admin/withdraw/requests', 'App\Http\Controllers\AdminDashboard@withdrawrequests');
