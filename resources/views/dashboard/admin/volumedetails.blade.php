@@ -754,17 +754,17 @@ $i = 0;
                                             </td>
                                             <td class="c-muted">{{ $item['email'] }}</td>
                                             <td>
-                                                <span class="amount-val positive">
+                                                <span class="amount-val" style="color: {{ $item['volume'] == 0 ? '#ff6b6b' : '#00ff87' }} !important;">
                                                     {{ number_format($item['volume'], 2) }}
                                                 </span>
                                             </td>
                                             <td>
-                                                <span class="amount-val warning">
+                                                <span class="amount-val" style="color: {{ $item['credit'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important;">
                                                     {{ number_format($item['credit'], 2) }}
                                                 </span>
                                             </td>
                                             <td>
-                                                <span class="amount-val" style="color: #38bdf8 !important;">
+                                                <span class="amount-val" style="color: {{ $item['wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important;">
                                                     {{ number_format($item['wallet'], 2) }}
                                                 </span>
                                             </td>
