@@ -797,7 +797,7 @@ $i = 0;
                                             <th colspan="3" class="text-center" style="border-left: 1px solid rgba(56, 189, 248, 0.2); border-right: 1px solid rgba(56, 189, 248, 0.2); color: var(--blue) !important; background: rgba(56, 189, 248, 0.08) !important;">Subscriptions</th>
                                             <th colspan="3" class="text-center" style="border-right: 1px solid rgba(0, 255, 135, 0.2); color: var(--green) !important; background: rgba(0, 255, 135, 0.08) !important;">Staking</th>
                                             <th colspan="3" class="text-center" style="border-right: 1px solid rgba(215, 131, 255, 0.2); color: var(--purple) !important; background: rgba(215, 131, 255, 0.08) !important;">AutoPoll</th>
-                                            <th colspan="3" class="text-center" style="color: var(--gold) !important; background: rgba(255, 215, 0, 0.08) !important;">Total Combined</th>
+                                            <th colspan="3" class="text-center" style="border-left: 1px solid rgba(255, 215, 0, 0.2); color: var(--gold) !important;">Total Combined</th>
                                         </tr>
                                         <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
                                             <th class="text-center" style="border-left: 1px solid rgba(56, 189, 248, 0.2); font-size: 0.65rem; background: rgba(56, 189, 248, 0.08) !important;">Vol</th>
@@ -812,9 +812,9 @@ $i = 0;
                                             <th class="text-center" style="font-size: 0.65rem; background: rgba(215, 131, 255, 0.08) !important;">Credit</th>
                                             <th class="text-center" style="border-right: 1px solid rgba(215, 131, 255, 0.2); font-size: 0.65rem; background: rgba(215, 131, 255, 0.08) !important;">Wallet</th>
                                             
-                                            <th class="text-center" style="font-size: 0.65rem; background: rgba(255, 215, 0, 0.08) !important;">Vol</th>
-                                            <th class="text-center" style="font-size: 0.65rem; background: rgba(255, 215, 0, 0.08) !important;">Credit</th>
-                                            <th class="text-center" style="font-size: 0.65rem; background: rgba(255, 215, 0, 0.08) !important;">Wallet</th>
+                                            <th class="text-center" style="border-left: 1px solid rgba(255, 215, 0, 0.2); font-size: 0.65rem; background: transparent !important;">Vol</th>
+                                            <th class="text-center" style="font-size: 0.65rem; background: transparent !important;">Credit</th>
+                                            <th class="text-center" style="font-size: 0.65rem; background: transparent !important;">Wallet</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -898,17 +898,17 @@ $i = 0;
                                             </td>
                                             
                                             <!-- Combined -->
-                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(255, 215, 0, 0.08) !important;">
+                                            <td class="text-center" style="border-left: 1px solid rgba(255, 215, 0, 0.2); font-size: 0.78rem;">
                                                 <span style="color: {{ $item['comb_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
                                                     {{ $item['comb_vol'] == 0 ? '--' : number_format($item['comb_vol'], 2) }}
                                                 </span>
                                             </td>
-                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(255, 215, 0, 0.08) !important;">
+                                            <td class="text-center" style="font-size: 0.78rem;">
                                                 <span style="color: {{ $item['comb_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
                                                     {{ $item['comb_cred'] == 0 ? '--' : number_format($item['comb_cred'], 2) }}
                                                 </span>
                                             </td>
-                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(255, 215, 0, 0.08) !important;">
+                                            <td class="text-center" style="font-size: 0.78rem;">
                                                 <span style="color: {{ $item['comb_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
                                                     {{ $item['comb_wallet'] == 0 ? '--' : number_format($item['comb_wallet'], 2) }}
                                                 </span>
