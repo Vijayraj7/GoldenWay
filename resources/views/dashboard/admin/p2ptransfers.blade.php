@@ -505,8 +505,8 @@ $i = 0;
 
                         // Base query for P2P transfers
                         $query = DB::table('customer_transfers')
-                            ->join('customers as sender', 'customer_transfers.fuserid', '=', 'sender.id')
-                            ->join('customers as receiver', 'customer_transfers.tuserid', '=', 'receiver.id')
+                            ->leftJoin('customers as sender', 'customer_transfers.fuserid', '=', 'sender.id')
+                            ->leftJoin('customers as receiver', 'customer_transfers.tuserid', '=', 'receiver.id')
                             ->select(
                                 'customer_transfers.*',
                                 'sender.name as sender_name',
@@ -700,33 +700,51 @@ $i = 0;
                                             </td>
                                             <td>
                                                 <div class="member-wrap">
-                                                    @if($item->sender_img)
-                                                    <img src="{{ $item->sender_img }}" class="mem-avatar" alt="avatar">
+                                                    @if($item->sender_name)
+                                                        @if($item->sender_img)
+                                                        <img src="{{ $item->sender_img }}" class="mem-avatar" alt="avatar">
+                                                        @else
+                                                        <div class="mem-initial">{{ $senderInitials }}</div>
+                                                        @endif
+                                                        <a href="/admin/user/{{ $item->fuserid }}" class="mem-link">{{ $item->sender_name }}</a>
                                                     @else
-                                                    <div class="mem-initial">{{ $senderInitials }}</div>
+                                                        <div class="mem-initial">S</div>
+                                                        <span style="color: var(--text-muted);">System / Admin</span>
                                                     @endif
-                                                    <a href="/admin/user/{{ $item->fuserid }}" class="mem-link">{{ $item->sender_name }}</a>
                                                 </div>
                                             </td>
                                             <td>
+                                                @if($item->sender_uid)
                                                 <span class="mem-uid" onclick="copyToClipboard('{{ $item->sender_uid }}', this)" title="Click to copy UID">
                                                     {{ $item->sender_uid }}
                                                 </span>
+                                                @else
+                                                <span style="color: var(--text-muted);">SYSTEM</span>
+                                                @endif
                                             </td>
                                             <td>
                                                 <div class="member-wrap">
-                                                    @if($item->receiver_img)
-                                                    <img src="{{ $item->receiver_img }}" class="mem-avatar" alt="avatar">
+                                                    @if($item->receiver_name)
+                                                        @if($item->receiver_img)
+                                                        <img src="{{ $item->receiver_img }}" class="mem-avatar" alt="avatar">
+                                                        @else
+                                                        <div class="mem-initial">{{ $receiverInitials }}</div>
+                                                        @endif
+                                                        <a href="/admin/user/{{ $item->tuserid }}" class="mem-link">{{ $item->receiver_name }}</a>
                                                     @else
-                                                    <div class="mem-initial">{{ $receiverInitials }}</div>
+                                                        <div class="mem-initial">S</div>
+                                                        <span style="color: var(--text-muted);">System / Admin</span>
                                                     @endif
-                                                    <a href="/admin/user/{{ $item->tuserid }}" class="mem-link">{{ $item->receiver_name }}</a>
                                                 </div>
                                             </td>
                                             <td>
+                                                @if($item->receiver_uid)
                                                 <span class="mem-uid" onclick="copyToClipboard('{{ $item->receiver_uid }}', this)" title="Click to copy UID">
                                                     {{ $item->receiver_uid }}
                                                 </span>
+                                                @else
+                                                <span style="color: var(--text-muted);">SYSTEM</span>
+                                                @endif
                                             </td>
                                             <td>
                                                 <span class="amount-val positive">
