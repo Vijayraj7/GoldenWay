@@ -699,53 +699,51 @@ $i = 0;
                         </div>
 
                         <!-- Filters Panel -->
-                        <div class="filter-panel">
+                        <div class="filter-panel" style="padding: 12px 18px; border-radius: 14px; margin-bottom: 20px;">
                             <form method="GET" action="/admin/income/volume-details" id="filterForm">
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-12 col-md-3">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span style="font-size: 12px; color: var(--text-sub); min-width: 40px;">Type:</span>
-                                            <select name="type" class="form-select" onchange="this.form.submit()">
+                                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                                    <!-- Left: Filters & Search Inputs -->
+                                    <div class="d-flex flex-wrap align-items-center gap-2">
+                                        <!-- Type selection -->
+                                        <div class="d-flex align-items-center gap-1">
+                                            <span style="font-size: 11px; color: var(--text-muted);">Type:</span>
+                                            <select name="type" class="form-select form-select-sm" style="width: auto; height: 32px; font-size: 11px; padding: 4px 10px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" onchange="this.form.submit()">
                                                 <option value="all" @if($selectedType == 'all') selected @endif>All Combined</option>
-                                                <option value="subscriptions" @if($selectedType == 'subscriptions') selected @endif>Subscriptions Only</option>
-                                                <option value="staking" @if($selectedType == 'staking') selected @endif>Staking Only</option>
-                                                <option value="autopoll" @if($selectedType == 'autopoll') selected @endif>AutoPoll Only</option>
+                                                <option value="subscriptions" @if($selectedType == 'subscriptions') selected @endif>Subscriptions</option>
+                                                <option value="staking" @if($selectedType == 'staking') selected @endif>Staking</option>
+                                                <option value="autopoll" @if($selectedType == 'autopoll') selected @endif>AutoPoll</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-md-3">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span style="font-size: 12px; color: var(--text-sub); min-width: 40px;">From:</span>
-                                            <input type="date" name="from_date" class="form-control" value="{{ substr($fromDate, 0, 10) }}">
+
+                                        <!-- Date range fields -->
+                                        <div class="d-flex align-items-center gap-1">
+                                            <span style="font-size: 11px; color: var(--text-muted);">From:</span>
+                                            <input type="date" name="from_date" class="form-control form-control-sm" style="width: 120px; height: 32px; font-size: 11px; padding: 4px 8px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" value="{{ substr($fromDate, 0, 10) }}">
+                                            <span style="font-size: 11px; color: var(--text-muted);">To:</span>
+                                            <input type="date" name="to_date" class="form-control form-control-sm" style="width: 120px; height: 32px; font-size: 11px; padding: 4px 8px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" value="{{ $toDate }}">
+                                        </div>
+
+                                        <!-- Date shortcuts group -->
+                                        <div style="display: inline-flex; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; padding: 2px;">
+                                            <button type="button" onclick="setTodayFilter()" class="btn-clear" style="padding: 4px 10px; font-size: 10px; height: 26px; border: none; border-radius: 6px; background: transparent;">Today</button>
+                                            <button type="button" onclick="setYesterdayFilter()" class="btn-clear" style="padding: 4px 10px; font-size: 10px; height: 26px; border: none; border-radius: 6px; background: transparent;">Yesterday</button>
+                                            <button type="button" onclick="setLastWeekFilter()" class="btn-clear" style="padding: 4px 10px; font-size: 10px; height: 26px; border: none; border-radius: 6px; background: transparent;">Last Week</button>
+                                        </div>
+
+                                        <!-- Search field -->
+                                        <div style="position: relative;">
+                                            <input type="text" name="srch" class="form-control form-control-sm" style="width: 160px; height: 32px; font-size: 11px; padding: 4px 10px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" placeholder="Search user/UID..." value="{{ $searchVal }}">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-3">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span style="font-size: 12px; color: var(--text-sub); min-width: 30px;">To:</span>
-                                            <input type="date" name="to_date" class="form-control" value="{{ $toDate }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-3">
-                                        <input type="text" name="srch" class="form-control" placeholder="Search customer name or UID..." value="{{ $searchVal }}">
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-2 align-items-center justify-content-end">
-                                    <div class="col-auto d-flex gap-2 flex-wrap">
-                                        <button type="button" onclick="setTodayFilter()" class="btn-clear" style="padding: 10px 18px;">
-                                            Today
-                                        </button>
-                                        <button type="button" onclick="setYesterdayFilter()" class="btn-clear" style="padding: 10px 18px;">
-                                            Yesterday
-                                        </button>
-                                        <button type="button" onclick="setLastWeekFilter()" class="btn-clear" style="padding: 10px 18px;">
-                                            Last Week
-                                        </button>
-                                        <button type="submit" class="btn-search" style="padding: 10px 24px;">
-                                            <i class="bx bx-filter-alt"></i> Apply Filters
+
+                                    <!-- Right: Action buttons -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button type="submit" class="btn-search" style="padding: 6px 14px; font-size: 11px; height: 32px; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; box-shadow: none;">
+                                            <i class="bx bx-filter-alt"></i> Apply
                                         </button>
                                         @if(!empty($searchVal) || $fromDate != '2026-06-11 23:00:00' || !empty($toDate))
-                                        <a href="/admin/income/volume-details?type={{ $selectedType }}" class="btn-clear" style="padding: 10px 18px;">
-                                            <i class="bx bx-x-circle"></i> Clear Filters
+                                        <a href="/admin/income/volume-details?type={{ $selectedType }}" class="btn-clear" style="padding: 6px 12px; font-size: 11px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px;">
+                                            <i class="bx bx-x-circle"></i> Clear
                                         </a>
                                         @endif
                                     </div>

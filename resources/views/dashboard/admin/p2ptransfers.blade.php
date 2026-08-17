@@ -490,7 +490,7 @@ $i = 0;
                 @include('dashboard.dcards.nav')
 
                 <div class="content-wrapper">
-                    @include('dashboard.dcards.wallet', ['snd' => false, 'adminwlt' => true])
+                    {{-- @include('dashboard.dcards.wallet', ['snd' => false, 'adminwlt' => true]) --}}
 
                     <div class="container-xxl flex-grow-1 container-p-y">
 
@@ -613,43 +613,41 @@ $i = 0;
                         </div>
 
                         <!-- Filters Panel -->
-                        <div class="filter-panel">
+                        <div class="filter-panel" style="padding: 12px 18px; border-radius: 14px; margin-bottom: 20px;">
                             <form method="GET" action="/admin/transfers/p2p" id="filterForm">
                                 <input type="hidden" name="customer_id" value="{{ $customerFilterId }}">
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-12 col-md-3">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span style="font-size: 12px; color: var(--text-sub); min-width: 40px;">From:</span>
-                                            <input type="date" name="from_date" class="form-control" value="{{ $fromDate }}">
+                                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                                    <!-- Left: Filters & Search Inputs -->
+                                    <div class="d-flex flex-wrap align-items-center gap-2">
+                                        <!-- Date range fields -->
+                                        <div class="d-flex align-items-center gap-1">
+                                            <span style="font-size: 11px; color: var(--text-muted);">From:</span>
+                                            <input type="date" name="from_date" class="form-control form-control-sm" style="width: 120px; height: 32px; font-size: 11px; padding: 4px 8px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" value="{{ $fromDate }}">
+                                            <span style="font-size: 11px; color: var(--text-muted);">To:</span>
+                                            <input type="date" name="to_date" class="form-control form-control-sm" style="width: 120px; height: 32px; font-size: 11px; padding: 4px 8px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" value="{{ $toDate }}">
+                                        </div>
+
+                                        <!-- Date shortcuts group -->
+                                        <div style="display: inline-flex; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; padding: 2px;">
+                                            <button type="button" onclick="setTodayFilter()" class="btn-clear" style="padding: 4px 10px; font-size: 10px; height: 26px; border: none; border-radius: 6px; background: transparent;">Today</button>
+                                            <button type="button" onclick="setYesterdayFilter()" class="btn-clear" style="padding: 4px 10px; font-size: 10px; height: 26px; border: none; border-radius: 6px; background: transparent;">Yesterday</button>
+                                            <button type="button" onclick="setLastWeekFilter()" class="btn-clear" style="padding: 4px 10px; font-size: 10px; height: 26px; border: none; border-radius: 6px; background: transparent;">Last Week</button>
+                                        </div>
+
+                                        <!-- Search field -->
+                                        <div style="position: relative;">
+                                            <input type="text" name="srch" class="form-control form-control-sm" style="width: 200px; height: 32px; font-size: 11px; padding: 4px 10px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" placeholder="Search sender or recipient..." value="{{ $searchVal }}">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-3">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <span style="font-size: 12px; color: var(--text-sub); min-width: 30px;">To:</span>
-                                            <input type="date" name="to_date" class="form-control" value="{{ $toDate }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4">
-                                        <input type="text" name="srch" class="form-control" placeholder="Search sender or recipient..." value="{{ $searchVal }}">
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-2 align-items-center justify-content-end">
-                                    <div class="col-auto d-flex gap-2 flex-wrap">
-                                        <button type="button" onclick="setTodayFilter()" class="btn-clear" style="padding: 10px 18px;">
-                                            Today
-                                        </button>
-                                        <button type="button" onclick="setYesterdayFilter()" class="btn-clear" style="padding: 10px 18px;">
-                                            Yesterday
-                                        </button>
-                                        <button type="button" onclick="setLastWeekFilter()" class="btn-clear" style="padding: 10px 18px;">
-                                            Last Week
-                                        </button>
-                                        <button type="submit" class="btn-search" style="padding: 10px 24px;">
-                                            <i class="bx bx-filter-alt"></i> Apply Filters
+
+                                    <!-- Right: Action buttons -->
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button type="submit" class="btn-search" style="padding: 6px 14px; font-size: 11px; height: 32px; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; box-shadow: none;">
+                                            <i class="bx bx-filter-alt"></i> Apply
                                         </button>
                                         @if(!empty($searchVal) || !empty($fromDate) || !empty($toDate) || $customerFilterId != '')
-                                        <a href="/admin/transfers/p2p" class="btn-clear" style="padding: 10px 18px;">
-                                            <i class="bx bx-x-circle"></i> Clear Filters
+                                        <a href="/admin/transfers/p2p" class="btn-clear" style="padding: 6px 12px; font-size: 11px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px;">
+                                            <i class="bx bx-x-circle"></i> Clear
                                         </a>
                                         @endif
                                     </div>
