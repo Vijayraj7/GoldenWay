@@ -689,7 +689,16 @@ $i = 0;
                                     </div>
                                 </div>
                                 <div class="row g-3 mt-2 align-items-center justify-content-end">
-                                    <div class="col-auto d-flex gap-2">
+                                    <div class="col-auto d-flex gap-2 flex-wrap">
+                                        <button type="button" onclick="setTodayFilter()" class="btn-clear" style="padding: 10px 18px;">
+                                            Today
+                                        </button>
+                                        <button type="button" onclick="setYesterdayFilter()" class="btn-clear" style="padding: 10px 18px;">
+                                            Yesterday
+                                        </button>
+                                        <button type="button" onclick="setLastWeekFilter()" class="btn-clear" style="padding: 10px 18px;">
+                                            Last Week
+                                        </button>
                                         <button type="submit" class="btn-search" style="padding: 10px 24px;">
                                             <i class="bx bx-filter-alt"></i> Apply Filters
                                         </button>
@@ -804,6 +813,42 @@ $i = 0;
             }, function(err) {
                 console.error('Could not copy text: ', err);
             });
+        }
+
+        function setTodayFilter() {
+            const now = new Date();
+            const todayStr = formatDate(now);
+            
+            document.querySelector('input[name="from_date"]').value = todayStr;
+            document.querySelector('input[name="to_date"]').value = todayStr;
+            document.getElementById('filterForm').submit();
+        }
+
+        function setYesterdayFilter() {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = formatDate(yesterday);
+            
+            document.querySelector('input[name="from_date"]').value = yesterdayStr;
+            document.querySelector('input[name="to_date"]').value = yesterdayStr;
+            document.getElementById('filterForm').submit();
+        }
+
+        function setLastWeekFilter() {
+            const now = new Date();
+            const lastWeekStart = new Date();
+            lastWeekStart.setDate(now.getDate() - 7);
+            
+            document.querySelector('input[name="from_date"]').value = formatDate(lastWeekStart);
+            document.querySelector('input[name="to_date"]').value = formatDate(now);
+            document.getElementById('filterForm').submit();
+        }
+
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
     </script>
 
