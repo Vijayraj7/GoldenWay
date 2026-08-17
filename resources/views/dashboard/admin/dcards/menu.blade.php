@@ -41,7 +41,19 @@
         <li class="menu-item @if($r == 'volumedetails') active @endif">
             <a href="/admin/income/volume-details" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-bar-chart-alt-2"></i>
-                <div data-i18n="VolumeDetails">Volume Breakdown</div>
+                <div data-i18n="VolumeDetails">All Transfers</div>
+            </a>
+        </li>
+        <li class="menu-item @if($r == 'p2ptransfers') active @endif">
+            <a href="/admin/transfers/p2p" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div data-i18n="Basic">P2P Transfers History</div>
+            </a>
+        </li>
+        <li class="menu-item @if($r == 'alltransfers') active @endif">
+            <a href="/admin/transfers/all" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Usage Transfers History</div>
             </a>
         </li>
         <li class="menu-item @if($r == 'detailedincome') active @endif">
@@ -140,24 +152,12 @@
                 <div data-i18n="Basic">Credit History</div>
             </a>
         </li>
-        <li class="menu-item @if($r == 'credittransactions') active @endif">
+        {{-- <li class="menu-item @if($r == 'credittransactions') active @endif">
             <a href="/admin/transactions/all?typ=trnsfr" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer-alt"></i>
                 <div data-i18n="Basic">Transfer Credit History</div>
             </a>
-        </li>
-        <li class="menu-item @if($r == 'p2ptransfers') active @endif">
-            <a href="/admin/transfers/p2p" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-group"></i>
-                <div data-i18n="Basic">P2P Transfers History</div>
-            </a>
-        </li>
-        <li class="menu-item @if($r == 'alltransfers') active @endif">
-            <a href="/admin/transfers/all" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">All Transfers History</div>
-            </a>
-        </li>
+        </li> --}}
         <li class="menu-item @if($r == 'adminautopoolhistory') active @endif">
             <a href="/admin/autopool/history" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-trending-up"></i>
