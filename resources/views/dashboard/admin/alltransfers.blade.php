@@ -473,7 +473,7 @@ $i = 0;
 
                         // Base query for all types of transfers
                         $query = DB::table('customer_transfers')
-                            ->leftJoin('customers as sender', 'customer_transfers.fuserid', '=', 'sender.id')
+                            ->leftJoin('customers as sender', 'customer_transfers.csId', '=', 'sender.id')
                             ->leftJoin('customers as receiver', 'customer_transfers.tuserid', '=', 'receiver.id')
                             ->select(
                                 'customer_transfers.*',
@@ -501,7 +501,7 @@ $i = 0;
 
                         // Filter by specific customer (sender)
                         if ($customerFilterId != '') {
-                            $query->where('customer_transfers.fuserid', $customerFilterId);
+                            $query->where('customer_transfers.csId', $customerFilterId);
                         }
 
                         // Filter by search keyword
@@ -528,19 +528,19 @@ $i = 0;
                         $stakingVolumeSum = $allFilteredTransfers->filter(function($item) {
                             return $item->tType == 'normal';
                         })->sum(function($item) {
-                            return (float)$item->tAmount;
+                            return abs((float)$item->tAmount);
                         });
 
                         $subsVolumeSum = $allFilteredTransfers->filter(function($item) {
                             return $item->tType == 'subscribe';
                         })->sum(function($item) {
-                            return (float)$item->tAmount;
+                            return abs((float)$item->tAmount);
                         });
 
                         $autopollVolumeSum = $allFilteredTransfers->filter(function($item) {
                             return $item->tType == 'autopoll';
                         })->sum(function($item) {
-                            return (float)$item->tAmount;
+                            return abs((float)$item->tAmount);
                         });
 
                         // Pagination setup
@@ -707,7 +707,7 @@ $i = 0;
                                             
                                             <!-- Customer Name -->
                                             <td>
-                                                @if(empty($item->fuserid) || empty($item->sender_name))
+                                                @if(empty($item->csId) || empty($item->sender_name))
                                                 <div class="member-info">
                                                     <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);">A</div>
                                                     <span style="color: var(--purple); font-weight: 700;">System / Admin</span>
@@ -719,14 +719,14 @@ $i = 0;
                                                     @else
                                                     <div class="mem-initial" style="color: var(--gold2); border-color: rgba(255, 159, 67, 0.3);">{{ $senderInitials }}</div>
                                                     @endif
-                                                    <a href="/admin/user/{{ $item->fuserid }}" class="mem-link" style="color: var(--gold2);">{{ $item->sender_name }}</a>
+                                                    <a href="/admin/user/{{ $item->csId }}" class="mem-link" style="color: var(--gold2);">{{ $item->sender_name }}</a>
                                                 </div>
                                                 @endif
                                             </td>
 
                                             <!-- Customer ID (UID) -->
                                             <td>
-                                                @if(!empty($item->fuserid) && !empty($item->sender_uid))
+                                                @if(!empty($item->csId) && !empty($item->sender_uid))
                                                 <span class="mem-uid" onclick="copyToClipboard('{{ $item->sender_uid }}', this)" title="Click to copy UID" style="font-size: 0.72rem; padding: 4px 8px; font-weight: 700;">
                                                     {{ $item->sender_uid }}
                                                 </span>
@@ -751,20 +751,20 @@ $i = 0;
                                             <!-- Gross Amount -->
                                             <td>
                                                 <span style="color: {{ (float)$item->tAmount == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 700;">
-                                                    {{ (float)$item->tAmount == 0 ? '--' : number_format($item->tAmount, 2) }}
+                                                    {{ (float)$item->tAmount == 0 ? '--' : number_format(abs($item->tAmount), 2) }}
                                                 </span>
                                             </td>
 
                                             <!-- Admin Fee -->
                                             <td>
                                                 <span style="color: {{ (float)$item->fee == 0 ? '#cbd5e1' : '#ff6b6b' }} !important; font-weight: 600;">
-                                                    {{ (float)$item->fee == 0 ? '--' : number_format($item->fee, 2) }}
+                                                    {{ (float)$item->fee == 0 ? '--' : number_format(abs($item->fee), 2) }}
                                                 </span>
                                             </td>
 
                                             <!-- Net Amount -->
                                             <td>
-                                                @php $netAmount = (float)$item->tAmount - (float)$item->fee; @endphp
+                                                @php $netAmount = abs((float)$item->tAmount) - abs((float)$item->fee); @endphp
                                                 <span style="color: {{ $netAmount == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 700;">
                                                     {{ $netAmount == 0 ? '--' : number_format($netAmount, 2) }}
                                                 </span>
