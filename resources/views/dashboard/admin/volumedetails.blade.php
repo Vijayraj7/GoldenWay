@@ -841,9 +841,13 @@ $i = 0;
                                                 </span>
                                             </td>
                                             <td class="text-center">
+                                                @if($item['comb_cred'] > 0)
                                                 <a href="/admin/transfers/p2p?customer_id={{ $item['id'] }}" class="btn-p2p">
                                                     <i class="bx bx-transfer"></i> P2P
                                                 </a>
+                                                @else
+                                                <span style="color: var(--text-muted); font-size: 11px;">--</span>
+                                                @endif
                                             </td>
                                             
                                             <!-- Subscriptions -->
