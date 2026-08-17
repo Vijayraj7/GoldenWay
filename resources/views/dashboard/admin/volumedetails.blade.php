@@ -259,6 +259,28 @@ $i = 0;
             color: var(--text-main);
         }
 
+        .btn-p2p {
+            padding: 4px 10px;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(215, 131, 255, 0.12) !important;
+            border: 1px solid rgba(215, 131, 255, 0.4) !important;
+            color: #d783ff !important;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-p2p:hover {
+            background: #d783ff !important;
+            color: #05060b !important;
+            box-shadow: 0 0 10px rgba(215, 131, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
         .table-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -819,74 +841,74 @@ $i = 0;
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <a href="/admin/transfers/p2p?customer_id={{ $item['id'] }}" class="btn btn-sm btn-clear" style="padding: 4px 8px; font-size: 10px; font-weight: 700; border-radius: 6px; display: inline-flex; align-items: center; gap: 3px;">
+                                                <a href="/admin/transfers/p2p?customer_id={{ $item['id'] }}" class="btn-p2p">
                                                     <i class="bx bx-transfer"></i> P2P
                                                 </a>
                                             </td>
                                             
                                             <!-- Subscriptions -->
-                                            <td class="text-center" style="border-left: 1px solid var(--border); font-size: 0.78rem;">
+                                            <td class="text-center" style="border-left: 1px solid var(--border); font-size: 0.78rem; background: rgba(56, 189, 248, 0.02) !important;">
                                                 <span style="color: {{ $item['sub_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
                                                     {{ $item['sub_vol'] == 0 ? '--' : number_format($item['sub_vol'], 2) }}
                                                 </span>
                                             </td>
-                                            <td class="text-center" style="font-size: 0.78rem;">
+                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(56, 189, 248, 0.02) !important;">
                                                 <span style="color: {{ $item['sub_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
                                                     {{ $item['sub_cred'] == 0 ? '--' : number_format($item['sub_cred'], 2) }}
                                                 </span>
                                             </td>
-                                            <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem;">
+                                            <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem; background: rgba(56, 189, 248, 0.02) !important;">
                                                 <span style="color: {{ $item['sub_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
                                                     {{ $item['sub_wallet'] == 0 ? '--' : number_format($item['sub_wallet'], 2) }}
                                                 </span>
                                             </td>
                                             
                                             <!-- Staking -->
-                                            <td class="text-center" style="font-size: 0.78rem;">
+                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(0, 255, 135, 0.02) !important;">
                                                 <span style="color: {{ $item['stake_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
                                                     {{ $item['stake_vol'] == 0 ? '--' : number_format($item['stake_vol'], 2) }}
                                                 </span>
                                             </td>
-                                            <td class="text-center" style="font-size: 0.78rem;">
+                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(0, 255, 135, 0.02) !important;">
                                                 <span style="color: {{ $item['stake_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
                                                     {{ $item['stake_cred'] == 0 ? '--' : number_format($item['stake_cred'], 2) }}
                                                 </span>
                                             </td>
-                                            <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem;">
+                                            <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem; background: rgba(0, 255, 135, 0.02) !important;">
                                                 <span style="color: {{ $item['stake_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
                                                     {{ $item['stake_wallet'] == 0 ? '--' : number_format($item['stake_wallet'], 2) }}
                                                 </span>
                                             </td>
                                             
                                             <!-- AutoPoll -->
-                                            <td class="text-center" style="font-size: 0.78rem;">
+                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(215, 131, 255, 0.02) !important;">
                                                 <span style="color: {{ $item['poll_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
                                                     {{ $item['poll_vol'] == 0 ? '--' : number_format($item['poll_vol'], 2) }}
                                                 </span>
                                             </td>
-                                            <td class="text-center" style="font-size: 0.78rem;">
+                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(215, 131, 255, 0.02) !important;">
                                                 <span style="color: {{ $item['poll_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
                                                     {{ $item['poll_cred'] == 0 ? '--' : number_format($item['poll_cred'], 2) }}
                                                 </span>
                                             </td>
-                                            <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem;">
+                                            <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem; background: rgba(215, 131, 255, 0.02) !important;">
                                                 <span style="color: {{ $item['poll_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
                                                     {{ $item['poll_wallet'] == 0 ? '--' : number_format($item['poll_wallet'], 2) }}
                                                 </span>
                                             </td>
                                             
                                             <!-- Combined -->
-                                            <td class="text-center" style="font-size: 0.78rem;">
+                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(255, 215, 0, 0.025) !important;">
                                                 <span style="color: {{ $item['comb_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
                                                     {{ $item['comb_vol'] == 0 ? '--' : number_format($item['comb_vol'], 2) }}
                                                 </span>
                                             </td>
-                                            <td class="text-center" style="font-size: 0.78rem;">
+                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(255, 215, 0, 0.025) !important;">
                                                 <span style="color: {{ $item['comb_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
                                                     {{ $item['comb_cred'] == 0 ? '--' : number_format($item['comb_cred'], 2) }}
                                                 </span>
                                             </td>
-                                            <td class="text-center" style="font-size: 0.78rem;">
+                                            <td class="text-center" style="font-size: 0.78rem; background: rgba(255, 215, 0, 0.025) !important;">
                                                 <span style="color: {{ $item['comb_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
                                                     {{ $item['comb_wallet'] == 0 ? '--' : number_format($item['comb_wallet'], 2) }}
                                                 </span>
