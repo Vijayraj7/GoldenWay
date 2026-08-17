@@ -576,40 +576,81 @@ $i = 0;
                         foreach ($customers as $c) {
                             if ($c->email === 'forvcom000@gmail.com') continue;
 
-                            $vol = 0;
-                            $cred = 0;
+                            $subVol = (float)($subsGroup[$c->id] ?? 0);
+                            $subCred = (float)($subsTransGroup[$c->id] ?? 0);
+                            $subWallet = $subVol - $subCred;
 
+                            $stakeVol = (float)($plansGroup[$c->id] ?? 0);
+                            $stakeCred = (float)($stakedTransGroup[$c->id] ?? 0);
+                            $stakeWallet = $stakeVol - $stakeCred;
+
+                            $pollVol = (float)($pollsGroup[$c->id] ?? 0);
+                            $pollCred = (float)($autopollTransGroup[$c->id] ?? 0);
+                            $pollWallet = $pollVol - $pollCred;
+
+                            $combVol = $subVol + $stakeVol + $pollVol;
+                            $combCred = $subCred + $stakeCred + $pollCred;
+                            $combWallet = $combVol - $combCred;
+
+                            // Determine row visibility
+                            $isVisible = false;
                             if ($selectedType == 'subscriptions') {
-                                $vol = (float)($subsGroup[$c->id] ?? 0);
-                                $cred = (float)($subsTransGroup[$c->id] ?? 0);
+                                if ($subVol > 0 || $subCred > 0) $isVisible = true;
                             } elseif ($selectedType == 'staking') {
-                                $vol = (float)($plansGroup[$c->id] ?? 0);
-                                $cred = (float)($stakedTransGroup[$c->id] ?? 0);
+                                if ($stakeVol > 0 || $stakeCred > 0) $isVisible = true;
                             } elseif ($selectedType == 'autopoll') {
-                                $vol = (float)($pollsGroup[$c->id] ?? 0);
-                                $cred = (float)($autopollTransGroup[$c->id] ?? 0);
+                                if ($pollVol > 0 || $pollCred > 0) $isVisible = true;
                             } else { // 'all'
-                                $vol = (float)($subsGroup[$c->id] ?? 0) + (float)($plansGroup[$c->id] ?? 0) + (float)($pollsGroup[$c->id] ?? 0);
-                                $cred = (float)($subsTransGroup[$c->id] ?? 0) + (float)($stakedTransGroup[$c->id] ?? 0) + (float)($autopollTransGroup[$c->id] ?? 0);
+                                if ($combVol > 0 || $combCred > 0) $isVisible = true;
                             }
 
-                            $wallet = $vol - $cred;
+                            if (!empty($searchVal)) {
+                                $isVisible = true;
+                            }
 
-                            if ($vol > 0 || $cred > 0 || !empty($searchVal)) {
+                            if ($isVisible) {
                                 $breakdownList[] = [
                                     'id' => $c->id,
                                     'name' => $c->name,
                                     'uid' => $c->uid,
                                     'email' => $c->email,
                                     'img' => $c->img,
-                                    'volume' => $vol,
-                                    'credit' => $cred,
-                                    'wallet' => $wallet
+                                    
+                                    'sub_vol' => $subVol,
+                                    'sub_cred' => $subCred,
+                                    'sub_wallet' => $subWallet,
+
+                                    'stake_vol' => $stakeVol,
+                                    'stake_cred' => $stakeCred,
+                                    'stake_wallet' => $stakeWallet,
+
+                                    'poll_vol' => $pollVol,
+                                    'poll_cred' => $pollCred,
+                                    'poll_wallet' => $pollWallet,
+
+                                    'comb_vol' => $combVol,
+                                    'comb_cred' => $combCred,
+                                    'comb_wallet' => $combWallet
                                 ];
 
-                                $totalVolumeSum += $vol;
-                                $totalCreditSum += $cred;
-                                $totalWalletSum += $wallet;
+                                // Global summary stats
+                                if ($selectedType == 'subscriptions') {
+                                    $totalVolumeSum += $subVol;
+                                    $totalCreditSum += $subCred;
+                                    $totalWalletSum += $subWallet;
+                                } elseif ($selectedType == 'staking') {
+                                    $totalVolumeSum += $stakeVol;
+                                    $totalCreditSum += $stakeCred;
+                                    $totalWalletSum += $stakeWallet;
+                                } elseif ($selectedType == 'autopoll') {
+                                    $totalVolumeSum += $pollVol;
+                                    $totalCreditSum += $pollCred;
+                                    $totalWalletSum += $pollWallet;
+                                } else { // 'all'
+                                    $totalVolumeSum += $combVol;
+                                    $totalCreditSum += $combCred;
+                                    $totalWalletSum += $combWallet;
+                                }
                             }
                         }
                         $totalCount = count($breakdownList);
@@ -728,14 +769,32 @@ $i = 0;
                             <div class="data-table-scroll">
                                 <table class="data-table">
                                     <thead>
-                                        <tr>
-                                            <th class="cell-num">#</th>
-                                            <th>Customer Name</th>
-                                            <th>User ID</th>
-                                            <th>Email</th>
-                                            <th>Total Volume (USDT)</th>
-                                            <th>Transfer Credit Used (USDT)</th>
-                                            <th>Wallet Used (USDT)</th>
+                                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+                                            <th rowspan="2" class="cell-num" style="vertical-align: middle;">#</th>
+                                            <th rowspan="2" style="vertical-align: middle;">Customer Name</th>
+                                            <th rowspan="2" style="vertical-align: middle;">User ID</th>
+                                            <th rowspan="2" style="vertical-align: middle; text-align: center;">Actions</th>
+                                            <th colspan="3" class="text-center" style="border-left: 1px solid var(--border); border-right: 1px solid var(--border); color: var(--blue) !important; background: rgba(56, 189, 248, 0.02);">Subscriptions</th>
+                                            <th colspan="3" class="text-center" style="border-right: 1px solid var(--border); color: var(--green) !important; background: rgba(0, 255, 135, 0.02);">Staking</th>
+                                            <th colspan="3" class="text-center" style="border-right: 1px solid var(--border); color: var(--purple) !important; background: rgba(215, 131, 255, 0.02);">AutoPoll</th>
+                                            <th colspan="3" class="text-center" style="color: var(--gold) !important; background: rgba(255, 215, 0, 0.02);">Total Combined</th>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+                                            <th class="text-center" style="border-left: 1px solid var(--border); font-size: 0.65rem;">Vol</th>
+                                            <th class="text-center" style="font-size: 0.65rem;">Credit</th>
+                                            <th class="text-center" style="border-right: 1px solid var(--border); font-size: 0.65rem;">Wallet</th>
+                                            
+                                            <th class="text-center" style="font-size: 0.65rem;">Vol</th>
+                                            <th class="text-center" style="font-size: 0.65rem;">Credit</th>
+                                            <th class="text-center" style="border-right: 1px solid var(--border); font-size: 0.65rem;">Wallet</th>
+                                            
+                                            <th class="text-center" style="font-size: 0.65rem;">Vol</th>
+                                            <th class="text-center" style="font-size: 0.65rem;">Credit</th>
+                                            <th class="text-center" style="border-right: 1px solid var(--border); font-size: 0.65rem;">Wallet</th>
+                                            
+                                            <th class="text-center" style="font-size: 0.65rem;">Vol</th>
+                                            <th class="text-center" style="font-size: 0.65rem;">Credit</th>
+                                            <th class="text-center" style="font-size: 0.65rem;">Wallet</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -753,35 +812,92 @@ $i = 0;
                                                     @else
                                                     <div class="mem-initial">{{ $initials }}</div>
                                                     @endif
-                                                    <a href="/admin/user/{{ $item['id'] }}" class="mem-link">{{ $item['name'] }}</a>
+                                                    <a href="/admin/user/{{ $item['id'] }}" class="mem-link" style="font-size: 0.8rem;">{{ $item['name'] }}</a>
                                                 </div>
                                             </td>
                                             <td>
-                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item['uid'] }}', this)" title="Click to copy UID">
+                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item['uid'] }}', this)" title="Click to copy UID" style="font-size: 0.7rem; padding: 2px 4px;">
                                                     {{ $item['uid'] }}
                                                 </span>
                                             </td>
-                                            <td class="c-muted">{{ $item['email'] }}</td>
-                                            <td>
-                                                <span class="amount-val" style="color: {{ $item['volume'] == 0 ? '#ff6b6b' : '#00ff87' }} !important;">
-                                                    {{ number_format($item['volume'], 2) }}
+                                            <td class="text-center">
+                                                <a href="/admin/transfers/p2p?customer_id={{ $item['id'] }}" class="btn btn-sm btn-clear" style="padding: 4px 8px; font-size: 10px; font-weight: 700; border-radius: 6px; display: inline-flex; align-items: center; gap: 3px;">
+                                                    <i class="bx bx-transfer"></i> P2P
+                                                </a>
+                                            </td>
+                                            
+                                            <!-- Subscriptions -->
+                                            <td class="text-center" style="border-left: 1px solid var(--border); font-size: 0.78rem;">
+                                                <span style="color: {{ $item['sub_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['sub_vol'], 2) }}
                                                 </span>
                                             </td>
-                                            <td>
-                                                <span class="amount-val" style="color: {{ $item['credit'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important;">
-                                                    {{ number_format($item['credit'], 2) }}
+                                            <td class="text-center" style="font-size: 0.78rem;">
+                                                <span style="color: {{ $item['sub_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['sub_cred'], 2) }}
                                                 </span>
                                             </td>
-                                            <td>
-                                                <span class="amount-val" style="color: {{ $item['wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important;">
-                                                    {{ number_format($item['wallet'], 2) }}
+                                            <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem;">
+                                                <span style="color: {{ $item['sub_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['sub_wallet'], 2) }}
+                                                </span>
+                                            </td>
+                                            
+                                            <!-- Staking -->
+                                            <td class="text-center" style="font-size: 0.78rem;">
+                                                <span style="color: {{ $item['stake_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['stake_vol'], 2) }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center" style="font-size: 0.78rem;">
+                                                <span style="color: {{ $item['stake_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['stake_cred'], 2) }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem;">
+                                                <span style="color: {{ $item['stake_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['stake_wallet'], 2) }}
+                                                </span>
+                                            </td>
+                                            
+                                            <!-- AutoPoll -->
+                                            <td class="text-center" style="font-size: 0.78rem;">
+                                                <span style="color: {{ $item['poll_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['poll_vol'], 2) }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center" style="font-size: 0.78rem;">
+                                                <span style="color: {{ $item['poll_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['poll_cred'], 2) }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center" style="border-right: 1px solid var(--border); font-size: 0.78rem;">
+                                                <span style="color: {{ $item['poll_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['poll_wallet'], 2) }}
+                                                </span>
+                                            </td>
+                                            
+                                            <!-- Combined -->
+                                            <td class="text-center" style="font-size: 0.78rem;">
+                                                <span style="color: {{ $item['comb_vol'] == 0 ? '#ff6b6b' : '#00ff87' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['comb_vol'], 2) }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center" style="font-size: 0.78rem;">
+                                                <span style="color: {{ $item['comb_cred'] == 0 ? '#ff6b6b' : 'var(--gold2)' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['comb_cred'], 2) }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center" style="font-size: 0.78rem;">
+                                                <span style="color: {{ $item['comb_wallet'] == 0 ? '#ff6b6b' : '#38bdf8' }} !important; font-weight: 600;">
+                                                    {{ number_format($item['comb_wallet'], 2) }}
                                                 </span>
                                             </td>
                                         </tr>
                                         @endforeach
                                         @if($totalCount == 0)
                                         <tr>
-                                            <td colspan="7" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                            <td colspan="16" style="text-align: center; padding: 40px; color: var(--text-muted);">
                                                 No customers found matching current criteria.
                                             </td>
                                         </tr>

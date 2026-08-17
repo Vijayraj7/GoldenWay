@@ -140,6 +140,12 @@
                 <div data-i18n="Basic">Transfer Credit History</div>
             </a>
         </li>
+        <li class="menu-item @if($r == 'p2ptransfers') active @endif">
+            <a href="/admin/transfers/p2p" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div data-i18n="Basic">P2P Transfers History</div>
+            </a>
+        </li>
         <li class="menu-item @if($r == 'adminautopoolhistory') active @endif">
             <a href="/admin/autopool/history" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-trending-up"></i>
