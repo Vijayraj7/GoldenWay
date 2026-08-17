@@ -281,6 +281,28 @@ $i = 0;
             transform: translateY(-1px);
         }
 
+        .btn-usage {
+            padding: 4px 10px;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 215, 0, 0.08) !important;
+            border: 1px solid rgba(255, 215, 0, 0.3) !important;
+            color: #ffd700 !important;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-usage:hover {
+            background: #ffd700 !important;
+            color: #05060b !important;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+            transform: translateY(-1px);
+        }
+
         .table-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -841,13 +863,18 @@ $i = 0;
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                @if($item['comb_cred'] > 0)
-                                                <a href="/admin/transfers/p2p?customer_id={{ $item['id'] }}" class="btn-p2p">
-                                                    <i class="bx bx-transfer"></i> P2P
-                                                </a>
-                                                @else
-                                                <span style="color: var(--text-muted); font-size: 11px;">--</span>
-                                                @endif
+                                                <div class="d-flex align-items-center justify-content-center gap-1">
+                                                    @if($item['comb_cred'] > 0)
+                                                    <a href="/admin/transfers/p2p?customer_id={{ $item['id'] }}" class="btn-p2p" title="P2P Transfers History">
+                                                        <i class="bx bx-group"></i> P2P
+                                                    </a>
+                                                    <a href="/admin/transfers/all?customer_id={{ $item['id'] }}" class="btn-usage" title="Usage Transfers History">
+                                                        <i class="bx bx-collection"></i> Usage
+                                                    </a>
+                                                    @else
+                                                    <span style="color: var(--text-muted); font-size: 11px;">--</span>
+                                                    @endif
+                                                </div>
                                             </td>
                                             
                                             <!-- Subscriptions -->

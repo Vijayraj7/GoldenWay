@@ -555,8 +555,13 @@ $i = 0;
 
                         // Retrieve active filter customer name if any
                         $filterCustomerName = '';
+                        $filterCustomerUid = '';
                         if ($customerFilterId != '') {
-                            $filterCustomerName = DB::table('customers')->where('id', $customerFilterId)->value('name') ?? 'Selected Customer';
+                            $customerObj = DB::table('customers')->where('id', $customerFilterId)->first(['name', 'uid']);
+                            if ($customerObj) {
+                                $filterCustomerName = $customerObj->name;
+                                $filterCustomerUid = $customerObj->uid;
+                            }
                         }
                         ?>
 
@@ -564,7 +569,13 @@ $i = 0;
                         <div class="hero-header">
                             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
                                 <div>
-                                    <h4 class="hero-title">Platform Transfers History</h4>
+                                    <h4 class="hero-title">
+                                        @if($customerFilterId != '')
+                                        {{ $filterCustomerName }} ({{ $filterCustomerUid }}) - Platform Usage
+                                        @else
+                                        Platform Transfers History
+                                        @endif
+                                    </h4>
                                     <p class="hero-sub">
                                         @if($customerFilterId != '')
                                         Showing credit usage (subscriptions, staking, autopoll) for customer <strong>{{ $filterCustomerName }}</strong>

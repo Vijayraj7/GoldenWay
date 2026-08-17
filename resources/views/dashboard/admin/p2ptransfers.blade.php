@@ -565,8 +565,13 @@ $i = 0;
 
                         // Retrieve active filter customer name if any
                         $filterCustomerName = '';
+                        $filterCustomerUid = '';
                         if ($customerFilterId != '') {
-                            $filterCustomerName = DB::table('customers')->where('id', $customerFilterId)->value('name') ?? 'Selected Customer';
+                            $customerObj = DB::table('customers')->where('id', $customerFilterId)->first(['name', 'uid']);
+                            if ($customerObj) {
+                                $filterCustomerName = $customerObj->name;
+                                $filterCustomerUid = $customerObj->uid;
+                            }
                         }
                         ?>
 
@@ -574,7 +579,13 @@ $i = 0;
                         <div class="hero-header">
                             <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
                                 <div>
-                                    <h1 class="hero-title">Customer to Customer Transfers</h1>
+                                    <h1 class="hero-title">
+                                        @if($customerFilterId != '')
+                                        {{ $filterCustomerName }} ({{ $filterCustomerUid }}) - P2P Transfers
+                                        @else
+                                        Customer to Customer Transfers
+                                        @endif
+                                    </h1>
                                     <p class="hero-sub">
                                         @if($customerFilterId != '')
                                         Showing credit transfer log for customer <strong>{{ $filterCustomerName }}</strong>
