@@ -459,7 +459,7 @@ $i = 0;
     @include('dashboard.dcards.naver')
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
-            @include('dashboard.admin.dcards.menu', ['r' => 'incomeanalytics'])
+            @include('dashboard.admin.dcards.menu', ['r' => 'volumedetails'])
 
             <div class="layout-page">
                 @include('dashboard.dcards.nav')
