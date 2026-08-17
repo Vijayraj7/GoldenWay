@@ -687,9 +687,9 @@ $i = 0;
                                     <thead>
                                         <tr>
                                             <th class="cell-num">#</th>
-                                            <th>Sender / Initiator</th>
-                                            <th>Recipient / Destination</th>
-                                            <th>Transfer Type</th>
+                                            <th>Customer Name</th>
+                                            <th>Customer ID (UID)</th>
+                                            <th>Use of Payment</th>
                                             <th>Gross Amount</th>
                                             <th>Admin Fee</th>
                                             <th>Net Amount</th>
@@ -701,12 +701,11 @@ $i = 0;
                                         @php
                                         $i++;
                                         $senderInitials = strtoupper(substr($item->sender_name ?? 'S', 0, 1));
-                                        $receiverInitials = strtoupper(substr($item->receiver_name ?? 'R', 0, 1));
                                         @endphp
                                         <tr>
                                             <td class="cell-num">{{ $offset + $i }}</td>
                                             
-                                            <!-- Sender/Initiator -->
+                                            <!-- Customer Name -->
                                             <td>
                                                 @if(empty($item->fuserid) || empty($item->sender_name))
                                                 <div class="member-info">
@@ -720,61 +719,33 @@ $i = 0;
                                                     @else
                                                     <div class="mem-initial" style="color: var(--gold2); border-color: rgba(255, 159, 67, 0.3);">{{ $senderInitials }}</div>
                                                     @endif
-                                                    <div>
-                                                        <a href="/admin/user/{{ $item->fuserid }}" class="mem-link" style="color: var(--gold2);">{{ $item->sender_name }}</a>
-                                                        <div style="margin-top: 2px;">
-                                                            <span class="mem-uid" onclick="copyToClipboard('{{ $item->sender_uid }}', this)" title="Click to copy UID" style="font-size: 0.65rem; padding: 1px 4px;">{{ $item->sender_uid }}</span>
-                                                        </div>
-                                                    </div>
+                                                    <a href="/admin/user/{{ $item->fuserid }}" class="mem-link" style="color: var(--gold2);">{{ $item->sender_name }}</a>
                                                 </div>
                                                 @endif
                                             </td>
 
-                                            <!-- Recipient/Destination -->
+                                            <!-- Customer ID (UID) -->
                                             <td>
-                                                 @if($item->tType == 'normal')
-                                                 <div class="member-info">
-                                                     <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-purchase-tag-alt"></i></div>
-                                                     <span style="color: var(--purple); font-weight: 700;">Staking Plan (System)</span>
-                                                 </div>
-                                                 @elseif($item->tType == 'subscribe')
-                                                 <div class="member-info">
-                                                     <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-layer"></i></div>
-                                                     <span style="color: var(--purple); font-weight: 700;">Subscription (System)</span>
-                                                 </div>
-                                                 @elseif($item->tType == 'autopoll')
-                                                 <div class="member-info">
-                                                     <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-trending-up"></i></div>
-                                                     <span style="color: var(--purple); font-weight: 700;">AutoPoll Slot (System)</span>
-                                                 </div>
-                                                 @else
-                                                    <div class="member-info">
-                                                        @if($item->receiver_img)
-                                                        <img src="{{ $item->receiver_img }}" class="mem-avatar" alt="avatar">
-                                                        @else
-                                                        <div class="mem-initial" style="color: var(--blue); border-color: rgba(56, 189, 248, 0.3);">{{ $receiverInitials }}</div>
-                                                        @endif
-                                                        <div>
-                                                            <a href="/admin/user/{{ $item->tuserid }}" class="mem-link" style="color: var(--blue);">{{ $item->receiver_name }}</a>
-                                                            <div style="margin-top: 2px;">
-                                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item->receiver_uid }}', this)" title="Click to copy UID" style="font-size: 0.65rem; padding: 1px 4px;">{{ $item->receiver_uid }}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                 @endif
+                                                @if(!empty($item->fuserid) && !empty($item->sender_uid))
+                                                <span class="mem-uid" onclick="copyToClipboard('{{ $item->sender_uid }}', this)" title="Click to copy UID" style="font-size: 0.72rem; padding: 4px 8px; font-weight: 700;">
+                                                    {{ $item->sender_uid }}
+                                                </span>
+                                                @else
+                                                <span style="color: var(--text-muted); font-weight: 600;">--</span>
+                                                @endif
                                             </td>
 
-                                            <!-- Transfer Type Badge -->
+                                            <!-- Use of Payment -->
                                             <td>
-                                                 @if($item->tType == 'normal')
-                                                 <span class="badge-type" style="background: rgba(0, 255, 135, 0.12); color: #00ff87; border: 1px solid rgba(0, 255, 135, 0.3);">Staking Transfer</span>
-                                                 @elseif($item->tType == 'subscribe')
-                                                 <span class="badge-type" style="background: rgba(255, 215, 0, 0.12); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3);">Subscription</span>
-                                                 @elseif($item->tType == 'autopoll')
-                                                 <span class="badge-type" style="background: rgba(215, 131, 255, 0.12); color: #d783ff; border: 1px solid rgba(215, 131, 255, 0.3);">AutoPoll</span>
-                                                 @else
-                                                 <span class="badge-type" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">P2P Transfer</span>
-                                                 @endif
+                                                @if($item->tType == 'normal')
+                                                <span class="badge-type" style="background: rgba(0, 255, 135, 0.1); color: #00ff87; border: 1px solid rgba(0, 255, 135, 0.25); font-weight: 700;">Staking Purchase</span>
+                                                @elseif($item->tType == 'subscribe')
+                                                <span class="badge-type" style="background: rgba(255, 215, 0, 0.1); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.25); font-weight: 700;">Subscription Payment</span>
+                                                @elseif($item->tType == 'autopoll')
+                                                <span class="badge-type" style="background: rgba(215, 131, 255, 0.1); color: #d783ff; border: 1px solid rgba(215, 131, 255, 0.25); font-weight: 700;">AutoPoll Slot Entry</span>
+                                                @else
+                                                <span class="badge-type" style="background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid var(--border); font-weight: 700;">System Usage</span>
+                                                @endif
                                             </td>
 
                                             <!-- Gross Amount -->
