@@ -488,38 +488,27 @@ $i = 0;
                             );
 
                         // Filter by selected transfer type
-                        if ($selectedType == 'p2p') {
-                            $query->where('customer_transfers.tType', 'transfer');
-                        } elseif ($selectedType == 'staking') {
+                        if ($selectedType == 'staking') {
                             $query->where('customer_transfers.tType', 'normal');
                         } elseif ($selectedType == 'subscriptions') {
                             $query->where('customer_transfers.tType', 'subscribe');
                         } elseif ($selectedType == 'autopoll') {
                             $query->where('customer_transfers.tType', 'autopoll');
                         } else {
-                            // Show all types
-                            $query->whereIn('customer_transfers.tType', ['transfer', 'normal', 'subscribe', 'autopoll']);
+                            // Show all system types (excluding 'transfer')
+                            $query->whereIn('customer_transfers.tType', ['normal', 'subscribe', 'autopoll']);
                         }
 
-                        // Filter by specific customer (sender or receiver)
+                        // Filter by specific customer (sender)
                         if ($customerFilterId != '') {
-                            $query->where(function($q) use ($customerFilterId) {
-                                $q->where('customer_transfers.fuserid', $customerFilterId)
-                                  ->orWhere(function($subQ) use ($customerFilterId) {
-                                      // Only check tuserid if type is transfer (since other types are system actions where tuserid is not a user)
-                                      $subQ->where('customer_transfers.tuserid', $customerFilterId)
-                                           ->where('customer_transfers.tType', 'transfer');
-                                  });
-                            });
+                            $query->where('customer_transfers.fuserid', $customerFilterId);
                         }
 
                         // Filter by search keyword
                         if ($searchVal != '') {
                             $query->where(function($q) use ($searchVal) {
                                 $q->where('sender.name', 'like', "%$searchVal%")
-                                  ->orWhere('sender.uid', 'like', "%$searchVal%")
-                                  ->orWhere('receiver.name', 'like', "%$searchVal%")
-                                  ->orWhere('receiver.uid', 'like', "%$searchVal%");
+                                  ->orWhere('sender.uid', 'like', "%$searchVal%");
                             });
                         }
 
@@ -535,15 +524,21 @@ $i = 0;
                         $allFilteredTransfers = $query->orderBy('customer_transfers.id', 'desc')->get();
                         $totalTransactionsCount = count($allFilteredTransfers);
 
-                        // Volume sums for P2P vs System usages
-                        $p2pVolumeSum = $allFilteredTransfers->filter(function($item) {
-                            return $item->tType == 'transfer';
+                        // Volume sums for each system type
+                        $stakingVolumeSum = $allFilteredTransfers->filter(function($item) {
+                            return $item->tType == 'normal';
                         })->sum(function($item) {
                             return (float)$item->tAmount;
                         });
 
-                        $systemVolumeSum = $allFilteredTransfers->filter(function($item) {
-                            return $item->tType != 'transfer';
+                        $subsVolumeSum = $allFilteredTransfers->filter(function($item) {
+                            return $item->tType == 'subscribe';
+                        })->sum(function($item) {
+                            return (float)$item->tAmount;
+                        });
+
+                        $autopollVolumeSum = $allFilteredTransfers->filter(function($item) {
+                            return $item->tType == 'autopoll';
                         })->sum(function($item) {
                             return (float)$item->tAmount;
                         });
@@ -569,12 +564,12 @@ $i = 0;
                         <div class="hero-header">
                             <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
                                 <div>
-                                    <h4 class="hero-title">All Transfers History</h4>
+                                    <h4 class="hero-title">Platform Transfers History</h4>
                                     <p class="hero-sub">
                                         @if($customerFilterId != '')
-                                        Showing credit usage and P2P transfers for customer <strong>{{ $filterCustomerName }}</strong>
+                                        Showing credit usage (subscriptions, staking, autopoll) for customer <strong>{{ $filterCustomerName }}</strong>
                                         @else
-                                        Complete log of system staking, subscriptions, autopoll, and peer-to-peer transfers
+                                        Complete log of system staking, subscriptions, and autopoll credit transfers
                                         @endif
                                     </p>
                                 </div>
@@ -600,23 +595,23 @@ $i = 0;
 
                         <!-- Stats Grid -->
                         <div class="stat-grid">
-                            <div class="stat-card s-blue">
-                                <div class="stat-icon-wrap"><i class="bx bx-transfer"></i></div>
-                                <div class="stat-label">Total Transactions</div>
-                                <div class="stat-value">{{ number_format($totalTransactionsCount) }}<span class="stat-unit">Transfers</span></div>
-                                <div class="stat-hint">P2P & system usages combined</div>
-                            </div>
                             <div class="stat-card s-gold">
-                                <div class="stat-icon-wrap"><i class="bx bx-group"></i></div>
-                                <div class="stat-label">P2P Volume Transferred</div>
-                                <div class="stat-value">{{ number_format($p2pVolumeSum, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Customer-to-customer balance transfers</div>
+                                <div class="stat-icon-wrap"><i class="bx bx-purchase-tag-alt"></i></div>
+                                <div class="stat-label">Staking Volume</div>
+                                <div class="stat-value">{{ number_format($stakingVolumeSum, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">Total transfer credit staked</div>
+                            </div>
+                            <div class="stat-card s-blue">
+                                <div class="stat-icon-wrap"><i class="bx bx-layer"></i></div>
+                                <div class="stat-label">Subscriptions Volume</div>
+                                <div class="stat-value">{{ number_format($subsVolumeSum, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">Total transfer credit subscribed</div>
                             </div>
                             <div class="stat-card s-purple">
-                                <div class="stat-icon-wrap"><i class="bx bx-purchase-tag-alt"></i></div>
-                                <div class="stat-label">System Credit Usages</div>
-                                <div class="stat-value">{{ number_format($systemVolumeSum, 2) }}<span class="stat-unit">USDT</span></div>
-                                <div class="stat-hint">Staking, Subscriptions, and AutoPoll purchases</div>
+                                <div class="stat-icon-wrap"><i class="bx bx-trending-up"></i></div>
+                                <div class="stat-label">AutoPoll Volume</div>
+                                <div class="stat-value">{{ number_format($autopollVolumeSum, 2) }}<span class="stat-unit">USDT</span></div>
+                                <div class="stat-hint">Total transfer credit auto-poll usage</div>
                             </div>
                         </div>
 
@@ -631,8 +626,7 @@ $i = 0;
                                         <div class="d-flex align-items-center gap-1">
                                             <span style="font-size: 11px; color: var(--text-muted);">Type:</span>
                                             <select name="type" class="form-select form-select-sm" style="width: auto; height: 32px; font-size: 11px; padding: 4px 10px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" onchange="this.form.submit()">
-                                                <option value="all" @if($selectedType == 'all') selected @endif>All Transfers</option>
-                                                <option value="p2p" @if($selectedType == 'p2p') selected @endif>P2P Only</option>
+                                                <option value="all" @if($selectedType == 'all') selected @endif>All System</option>
                                                 <option value="staking" @if($selectedType == 'staking') selected @endif>Staking Only</option>
                                                 <option value="subscriptions" @if($selectedType == 'subscriptions') selected @endif>Subscriptions Only</option>
                                                 <option value="autopoll" @if($selectedType == 'autopoll') selected @endif>AutoPoll Only</option>
@@ -656,7 +650,7 @@ $i = 0;
 
                                         <!-- Search field -->
                                         <div style="position: relative;">
-                                            <input type="text" name="srch" class="form-control form-control-sm" style="width: 200px; height: 32px; font-size: 11px; padding: 4px 10px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" placeholder="Search sender or recipient..." value="{{ $searchVal }}">
+                                            <input type="text" name="srch" class="form-control form-control-sm" style="width: 200px; height: 32px; font-size: 11px; padding: 4px 10px; background-color: var(--bg-card2); border-color: var(--border); color: #fff;" placeholder="Search sender..." value="{{ $searchVal }}">
                                         </div>
                                     </div>
 
@@ -682,7 +676,7 @@ $i = 0;
                                     <div class="table-header-icon"><i class="bx bx-table"></i></div>
                                     <div>
                                         <h5>Transfers Log List</h5>
-                                        <p>Staking, Subscriptions, AutoPoll, and P2P transfer logs</p>
+                                        <p>Staking, Subscriptions, and AutoPoll transfer logs</p>
                                     </div>
                                 </div>
                                 <span class="count-pill">{{ $totalTransactionsCount }} records found</span>
@@ -738,13 +732,22 @@ $i = 0;
 
                                             <!-- Recipient/Destination -->
                                             <td>
-                                                @if($item->tType == 'transfer')
-                                                    @if(empty($item->tuserid) || empty($item->receiver_name))
-                                                    <div class="member-info">
-                                                        <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);">S</div>
-                                                        <span style="color: var(--purple); font-weight: 700;">SYSTEM</span>
-                                                    </div>
-                                                    @else
+                                                 @if($item->tType == 'normal')
+                                                 <div class="member-info">
+                                                     <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-purchase-tag-alt"></i></div>
+                                                     <span style="color: var(--purple); font-weight: 700;">Staking Plan (System)</span>
+                                                 </div>
+                                                 @elseif($item->tType == 'subscribe')
+                                                 <div class="member-info">
+                                                     <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-layer"></i></div>
+                                                     <span style="color: var(--purple); font-weight: 700;">Subscription (System)</span>
+                                                 </div>
+                                                 @elseif($item->tType == 'autopoll')
+                                                 <div class="member-info">
+                                                     <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-trending-up"></i></div>
+                                                     <span style="color: var(--purple); font-weight: 700;">AutoPoll Slot (System)</span>
+                                                 </div>
+                                                 @else
                                                     <div class="member-info">
                                                         @if($item->receiver_img)
                                                         <img src="{{ $item->receiver_img }}" class="mem-avatar" alt="avatar">
@@ -758,36 +761,20 @@ $i = 0;
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @endif
-                                                @elseif($item->tType == 'normal')
-                                                <div class="member-info">
-                                                    <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-purchase-tag-alt"></i></div>
-                                                    <span style="color: var(--purple); font-weight: 700;">Staking Plan (System)</span>
-                                                </div>
-                                                @elseif($item->tType == 'subscribe')
-                                                <div class="member-info">
-                                                    <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-layer"></i></div>
-                                                    <span style="color: var(--purple); font-weight: 700;">Subscription (System)</span>
-                                                </div>
-                                                @elseif($item->tType == 'autopoll')
-                                                <div class="member-info">
-                                                    <div class="mem-initial" style="background: rgba(215, 131, 255, 0.1); border-color: rgba(215, 131, 255, 0.3); color: var(--purple);"><i class="bx bx-trending-up"></i></div>
-                                                    <span style="color: var(--purple); font-weight: 700;">AutoPoll Slot (System)</span>
-                                                </div>
-                                                @endif
+                                                 @endif
                                             </td>
 
                                             <!-- Transfer Type Badge -->
                                             <td>
-                                                @if($item->tType == 'transfer')
-                                                <span class="badge-type" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">P2P Transfer</span>
-                                                @elseif($item->tType == 'normal')
-                                                <span class="badge-type" style="background: rgba(0, 255, 135, 0.12); color: #00ff87; border: 1px solid rgba(0, 255, 135, 0.3);">Staking Transfer</span>
-                                                @elseif($item->tType == 'subscribe')
-                                                <span class="badge-type" style="background: rgba(255, 215, 0, 0.12); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3);">Subscription</span>
-                                                @elseif($item->tType == 'autopoll')
-                                                <span class="badge-type" style="background: rgba(215, 131, 255, 0.12); color: #d783ff; border: 1px solid rgba(215, 131, 255, 0.3);">AutoPoll</span>
-                                                @endif
+                                                 @if($item->tType == 'normal')
+                                                 <span class="badge-type" style="background: rgba(0, 255, 135, 0.12); color: #00ff87; border: 1px solid rgba(0, 255, 135, 0.3);">Staking Transfer</span>
+                                                 @elseif($item->tType == 'subscribe')
+                                                 <span class="badge-type" style="background: rgba(255, 215, 0, 0.12); color: #ffd700; border: 1px solid rgba(255, 215, 0, 0.3);">Subscription</span>
+                                                 @elseif($item->tType == 'autopoll')
+                                                 <span class="badge-type" style="background: rgba(215, 131, 255, 0.12); color: #d783ff; border: 1px solid rgba(215, 131, 255, 0.3);">AutoPoll</span>
+                                                 @else
+                                                 <span class="badge-type" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">P2P Transfer</span>
+                                                 @endif
                                             </td>
 
                                             <!-- Gross Amount -->
