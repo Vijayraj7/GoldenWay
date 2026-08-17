@@ -703,6 +703,9 @@ $i = 0;
                                     Used Transfer Credit: {{ number_format($usedSubscribeCredit, 2) }} USDT<br/>
                                     Wallet Used: {{ number_format($walletUsedSubscribe, 2) }} USDT
                                 </div>
+                                <a href="/admin/income/volume-details?type=subscriptions{{ $queryString }}" class="btn-detail" style="margin-top: 12px; display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; color: var(--gold); text-decoration: none; font-weight: 700; border: 1px solid rgba(245, 197, 24, 0.3); padding: 4px 10px; border-radius: 6px; background: rgba(245, 197, 24, 0.05); transition: all 0.2s;">
+                                    View Breakdown <i class="bx bx-right-arrow-alt"></i>
+                                </a>
                             </div>
                             <div class="stat-card s-green">
                                 <div class="stat-icon-wrap"><i class="bx bx-git-pull-request"></i></div>
@@ -712,6 +715,9 @@ $i = 0;
                                     Used Transfer Credit: {{ number_format($usedStakedCredit, 2) }} USDT<br/>
                                     Wallet Used: {{ number_format($walletUsedStaked, 2) }} USDT
                                 </div>
+                                <a href="/admin/income/volume-details?type=staking{{ $queryString }}" class="btn-detail" style="margin-top: 12px; display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; color: var(--gold); text-decoration: none; font-weight: 700; border: 1px solid rgba(245, 197, 24, 0.3); padding: 4px 10px; border-radius: 6px; background: rgba(245, 197, 24, 0.05); transition: all 0.2s;">
+                                    View Breakdown <i class="bx bx-right-arrow-alt"></i>
+                                </a>
                             </div>
                             <div class="stat-card s-purple">
                                 <div class="stat-icon-wrap"><i class="bx bx-group"></i></div>
@@ -721,6 +727,9 @@ $i = 0;
                                     Used Transfer Credit: {{ number_format($usedAutopollCredit, 2) }} USDT<br/>
                                     Wallet Used: {{ number_format($walletUsedAutopoll, 2) }} USDT
                                 </div>
+                                <a href="/admin/income/volume-details?type=autopoll{{ $queryString }}" class="btn-detail" style="margin-top: 12px; display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; color: var(--gold); text-decoration: none; font-weight: 700; border: 1px solid rgba(245, 197, 24, 0.3); padding: 4px 10px; border-radius: 6px; background: rgba(245, 197, 24, 0.05); transition: all 0.2s;">
+                                    View Breakdown <i class="bx bx-right-arrow-alt"></i>
+                                </a>
                             </div>
                             <div class="stat-card s-gold">
                                 <div class="stat-icon-wrap"><i class="bx bx-wallet"></i></div>
@@ -730,6 +739,9 @@ $i = 0;
                                     Total Transfer Credit Used: {{ number_format($grandUsedCredit, 2) }} USDT<br/>
                                     Total Wallet Used: {{ number_format($grandWalletUsed, 2) }} USDT
                                 </div>
+                                <a href="/admin/income/volume-details?type=all{{ $queryString }}" class="btn-detail" style="margin-top: 12px; display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; color: var(--gold); text-decoration: none; font-weight: 700; border: 1px solid rgba(245, 197, 24, 0.3); padding: 4px 10px; border-radius: 6px; background: rgba(245, 197, 24, 0.05); transition: all 0.2s;">
+                                    View Breakdown <i class="bx bx-right-arrow-alt"></i>
+                                </a>
                             </div>
                         </div>
 
