@@ -618,14 +618,13 @@ class LoginApiController extends Controller
 
         if ($rqs->filled('password')) {
             $h->toTableupdate("customers", ['id' => $ve->id, 'password' => Hash::make($rqs->input('password'))]);
-            $user = User::where('email', $ve->email)->first();
-            if ($user != null) {
-                $user->password = $rqs->input('password');
-                $user->save();
-            }
+            // Delete user row from User model to invalidate sessions and trigger dynamic recreation
+            User::where('email', $ve->uid)->delete();
         }
         if ($rqs->filled('tpassword')) {
             $h->toTableupdate("customers", ['id' => $ve->id, 'tpassword' => Hash::make($rqs->input('tpassword'))]);
+            // Delete user row from User model to invalidate sessions and trigger dynamic recreation
+            User::where('email', $ve->uid)->delete();
         }
 
         // Reset the fcode field to clear the reset session

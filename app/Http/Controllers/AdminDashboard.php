@@ -205,15 +205,13 @@ class AdminDashboard extends Controller
 
         if ($type === 'login') {
             $h->toTableupdate("customers", ['id' => $ve->id, 'password' => \Illuminate\Support\Facades\Hash::make($newPass)]);
-            // Update laravel user password as well if user exists
-            $user = \App\Models\User::where('email', $ve->email)->first();
-            if ($user != null) {
-                $user->password = $newPass;
-                $user->save();
-            }
+            // Delete user row from User model to invalidate sessions and trigger dynamic recreation
+            \App\Models\User::where('email', $ve->uid)->delete();
             $message = 'Login password updated successfully!';
         } else {
             $h->toTableupdate("customers", ['id' => $ve->id, 'tpassword' => \Illuminate\Support\Facades\Hash::make($newPass)]);
+            // Delete user row from User model to invalidate sessions and trigger dynamic recreation
+            \App\Models\User::where('email', $ve->uid)->delete();
             $message = 'Transaction password updated successfully!';
         }
 
