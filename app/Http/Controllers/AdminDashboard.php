@@ -180,16 +180,23 @@ class AdminDashboard extends Controller
     {
         checkadmin();
         $rqs->validate([
-            'customer_id' => 'required|exists:customers,id',
+            'customer_id' => 'required_without:uid|nullable|exists:customers,id',
+            'uid' => 'required_without:customer_id|nullable|exists:customers,uid',
             'password_type' => 'required|in:login,transaction',
             'new_password' => 'required|min:4'
         ]);
 
         $customerId = $rqs->input('customer_id');
+        $uid = $rqs->input('uid');
         $type = $rqs->input('password_type');
         $newPass = $rqs->input('new_password');
 
-        $ve = DB::table("customers")->where('id', $customerId)->first();
+        if ($customerId) {
+            $ve = DB::table("customers")->where('id', $customerId)->first();
+        } else {
+            $ve = DB::table("customers")->where('uid', trim($uid))->first();
+        }
+
         if ($ve == null) {
             return redirect()->back()->withErrors(['error' => 'Customer not found.']);
         }

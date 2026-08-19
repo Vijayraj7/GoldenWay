@@ -101,14 +101,72 @@ $i = 0;
                                 Chats</h4>
 
                             @if ($errors->any())
-                            <div class="alert alert-danger mb-4" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; border-radius: 8px; padding: 12px; font-weight: 600; font-size: 13px;">
-                                <ul class="mb-0 px-3">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                                @if ($errors->has('success'))
+                                <div class="alert alert-success mb-4" style="background: rgba(0, 208, 148, 0.15); border: 1px solid rgba(0, 208, 148, 0.3); color: #00ff88; border-radius: 8px; padding: 12px; font-weight: 600; font-size: 13px;">
+                                    <ul class="mb-0 px-3">
+                                        @foreach ($errors->get('success') as $msg)
+                                            <li>{{ $msg }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
+                                @if (count($errors->all()) > count($errors->get('success')))
+                                <div class="alert alert-danger mb-4" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; border-radius: 8px; padding: 12px; font-weight: 600; font-size: 13px;">
+                                    <ul class="mb-0 px-3">
+                                        @foreach ($errors->all() as $error)
+                                            @if ($error !== $errors->first('success'))
+                                                <li>{{ $error }}</li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
                             @endif
+
+                            <!-- Change Password by UID Card -->
+                            <div class="card mb-4" style="border: 1px solid rgba(255, 215, 0, 0.2); background: linear-gradient(135deg, rgba(7, 31, 23, 0.8), rgba(12, 40, 32, 0.8));">
+                                <h5 class="card-header text-white" style="border-bottom: 1px solid rgba(255, 215, 0, 0.15); padding: 1.125rem 1.25rem !important;">Change Any Customer Password by UID</h5>
+                                <div class="card-body pt-3">
+                                    <form action="/admin/customer/change-password" method="POST">
+                                        @csrf
+                                        <div class="row g-3 align-items-end">
+                                            <div class="col-md-3">
+                                                <label class="form-label text-warning" for="uid_input" style="font-weight: 600;">Customer UID</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text" style="background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff;"><i class="bx bx-user"></i></span>
+                                                    <input type="text" name="uid" required id="uid_input" class="form-control" placeholder="Enter Customer UID (e.g., GW123456)" oninput="onOtherUidInput(this)" style="background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff;">
+                                                </div>
+                                                <small id="uid_status" class="form-text mt-1 d-block" style="font-size: 11px; font-weight: 600; min-height: 15px;"></small>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label class="form-label text-warning" for="pwd_type_input" style="font-weight: 600;">Password Type</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text" style="background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff;"><i class="bx bx-cog"></i></span>
+                                                    <select name="password_type" required id="pwd_type_input" class="form-select" style="background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff;">
+                                                        <option value="login" style="background-color: #0c2b21; color: white;">Login Password</option>
+                                                        <option value="transaction" style="background-color: #0c2b21; color: white;">Transaction Password</option>
+                                                    </select>
+                                                </div>
+                                                <small class="form-text mt-1 d-block" style="min-height: 15px;"></small>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-label text-warning" for="new_pwd_input" style="font-weight: 600;">New Password</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text" style="background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff;"><i class="bx bx-key"></i></span>
+                                                    <input type="password" name="new_password" required minlength="4" id="new_pwd_input" class="form-control" placeholder="Enter new password" style="background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff;">
+                                                    <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility('new_pwd_input', this)" style="background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff; cursor: pointer;">
+                                                        <i class="bx bx-hide"></i>
+                                                    </span>
+                                                </div>
+                                                <small class="form-text mt-1 d-block" style="min-height: 15px;"></small>
+                                            </div>
+                                            <div class="col-md-2" style="margin-bottom: 21px;">
+                                                <button type="submit" class="btn btn-primary w-100" style="height: 38px;">Update Password</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
 
                             <!-- Basic Bootstrap Table -->
                             <div class="card">
@@ -512,6 +570,64 @@ function openChangePasswordModal(userId, userName, type) {
     
     var myModal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
     myModal.show();
+}
+
+function onOtherUidInput(inp) {
+    var userid = inp.value.trim();
+    var statusEl = document.getElementById('uid_status');
+    if (userid.length >= 4) {
+        statusEl.style.color = '#f9a826';
+        statusEl.innerText = 'Checking...';
+        
+        const tapData = {
+            csId: userid,
+            _token: '{{ csrf_token() }}'
+        };
+
+        fetch('/getcusname', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(tapData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                if (data === 'user found') {
+                    statusEl.style.color = '#00ff88';
+                    statusEl.innerText = 'User Validated';
+                } else {
+                    statusEl.style.color = '#ff4444';
+                    statusEl.innerText = 'User not found';
+                }
+            })
+            .catch(error => {
+                console.error('Error validating UID:', error);
+                statusEl.style.color = '#ff4444';
+                statusEl.innerText = 'Error validating';
+            });
+    } else {
+        statusEl.innerText = '';
+    }
+}
+
+function togglePasswordVisibility(id, btn) {
+    var input = document.getElementById(id);
+    var icon = btn.querySelector('i');
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove('bx-hide');
+        icon.classList.add('bx-show');
+    } else {
+        input.type = "password";
+        icon.classList.remove('bx-show');
+        icon.classList.add('bx-hide');
+    }
 }
 </script>
     </body>
