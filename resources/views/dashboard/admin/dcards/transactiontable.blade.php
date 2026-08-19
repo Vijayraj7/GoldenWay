@@ -98,22 +98,28 @@
                                 @endif
                                 {{ getPname($transaction->tType) }}
                                 @if ($transaction->planId != null)
-                                    <a href="/admin/product/requests?plnid={{ $transaction->planId }}">
+                                    @php
+                                        $plndtls = DB::table('customer_plans')
+                                            ->where('id', $transaction->planId)
+                                            ->first();
+                                    @endphp
+                                    @if ($plndtls != null)
                                         @php
-                                            $plndtls = DB::table('customer_plans')
-                                                ->where('id', $transaction->planId)
-                                                ->first();
                                             $plnusr = DB::table('customers')
                                                 ->where('id', $plndtls->csId)
                                                 ->first();
                                         @endphp
-                                        <br>
-                                        Plan
-                                        <span style="color: grey;">{{ getPname($plndtls->pname) }}</span>
-                                        <br>
-                                        <span style="color: grey;">{{ $plnusr->name }}</span>
-                                        <span style="color: black;">{{ $plndtls->pamount }} USDT</span>
-                                    </a>
+                                        <a href="/admin/product/requests?plnid={{ $transaction->planId }}">
+                                            <br>
+                                            Plan
+                                            <span style="color: grey;">{{ getPname($plndtls->pname) }}</span>
+                                            <br>
+                                            @if ($plnusr != null)
+                                                <span style="color: grey;">{{ $plnusr->name }}</span>
+                                            @endif
+                                            <span style="color: black;">{{ $plndtls->pamount }} USDT</span>
+                                        </a>
+                                    @endif
                                 @endif
 
                                 @if ($transaction->wthId != null)
