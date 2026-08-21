@@ -34,11 +34,11 @@ class AutopollController extends Controller
             ]);
         }
 
-        if (!$rqs->filled('tpassword') || !Hash::check($rqs->input('tpassword'), $customer->tpassword)) {
-            return redirect()->back()->withInput($rqs->all())->withErrors([
-                'poll_error' => 'Wrong transaction password.',
-            ]);
-        }
+        // if (!$rqs->filled('tpassword') || !Hash::check($rqs->input('tpassword'), $customer->tpassword)) {
+        //     return redirect()->back()->withInput($rqs->all())->withErrors([
+        //         'poll_error' => 'Wrong transaction password.',
+        //     ]);
+        // }
 
         $hasSub = false;
         if (Schema::hasTable('customer_subs')) {
