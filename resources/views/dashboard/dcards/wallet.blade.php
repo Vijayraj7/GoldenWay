@@ -614,8 +614,21 @@ $pvt_wallet = decStr($v->gms_pvt_key);
                         changecoin(coin_type, true);
                     }
 
+                    function setMaxAmount() {
+                        var maxVal = 0;
+                        if (coin_type == 'usdt') {
+                            maxVal = usdtbalance;
+                        } else {
+                            maxVal = bnbalance;
+                        }
+                        var input = document.getElementById('send_amount_input');
+                        input.value = maxVal;
+                        onbnbchange({ target: input });
+                    }
+
                     function changecoin(coin_type, alrt) {
                         var bnb_result = document.getElementById('bnb_result');
+                        var max_btn = document.getElementById('btn-max-amount');
                         // if (alrt)
                         // alert('coin changed to ' + coin_type);
                         if (coin_type == 'usdt') {
@@ -627,6 +640,9 @@ $pvt_wallet = decStr($v->gms_pvt_key);
                             document.getElementById('title-icon').setAttribute("src"
                                 , "https://cdn-icons-png.flaticon.com/256/6001/6001566.png");
                             bnb_result.innerText = '';
+                            if (max_btn) {
+                                max_btn.style.color = '#27a17c';
+                            }
                         } else {
                             document.getElementById('send_btn').innerText = 'SEND BNB';
                             document.getElementById('modalsendtitle').innerText = 'BNB Balance : ' + bnbalance;
@@ -636,6 +652,9 @@ $pvt_wallet = decStr($v->gms_pvt_key);
                             document.getElementById('title-icon').setAttribute("src"
                                 , "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png");
                             bnb_result.innerText = '';
+                            if (max_btn) {
+                                max_btn.style.color = '#cf9a00';
+                            }
                         }
                     }
 
@@ -733,6 +752,9 @@ $pvt_wallet = decStr($v->gms_pvt_key);
                                 <i class="bx bx-dollar"></i>
                             </span>
                             <input type="number" oninput="onbnbchange(event)" name="pamount" value="{{ old('pamount') }}" id="send_amount_input" step="any" class="form-control phone-mask" placeholder="Min USDT 50" aria-label="Min USDT 50" aria-describedby="send_amount_input">
+                            <span id="btn-max-amount" class="input-group-text cursor-pointer" onclick="setMaxAmount()" style="font-weight: bold; color: #27a17c; font-size: 12px; cursor: pointer; user-select: none;">
+                                MAX
+                            </span>
                         </div>
                     </div>
                     <label style="margin-top: 7px;" class="col-sm-2 form-label" id="bnb_result" for="basic-icon-default-message"></label>
