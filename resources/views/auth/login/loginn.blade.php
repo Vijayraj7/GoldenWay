@@ -1,3 +1,6 @@
+@php
+    $security_verification = false; // Set to false to disable security verification
+@endphp
 <!DOCTYPE html>
 <!-- =========================================================
 * Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
@@ -417,12 +420,16 @@ function confirmLogin(event) {
   // Assuming you have a function to submit the form data to the server
 //   submitLoginForm(username.value, password.value);
 
+  @if($security_verification)
   // Uncomment if you want to show the modal after successful validation
   $(document).ready(function() {
     $('#modalCenter').modal('show');
   });
 
   return false; // Still return false to potentially prevent default form submission
+  @else
+  return true; // Submit the form immediately
+  @endif
 }
         </script>
         <style>
@@ -454,6 +461,7 @@ function confirmLogin(event) {
     align-items: center !important;
 }
         </style>
+        @if($security_verification)
         <div
             class="modal fade"
             id="modalCenter"
@@ -483,6 +491,7 @@ function confirmLogin(event) {
                 </div>
             </div>
         </div>
+        @endif
         <style>
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap');
 
@@ -654,6 +663,7 @@ body{
 
 
 // ----set-captcha with script278
+@if($security_verification)
 var captcha = sliderCaptcha({
   id: 'captcha',
   loadingText: 'Loading...',
@@ -675,6 +685,7 @@ var captcha = sliderCaptcha({
        //return 'https://picsum.photos/' + Math.round(Math.random() * 136) + '.jpg';
   },
 });
+@endif
         </script>
         <!-- / Content -->
         <!-- <div class="buy-now">
