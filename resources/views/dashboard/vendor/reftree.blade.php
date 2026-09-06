@@ -103,8 +103,8 @@ if ($refuser->id < $myintid) {
 
                         @if ($refuser)
                         @php
-                        // Fetch downline stats efficiently
-                        $customersMap = DB::table('customers')->select('id', 'left', 'right')->get()->keyBy('id');
+                        // Fetch downline stats efficiently with all needed member attributes
+                        $customersMap = DB::table('customers')->select('id', 'uid', 'name', 'phone', 'left', 'right', 'referral', 'created_at')->get()->keyBy('id');
 
                         if (!function_exists('getDownlineIds')) {
                         function getDownlineIds($startId, $customersMap)
@@ -114,15 +114,18 @@ if ($refuser->id < $myintid) {
                         }
                         $ids = [];
                         $queue = [$startId];
+                        $visited = [$startId => true];
                         while (!empty($queue)) {
                         $currId = array_shift($queue);
                         $ids[] = $currId;
                         $curr = $customersMap[$currId] ?? null;
                         if ($curr) {
-                        if ($curr->left && isset($customersMap[$curr->left])) {
+                        if ($curr->left && isset($customersMap[$curr->left]) && !isset($visited[$curr->left])) {
+                        $visited[$curr->left] = true;
                         $queue[] = $curr->left;
                         }
-                        if ($curr->right && isset($customersMap[$curr->right])) {
+                        if ($curr->right && isset($customersMap[$curr->right]) && !isset($visited[$curr->right])) {
+                        $visited[$curr->right] = true;
                         $queue[] = $curr->right;
                         }
                         }
@@ -131,26 +134,107 @@ if ($refuser->id < $myintid) {
                         }
                         }
 
-                        $leftIds = getDownlineIds($refuser->left, $customersMap);
-                        $leftCount = count($leftIds);
-                        $leftSub = $leftCount > 0 ? DB::table('customer_subs')->whereIn('csId', $leftIds)->sum('sub_amount') : 0;
-                        $leftStake = $leftCount > 0 ? DB::table('customer_plans')->whereIn('csId', $leftIds)->sum('pamount') : 0;
+                        if (!function_exists('getAllDownlineMembers')) {
+                        function getAllDownlineMembers($rootUser, $customersMap)
+                        {
+                        if (!$rootUser) {
+                        return [];
+                        }
+                        $members = [];
+                        $queue = [];
+                        $visited = [];
+                        if ($rootUser->left && isset($customersMap[$rootUser->left])) {
+                            $queue[] = ['id' => $rootUser->left, 'side' => 'Left', 'level' => 1, 'parentId' => $rootUser->id];
+                            $visited[$rootUser->left] = true;
+                        }
+                        if ($rootUser->right && isset($customersMap[$rootUser->right])) {
+                            $queue[] = ['id' => $rootUser->right, 'side' => 'Right', 'level' => 1, 'parentId' => $rootUser->id];
+                            $visited[$rootUser->right] = true;
+                        }
 
-                        $rightIds = getDownlineIds($refuser->right, $customersMap);
+                        while (!empty($queue)) {
+                            $item = array_shift($queue);
+                            $currId = $item['id'];
+                            $curr = $customersMap[$currId] ?? null;
+                            if ($curr) {
+                                $members[] = [
+                                    'id' => $curr->id,
+                                    'uid' => $curr->uid ?? $curr->id,
+                                    'name' => $curr->name ?? 'Member',
+                                    'phone' => $curr->phone ?? '',
+                                    'side' => $item['side'],
+                                    'level' => $item['level'],
+                                    'parentId' => $item['parentId'],
+                                    'referral' => $curr->referral ?? null,
+                                    'created_at' => $curr->created_at ?? null,
+                                    'left' => $curr->left,
+                                    'right' => $curr->right,
+                                ];
+                                if ($curr->left && isset($customersMap[$curr->left]) && !isset($visited[$curr->left])) {
+                                    $visited[$curr->left] = true;
+                                    $queue[] = ['id' => $curr->left, 'side' => $item['side'], 'level' => $item['level'] + 1, 'parentId' => $curr->id];
+                                }
+                                if ($curr->right && isset($customersMap[$curr->right]) && !isset($visited[$curr->right])) {
+                                    $visited[$curr->right] = true;
+                                    $queue[] = ['id' => $curr->right, 'side' => $item['side'], 'level' => $item['level'] + 1, 'parentId' => $curr->id];
+                                }
+                            }
+                        }
+                        return $members;
+                        }
+                        }
+
+                        $allDownlineMembers = getAllDownlineMembers($refuser, $customersMap);
+                        $leftIds = array_column(array_filter($allDownlineMembers, function($m) { return $m['side'] === 'Left'; }), 'id');
+                        $rightIds = array_column(array_filter($allDownlineMembers, function($m) { return $m['side'] === 'Right'; }), 'id');
+                        $leftCount = count($leftIds);
                         $rightCount = count($rightIds);
-                        $rightSub = $rightCount > 0 ? DB::table('customer_subs')->whereIn('csId', $rightIds)->sum('sub_amount') : 0;
-                        $rightStake = $rightCount > 0 ? DB::table('customer_plans')->whereIn('csId', $rightIds)->sum('pamount') : 0;
+
+                        $allDownlineIds = array_column($allDownlineMembers, 'id');
+
+                        $downlineSubs = empty($allDownlineIds) ? [] : DB::table('customer_subs')
+                        ->whereIn('csId', $allDownlineIds)
+                        ->groupBy('csId')
+                        ->select('csId', DB::raw('SUM(sub_amount) as total'))
+                        ->pluck('total', 'csId')
+                        ->toArray();
+
+                        $downlineStakes = empty($allDownlineIds) ? [] : DB::table('customer_plans')
+                        ->whereIn('csId', $allDownlineIds)
+                        ->where('pstatus', '1')
+                        ->groupBy('csId')
+                        ->select('csId', DB::raw('SUM(pamount) as total'))
+                        ->pluck('total', 'csId')
+                        ->toArray();
+
+                        $leftSub = 0;
+                        foreach ($leftIds as $lid) {
+                        $leftSub += (float) ($downlineSubs[$lid] ?? 0);
+                        }
+                        $leftStake = 0;
+                        foreach ($leftIds as $lid) {
+                        $leftStake += (float) ($downlineStakes[$lid] ?? 0);
+                        }
+
+                        $rightSub = 0;
+                        foreach ($rightIds as $rid) {
+                        $rightSub += (float) ($downlineSubs[$rid] ?? 0);
+                        }
+                        $rightStake = 0;
+                        foreach ($rightIds as $rid) {
+                        $rightStake += (float) ($downlineStakes[$rid] ?? 0);
+                        }
 
                         // Today's new subscriptions from 5 AM Indian Standard Time (IST)
                         $today5amObj = new \DateTime('today 05:00:00', new \DateTimeZone('Asia/Kolkata'));
                         $today5amObj->setTimezone(new \DateTimeZone(config('app.timezone', 'Asia/Dubai')));
                         $today5am = $today5amObj->format('Y-m-d H:i:s');
-                        $leftTodaySub = $leftCount > 0 ? DB::table('customer_subs')->whereIn('csId', $leftIds)->where('created_at', '>=', $today5am)->sum('sub_amount') : 0;
-                        $rightTodaySub = $rightCount > 0 ? DB::table('customer_subs')->whereIn('csId', $rightIds)->where('created_at', '>=', $today5am)->sum('sub_amount') : 0;
+                        $leftTodaySub = $leftCount > 0 ? (float) DB::table('customer_subs')->whereIn('csId', $leftIds)->where('created_at', '>=', $today5am)->sum('sub_amount') : 0;
+                        $rightTodaySub = $rightCount > 0 ? (float) DB::table('customer_subs')->whereIn('csId', $rightIds)->where('created_at', '>=', $today5am)->sum('sub_amount') : 0;
                         @endphp
                         <!-- Control Panel -->
                         <div class="tree-control-panel mb-4">
-                            <div class="control-left">
+                            <div class="control-left d-flex flex-wrap align-items-center gap-2">
                                 <a href="/dashboard/reftree/{{ $myintid }}" class="btn btn-primary btn-sm btn-control">
                                     <i class="bx bx-home-alt me-1"></i> My Tree
                                 </a>
@@ -159,6 +243,10 @@ if ($refuser->id < $myintid) {
                                     <i class="bx bx-up-arrow-alt me-1"></i> Up One Level
                                 </a>
                                 @endif
+                                <button type="button" class="btn btn-warning btn-sm btn-control btn-view-all-tree" data-bs-toggle="modal" data-bs-target="#allTreeModal">
+                                    <i class="bx bx-sitemap me-1"></i> View All Tree Under User
+                                    <span class="badge bg-dark text-warning ms-1" style="font-size: 0.72rem; border-radius: 12px; font-weight: 700;">{{ number_format($leftCount + $rightCount) }}</span>
+                                </button>
                             </div>
 
                             <!-- Search bar with frontend validation -->
@@ -273,8 +361,15 @@ if ($refuser->id < $myintid) {
                             </div>
                         </div>
 
+                        @php
+                        $treeDepth = (int) request()->get('depth', 2);
+                        if ($treeDepth < 2 || $treeDepth > 4) {
+                            $treeDepth = 2;
+                        }
+                        @endphp
+
                         <!-- Tree UI Controls Header -->
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
                             <div>
                                 <h5 class="text-white mb-0" style="font-weight: 600; font-size: 15px; letter-spacing: 0.5px;">Referral Tree View</h5>
                                 <div class="d-flex gap-2 mt-1">
@@ -282,10 +377,18 @@ if ($refuser->id < $myintid) {
                                     <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); text-transform: none; font-weight: 600; font-size: 11px; letter-spacing: normal; padding: 0.35rem 0.5rem;">R: {{ number_format($rightSub, 2) }} USDT</span>
                                 </div>
                             </div>
-                            <div class="tree-zoom-dock">
-                                <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(1.1)" title="Zoom In"><i class="bx bx-zoom-in"></i></button>
-                                <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(0.9)" title="Zoom Out"><i class="bx bx-zoom-out"></i></button>
-                                <button class="btn btn-sm btn-zoom-dock" onclick="resetZoom()" title="Reset Zoom"><i class="bx bx-refresh"></i></button>
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <div class="tree-depth-dock">
+                                    <span class="depth-title text-muted small me-1"><i class="bx bx-layer"></i> Levels:</span>
+                                    <a href="{{ request()->fullUrlWithQuery(['depth' => 2]) }}" class="btn-depth {{ $treeDepth == 2 ? 'active' : '' }}">2 Levels</a>
+                                    <a href="{{ request()->fullUrlWithQuery(['depth' => 3]) }}" class="btn-depth {{ $treeDepth == 3 ? 'active' : '' }}">3 Levels</a>
+                                    <a href="{{ request()->fullUrlWithQuery(['depth' => 4]) }}" class="btn-depth {{ $treeDepth == 4 ? 'active' : '' }}">4 Levels</a>
+                                </div>
+                                <div class="tree-zoom-dock">
+                                    <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(1.1)" title="Zoom In"><i class="bx bx-zoom-in"></i></button>
+                                    <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(0.9)" title="Zoom Out"><i class="bx bx-zoom-out"></i></button>
+                                    <button class="btn btn-sm btn-zoom-dock" onclick="resetZoom()" title="Reset Zoom"><i class="bx bx-refresh"></i></button>
+                                </div>
                             </div>
                         </div>
 
@@ -413,7 +516,7 @@ if ($refuser->id < $myintid) {
                                     }
 
                                     // Start tree drawing
-                                    renderNewUserTree($refuser, 0, 2, null, null, '');
+                                    renderNewUserTree($refuser, 0, $treeDepth, null, null, '');
                                     @endphp
                             </div>
                         </div>
@@ -445,6 +548,164 @@ if ($refuser->id < $myintid) {
                         @endif
 
                         <style>
+                            /* All Tree Modal & Depth Controls */
+                            .btn-view-all-tree {
+                                background: linear-gradient(135deg, #f5c518 0%, #e6a100 100%) !important;
+                                color: #000 !important;
+                                font-weight: 700 !important;
+                                border: none !important;
+                                box-shadow: 0 4px 15px rgba(245, 197, 24, 0.25) !important;
+                            }
+                            .btn-view-all-tree:hover {
+                                background: linear-gradient(135deg, #ffd700 0%, #f5c518 100%) !important;
+                                transform: translateY(-2px);
+                                box-shadow: 0 6px 20px rgba(245, 197, 24, 0.4) !important;
+                                color: #000 !important;
+                            }
+                            .tree-depth-dock {
+                                display: flex;
+                                align-items: center;
+                                background: rgba(18, 18, 30, 0.8);
+                                border: 1px solid rgba(255, 215, 0, 0.25);
+                                border-radius: 10px;
+                                padding: 4px 8px;
+                                gap: 4px;
+                            }
+                            .btn-depth {
+                                background: rgba(255, 255, 255, 0.05);
+                                border: 1px solid transparent;
+                                color: rgba(255, 255, 255, 0.7);
+                                font-size: 0.75rem;
+                                font-weight: 600;
+                                padding: 4px 8px;
+                                border-radius: 6px;
+                                text-decoration: none;
+                                transition: all 0.2s ease;
+                            }
+                            .btn-depth:hover {
+                                color: #fff;
+                                background: rgba(255, 255, 255, 0.15);
+                            }
+                            .btn-depth.active {
+                                background: #ffd700;
+                                color: #000;
+                                font-weight: 700;
+                            }
+                            .modal-stat-card {
+                                background: rgba(255, 255, 255, 0.03);
+                                border: 1px solid rgba(255, 215, 0, 0.15);
+                                border-radius: 12px;
+                                padding: 12px 16px;
+                                display: flex;
+                                align-items: center;
+                                gap: 12px;
+                                height: 100%;
+                            }
+                            .stat-icon-wrap {
+                                width: 42px;
+                                height: 42px;
+                                border-radius: 10px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 1.4rem;
+                                flex-shrink: 0;
+                            }
+                            .stat-icon-wrap.left-icon {
+                                background: rgba(16, 185, 129, 0.15);
+                                color: #10b981;
+                                border: 1px solid rgba(16, 185, 129, 0.3);
+                            }
+                            .stat-icon-wrap.right-icon {
+                                background: rgba(59, 130, 246, 0.15);
+                                color: #3b82f6;
+                                border: 1px solid rgba(59, 130, 246, 0.3);
+                            }
+                            .stat-icon-wrap.total-icon {
+                                background: rgba(245, 197, 24, 0.15);
+                                color: #f5c518;
+                                border: 1px solid rgba(245, 197, 24, 0.3);
+                            }
+                            .stat-label {
+                                font-size: 0.72rem;
+                                color: rgba(255, 255, 255, 0.6);
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                            }
+                            .stat-value {
+                                font-size: 1.1rem;
+                                font-weight: 700;
+                                color: #fff;
+                            }
+                            .stat-sub {
+                                font-size: 0.75rem;
+                                color: rgba(255, 255, 255, 0.5);
+                                font-weight: normal;
+                            }
+                            .stat-desc {
+                                font-size: 0.75rem;
+                                color: rgba(255, 255, 255, 0.7);
+                                margin-top: 2px;
+                            }
+                            .modal-search-wrap {
+                                background: rgba(255, 255, 255, 0.05);
+                                border: 1px solid rgba(255, 215, 0, 0.2);
+                                border-radius: 8px;
+                                overflow: hidden;
+                            }
+                            .modal-search-input {
+                                background: transparent !important;
+                                border: none !important;
+                                color: #fff !important;
+                            }
+                            .modal-search-input:focus {
+                                box-shadow: none !important;
+                            }
+                            .badge-leg-left {
+                                background: rgba(16, 185, 129, 0.15) !important;
+                                color: #10b981 !important;
+                                border: 1px solid rgba(16, 185, 129, 0.3) !important;
+                                font-weight: 600;
+                                padding: 0.35rem 0.6rem;
+                            }
+                            .badge-leg-right {
+                                background: rgba(59, 130, 246, 0.15) !important;
+                                color: #60a5fa !important;
+                                border: 1px solid rgba(59, 130, 246, 0.3) !important;
+                                font-weight: 600;
+                                padding: 0.35rem 0.6rem;
+                            }
+                            .badge-level {
+                                background: rgba(255, 255, 255, 0.08) !important;
+                                color: #e2e8f0 !important;
+                                border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                                font-weight: 600;
+                                padding: 0.35rem 0.5rem;
+                            }
+                            .mini-member-avatar {
+                                width: 32px;
+                                height: 32px;
+                                border-radius: 50%;
+                                border: 2px solid;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                background: rgba(0, 0, 0, 0.4);
+                                flex-shrink: 0;
+                            }
+                            .btn-filter-leg.active {
+                                background: #ffd700 !important;
+                                color: #000 !important;
+                                border-color: #ffd700 !important;
+                                font-weight: 700;
+                            }
+                            .btn-filter-status.active {
+                                background: #3b82f6 !important;
+                                color: #fff !important;
+                                border-color: #3b82f6 !important;
+                                font-weight: 700;
+                            }
+
                             /* Beautiful CSS Styles for the MLM Binary Referral Tree */
                             /* Tree Zoom Dock Above Viewport */
                             .tree-zoom-dock {
@@ -1164,6 +1425,213 @@ if ($refuser->id < $myintid) {
                         <div style="height: 100px;"></div>
                         <hr class="my-5" />
 
+                        <!-- All Tree Under User Modal -->
+                        <div class="modal fade" id="allTreeModal" tabindex="-1" aria-labelledby="allTreeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content" style="background: linear-gradient(145deg, #131322, #0c0c18); border: 1px solid rgba(255, 215, 0, 0.25); border-radius: 18px; color: #fff; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);">
+                                    <div class="modal-header border-0 pb-0" style="padding: 1.5rem 1.75rem 0.75rem;">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="stats-icon-wrapper" style="background: rgba(255, 215, 0, 0.15); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 12px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;">
+                                                <i class="bx bx-sitemap" style="color: #ffd700; font-size: 1.5rem;"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="modal-title text-white fw-bold mb-0" id="allTreeModalLabel">
+                                                    All Tree Members Under {{ $refuser->name }}
+                                                </h5>
+                                                <div class="text-muted small mt-1">
+                                                    UID: <strong class="text-warning">{{ $refuser->uid ?? $refuser->id }}</strong> &bull; Total <strong class="text-white">{{ number_format($leftCount + $rightCount) }}</strong> members placed across downline communities
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body" style="padding: 1.25rem 1.75rem;">
+                                        <!-- Top Summary Stat Cards -->
+                                        <div class="row g-3 mb-3">
+                                            <div class="col-md-4 col-sm-6">
+                                                <div class="modal-stat-card">
+                                                    <div class="stat-icon-wrap left-icon"><i class="bx bx-left-arrow-circle"></i></div>
+                                                    <div>
+                                                        <div class="stat-label">Left Community</div>
+                                                        <div class="stat-value">{{ number_format($leftCount) }} <span class="stat-sub">Members</span></div>
+                                                        <div class="stat-desc">Sub: <strong class="text-success">{{ number_format($leftSub, 2) }} USDT</strong> | Stake: <strong class="text-warning">{{ number_format($leftStake, 2) }} USDT</strong></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6">
+                                                <div class="modal-stat-card">
+                                                    <div class="stat-icon-wrap right-icon"><i class="bx bx-right-arrow-circle"></i></div>
+                                                    <div>
+                                                        <div class="stat-label">Right Community</div>
+                                                        <div class="stat-value">{{ number_format($rightCount) }} <span class="stat-sub">Members</span></div>
+                                                        <div class="stat-desc">Sub: <strong class="text-success">{{ number_format($rightSub, 2) }} USDT</strong> | Stake: <strong class="text-warning">{{ number_format($rightStake, 2) }} USDT</strong></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
+                                                <div class="modal-stat-card">
+                                                    <div class="stat-icon-wrap total-icon"><i class="bx bx-group"></i></div>
+                                                    <div>
+                                                        <div class="stat-label">Total Downline Business</div>
+                                                        <div class="stat-value text-warning">{{ number_format($leftSub + $rightSub + $leftStake + $rightStake, 2) }} <span class="stat-sub">USDT</span></div>
+                                                        <div class="stat-desc">Total Sub: <strong class="text-white">{{ number_format($leftSub + $rightSub, 2) }} USDT</strong> | Stake: <strong class="text-white">{{ number_format($leftStake + $rightStake, 2) }} USDT</strong></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Filter and Search Toolbar -->
+                                        <div class="p-3 mb-3" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px;">
+                                            <div class="row g-2 align-items-center">
+                                                <div class="col-lg-4 col-md-5">
+                                                    <div class="input-group input-group-sm modal-search-wrap">
+                                                        <span class="input-group-text bg-transparent border-0 text-warning"><i class="bx bx-search"></i></span>
+                                                        <input type="text" id="allTreeSearchInput" class="form-control form-control-sm modal-search-input" placeholder="Search by UID or Name..." oninput="filterAllTreeTable()">
+                                                        <button type="button" class="btn btn-sm btn-outline-secondary text-white border-0" onclick="clearTreeSearch()" title="Clear Search"><i class="bx bx-x"></i></button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8 col-md-7 d-flex justify-content-md-end flex-wrap align-items-center gap-2">
+                                                    <!-- Leg Filter -->
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button type="button" class="btn btn-outline-warning btn-filter-leg active" data-leg="all" onclick="filterLeg('all', this)">All Legs ({{ $leftCount + $rightCount }})</button>
+                                                        <button type="button" class="btn btn-outline-warning btn-filter-leg" data-leg="Left" onclick="filterLeg('Left', this)"><i class="bx bx-left-arrow-alt"></i> Left ({{ $leftCount }})</button>
+                                                        <button type="button" class="btn btn-outline-warning btn-filter-leg" data-leg="Right" onclick="filterLeg('Right', this)"><i class="bx bx-right-arrow-alt"></i> Right ({{ $rightCount }})</button>
+                                                    </div>
+                                                    <!-- Status Filter -->
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button type="button" class="btn btn-outline-secondary text-white btn-filter-status active" data-status="all" onclick="filterStatus('all', this)">All</button>
+                                                        <button type="button" class="btn btn-outline-secondary text-white btn-filter-status" data-status="active" onclick="filterStatus('active', this)">Active</button>
+                                                        <button type="button" class="btn btn-outline-secondary text-white btn-filter-status" data-status="inactive" onclick="filterStatus('inactive', this)">Inactive</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">
+                                                <span>Showing <strong id="visibleTreeCount" class="text-warning">{{ count($allDownlineMembers) }}</strong> of {{ count($allDownlineMembers) }} downline members</span>
+                                                <span><i class="bx bx-info-circle me-1"></i>Click "View in Tree" to center the diagram on any member</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Members Table -->
+                                        <div class="table-responsive" style="max-height: 520px; overflow-y: auto; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px;">
+                                            <table class="table table-dark table-hover align-middle mb-0" id="allTreeMembersTable" style="background: transparent;">
+                                                <thead style="position: sticky; top: 0; z-index: 10; background: #16162a; border-bottom: 2px solid rgba(255, 215, 0, 0.2);">
+                                                    <tr style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255, 255, 255, 0.7);">
+                                                        <th style="width: 50px;" class="ps-3">#</th>
+                                                        <th>Member</th>
+                                                        <th>Community Leg</th>
+                                                        <th>Level</th>
+                                                        <th>Direct Sponsor</th>
+                                                        <th>Subscription</th>
+                                                        <th>Staking</th>
+                                                        <th>Status</th>
+                                                        <th>Joined</th>
+                                                        <th class="text-end pe-3">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @forelse($allDownlineMembers as $index => $m)
+                                                        @php
+                                                        $mSub = (float) ($downlineSubs[$m['id']] ?? 0);
+                                                        $mStake = (float) ($downlineStakes[$m['id']] ?? 0);
+                                                        $isActive = $mSub > 0;
+                                                        $sponsor = isset($customersMap[$m['referral']]) ? $customersMap[$m['referral']] : null;
+                                                        @endphp
+                                                        <tr class="alltree-row" data-side="{{ $m['side'] }}" data-status="{{ $isActive ? 'active' : 'inactive' }}" data-search="{{ strtolower($m['uid'] . ' ' . $m['name']) }}" style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
+                                                            <td class="text-muted ps-3">{{ $index + 1 }}</td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center gap-2">
+                                                                    <div class="mini-member-avatar {{ $isActive ? 'border-success' : 'border-danger' }}">
+                                                                        <img src="/tst/goldenlogo.png" alt="" style="height: 18px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="fw-bold text-white">{{ $m['name'] }}</div>
+                                                                        <div class="text-muted small">ID: <span class="text-warning">{{ $m['uid'] }}</span>
+                                                                            <span onclick="copyUid(event, '{{ $m['uid'] }}')" class="copy-icon" title="Copy UID" style="cursor: pointer; color: #ffd700; margin-left: 4px;"><i class="bx bx-copy"></i></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                @if ($m['side'] === 'Left')
+                                                                    <span class="badge badge-leg-left"><i class="bx bx-left-arrow-alt me-1"></i>Left Leg</span>
+                                                                @else
+                                                                    <span class="badge badge-leg-right"><i class="bx bx-right-arrow-alt me-1"></i>Right Leg</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge badge-level">Level {{ $m['level'] }}</span>
+                                                            </td>
+                                                            <td>
+                                                                @if ($sponsor)
+                                                                    <div class="text-white small fw-semibold">{{ $sponsor->name }}</div>
+                                                                    <div class="text-muted small">UID: {{ $sponsor->uid }}</div>
+                                                                @else
+                                                                    <span class="text-muted small">-</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                @if ($mSub > 0)
+                                                                    <span class="text-success fw-bold">{{ number_format($mSub, 2) }} USDT</span>
+                                                                @else
+                                                                    <span class="text-muted small">0.00 USDT</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                @if ($mStake > 0)
+                                                                    <span class="text-warning fw-bold">{{ number_format($mStake, 2) }} USDT</span>
+                                                                @else
+                                                                    <span class="text-muted small">0.00 USDT</span>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                @if ($isActive)
+                                                                    <span class="badge" style="background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3);"><i class="bx bx-check-circle me-1"></i>Active</span>
+                                                                @else
+                                                                    <span class="badge" style="background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid rgba(231, 76, 60, 0.3);"><i class="bx bx-x-circle me-1"></i>Inactive</span>
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-muted small">
+                                                                {{ $m['created_at'] ? date('M d, Y', strtotime($m['created_at'])) : '-' }}
+                                                            </td>
+                                                            <td class="text-end pe-3">
+                                                                <a href="/dashboard/reftree/{{ $m['id'] }}" class="btn btn-xs btn-outline-warning" title="Center tree on this member" style="font-size: 0.75rem; padding: 4px 10px; border-radius: 6px;">
+                                                                    <i class="bx bx-git-repo-forked me-1"></i> View in Tree
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr id="noDownlineRow">
+                                                            <td colspan="10" class="text-center py-5">
+                                                                <div class="py-4">
+                                                                    <i class="bx bx-sitemap text-warning" style="font-size: 3.5rem;"></i>
+                                                                    <h6 class="text-white mt-3 fw-bold">No Downline Tree Members Found</h6>
+                                                                    <p class="text-muted small mb-0">This user does not have any members placed in their left or right community tree yet.</p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforelse
+                                                    <tr id="noFilterMatchRow" style="display: none;">
+                                                        <td colspan="10" class="text-center py-5 text-muted">
+                                                            <i class="bx bx-search-alt-2 fs-1 text-warning d-block mb-2"></i>
+                                                            No members match your search or filter criteria.
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer border-0 pt-0" style="padding: 0.75rem 1.75rem 1.5rem;">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                        <a href="/dashboard/reftree/{{ $refuser->id }}" class="btn btn-warning btn-sm">
+                                            <i class="bx bx-refresh me-1"></i> Refresh Tree
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Footer -->
                         @include('dashboard.dcards.footer')
                         <!-- / Footer -->
@@ -1323,6 +1791,65 @@ if ($refuser->id < $myintid) {
             const walk = (x - startX) * 1.5; // Scroll speed scaling
             slider.scrollLeft = scrollLeft - walk;
         });
+
+        // Filter functionality for All Tree Modal
+        let currentLegFilter = 'all';
+        let currentStatusFilter = 'all';
+
+        function filterAllTreeTable() {
+            const searchVal = (document.getElementById('allTreeSearchInput')?.value || '').toLowerCase().trim();
+            const rows = document.querySelectorAll('.alltree-row');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const rowSearch = row.getAttribute('data-search') || '';
+                const rowSide = row.getAttribute('data-side') || '';
+                const rowStatus = row.getAttribute('data-status') || '';
+
+                const matchesSearch = !searchVal || rowSearch.includes(searchVal);
+                const matchesLeg = currentLegFilter === 'all' || rowSide === currentLegFilter;
+                const matchesStatus = currentStatusFilter === 'all' || rowStatus === currentStatusFilter;
+
+                if (matchesSearch && matchesLeg && matchesStatus) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            const countDisplay = document.getElementById('visibleTreeCount');
+            if (countDisplay) {
+                countDisplay.innerText = visibleCount;
+            }
+
+            const noMatchRow = document.getElementById('noFilterMatchRow');
+            if (noMatchRow) {
+                noMatchRow.style.display = (visibleCount === 0 && rows.length > 0) ? '' : 'none';
+            }
+        }
+
+        function filterLeg(leg, btn) {
+            currentLegFilter = leg;
+            document.querySelectorAll('.btn-filter-leg').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            filterAllTreeTable();
+        }
+
+        function filterStatus(status, btn) {
+            currentStatusFilter = status;
+            document.querySelectorAll('.btn-filter-status').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            filterAllTreeTable();
+        }
+
+        function clearTreeSearch() {
+            const input = document.getElementById('allTreeSearchInput');
+            if (input) {
+                input.value = '';
+                filterAllTreeTable();
+            }
+        }
 
     </script>
 
