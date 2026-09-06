@@ -376,36 +376,43 @@ async function decryptWithPassword(encryptedValue, password) {
 
             $tAllincome = DB::table('customer_transactions')
                 ->where('csId', $v->id)
+                ->where('tStatus', '1')
                 ->get();
             $tProfitincome = DB::table('customer_transactions')
                 ->where('csId', $v->id)
                 ->where('tType', 'pincome')
+                ->where('tStatus', '1')
                 ->get();
             $tReferalincome = DB::table('customer_transactions')
                 ->where('csId', $v->id)
                 ->where('tType', 'refincome')
+                ->where('tStatus', '1')
                 ->get();
             $tLevelincome = DB::table('customer_transactions')
                 ->where('csId', $v->id)
                 ->where('tType', 'levincome')
+                ->where('tStatus', '1')
                 ->get();
 
+            $sumTrans = function($collection) {
+                return (float) $collection->sum(function($tr) {
+                    return (float) (is_array($tr) ? ($tr['tAmount'] ?? $tr['tamount'] ?? 0) : ($tr->tAmount ?? $tr->tamount ?? 0));
+                });
+            };
 
-            $twthAllincome = DB::table('customer_transactions')
+            $twthAllincome = $sumTrans(DB::table('customer_transactions')
                 ->where('csId', $v->id)
                 ->where('wStatus', '1')
-                ->get()->sum('tAmount');
+                ->where('tStatus', '1')
+                ->get());
 
-
-            $totProfitincome = $tProfitincome->where('wStatus', '0')->sum('tAmount');
-            $totLevelincome = $tLevelincome->where('wStatus', '0')->sum('tAmount');
-            $totReferalincome = $tReferalincome->where('wStatus', '0')->sum('tAmount');
-            $totBalance = $tAllincome->sum('tAmount');
-            // dd($totBalance);
-            $tAllincome->sum('tAmount');
-            $withProfitincome = $tProfitincome->where('wStatus', '1')->sum('tAmount');
-            $withLevelincome = $tLevelincome->where('wStatus', '1')->sum('tAmount');
-            $withReferalincome = $tReferalincome->where('wStatus', '1')->sum('tAmount');
+            $totProfitincome = $sumTrans($tProfitincome->where('wStatus', '0'));
+            $totLevelincome = $sumTrans($tLevelincome->where('wStatus', '0'));
+            $totReferalincome = $sumTrans($tReferalincome->where('wStatus', '0'));
+            $totBalance = $sumTrans($tAllincome);
+            $withProfitincome = $sumTrans($tProfitincome->where('wStatus', '1'));
+            $withLevelincome = $sumTrans($tLevelincome->where('wStatus', '1'));
+            $withReferalincome = $sumTrans($tReferalincome->where('wStatus', '1'));
 
             // $dt['profit'] = $profit + $withProfitincome;
             // $dt['totalevincome'] = $totalevincome + $withLevelincome;

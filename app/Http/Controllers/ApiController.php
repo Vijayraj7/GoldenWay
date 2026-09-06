@@ -1246,24 +1246,37 @@ updateBalances();
         }
         $tAllincome = DB::table('customer_transactions')
             ->where('csId', $usid)
+            ->where('tStatus', '1')
             ->get();
         $tProfitincome = DB::table('customer_transactions')
             ->where('csId', $usid)
             ->where('tType', 'pincome')
+            ->where('tStatus', '1')
             ->get();
         $tReferalincome = DB::table('customer_transactions')
             ->where('csId', $usid)
             ->where('tType', 'refincome')
+            ->where('tStatus', '1')
             ->get();
         $tLevelincome = DB::table('customer_transactions')
             ->where('csId', $usid)
             ->where('tType', 'levincome')
+            ->where('tStatus', '1')
             ->get();
 
-        $totProfitincome = $tProfitincome->where('wStatus', '0')->sum('tAmount');
-        $totLevelincome = $tLevelincome->where('wStatus', '0')->sum('tAmount');
-        $totReferalincome = $tReferalincome->where('wStatus', '0')->sum('tAmount');
-        $totBalance = $tAllincome->sum('tAmount');
+        $sumTransAmount = function($collection) {
+            return (float) $collection->sum(function($tr) {
+                return (float) (is_array($tr) ? ($tr['tAmount'] ?? $tr['tamount'] ?? 0) : ($tr->tAmount ?? $tr->tamount ?? 0));
+            });
+        };
+
+        $totProfitincome = $sumTransAmount($tProfitincome->where('wStatus', '0'));
+        $totLevelincome = $sumTransAmount($tLevelincome->where('wStatus', '0'));
+        $totReferalincome = $sumTransAmount($tReferalincome->where('wStatus', '0'));
+        $totBalance = $sumTransAmount($tAllincome);
+        if ($totBalance < 0) {
+            $totBalance = 0.0;
+        }
 
 
         $tuserid = (float) $prs['tuserid'];
@@ -1279,7 +1292,20 @@ updateBalances();
                 ]);
             }
         }
-        $gross_amount = $amnt + (isset($prs['fuel']) ? (float)$prs['fuel'] : 0);
+
+        // If allincome, ensure fee (fuel) and net receivable amount are properly set
+        if ($prs['pname'] == 'allincome') {
+            $fuel = isset($prs['fuel']) ? (float)$prs['fuel'] : 0.0;
+            // If fuel was not passed or is 0, but user submitted gross amount >= 20:
+            if ($fuel <= 0.0 && $amnt >= 20.0) {
+                $fuel = round($amnt * 10 / 100, 2);
+                $amnt = round($amnt - $fuel, 2);
+                $prs['fuel'] = strval($fuel);
+                $prs['amount'] = strval($amnt);
+            }
+        }
+
+        $gross_amount = round($amnt + (isset($prs['fuel']) ? (float)$prs['fuel'] : 0), 2);
         if ($prs['pname'] == 'pollincome') {
             if ($gross_amount < 10) {
                 return redirect()->back()->withInput($rqs->all())->withErrors([
@@ -1303,14 +1329,17 @@ updateBalances();
         } else if ($prs['pname'] == 'allincome') {
             $maxmnt = $totBalance - ($totBalance * 10 / 100);
         } else if ($prs['pname'] == 'transfer') {
+            $transferSum = DB::table('customer_transfers')->where('csId', $usid)->where('tStatus', '1')->get()->sum(function($tr) {
+                return (float) (is_array($tr) ? ($tr['tAmount'] ?? $tr['tamount'] ?? 0) : ($tr->tAmount ?? $tr->tamount ?? 0));
+            });
             if (isset($prs['trnfrc'])) {
                 if ($prs['trnfrc'] == '1') {
-                    $maxmnt = DB::table('customer_transfers')->where('csId', $usid)->get()->sum('tAmount');
+                    $maxmnt = $transferSum;
                 } else {
-                    $maxmnt = $totBalance + DB::table('customer_transfers')->where('csId', $usid)->get()->sum('tAmount');
+                    $maxmnt = $totBalance + $transferSum;
                 }
             } else {
-                $maxmnt = $totBalance + DB::table('customer_transfers')->where('csId', $usid)->get()->sum('tAmount');
+                $maxmnt = $totBalance + $transferSum;
             }
         } else if ($prs['pname'] == 'pollincome') {
             $total_poll_income = Schema::hasTable('customer_poll_transactions') ? (float) DB::table('customer_poll_transactions')->where('csId', $usid)->where('tType', 'pollincome')->where('tamount', '>', 0)->sum('tamount') : 0.0;
@@ -1328,10 +1357,19 @@ updateBalances();
         } else {
         }
 
-        if ($amnt > $maxmnt) {
-            return redirect()->back()->withInput($rqs->all())->withErrors([
-                'image' => "No Enough Balance",
-            ]);
+        if ($prs['pname'] == 'allincome') {
+            $isBalanceSufficient = (round($gross_amount, 2) <= round($totBalance, 2) + 0.01) && (round($amnt, 2) <= round($maxmnt, 2) + 0.01);
+            if (!$isBalanceSufficient) {
+                return redirect()->back()->withInput($rqs->all())->withErrors([
+                    'image' => "No Enough Balance",
+                ]);
+            }
+        } else {
+            if (round($amnt, 2) > round($maxmnt, 2) + 0.01) {
+                return redirect()->back()->withInput($rqs->all())->withErrors([
+                    'image' => "No Enough Balance",
+                ]);
+            }
         }
 
         $products = DB::table("customer_plans")->where('csId', $prs['csId'])->where('pstatus', '0')->whereIn('pname', ['reinvest', 'reinvest_compound'])->get();

@@ -542,7 +542,12 @@ ini_set('display_errors', 1);
                                 ->where('csId', $v->id)
                                 ->where('tStatus', '1')
                                 ->get()
-                                ->sum('tAmount');
+                                ->sum(function($tr) {
+                                    return (float) (is_array($tr) ? ($tr['tAmount'] ?? $tr['tamount'] ?? 0) : ($tr->tAmount ?? $tr->tamount ?? 0));
+                                });
+                            if ($withrawable_raw < 0) {
+                                $withrawable_raw = 0.0;
+                            }
                             $withrawable = number_format($withrawable_raw, 2);
                             $withrawable_numeric = number_format($withrawable_raw, 2, '.', '');
                             ?>
@@ -610,7 +615,7 @@ ini_set('display_errors', 1);
                                                 <label class="wth-label">Withdrawal Amount</label>
                                                 <div class="wth-input-group" style="display: flex; overflow: hidden; align-items: stretch;">
                                                     <span class="wth-input-prefix">USDT</span>
-                                                    <input type="number" min="20" step="any" max="{{ $withrawable_numeric }}" required id="input_amount_element" class="wth-input-inner" placeholder="Min 20 — Max {{ $withrawable }}" />
+                                                    <input type="number" min="20" step="any" max="{{ $withrawable_numeric }}" required id="input_amount_element" class="wth-input-inner" placeholder="Min 20 — Max {{ $withrawable }}" value="{{ (old('amount') && old('fuel')) ? number_format((float)old('amount') + (float)old('fuel'), 2, '.', '') : (old('amount') ? old('amount') : '') }}" />
                                                     <button type="button" id="max_withdraw_btn" style="background: rgba(245, 197, 24, 0.15); border: none; border-left: 1px solid rgba(255, 255, 255, 0.08); color: #f5c518; font-weight: 700; font-size: 0.75rem; padding: 0 16px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap;">MAX</button>
                                                 </div>
                                             </div>
@@ -769,22 +774,31 @@ ini_set('display_errors', 1);
         var element_outvalue_hidden_amnt = document.getElementById('hid_amount');
         var element_outvalue_hidden_fuel = document.getElementById('hid_fuel');
 
-        element_inpamnt.addEventListener('input', function() {
-            var inputamount = Number(this.value);
+        function updateWithdrawCalculations() {
+            var inputamount = Number(element_inpamnt.value);
+            if (isNaN(inputamount) || inputamount < 0) {
+                inputamount = 0;
+            }
             var fuel_amount = inputamount * 10 / 100;
             var receivable_amount = inputamount - fuel_amount;
             element_display_recamnt.innerText = receivable_amount.toFixed(2);
             element_fee_display.innerText = fuel_amount.toFixed(2) + ' USDT';
-            element_outvalue_hidden_fuel.value = fuel_amount.toString();
-            element_outvalue_hidden_amnt.value = receivable_amount.toString();
-        });
+            element_outvalue_hidden_fuel.value = fuel_amount.toFixed(2);
+            element_outvalue_hidden_amnt.value = receivable_amount.toFixed(2);
+        }
+
+        element_inpamnt.addEventListener('input', updateWithdrawCalculations);
+        element_inpamnt.addEventListener('change', updateWithdrawCalculations);
+
+        if (element_inpamnt.value) {
+            updateWithdrawCalculations();
+        }
 
         // Max button click handler
         document.getElementById('max_withdraw_btn').addEventListener('click', function() {
             var maxVal = Number('{{ $withrawable_numeric }}');
             element_inpamnt.value = maxVal;
-            var event = new Event('input', { bubbles: true });
-            element_inpamnt.dispatchEvent(event);
+            updateWithdrawCalculations();
         });
 
         // Submit handler
@@ -801,7 +815,7 @@ ini_set('display_errors', 1);
                 alert('Minimum withdrawal is 20 USDT');
                 return;
             }
-            if (amo > max) {
+            if (amo > max + 0.001) {
                 alert('Insufficient balance');
                 return;
             }
@@ -809,6 +823,13 @@ ini_set('display_errors', 1);
                 alert('Transaction password is required');
                 return;
             }
+
+            // Explicitly sync hidden fields right before submitting
+            var fuel_amount = amo * 10 / 100;
+            var receivable_amount = amo - fuel_amount;
+            document.getElementById('hid_fuel').value = fuel_amount.toFixed(2);
+            document.getElementById('hid_amount').value = receivable_amount.toFixed(2);
+
             $('#proccess_tic').modal('show');
             (async () => {
                 await new Promise(resolve => setTimeout(resolve, 4000));
