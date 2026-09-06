@@ -105,12 +105,37 @@ if ($refuser->id < $myintid) {
                         @php
                         // Fetch downline stats efficiently with all needed member attributes
                         $customersMap = DB::table('customers')->select('id', 'uid', 'name', 'phone', 'left', 'right', 'referral', 'created_at')->get()->keyBy('id');
+                        $GLOBALS['customersMap'] = $customersMap;
 
                         if (!function_exists('getDownlineIds')) {
-                        function getDownlineIds($startId, $customersMap)
+                        function getDownlineIds($startId, $customersMap = null)
                         {
+                        if (!$customersMap) {
+                            $customersMap = $GLOBALS['customersMap'] ?? [];
+                        }
                         if (!$startId || !isset($customersMap[$startId])) {
-                        return [];
+                            if ($startId) {
+                                $ids = [];
+                                $queue = [$startId];
+                                $visited = [$startId => true];
+                                while (!empty($queue)) {
+                                    $currId = array_shift($queue);
+                                    $ids[] = $currId;
+                                    $row = DB::table('customers')->where('id', $currId)->select('left', 'right')->first();
+                                    if ($row) {
+                                        if ($row->left && !isset($visited[$row->left])) {
+                                            $visited[$row->left] = true;
+                                            $queue[] = $row->left;
+                                        }
+                                        if ($row->right && !isset($visited[$row->right])) {
+                                            $visited[$row->right] = true;
+                                            $queue[] = $row->right;
+                                        }
+                                    }
+                                }
+                                return $ids;
+                            }
+                            return [];
                         }
                         $ids = [];
                         $queue = [$startId];
@@ -208,6 +233,9 @@ if ($refuser->id < $myintid) {
                         ->select('csId', DB::raw('SUM(pamount) as total'))
                         ->pluck('total', 'csId')
                         ->toArray();
+
+                        $GLOBALS['downlineSubs'] = $downlineSubs;
+                        $GLOBALS['downlineStakes'] = $downlineStakes;
 
                         $leftSub = 0;
                         foreach ($leftIds as $lid) {
@@ -428,6 +456,9 @@ if ($refuser->id < $myintid) {
                                 function renderNewUserTree($user, $currentDepth = 0, $maxDepth = 2, $parentId = null, $placementSide = null, $path = '')
                                 {
                                 global $customersMap, $downlineSubs, $downlineStakes;
+                                $map = $customersMap ?? ($GLOBALS['customersMap'] ?? []);
+                                $subsMap = $downlineSubs ?? ($GLOBALS['downlineSubs'] ?? []);
+                                $stakesMap = $downlineStakes ?? ($GLOBALS['downlineStakes'] ?? []);
 
                                 if ($user === null) {
                                 // Render vacant slots up to the maximum depth
@@ -473,20 +504,27 @@ if ($refuser->id < $myintid) {
                                 }
                                 return;
                                 }
-                                // In-memory user active plan statistics from preloaded map
-                                $pltot = (float) ($downlineSubs[$user->id] ?? 0);
-                                $stake_total = (float) ($downlineStakes[$user->id] ?? 0);
+                                // User active plan statistics with DB fallback
+                                $pltot = isset($subsMap[$user->id]) ? (float) $subsMap[$user->id] : (float) DB::table('customer_subs')->where('csId', $user->id)->sum('sub_amount');
+                                $stake_total = isset($stakesMap[$user->id]) ? (float) $stakesMap[$user->id] : (float) DB::table('customer_plans')->where('csId', $user->id)->where('pstatus', '1')->sum('pamount');
 
-                                // Compute left/right downline subscription totals from preloaded map
-                                $downlineLeftIds = getDownlineIds($user->left, $customersMap);
-                                $downlineRightIds = getDownlineIds($user->right, $customersMap);
+                                // Compute left/right downline subscription totals from preloaded map or fallback
+                                $downlineLeftIds = getDownlineIds($user->left, $map);
+                                $downlineRightIds = getDownlineIds($user->right, $map);
                                 $downlineLeftSub = 0;
                                 foreach ($downlineLeftIds as $dlId) {
-                                    $downlineLeftSub += (float) ($downlineSubs[$dlId] ?? 0);
+                                    $downlineLeftSub += (float) ($subsMap[$dlId] ?? 0);
                                 }
+                                if ($downlineLeftSub == 0 && count($downlineLeftIds) > 0) {
+                                    $downlineLeftSub = (float) DB::table('customer_subs')->whereIn('csId', $downlineLeftIds)->sum('sub_amount');
+                                }
+
                                 $downlineRightSub = 0;
                                 foreach ($downlineRightIds as $drId) {
-                                    $downlineRightSub += (float) ($downlineSubs[$drId] ?? 0);
+                                    $downlineRightSub += (float) ($subsMap[$drId] ?? 0);
+                                }
+                                if ($downlineRightSub == 0 && count($downlineRightIds) > 0) {
+                                    $downlineRightSub = (float) DB::table('customer_subs')->whereIn('csId', $downlineRightIds)->sum('sub_amount');
                                 }
 
                                 $isActive = $pltot > 0;
@@ -533,10 +571,16 @@ if ($refuser->id < $myintid) {
                                             echo ' </a>';
                                         echo ' </div>';
 
-                                    // Depth limited recursion for Left/Right legs
+                                    // Depth limited recursion for Left/Right legs with fallback
                                     if ($currentDepth < $maxDepth) {
-                                        $leftUser = $user->left ? ($customersMap[$user->left] ?? null) : null;
-                                        $rightUser = $user->right ? ($customersMap[$user->right] ?? null) : null;
+                                        $leftUser = null;
+                                        if ($user->left) {
+                                            $leftUser = $map[$user->left] ?? DB::table('customers')->where('id', $user->left)->first();
+                                        }
+                                        $rightUser = null;
+                                        if ($user->right) {
+                                            $rightUser = $map[$user->right] ?? DB::table('customers')->where('id', $user->right)->first();
+                                        }
 
                                         echo ' <div class="tree-children">';
                                             echo ' <div class="tree-branch left-branch">';
