@@ -185,22 +185,24 @@ if ($refuser->id < $myintid) {
                         }
 
                         $allDownlineMembers = getAllDownlineMembers($refuser, $customersMap);
+                        $maxTreeLevel = !empty($allDownlineMembers) ? max(array_column($allDownlineMembers, 'level')) : 0;
                         $leftIds = array_column(array_filter($allDownlineMembers, function($m) { return $m['side'] === 'Left'; }), 'id');
                         $rightIds = array_column(array_filter($allDownlineMembers, function($m) { return $m['side'] === 'Right'; }), 'id');
                         $leftCount = count($leftIds);
                         $rightCount = count($rightIds);
 
                         $allDownlineIds = array_column($allDownlineMembers, 'id');
+                        $allQueriedIds = array_unique(array_merge([$refuser->id], $allDownlineIds));
 
-                        $downlineSubs = empty($allDownlineIds) ? [] : DB::table('customer_subs')
-                        ->whereIn('csId', $allDownlineIds)
+                        $downlineSubs = empty($allQueriedIds) ? [] : DB::table('customer_subs')
+                        ->whereIn('csId', $allQueriedIds)
                         ->groupBy('csId')
                         ->select('csId', DB::raw('SUM(sub_amount) as total'))
                         ->pluck('total', 'csId')
                         ->toArray();
 
-                        $downlineStakes = empty($allDownlineIds) ? [] : DB::table('customer_plans')
-                        ->whereIn('csId', $allDownlineIds)
+                        $downlineStakes = empty($allQueriedIds) ? [] : DB::table('customer_plans')
+                        ->whereIn('csId', $allQueriedIds)
                         ->where('pstatus', '1')
                         ->groupBy('csId')
                         ->select('csId', DB::raw('SUM(pamount) as total'))
@@ -362,16 +364,36 @@ if ($refuser->id < $myintid) {
                         </div>
 
                         @php
-                        $treeDepth = (int) request()->get('depth', 2);
-                        if ($treeDepth < 2 || $treeDepth > 4) {
-                            $treeDepth = 2;
+                        $reqDepth = request()->get('depth');
+                        $effectiveMaxDepth = max(2, min($maxTreeLevel, 10));
+
+                        if ($reqDepth === 'max') {
+                            $treeDepth = $effectiveMaxDepth;
+                            $isMaxSelected = true;
+                        } else {
+                            $treeDepth = (int) ($reqDepth ?? 2);
+                            if ($treeDepth < 2) {
+                                $treeDepth = 2;
+                            }
+                            if ($treeDepth > 10) {
+                                $treeDepth = 10;
+                            }
+                            $isMaxSelected = ($reqDepth === 'max' || ($reqDepth !== null && (int)$reqDepth >= $effectiveMaxDepth && $maxTreeLevel > 2));
                         }
                         @endphp
 
                         <!-- Tree UI Controls Header -->
                         <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
                             <div>
-                                <h5 class="text-white mb-0" style="font-weight: 600; font-size: 15px; letter-spacing: 0.5px;">Referral Tree View</h5>
+                                <div class="d-flex align-items-center gap-2 flex-wrap">
+                                    <h5 class="text-white mb-0" style="font-weight: 600; font-size: 15px; letter-spacing: 0.5px;">Referral Tree View</h5>
+                                    <span class="badge badge-max-level" title="Maximum depth level in this user's downline tree">
+                                        <i class="bx bx-layer me-1"></i>Max Depth: {{ $maxTreeLevel }} {{ $maxTreeLevel == 1 ? 'Level' : 'Levels' }}
+                                    </span>
+                                    <span class="badge badge-showing-level" title="Currently rendered tree levels">
+                                        Showing: {{ $treeDepth }} {{ $treeDepth == 1 ? 'Level' : 'Levels' }}
+                                    </span>
+                                </div>
                                 <div class="d-flex gap-2 mt-1">
                                     <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); text-transform: none; font-weight: 600; font-size: 11px; letter-spacing: normal; padding: 0.35rem 0.5rem;">L: {{ number_format($leftSub, 2) }} USDT</span>
                                     <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); text-transform: none; font-weight: 600; font-size: 11px; letter-spacing: normal; padding: 0.35rem 0.5rem;">R: {{ number_format($rightSub, 2) }} USDT</span>
@@ -380,9 +402,15 @@ if ($refuser->id < $myintid) {
                             <div class="d-flex align-items-center gap-2 flex-wrap">
                                 <div class="tree-depth-dock">
                                     <span class="depth-title text-muted small me-1"><i class="bx bx-layer"></i> Levels:</span>
-                                    <a href="{{ request()->fullUrlWithQuery(['depth' => 2]) }}" class="btn-depth {{ $treeDepth == 2 ? 'active' : '' }}">2 Levels</a>
-                                    <a href="{{ request()->fullUrlWithQuery(['depth' => 3]) }}" class="btn-depth {{ $treeDepth == 3 ? 'active' : '' }}">3 Levels</a>
-                                    <a href="{{ request()->fullUrlWithQuery(['depth' => 4]) }}" class="btn-depth {{ $treeDepth == 4 ? 'active' : '' }}">4 Levels</a>
+                                    <a href="{{ request()->fullUrlWithQuery(['depth' => 2]) }}" class="btn-depth {{ ($treeDepth == 2 && !$isMaxSelected) ? 'active' : '' }}">2 Levels</a>
+                                    <a href="{{ request()->fullUrlWithQuery(['depth' => 3]) }}" class="btn-depth {{ ($treeDepth == 3 && !$isMaxSelected) ? 'active' : '' }}">3 Levels</a>
+                                    <a href="{{ request()->fullUrlWithQuery(['depth' => 4]) }}" class="btn-depth {{ ($treeDepth == 4 && !$isMaxSelected) ? 'active' : '' }}">4 Levels</a>
+                                    @if ($maxTreeLevel >= 5)
+                                        <a href="{{ request()->fullUrlWithQuery(['depth' => 5]) }}" class="btn-depth {{ ($treeDepth == 5 && !$isMaxSelected) ? 'active' : '' }}">5 Levels</a>
+                                    @endif
+                                    <a href="{{ request()->fullUrlWithQuery(['depth' => 'max']) }}" class="btn-depth btn-depth-max {{ $isMaxSelected ? 'active' : '' }}" title="View all tree levels under this user">
+                                        <i class="bx bx-expand-alt me-1"></i>Max {{ $maxTreeLevel > 0 ? "({$maxTreeLevel} " . ($maxTreeLevel == 1 ? 'Lvl' : 'Lvls') . ")" : 'Levels' }}
+                                    </a>
                                 </div>
                                 <div class="tree-zoom-dock">
                                     <button class="btn btn-sm btn-zoom-dock" onclick="zoomTree(1.1)" title="Zoom In"><i class="bx bx-zoom-in"></i></button>
@@ -399,8 +427,10 @@ if ($refuser->id < $myintid) {
                                 if (!function_exists('renderNewUserTree')) {
                                 function renderNewUserTree($user, $currentDepth = 0, $maxDepth = 2, $parentId = null, $placementSide = null, $path = '')
                                 {
+                                global $customersMap, $downlineSubs, $downlineStakes;
+
                                 if ($user === null) {
-                                // Render vacant slots up to the maximum depth — always recurse so all 7 boxes show
+                                // Render vacant slots up to the maximum depth
                                 if ($currentDepth <= $maxDepth) {
                                     $isInner = ($path === 'I');
                                     // Only the pure-left-end and pure-right-end leaf slots are clickable
@@ -422,8 +452,11 @@ if ($refuser->id < $myintid) {
                                     echo '</div>';
                                     echo '</a>';
 
-                                    // Recurse so children of this vacant slot are also drawn
-                                    if ($currentDepth < $maxDepth) {
+                                    // Recurse children for vacant slots:
+                                    // For classic view, recurse up to depth 2 so standard slots show.
+                                    // Beyond depth 2, do not generate empty vacant slots under vacant slots.
+                                    $vacantMaxDepth = min($maxDepth, 2);
+                                    if ($currentDepth < $vacantMaxDepth) {
                                         $leftPath  = ($path === '' || $path === 'L') ? 'L' : 'I';
                                         $rightPath = ($path === '' || $path === 'R') ? 'R' : 'I';
                                         echo '<div class="tree-children">';
@@ -440,84 +473,88 @@ if ($refuser->id < $myintid) {
                                 }
                                 return;
                                 }
-                                // Fetch user active plan statistics 
-                                $pltot=DB::table('customer_subs') ->where('csId', $user->id)->sum('sub_amount');
-                                    $stake_total = DB::table('customer_plans')
-                                    ->where('csId', $user->id)
-                                    ->sum('pamount');
+                                // In-memory user active plan statistics from preloaded map
+                                $pltot = (float) ($downlineSubs[$user->id] ?? 0);
+                                $stake_total = (float) ($downlineStakes[$user->id] ?? 0);
 
-                                    // Compute left/right downline subscription totals
-                                    global $customersMap;
-                                    $downlineLeftIds = getDownlineIds($user->left, $customersMap);
-                                    $downlineRightIds = getDownlineIds($user->right, $customersMap);
-                                    $downlineLeftSub = count($downlineLeftIds) > 0 ? DB::table('customer_subs')->whereIn('csId', $downlineLeftIds)->sum('sub_amount') : 0;
-                                    $downlineRightSub = count($downlineRightIds) > 0 ? DB::table('customer_subs')->whereIn('csId', $downlineRightIds)->sum('sub_amount') : 0;
+                                // Compute left/right downline subscription totals from preloaded map
+                                $downlineLeftIds = getDownlineIds($user->left, $customersMap);
+                                $downlineRightIds = getDownlineIds($user->right, $customersMap);
+                                $downlineLeftSub = 0;
+                                foreach ($downlineLeftIds as $dlId) {
+                                    $downlineLeftSub += (float) ($downlineSubs[$dlId] ?? 0);
+                                }
+                                $downlineRightSub = 0;
+                                foreach ($downlineRightIds as $drId) {
+                                    $downlineRightSub += (float) ($downlineSubs[$drId] ?? 0);
+                                }
 
-                                    $isActive = $pltot > 0;
-                                    $cardClass = $isActive ? 'active-card' : 'inactive-card';
-                                    $statusClass = $isActive ? 'status-active' : 'status-inactive';
-                                    $avatarBorder = $isActive ? 'active-avatar' : 'inactive-avatar';
+                                $isActive = $pltot > 0;
+                                $cardClass = $isActive ? 'active-card' : 'inactive-card';
+                                $statusClass = $isActive ? 'status-active' : 'status-inactive';
+                                $avatarBorder = $isActive ? 'active-avatar' : 'inactive-avatar';
 
-                                    echo '<div class="tree-node-wrapper">';
-                                        echo ' <div class="tree-card-container">';
-                                            echo ' <a href="/dashboard/reftree/' . $user->id . '" class="tree-card-link">';
-                                                echo ' <div class="tree-card ' . $cardClass . '">';
+                                echo '<div class="tree-node-wrapper">';
+                                    echo ' <div class="tree-card-container">';
+                                        echo ' <a href="/dashboard/reftree/' . $user->id . '" class="tree-card-link">';
+                                            echo ' <div class="tree-card ' . $cardClass . '">';
 
-                                                    $downlineTextList = [];
-                                                    if ($downlineLeftSub > 0) {
-                                                        $downlineTextList[] = 'L: ' . number_format($downlineLeftSub, 0) . ' USDT';
-                                                    }
-                                                    if ($downlineRightSub > 0) {
-                                                        $downlineTextList[] = 'R: ' . number_format($downlineRightSub, 0) . ' USDT';
-                                                    }
-                                                    if (!empty($downlineTextList)) {
-                                                        echo '<span class="badge badge-downline" style="background-color: rgba(241, 196, 15, 0.12); color: #f1c40f; border: 1px solid rgba(241, 196, 15, 0.25); text-transform: none; letter-spacing: normal; display: block; margin-bottom: 8px; font-size: 8.5px;">' . implode(' | ', $downlineTextList) . '</span>';
-                                                    }
+                                                $downlineTextList = [];
+                                                if ($downlineLeftSub > 0) {
+                                                    $downlineTextList[] = 'L: ' . number_format($downlineLeftSub, 0) . ' USDT';
+                                                }
+                                                if ($downlineRightSub > 0) {
+                                                    $downlineTextList[] = 'R: ' . number_format($downlineRightSub, 0) . ' USDT';
+                                                }
+                                                if (!empty($downlineTextList)) {
+                                                    echo '<span class="badge badge-downline" style="background-color: rgba(241, 196, 15, 0.12); color: #f1c40f; border: 1px solid rgba(241, 196, 15, 0.25); text-transform: none; letter-spacing: normal; display: block; margin-bottom: 8px; font-size: 8.5px;">' . implode(' | ', $downlineTextList) . '</span>';
+                                                }
 
-                                                    // Avatar picture with status halo
-                                                    echo ' <div class="avatar-wrapper ' . $avatarBorder . '">';
-                                                        echo ' <img src="/tst/goldenlogo.png" alt="Avatar" />';
-                                                        echo ' <span class="status-indicator ' . $statusClass . '"></span>';
-                                                        echo ' </div>';
-
-                                                    // Name, ID, Phone details
-                                                    echo ' <h6 class="member-name" style="display:none">' . htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8') . '</h6>';
-                                                    echo ' <p class="member-name">ID ' . htmlspecialchars($user->uid, ENT_QUOTES, 'UTF-8') . ' <span onclick="copyUid(event, \'' . htmlspecialchars($user->uid, ENT_QUOTES, 'UTF-8') . '\'); event.stopPropagation(); event.preventDefault(); return false;" class="copy-uid-btn" style="cursor: pointer; margin-left: 5px; color: #ffd700; transition: color 0.2s;" onmouseover="this.style.color=\'#fff\'" onmouseout="this.style.color=\'#ffd700\'" title="Copy ID"><i class="bx bx-copy"></i></span></p>';
-
-                                                        // Current user business volume plan total
-                                                        if ($isActive) {
-                                                        echo ' <span class="badge badge-active">Sub ' . number_format($pltot, 0) . ' USDT</span>';
-                                                        echo '<div style="height: 10px;"></div>';
-                                                        echo ' <span class="badge badge-stake">Stake ' . number_format($stake_total, 0) . ' USDT</span>';
-                                                        } else {
-                                                        echo ' <span class="badge badge-inactive">0 USDT</span>';
-                                                        }
-
-                                                        echo ' </div>';
-                                                echo ' </a>';
-                                            echo ' </div>';
-
-                                        // Depth limited recursion for Left/Right legs
-                                        if ($currentDepth < $maxDepth) { $leftUser=$user->left ? DB::table('customers')->where('id', $user->left)->first() : null;
-                                            $rightUser = $user->right ? DB::table('customers')->where('id', $user->right)->first() : null;
-
-                                            echo ' <div class="tree-children">';
-                                                echo ' <div class="tree-branch left-branch">';
-                                                    renderNewUserTree($leftUser, $currentDepth + 1, $maxDepth, $user->id, 'left', ($path === '' || $path === 'L') ? 'L' : 'I');
+                                                // Avatar picture with status halo
+                                                echo ' <div class="avatar-wrapper ' . $avatarBorder . '">';
+                                                    echo ' <img src="/tst/goldenlogo.png" alt="Avatar" />';
+                                                    echo ' <span class="status-indicator ' . $statusClass . '"></span>';
                                                     echo ' </div>';
-                                                echo ' <div class="tree-branch right-branch">';
-                                                    renderNewUserTree($rightUser, $currentDepth + 1, $maxDepth, $user->id, 'right', ($path === '' || $path === 'R') ? 'R' : 'I');
+
+                                                // Name, ID, details
+                                                echo ' <h6 class="member-name" style="display:none">' . htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8') . '</h6>';
+                                                echo ' <p class="member-name">ID ' . htmlspecialchars($user->uid, ENT_QUOTES, 'UTF-8') . ' <span onclick="copyUid(event, \'' . htmlspecialchars($user->uid, ENT_QUOTES, 'UTF-8') . '\'); event.stopPropagation(); event.preventDefault(); return false;" class="copy-uid-btn" style="cursor: pointer; margin-left: 5px; color: #ffd700; transition: color 0.2s;" onmouseover="this.style.color=\'#fff\'" onmouseout="this.style.color=\'#ffd700\'" title="Copy ID"><i class="bx bx-copy"></i></span></p>';
+
+                                                    // Current user business volume plan total
+                                                    if ($isActive) {
+                                                    echo ' <span class="badge badge-active">Sub ' . number_format($pltot, 0) . ' USDT</span>';
+                                                    echo '<div style="height: 10px;"></div>';
+                                                    echo ' <span class="badge badge-stake">Stake ' . number_format($stake_total, 0) . ' USDT</span>';
+                                                    } else {
+                                                    echo ' <span class="badge badge-inactive">0 USDT</span>';
+                                                    }
+
                                                     echo ' </div>';
+                                            echo ' </a>';
+                                        echo ' </div>';
+
+                                    // Depth limited recursion for Left/Right legs
+                                    if ($currentDepth < $maxDepth) {
+                                        $leftUser = $user->left ? ($customersMap[$user->left] ?? null) : null;
+                                        $rightUser = $user->right ? ($customersMap[$user->right] ?? null) : null;
+
+                                        echo ' <div class="tree-children">';
+                                            echo ' <div class="tree-branch left-branch">';
+                                                renderNewUserTree($leftUser, $currentDepth + 1, $maxDepth, $user->id, 'left', ($path === '' || $path === 'L') ? 'L' : 'I');
                                                 echo ' </div>';
-                                            }
+                                            echo ' <div class="tree-branch right-branch">';
+                                                renderNewUserTree($rightUser, $currentDepth + 1, $maxDepth, $user->id, 'right', ($path === '' || $path === 'R') ? 'R' : 'I');
+                                                echo ' </div>';
+                                            echo ' </div>';
+                                        }
 
-                                            echo '</div>';
-                                    }
-                                    }
+                                        echo '</div>';
+                                }
+                                }
 
-                                    // Start tree drawing
-                                    renderNewUserTree($refuser, 0, $treeDepth, null, null, '');
-                                    @endphp
+                                // Start tree drawing
+                                renderNewUserTree($refuser, 0, $treeDepth, null, null, '');
+                                @endphp
                             </div>
                         </div>
 
@@ -590,6 +627,42 @@ if ($refuser->id < $myintid) {
                                 background: #ffd700;
                                 color: #000;
                                 font-weight: 700;
+                            }
+                            .btn-depth-max {
+                                background: rgba(245, 197, 24, 0.12) !important;
+                                border: 1px solid rgba(245, 197, 24, 0.35) !important;
+                                color: #ffd700 !important;
+                            }
+                            .btn-depth-max:hover {
+                                background: #ffd700 !important;
+                                color: #000 !important;
+                            }
+                            .btn-depth-max.active {
+                                background: linear-gradient(135deg, #ffd700 0%, #f5c518 100%) !important;
+                                color: #000 !important;
+                                font-weight: 700 !important;
+                                border-color: #ffd700 !important;
+                                box-shadow: 0 0 10px rgba(245, 197, 24, 0.4) !important;
+                            }
+                            .badge-max-level {
+                                background: rgba(245, 197, 24, 0.15) !important;
+                                color: #ffd700 !important;
+                                border: 1px solid rgba(245, 197, 24, 0.35) !important;
+                                text-transform: none !important;
+                                font-weight: 700 !important;
+                                font-size: 11px !important;
+                                padding: 0.35rem 0.55rem !important;
+                                letter-spacing: normal !important;
+                            }
+                            .badge-showing-level {
+                                background: rgba(59, 130, 246, 0.15) !important;
+                                color: #60a5fa !important;
+                                border: 1px solid rgba(59, 130, 246, 0.3) !important;
+                                text-transform: none !important;
+                                font-weight: 600 !important;
+                                font-size: 11px !important;
+                                padding: 0.35rem 0.55rem !important;
+                                letter-spacing: normal !important;
                             }
                             .modal-stat-card {
                                 background: rgba(255, 255, 255, 0.03);
@@ -1439,7 +1512,7 @@ if ($refuser->id < $myintid) {
                                                     All Tree Members Under {{ $refuser->name }}
                                                 </h5>
                                                 <div class="text-muted small mt-1">
-                                                    UID: <strong class="text-warning">{{ $refuser->uid ?? $refuser->id }}</strong> &bull; Total <strong class="text-white">{{ number_format($leftCount + $rightCount) }}</strong> members placed across downline communities
+                                                    UID: <strong class="text-warning">{{ $refuser->uid ?? $refuser->id }}</strong> &bull; Total <strong class="text-white">{{ number_format($leftCount + $rightCount) }}</strong> members &bull; Max Depth: <strong class="text-warning">{{ $maxTreeLevel }} {{ $maxTreeLevel == 1 ? 'Level' : 'Levels' }}</strong>
                                                 </div>
                                             </div>
                                         </div>
@@ -1504,6 +1577,15 @@ if ($refuser->id < $myintid) {
                                                         <button type="button" class="btn btn-outline-secondary text-white btn-filter-status" data-status="active" onclick="filterStatus('active', this)">Active</button>
                                                         <button type="button" class="btn btn-outline-secondary text-white btn-filter-status" data-status="inactive" onclick="filterStatus('inactive', this)">Inactive</button>
                                                     </div>
+                                                    <!-- Level Filter Dropdown -->
+                                                    @if ($maxTreeLevel > 1)
+                                                    <select id="treeLevelFilterSelect" class="form-select form-select-sm" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 215, 0, 0.25); color: #fff; width: auto; font-size: 0.78rem; border-radius: 6px; padding: 0.25rem 0.6rem;" onchange="filterLevel(this.value)">
+                                                        <option value="all" style="background: #16162a; color: #fff;">All Levels (Max {{ $maxTreeLevel }})</option>
+                                                        @for($lvl = 1; $lvl <= $maxTreeLevel; $lvl++)
+                                                            <option value="{{ $lvl }}" style="background: #16162a; color: #fff;">Level {{ $lvl }}</option>
+                                                        @endfor
+                                                    </select>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center mt-2 small text-muted">
@@ -1537,7 +1619,7 @@ if ($refuser->id < $myintid) {
                                                         $isActive = $mSub > 0;
                                                         $sponsor = isset($customersMap[$m['referral']]) ? $customersMap[$m['referral']] : null;
                                                         @endphp
-                                                        <tr class="alltree-row" data-side="{{ $m['side'] }}" data-status="{{ $isActive ? 'active' : 'inactive' }}" data-search="{{ strtolower($m['uid'] . ' ' . $m['name']) }}" style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
+                                                        <tr class="alltree-row" data-side="{{ $m['side'] }}" data-status="{{ $isActive ? 'active' : 'inactive' }}" data-level="{{ $m['level'] }}" data-search="{{ strtolower($m['uid'] . ' ' . $m['name']) }}" style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
                                                             <td class="text-muted ps-3">{{ $index + 1 }}</td>
                                                             <td>
                                                                 <div class="d-flex align-items-center gap-2">
@@ -1795,6 +1877,7 @@ if ($refuser->id < $myintid) {
         // Filter functionality for All Tree Modal
         let currentLegFilter = 'all';
         let currentStatusFilter = 'all';
+        let currentLevelFilter = 'all';
 
         function filterAllTreeTable() {
             const searchVal = (document.getElementById('allTreeSearchInput')?.value || '').toLowerCase().trim();
@@ -1805,12 +1888,14 @@ if ($refuser->id < $myintid) {
                 const rowSearch = row.getAttribute('data-search') || '';
                 const rowSide = row.getAttribute('data-side') || '';
                 const rowStatus = row.getAttribute('data-status') || '';
+                const rowLevel = row.getAttribute('data-level') || '';
 
                 const matchesSearch = !searchVal || rowSearch.includes(searchVal);
                 const matchesLeg = currentLegFilter === 'all' || rowSide === currentLegFilter;
                 const matchesStatus = currentStatusFilter === 'all' || rowStatus === currentStatusFilter;
+                const matchesLevel = currentLevelFilter === 'all' || rowLevel === currentLevelFilter;
 
-                if (matchesSearch && matchesLeg && matchesStatus) {
+                if (matchesSearch && matchesLeg && matchesStatus && matchesLevel) {
                     row.style.display = '';
                     visibleCount++;
                 } else {
@@ -1840,6 +1925,11 @@ if ($refuser->id < $myintid) {
             currentStatusFilter = status;
             document.querySelectorAll('.btn-filter-status').forEach(b => b.classList.remove('active'));
             if (btn) btn.classList.add('active');
+            filterAllTreeTable();
+        }
+
+        function filterLevel(level) {
+            currentLevelFilter = level;
             filterAllTreeTable();
         }
 
