@@ -402,9 +402,9 @@ if ($refuser->id < $myintid) {
                             $treeDepth = max(2, (int) $reqDepth);
                             $isMaxSelected = ($treeDepth >= $fullTreeDepth && $maxTreeLevel > 2);
                         } else {
-                            // Default when viewing the tree: show the full levels under the user
-                            $treeDepth = $fullTreeDepth;
-                            $isMaxSelected = true;
+                            // Default when page opens first: only show 2 levels
+                            $treeDepth = 2;
+                            $isMaxSelected = false;
                         }
                         @endphp
 
