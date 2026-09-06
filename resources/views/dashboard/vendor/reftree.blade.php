@@ -393,20 +393,18 @@ if ($refuser->id < $myintid) {
 
                         @php
                         $reqDepth = request()->get('depth');
-                        $effectiveMaxDepth = max(2, min($maxTreeLevel, 10));
+                        $fullTreeDepth = max(2, $maxTreeLevel);
 
-                        if ($reqDepth === 'max') {
-                            $treeDepth = $effectiveMaxDepth;
+                        if ($reqDepth === 'max' || $reqDepth === 'full') {
+                            $treeDepth = $fullTreeDepth;
                             $isMaxSelected = true;
+                        } elseif ($reqDepth !== null && is_numeric($reqDepth)) {
+                            $treeDepth = max(2, (int) $reqDepth);
+                            $isMaxSelected = ($treeDepth >= $fullTreeDepth && $maxTreeLevel > 2);
                         } else {
-                            $treeDepth = (int) ($reqDepth ?? 2);
-                            if ($treeDepth < 2) {
-                                $treeDepth = 2;
-                            }
-                            if ($treeDepth > 10) {
-                                $treeDepth = 10;
-                            }
-                            $isMaxSelected = ($reqDepth === 'max' || ($reqDepth !== null && (int)$reqDepth >= $effectiveMaxDepth && $maxTreeLevel > 2));
+                            // Default when viewing the tree: show the full levels under the user
+                            $treeDepth = $fullTreeDepth;
+                            $isMaxSelected = true;
                         }
                         @endphp
 
@@ -433,11 +431,11 @@ if ($refuser->id < $myintid) {
                                     <a href="{{ request()->fullUrlWithQuery(['depth' => 2]) }}" class="btn-depth {{ ($treeDepth == 2 && !$isMaxSelected) ? 'active' : '' }}">2 Levels</a>
                                     <a href="{{ request()->fullUrlWithQuery(['depth' => 3]) }}" class="btn-depth {{ ($treeDepth == 3 && !$isMaxSelected) ? 'active' : '' }}">3 Levels</a>
                                     <a href="{{ request()->fullUrlWithQuery(['depth' => 4]) }}" class="btn-depth {{ ($treeDepth == 4 && !$isMaxSelected) ? 'active' : '' }}">4 Levels</a>
-                                    @if ($maxTreeLevel >= 5)
+                                    @if ($maxTreeLevel >= 5 && $maxTreeLevel != 5)
                                         <a href="{{ request()->fullUrlWithQuery(['depth' => 5]) }}" class="btn-depth {{ ($treeDepth == 5 && !$isMaxSelected) ? 'active' : '' }}">5 Levels</a>
                                     @endif
                                     <a href="{{ request()->fullUrlWithQuery(['depth' => 'max']) }}" class="btn-depth btn-depth-max {{ $isMaxSelected ? 'active' : '' }}" title="View all tree levels under this user">
-                                        <i class="bx bx-expand-alt me-1"></i>Max {{ $maxTreeLevel > 0 ? "({$maxTreeLevel} " . ($maxTreeLevel == 1 ? 'Lvl' : 'Lvls') . ")" : 'Levels' }}
+                                        <i class="bx bx-expand-alt me-1"></i>Full Levels ({{ $maxTreeLevel > 0 ? $maxTreeLevel : 2 }} Lvls)
                                     </a>
                                 </div>
                                 <div class="tree-zoom-dock">
