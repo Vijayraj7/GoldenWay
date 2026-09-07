@@ -240,28 +240,40 @@ if (isset($_GET['plnid'])) {
                                                 <td style="white-space: normal !important;">
                                                     @if ($support->reply == null)
                                                         <span class="badge bg-label-warning mb-2">Pending</span>
-                                                        <form action="/customer/support" method="POST" class="d-flex flex-column gap-1" style="width: 220px;">
+                                                        <form action="/customer/support" method="POST" class="d-flex flex-column gap-1" style="width: 250px;">
                                                             @csrf
                                                             <input type="hidden" name="id" value="{{$support->id}}">
-                                                            <div class="d-flex gap-1">
-                                                                <textarea name="reply" required minlength="5" class="form-control form-control-sm" placeholder="Reply..." rows="1" style="font-size: 11px; background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff; padding: 4px 8px; resize: none;"></textarea>
-                                                                <button type="submit" class="btn btn-xs btn-primary px-2" style="font-size: 10px; height: 30px;">Send</button>
+                                                            <textarea name="reply" required minlength="5" class="form-control form-control-sm" placeholder="Type reply message..." rows="2" style="font-size: 11px; background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.25); color: #ffffff; padding: 5px 8px; border-radius: 6px; resize: none;"></textarea>
+                                                            <div class="d-flex gap-1 mt-1">
+                                                                <button type="submit" name="send_email" value="1" class="btn btn-xs btn-warning d-inline-flex align-items-center justify-content-center px-2 py-1 flex-grow-1" title="Save reply and send HTML email to customer" style="font-size: 10px; height: 28px; background: linear-gradient(135deg, #ffd700, #f9a826); color: #071f17; border: none; font-weight: 700; border-radius: 4px; box-shadow: 0 2px 8px rgba(249, 168, 38, 0.25);">
+                                                                    <i class="bx bx-envelope me-1" style="font-size: 12px;"></i> Reply & Email
+                                                                </button>
+                                                                <button type="submit" name="send_email" value="0" class="btn btn-xs btn-primary px-2" title="Save reply only" style="font-size: 10px; height: 28px; border-radius: 4px;">Reply</button>
                                                             </div>
                                                         </form>
                                                     @else
-                                                        <span class="badge bg-label-success mb-1">Success</span>
-                                                        <div class="small text-secondary" style="max-width: 220px; font-size: 11px; line-height: 1.3; color: #697a8d !important;">
+                                                        <span class="badge bg-label-success mb-1">Answered</span>
+                                                        <div class="small text-secondary" style="max-width: 250px; font-size: 11px; line-height: 1.35; color: #697a8d !important; background: rgba(0, 0, 0, 0.04); padding: 6px 8px; border-radius: 5px; border-left: 3px solid #00d094;">
                                                             <strong class="text-dark">Reply:</strong> {{ $support->reply }}
                                                         </div>
-                                                        <button class="btn btn-sm btn-link p-0 mt-1 text-primary" style="font-size: 11px; text-decoration: none;" onclick="event.preventDefault(); document.getElementById('edit-form-{{$support->id}}').classList.toggle('d-none');">
-                                                            <i class="bx bx-edit-alt"></i> Edit
-                                                        </button>
-                                                        <form id="edit-form-{{$support->id}}" action="/customer/support" method="POST" class="d-none mt-2" style="width: 220px;">
+                                                        <div class="d-flex align-items-center gap-2 mt-1">
+                                                            <button class="btn btn-sm btn-link p-0 text-primary" style="font-size: 11px; text-decoration: none;" onclick="event.preventDefault(); document.getElementById('edit-form-{{$support->id}}').classList.toggle('d-none');">
+                                                                <i class="bx bx-edit-alt"></i> Edit
+                                                            </button>
+                                                            <span class="text-muted" style="font-size: 10px;">•</span>
+                                                            <button type="button" class="btn btn-sm btn-link p-0 text-warning" style="font-size: 11px; text-decoration: none; font-weight: 600;" onclick="openSupportEmailModal({{ $support->id }}, '{{ addslashes($usr->name ?? 'Customer') }}', '{{ addslashes($usr->email ?? '') }}', '{{ addslashes($usr->uid ?? '') }}', '{{ addslashes($support->subject ?? '') }}', '{{ addslashes(str_replace(array("\r", "\n"), ' ', $support->comment ?? '')) }}', '{{ addslashes(str_replace(array("\r", "\n"), ' ', $support->reply ?? '')) }}')">
+                                                                <i class="bx bx-envelope"></i> Send to Email
+                                                            </button>
+                                                        </div>
+                                                        <form id="edit-form-{{$support->id}}" action="/customer/support" method="POST" class="d-none mt-2" style="width: 250px;">
                                                             @csrf
                                                             <input type="hidden" name="id" value="{{$support->id}}">
-                                                            <div class="d-flex gap-1">
-                                                                <textarea name="reply" required minlength="5" class="form-control form-control-sm" rows="1" style="font-size: 11px; background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff; padding: 4px 8px; resize: none;">{{ $support->reply }}</textarea>
-                                                                <button type="submit" class="btn btn-xs btn-primary px-2" style="font-size: 10px; height: 30px;">Save</button>
+                                                            <textarea name="reply" required minlength="5" class="form-control form-control-sm" rows="2" style="font-size: 11px; background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.25); color: #ffffff; padding: 5px 8px; border-radius: 6px; resize: none;">{{ $support->reply }}</textarea>
+                                                            <div class="d-flex gap-1 mt-1">
+                                                                <button type="submit" name="send_email" value="1" class="btn btn-xs btn-warning d-inline-flex align-items-center justify-content-center px-2 py-1 flex-grow-1" style="font-size: 10px; height: 28px; background: linear-gradient(135deg, #ffd700, #f9a826); color: #071f17; border: none; font-weight: 700; border-radius: 4px;">
+                                                                    <i class="bx bx-envelope me-1" style="font-size: 12px;"></i> Save & Email
+                                                                </button>
+                                                                <button type="submit" name="send_email" value="0" class="btn btn-xs btn-primary px-2" style="font-size: 10px; height: 28px; border-radius: 4px;">Save</button>
                                                             </div>
                                                         </form>
                                                     @endif
@@ -275,6 +287,11 @@ if (isset($_GET['plnid'])) {
                                                             <li>
                                                                 <a class="dropdown-item" href="/admin/customer/support/status/?sprtid={{$support->id}}">
                                                                     <i class="bx bxs-contact me-1"></i> View Detail
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item text-warning" href="javascript:void(0);" onclick="openSupportEmailModal({{ $support->id }}, '{{ addslashes($usr->name ?? 'Customer') }}', '{{ addslashes($usr->email ?? '') }}', '{{ addslashes($usr->uid ?? '') }}', '{{ addslashes($support->subject ?? '') }}', '{{ addslashes(str_replace(array("\r", "\n"), ' ', $support->comment ?? '')) }}', '{{ addslashes(str_replace(array("\r", "\n"), ' ', $support->reply ?? '')) }}')">
+                                                                    <i class="bx bx-envelope me-1"></i> Send to Email
                                                                 </a>
                                                             </li>
                                                             <li>
@@ -329,12 +346,33 @@ $tpamount = $plans->sum('pamount');
             <h4 class="fw-bold py-3 mb-4"><span
                     class="text-muted fw-light">Dashboard
                     /</span>
-                Chat View</h4>
-
-            <!-- Basic Layout & Basic with Icons -->
+                Chat View</h4>            <!-- Basic Layout & Basic with Icons -->
             <div class="row">
                 <!-- Basic with Icons -->
                 <div class="col-xxl">
+                    @if ($errors->any())
+                        @if ($errors->has('success'))
+                        <div class="alert alert-success mb-4" style="background: rgba(0, 208, 148, 0.15); border: 1px solid rgba(0, 208, 148, 0.3); color: #00ff88; border-radius: 8px; padding: 12px; font-weight: 600; font-size: 13px;">
+                            <ul class="mb-0 px-3">
+                                @foreach ($errors->get('success') as $msg)
+                                    <li>{{ $msg }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+                        @if (count($errors->all()) > count($errors->get('success')))
+                        <div class="alert alert-danger mb-4" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; border-radius: 8px; padding: 12px; font-weight: 600; font-size: 13px;">
+                            <ul class="mb-0 px-3">
+                                @foreach ($errors->all() as $error)
+                                    @if ($error !== $errors->first('success'))
+                                        <li>{{ $error }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+                    @endif
+
                     <div class="card mb-4" style="margin-bottom: 170px !important;">
                         <div
                             class="card-header d-flex align-items-center justify-content-between">
@@ -410,6 +448,24 @@ $tpamount = $plans->sum('pamount');
                                     class="row mb-3">
                                     <label
                                         class="col-sm-2 col-form-label hnot"
+                                        for="basic-icon-default-useremail">Customer Email</label>
+                                    <div class="col-sm-10 hnot">
+                                        <p class="form-control d-flex align-items-center gap-2"
+                                            style="border: none !important;"
+                                            id="basic-icon-default-useremail">
+                                            <strong>{{$usr->email ?? 'No email provided'}}</strong>
+                                            @if(!empty($usr->email))
+                                                <span class="badge bg-label-success" style="font-size: 11px;"><i class="bx bx-check-shield"></i> Registered Email</span>
+                                            @else
+                                                <span class="badge bg-label-warning" style="font-size: 11px;"><i class="bx bx-error"></i> No Email</span>
+                                            @endif
+                                        </p>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 0px;"
+                                    class="row mb-3">
+                                    <label
+                                        class="col-sm-2 col-form-label hnot"
                                         for="basic-icon-default-fullname">Subject</label>
                                     <div class="col-sm-10 hnot">
                                         <p class="form-control"
@@ -439,18 +495,15 @@ $tpamount = $plans->sum('pamount');
                                     <div class="col-sm-10">
                                         <div
                                             class="input-group input-group-merge">
-                                            <!-- <span
-                                                id="basic-icon-default-message2"
-                                                class="input-group-text">USDT</span> -->
                                             <textarea
                                                 type="text"
                                                 name="reply"
                                                 required
                                                 aria-required="true"
-                                                value="{{old('reply') ?? $chat->reply}}"
                                                 id="basic-icon-default-message2"
+                                                rows="4"
                                                 class="form-control phone-mask"
-                                                placeholder="Reply"
+                                                placeholder="Enter your official reply to the customer..."
                                                 aria-label="Reply"
                                                 aria-describedby="basic-icon-default-message2" >{{old('reply') ?? $chat->reply}}</textarea>
                                         </div>
@@ -461,25 +514,39 @@ $tpamount = $plans->sum('pamount');
                                     class="row justify-content-end" 
                                     style="margin-bottom: 30px; margin-top: 25px;">
                                     <div class="col-sm-10">
-                                        <button
-                                            onclick="return confirmSubmit()"
-                                            type="submit"
-                                            class="btn btn-primary">Reply</button>
+                                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                                            <button
+                                                type="submit"
+                                                name="send_email"
+                                                value="1"
+                                                class="btn btn-warning d-inline-flex align-items-center"
+                                                style="background: linear-gradient(135deg, #ffd700, #f9a826); color: #071f17; border: none; font-weight: 700; padding: 9px 20px; box-shadow: 0 4px 14px rgba(249, 168, 38, 0.35);">
+                                                <i class="bx bx-envelope me-1 fs-5"></i> Save & Send to Customer Email
+                                            </button>
+                                            <button
+                                                type="submit"
+                                                name="send_email"
+                                                value="0"
+                                                class="btn btn-primary d-inline-flex align-items-center"
+                                                style="padding: 9px 20px;">
+                                                <i class="bx bx-save me-1 fs-5"></i> Save Reply Only
+                                            </button>
+                                            <button
+                                                type="button"
+                                                class="btn btn-outline-warning d-inline-flex align-items-center"
+                                                onclick="openSupportEmailModal({{ $chat->id }}, '{{ addslashes($usr->name ?? 'Customer') }}', '{{ addslashes($usr->email ?? '') }}', '{{ addslashes($usr->uid ?? '') }}', '{{ addslashes($chat->subject ?? '') }}', '{{ addslashes(str_replace(array(\"\r\", \"\n\"), ' ', $chat->comment ?? '')) }}', document.getElementById('basic-icon-default-message2').value)">
+                                                <i class="bx bx-show me-1 fs-5"></i> Email Preview Modal
+                                            </button>
+                                        </div>
+                                        <small class="text-secondary d-block mt-2" style="font-size: 11px;">
+                                            <i class="bx bx-info-circle"></i> "Save & Send to Customer Email" will save the reply to database and dispatch a VIP styled HTML email to <strong>{{ $usr->email ?? 'customer email' }}</strong>.
+                                        </small>
                                     </div>
                                 </div>
                             </form>
 
                         </div>
                     </div>
-                    <script>
-                        function confirmSubmit() {
-                            if (confirm("Are you sure you want to credit")) {
-                              return true; 
-                            } else {
-                               return false;
-                            }
-                        }
-                        </script>
                     <!-- / Content -->
 
                     <!-- Footer -->
@@ -557,7 +624,100 @@ $tpamount = $plans->sum('pamount');
     </div>
 </div>
 
+<!-- Support Email Reply Modal -->
+<div class="modal fade" id="supportEmailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content" style="background: linear-gradient(145deg, #071f17, #0c2b21); border: 1px solid rgba(255, 215, 0, 0.35); box-shadow: 0 10px 40px rgba(0,0,0,0.7);">
+            <div class="modal-header" style="border-bottom: 1px solid rgba(255, 215, 0, 0.15); padding: 1.25rem 1.5rem;">
+                <div class="d-flex align-items-center">
+                    <div class="avatar avatar-sm me-3" style="background: rgba(255, 215, 0, 0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px;">
+                        <i class="bx bx-mail-send text-warning fs-3"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title text-white mb-0" id="supportEmailModalTitle" style="font-weight: 700;">Send Support Reply to Customer Email</h5>
+                        <small style="color: rgba(255, 215, 0, 0.7) !important;">GoldenWay VIP Customer Support Mailer</small>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
+            </div>
+            <form action="/customer/support" method="POST" id="supportEmailModalForm">
+                @csrf
+                <input type="hidden" name="id" id="modal_support_id">
+                <input type="hidden" name="send_email" value="1">
+                <div class="modal-body" style="padding: 1.5rem;">
+                    <!-- Customer Recipient Banner -->
+                    <div class="p-3 mb-3 rounded" style="background: rgba(4, 15, 12, 0.7); border: 1px solid rgba(255, 215, 0, 0.2);">
+                        <div class="row align-items-center">
+                            <div class="col-sm-7">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="text-white fw-bold fs-6" id="modal_display_name">Customer Name</span>
+                                    <span class="badge bg-warning text-dark fw-bold" id="modal_display_uid" style="font-size: 11px;">GW000000</span>
+                                </div>
+                                <div class="text-secondary small mt-1" style="color: #9ab4aa !important;">
+                                    <i class="bx bx-envelope text-warning me-1"></i> <span id="modal_display_email" class="text-white fw-semibold">customer@domain.com</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 text-sm-end mt-2 mt-sm-0">
+                                <span class="badge" style="background: rgba(0, 208, 148, 0.15); border: 1px solid rgba(0, 208, 148, 0.3); color: #00ff88; font-size: 12px; padding: 6px 12px;">
+                                    <i class="bx bx-badge-check me-1"></i> Ticket #<span id="modal_display_tktid"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ticket Subject -->
+                    <div class="mb-3">
+                        <label class="form-label text-warning fw-semibold" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Ticket Subject</label>
+                        <input type="text" id="modal_display_subject" class="form-control" readonly style="background-color: rgba(5, 20, 16, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); color: #ffffff; font-size: 13px; font-weight: 600;">
+                    </div>
+
+                    <!-- Customer Inquiry Quote -->
+                    <div class="mb-3">
+                        <label class="form-label text-warning fw-semibold" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Customer Inquiry</label>
+                        <div class="p-3 rounded" style="background: rgba(5, 20, 16, 0.5); border-left: 3px solid rgba(255, 215, 0, 0.5); color: rgba(255, 255, 255, 0.85); font-size: 13px; line-height: 1.5; font-style: italic; max-height: 110px; overflow-y: auto;" id="modal_display_comment">
+                            Inquiry text...
+                        </div>
+                    </div>
+
+                    <!-- Admin Reply -->
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <label for="modal_reply_text" class="form-label text-warning fw-semibold mb-0" style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Official Reply Message</label>
+                            <small class="text-muted" style="color: rgba(255, 215, 0, 0.6) !important;">Sent to customer's registered email</small>
+                        </div>
+                        <textarea name="reply" id="modal_reply_text" required minlength="5" rows="5" class="form-control" placeholder="Write your official response to the customer..." style="background-color: rgba(5, 20, 16, 0.8); border: 1px solid rgba(255, 215, 0, 0.35); color: #ffffff; font-size: 13px; line-height: 1.5; resize: vertical;"></textarea>
+                    </div>
+
+                    <div class="alert alert-info py-2 px-3 mt-3 mb-0 d-flex align-items-center" style="background: rgba(249, 168, 38, 0.1); border: 1px solid rgba(249, 168, 38, 0.25); color: #ffd700; border-radius: 6px; font-size: 12px;">
+                        <i class="bx bx-info-circle fs-5 me-2 flex-shrink-0"></i>
+                        <span>This will update the ticket reply in the database and immediately dispatch a branded HTML email to the customer's email address.</span>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid rgba(255, 215, 0, 0.15); padding: 1rem 1.5rem;">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="color: rgba(255, 255, 255, 0.7); border-color: rgba(255, 255, 255, 0.3);">Cancel</button>
+                    <button type="submit" id="btn_send_email_submit" class="btn btn-warning fw-bold d-inline-flex align-items-center" style="background: linear-gradient(90deg, #ffd700, #f9a826); color: #071f17; border: none; padding: 8px 22px; box-shadow: 0 4px 15px rgba(249, 168, 38, 0.3);">
+                        <i class="bx bx-paper-plane me-1"></i> Send Reply to Email
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
+function openSupportEmailModal(ticketId, cusName, cusEmail, cusUid, subject, comment, existingReply) {
+    document.getElementById('modal_support_id').value = ticketId;
+    document.getElementById('modal_display_name').innerText = cusName || 'Customer';
+    document.getElementById('modal_display_email').innerText = cusEmail || 'No email registered';
+    document.getElementById('modal_display_uid').innerText = 'UID: ' + (cusUid || 'N/A');
+    document.getElementById('modal_display_tktid').innerText = ticketId;
+    document.getElementById('modal_display_subject').value = subject || 'Customer Support Request';
+    document.getElementById('modal_display_comment').innerText = comment || 'No message provided.';
+    document.getElementById('modal_reply_text').value = existingReply || '';
+    
+    var emailModal = new bootstrap.Modal(document.getElementById('supportEmailModal'));
+    emailModal.show();
+}
 function openChangePasswordModal(userId, userName, type) {
     document.getElementById('modal_customer_id').value = userId;
     document.getElementById('modal_password_type').value = type;

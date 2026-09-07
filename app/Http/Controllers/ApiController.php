@@ -2062,19 +2062,69 @@ updateBalances();
         if (isset($prs['id'])) {
             $spid = $prs['id'];
 
-            if (!isset($prs['reply'])) {
+            if (!isset($prs['reply']) || strlen(trim($prs['reply'])) < 5) {
                 return redirect()->back()->withInput($rqs->all())->withErrors([
-                    'image' => 'Minimum 5 words',
+                    'image' => 'Reply message must be at least 5 characters.',
                 ]);
             }
-            if (strlen($prs['reply']) < 5) {
-                return redirect()->back()->withInput($rqs->all())->withErrors([
-                    'image' => 'Minimum 5 words',
-                ]);
-            }
-            $reply = $prs['reply'];
+            $reply = trim($prs['reply']);
             DB::table('customer_support')->where('id', $spid)->update(['reply' => $reply]);
-            return redirect('/admin/customer/support/status');
+
+            $sendEmail = isset($prs['send_email']) && in_array($prs['send_email'], [1, '1', true, 'true', 'on'], true);
+            if ($sendEmail) {
+                $support = DB::table('customer_support')->where('id', $spid)->first();
+                if ($support) {
+                    $customer = DB::table('customers')->where('id', $support->csId)->first();
+                    if ($customer && !empty($customer->email)) {
+                        try {
+                            $webUrl = env('WEB_URL') ?: (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'goldenwayintl.com');
+                            $html = view('mail.support_reply', [
+                                'name' => $customer->name ?? 'Customer',
+                                'email' => $customer->email,
+                                'uid' => $customer->uid ?? ('GW' . $customer->id),
+                                'ticket_id' => $support->id,
+                                'subject' => $support->subject ?: 'Customer Support Inquiry',
+                                'customer_message' => $support->comment ?: 'No message provided.',
+                                'reply_message' => $reply,
+                                'created_at' => $support->created_at ? date('d M Y, h:i A', strtotime($support->created_at)) : date('d M Y, h:i A'),
+                                'web_url' => $webUrl,
+                            ])->render();
+
+                            $headers = "MIME-Version: 1.0" . "\r\n";
+                            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+                            $headers .= 'From: GoldenWay International <noreply@' . $webUrl . '>' . "\r\n";
+                            $headers .= 'Reply-To: noreply@' . $webUrl . "\r\n";
+                            $headers .= 'X-Mailer: PHP/' . phpversion();
+
+                            $emailSubject = 'Support Ticket #' . $support->id . ' Response - GoldenWay International';
+                            $sent = @mail($customer->email, $emailSubject, $html, $headers);
+
+                            if ($sent) {
+                                return redirect()->back()->withErrors([
+                                    'success' => 'Support reply updated and email dispatched to ' . $customer->email . ' successfully!',
+                                ]);
+                            } else {
+                                return redirect()->back()->withErrors([
+                                    'success' => 'Support reply saved. (Notice: Server mail() could not deliver to ' . $customer->email . ')',
+                                ]);
+                            }
+                        } catch (\Exception $e) {
+                            \Illuminate\Support\Facades\Log::error('Failed to send support reply email: ' . $e->getMessage());
+                            return redirect()->back()->withErrors([
+                                'success' => 'Support reply saved. (Email error: ' . $e->getMessage() . ')',
+                            ]);
+                        }
+                    } else {
+                        return redirect()->back()->withErrors([
+                            'image' => 'Support reply saved, but customer has no email address registered.',
+                        ]);
+                    }
+                }
+            }
+
+            return redirect()->back()->withErrors([
+                'success' => 'Support reply saved successfully!',
+            ]);
         }
         $new_id = $h->toTable2('customer_support', $prs);
         $fc = new FcmController;
