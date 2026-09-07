@@ -261,7 +261,16 @@ if (isset($_GET['plnid'])) {
                                                                 <i class="bx bx-edit-alt"></i> Edit
                                                             </button>
                                                             <span class="text-muted" style="font-size: 10px;">•</span>
-                                                            <button type="button" class="btn btn-sm btn-link p-0 text-warning" style="font-size: 11px; text-decoration: none; font-weight: 600;" onclick="openSupportEmailModal({{ $support->id }}, '{{ addslashes($usr->name ?? 'Customer') }}', '{{ addslashes($usr->email ?? '') }}', '{{ addslashes($usr->uid ?? '') }}', '{{ addslashes($support->subject ?? '') }}', '{{ addslashes(str_replace(array("\r", "\n"), ' ', $support->comment ?? '')) }}', '{{ addslashes(str_replace(array("\r", "\n"), ' ', $support->reply ?? '')) }}')">
+                                                            <button type="button" class="btn btn-sm btn-link p-0 text-warning" style="font-size: 11px; text-decoration: none; font-weight: 600;"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#supportEmailModal"
+                                                                data-id="{{ $support->id }}"
+                                                                data-name="{{ $usr->name ?? 'Customer' }}"
+                                                                data-email="{{ $usr->email ?? '' }}"
+                                                                data-uid="{{ $usr->uid ?? '' }}"
+                                                                data-subject="{{ $support->subject ?? '' }}"
+                                                                data-comment="{{ $support->comment ?? '' }}"
+                                                                data-reply="{{ $support->reply ?? '' }}">
                                                                 <i class="bx bx-envelope"></i> Send to Email
                                                             </button>
                                                         </div>
@@ -290,7 +299,16 @@ if (isset($_GET['plnid'])) {
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a class="dropdown-item text-warning" href="javascript:void(0);" onclick="openSupportEmailModal({{ $support->id }}, '{{ addslashes($usr->name ?? 'Customer') }}', '{{ addslashes($usr->email ?? '') }}', '{{ addslashes($usr->uid ?? '') }}', '{{ addslashes($support->subject ?? '') }}', '{{ addslashes(str_replace(array("\r", "\n"), ' ', $support->comment ?? '')) }}', '{{ addslashes(str_replace(array("\r", "\n"), ' ', $support->reply ?? '')) }}')">
+                                                                <a class="dropdown-item text-warning" href="javascript:void(0);"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#supportEmailModal"
+                                                                    data-id="{{ $support->id }}"
+                                                                    data-name="{{ $usr->name ?? 'Customer' }}"
+                                                                    data-email="{{ $usr->email ?? '' }}"
+                                                                    data-uid="{{ $usr->uid ?? '' }}"
+                                                                    data-subject="{{ $support->subject ?? '' }}"
+                                                                    data-comment="{{ $support->comment ?? '' }}"
+                                                                    data-reply="{{ $support->reply ?? '' }}">
                                                                     <i class="bx bx-envelope me-1"></i> Send to Email
                                                                 </a>
                                                             </li>
@@ -534,7 +552,15 @@ $tpamount = $plans->sum('pamount');
                                             <button
                                                 type="button"
                                                 class="btn btn-outline-warning d-inline-flex align-items-center"
-                                                onclick="openSupportEmailModal({{ $chat->id }}, '{{ addslashes($usr->name ?? 'Customer') }}', '{{ addslashes($usr->email ?? '') }}', '{{ addslashes($usr->uid ?? '') }}', '{{ addslashes($chat->subject ?? '') }}', '{{ addslashes(str_replace(array(\"\r\", \"\n\"), ' ', $chat->comment ?? '')) }}', document.getElementById('basic-icon-default-message2').value)">
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#supportEmailModal"
+                                                data-id="{{ $chat->id }}"
+                                                data-name="{{ $usr->name ?? 'Customer' }}"
+                                                data-email="{{ $usr->email ?? '' }}"
+                                                data-uid="{{ $usr->uid ?? '' }}"
+                                                data-subject="{{ $chat->subject ?? '' }}"
+                                                data-comment="{{ $chat->comment ?? '' }}"
+                                                id="btn_detail_email_preview">
                                                 <i class="bx bx-show me-1 fs-5"></i> Email Preview Modal
                                             </button>
                                         </div>
@@ -705,6 +731,38 @@ $tpamount = $plans->sum('pamount');
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var supportEmailModalEl = document.getElementById('supportEmailModal');
+    if (supportEmailModalEl) {
+        supportEmailModalEl.addEventListener('show.bs.modal', function(event) {
+            var button = event.relatedTarget;
+            if (!button || !button.hasAttribute('data-id')) return;
+            
+            var id = button.getAttribute('data-id') || '';
+            var name = button.getAttribute('data-name') || 'Customer';
+            var email = button.getAttribute('data-email') || 'No email registered';
+            var uid = button.getAttribute('data-uid') || 'N/A';
+            var subject = button.getAttribute('data-subject') || 'Customer Support Request';
+            var comment = button.getAttribute('data-comment') || 'No description provided.';
+            var reply = button.getAttribute('data-reply') || '';
+
+            var detailTextarea = document.getElementById('basic-icon-default-message2');
+            if (detailTextarea && button.id === 'btn_detail_email_preview') {
+                reply = detailTextarea.value || reply;
+            }
+
+            document.getElementById('modal_support_id').value = id;
+            document.getElementById('modal_display_name').innerText = name;
+            document.getElementById('modal_display_email').innerText = email;
+            document.getElementById('modal_display_uid').innerText = 'UID: ' + uid;
+            document.getElementById('modal_display_tktid').innerText = id;
+            document.getElementById('modal_display_subject').value = subject;
+            document.getElementById('modal_display_comment').innerText = comment;
+            document.getElementById('modal_reply_text').value = reply;
+        });
+    }
+});
+
 function openSupportEmailModal(ticketId, cusName, cusEmail, cusUid, subject, comment, existingReply) {
     document.getElementById('modal_support_id').value = ticketId;
     document.getElementById('modal_display_name').innerText = cusName || 'Customer';
