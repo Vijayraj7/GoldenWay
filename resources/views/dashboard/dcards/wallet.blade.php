@@ -1350,6 +1350,40 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
             overflow: hidden;
             padding: 0 !important;
             box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(249,168,38,0.08);
+            position: relative !important;
+        }
+        /* Top right close button */
+        #success_tic .stc-close-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: rgba(255, 255, 255, 0.65);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 20;
+            padding: 0;
+            line-height: 1;
+            text-decoration: none;
+            outline: none;
+        }
+        #success_tic .stc-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: scale(1.08);
+        }
+        #success_tic .stc-close-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(249, 168, 38, 0.4);
         }
         /* Glow stripe at the top */
         #success_tic .stc-topbar {
@@ -1531,6 +1565,15 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
                 {{-- Animated colour stripe at top --}}
                 <div class="stc-topbar {{ $tsuccess ? 'success-bar' : 'fail-bar' }}"></div>
 
+                {{-- Close button in top right --}}
+                <button type="button"
+                        class="stc-close-btn"
+                        data-bs-dismiss="modal"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+
                 <div class="stc-body">
 
                     {{-- Status badge --}}
@@ -1597,6 +1640,9 @@ DB::table('customer_transactions')->where('csId', $v->id)->get()->sum('tAmount')
     <script>
         $(document).ready(function() {
             $('#success_tic').modal('show');
+            $('#success_tic').on('click', '.stc-close-btn', function() {
+                $('#success_tic').modal('hide');
+            });
         });
     </script>
     @enderror

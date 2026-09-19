@@ -2032,7 +2032,8 @@ if (count($plans) == 0) {
                         <!-- Modal -->
                         <div class="modal fade" id="youTubeModal" style="z-index: 2000 !important;" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog" role="document">
-                                <div class="modal-content">
+                                <div class="modal-content" style="position: relative;">
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 12px; right: 12px; z-index: 10;"></button>
                                     <img height="350" src="https://media1.giphy.com/media/iHD88spVFkL7mZakwa/giphy.gif?cid=6c09b952wuhq90boqfjywwf4ybxeuvpan10wacws9uwctvdg&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=g"></img>
                                 </div>
                             </div>

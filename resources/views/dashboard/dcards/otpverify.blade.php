@@ -177,8 +177,8 @@ justify-content: center !important;
 align-items: center !important;">
             <div class="modal-dialog">
                 <!-- Modal content -->
-                <div class="modal-content" style="
-padding: 10px;">
+                <div class="modal-content" style="position: relative; padding: 10px;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 12px; right: 12px; z-index: 10;"></button>
                     <div class="page-body">
                         <div class="head" style="width:100%; display: flex; justify-content:center;">
                             <h3 style="margin-top:5px; font-size:14px; color: #black;">
@@ -220,6 +220,9 @@ padding: 10px;">
         // window.history.replaceState({}, document.title, '/');
         $(document).ready(function() {
             $('#success_otp').modal('show');
+            $('#success_otp').on('click', '.btn-close', function() {
+                $('#success_otp').modal('hide');
+            });
         });
     </script>
 @enderror

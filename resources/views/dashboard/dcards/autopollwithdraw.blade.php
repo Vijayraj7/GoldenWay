@@ -144,7 +144,8 @@
     @if(old('pname') == 'pollincome')
     <div id="success_wth_modal" class="modal fade" role="dialog" style="z-index: 2000;">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="padding: 1.5rem; background-color: #111; color: #fff; border-radius: 15px; text-align: center; border: 1px solid #222;">
+            <div class="modal-content" style="position: relative; padding: 1.5rem; background-color: #111; color: #fff; border-radius: 15px; text-align: center; border: 1px solid #222;">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close" style="position: absolute; top: 1.25rem; right: 1.25rem; z-index: 10;"></button>
                 <div class="modal-header" style="border-bottom:none; justify-content: center;">
                     <h3 class="text-white" style="margin-top:5px;">Withdraw Requested</h3>
                 </div>
@@ -156,7 +157,7 @@
                     </div>
                 </div>
                 <div class="modal-footer" style="border-top:none; justify-content: center;">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" style="background-color: #333; border: none; padding: 8px 25px; color: #fff;">Ok</button>
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" data-dismiss="modal" style="background-color: #333; border: none; padding: 8px 25px; color: #fff;">Ok</button>
                 </div>
             </div>
         </div>
@@ -164,6 +165,9 @@
     <script>
         window.addEventListener('load', function() {
             $('#success_wth_modal').modal('show');
+            $('#success_wth_modal').on('click', '.btn-close', function() {
+                $('#success_wth_modal').modal('hide');
+            });
         });
     </script>
     @endif
