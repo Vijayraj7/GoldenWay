@@ -391,12 +391,22 @@ if (isset($_GET['typ'])) {
                                                     </div>
                                                 </div>
 
+                                                @php
+                                                    $bp_sub_amount = (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount');
+                                                    $bp_max_limit = $bp_sub_amount * 10;
+                                                    $bp_already_staked = (float) DB::table('customer_plans')->where('csId', $v->id)->where('pstatus', '1')->sum('pamount');
+                                                    $bp_remaining_limit = max(0.0, $bp_max_limit - $bp_already_staked);
+                                                @endphp
                                                 <div class="row mb-3">
                                                     <label class="col-sm-3 form-label" for="pamount_input">Amount</label>
                                                     <div class="col-sm-9">
                                                         <div class="input-group input-group-merge">
                                                             <span class="input-group-text"><i class="bx bx-dollar-circle"></i> &nbsp; USDT</span>
-                                                            <input type="number" step="any" name="pamount" value="{{ old('pamount') ?? old('amount') }}" id="pamount_input" class="form-control" placeholder="Min 100 USDT and Max {{ number_format(DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') * 10, 2) }}" aria-label="Min 100 USDT and Max {{ number_format(DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') * 10, 2) }}" aria-describedby="pamount" />
+                                                            <input type="number" step="any" name="pamount" value="{{ old('pamount') ?? old('amount') }}" id="pamount_input" class="form-control" placeholder="Remaining Max {{ number_format($bp_remaining_limit, 2) }} USDT" aria-label="Amount" />
+                                                        </div>
+                                                        <div class="d-flex justify-content-between align-items-center mt-1 px-1" style="font-size: 11px; color: rgba(255, 255, 255, 0.6);">
+                                                            <span>Remaining: <strong style="color: {{ $bp_remaining_limit > 0 ? '#00D094' : '#ff4d4f' }};">{{ number_format($bp_remaining_limit, 2) }}</strong> USDT</span>
+                                                            <span>Staked: <strong style="color: #ffd700;">{{ number_format($bp_already_staked, 2) }}</strong> / {{ number_format($bp_max_limit, 2) }} USDT</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -462,14 +472,46 @@ if (isset($_GET['typ'])) {
                     function onsubmitbuy() {
 
                         var am = document.getElementById('pamount_input').value;
-                        if (am == null) {
+                        if (am == null || am.trim() === '') {
+                            alert('Please enter an amount.');
                             return;
                         }
                         var amo = Number(am);
-                        if (amo < 0) {
-                            alert('minimum 100 USDT');
+                        if (isNaN(amo) || amo <= 0) {
+                            alert('Please enter a valid amount.');
                             return;
                         }
+                        if (amo < 10) {
+                            alert('Minimum amount is 10 USDT.');
+                            return;
+                        }
+
+                        var totalSub = {{ (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') }};
+                        var maxLimit = totalSub * 10;
+                        var alreadyStaked = {{ (float) DB::table('customer_plans')->where('csId', $v->id)->where('pstatus', '1')->sum('pamount') }};
+                        var remainingLimit = Math.max(0, maxLimit - alreadyStaked);
+
+                        if (totalSub <= 0) {
+                            alert('Please subscribe before staking.');
+                            return;
+                        }
+
+                        if (remainingLimit <= 0) {
+                            alert('You have reached the maximum stake limit of ' + maxLimit.toFixed(2) + ' USDT (10x of subscription). Please increase your subscription to stake more.');
+                            return;
+                        }
+
+                        if (amo > remainingLimit) {
+                            alert('Amount cannot exceed remaining stake limit of ' + remainingLimit.toFixed(2) + ' USDT.\n\nMax limit (10x subscription): ' + maxLimit.toFixed(2) + ' USDT\nAlready staked: ' + alreadyStaked.toFixed(2) + ' USDT');
+                            return;
+                        }
+
+                        var tp = document.getElementById('buyproduct_tpassword');
+                        if (!tp || !tp.value.trim()) {
+                            alert('Please enter your transaction password.');
+                            return;
+                        }
+
                         $('#proccess_tic').modal('show');
                         (async () => {
                             await new Promise(resolve => setTimeout(resolve, 4000));

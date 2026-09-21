@@ -1569,17 +1569,35 @@ updateBalances();
                         'image' => "Minimum USDT is 10",
                     ]);
                 }
-                $max_invest = $total_sub_amount * 10;
-                if ($amnt > $max_invest) {
-                    return redirect()->back()->withInput($rqs->all())->withErrors([
-                        'image' => "Max USDT is " . $max_invest,
-                    ]);
-                }
                 if ($prs['pname'] == 'normal' || $prs['pname'] == 'compound') {
-                    $max_limit = DB::table('customer_subs')->where('csId', $csId)->sum('sub_amount') * 10;
-                    if ($amnt > $max_limit) {
+                    if ($total_sub_amount <= 0) {
                         return redirect()->back()->withInput($rqs->all())->withErrors([
-                            'image' => "Amount cannot exceed maximum limit of " . number_format($max_limit, 2) . " USDT.",
+                            'image' => "Please subscribe before staking.",
+                        ]);
+                    }
+                    $max_limit = (float) DB::table('customer_subs')->where('csId', $csId)->sum('sub_amount') * 10;
+                    $already_staked = (float) DB::table('customer_plans')
+                        ->where('csId', $csId)
+                        ->where('pstatus', '1')
+                        ->sum('pamount');
+                    $remaining_limit = max(0.0, $max_limit - $already_staked);
+
+                    if ($remaining_limit <= 0) {
+                        return redirect()->back()->withInput($rqs->all())->withErrors([
+                            'image' => "You have reached the maximum stake limit of " . number_format($max_limit, 2) . " USDT (10x of subscription). Please increase your subscription to stake more.",
+                        ]);
+                    }
+
+                    if ($amnt > $remaining_limit) {
+                        return redirect()->back()->withInput($rqs->all())->withErrors([
+                            'image' => "Amount cannot exceed remaining stake limit of " . number_format($remaining_limit, 2) . " USDT. (Maximum 10x limit: " . number_format($max_limit, 2) . " USDT, Already staked: " . number_format($already_staked, 2) . " USDT).",
+                        ]);
+                    }
+                } else {
+                    $max_invest = $total_sub_amount * 10;
+                    if ($amnt > $max_invest) {
+                        return redirect()->back()->withInput($rqs->all())->withErrors([
+                            'image' => "Max USDT is " . $max_invest,
                         ]);
                     }
                 }
@@ -1900,8 +1918,22 @@ updateBalances();
         // $fc->sendFCMMessageToTopic('admin', getPname($head), "new $head");
         // $uname = $musr->name;
         // if ($amnt >= 1000) {
-        //     $fc->sendFCMMessageToTopic("all", "$uname Earned a New Milestone!", "$uname just achieved Diamond! You can achieve this too");
-        // }
+        if ($prs['pname'] == 'normal' || $prs['pname'] == 'compound') {
+            $total_sub = (float) DB::table('customer_subs')->where('csId', $csId)->sum('sub_amount');
+            $max_limit = $total_sub * 10;
+            $already_staked = (float) DB::table('customer_plans')
+                ->where('csId', $csId)
+                ->where('pstatus', '1')
+                ->sum('pamount');
+            $remaining_limit = max(0.0, $max_limit - $already_staked);
+
+            if ($amnt > $remaining_limit + 0.01) {
+                return redirect('/dashboard')->withInput($rqs->all())->withErrors([
+                    'image' => "Stake limit exceeded. Maximum allowed: " . number_format($remaining_limit, 2) . " USDT.",
+                ]);
+            }
+        }
+
         if ($prs['pname'] == 'normal') {
             $prs['pstatus'] = '1';
         }

@@ -1115,6 +1115,10 @@ if (count($plans) == 0) {
                                                                 <span style="color: #f9a826; font-weight: 600; font-size: 11px;">USDT</span>
                                                             </h6>
                                                         </div>
+                                                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 4px; font-size: 10px; color: rgba(255,255,255,0.6);">
+                                                            <span>Staked: <strong style="color: #ffd700;">{{ number_format($staked_amount, 2) }}</strong> USDT</span>
+                                                            <span>Remaining: <strong style="color: #00D094;">{{ number_format(max(0, ($sub_amount * 10) - $staked_amount), 2) }}</strong> USDT</span>
+                                                        </div>
                                                     </div>
 
                                                     <!-- Stake Progress (2X Progress) -->
@@ -1654,17 +1658,39 @@ if (count($plans) == 0) {
                                     var amountInput = document.getElementById('sil_amnt');
                                     if (amountInput && (amountInput.offsetWidth > 0 || amountInput.offsetHeight > 0)) {
                                         var enteredAmount = parseFloat(amountInput.value.trim());
-                                        var maxLimit = {{ DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') * 10 }};
+                                        var totalSub = {{ (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') }};
+                                        var maxLimit = totalSub * 10;
+                                        var alreadyStaked = {{ (float) DB::table('customer_plans')->where('csId', $v->id)->where('pstatus', '1')->sum('pamount') }};
+                                        var remainingLimit = Math.max(0, maxLimit - alreadyStaked);
+
                                         if (isNaN(enteredAmount) || enteredAmount <= 0) {
                                             alert('Please enter a valid amount.');
                                             event.preventDefault();
                                             return false;
                                         }
-                                        if (enteredAmount > maxLimit) {
-                                            alert('Amount cannot exceed the maximum limit of ' + maxLimit.toLocaleString('en-US', {
-                                                minimumFractionDigits: 2
-                                                , maximumFractionDigits: 2
-                                            }) + ' USDT.');
+
+                                        if (totalSub <= 0) {
+                                            alert('Please subscribe before staking.');
+                                            event.preventDefault();
+                                            return false;
+                                        }
+
+                                        if (remainingLimit <= 0) {
+                                            alert('You have reached the maximum stake limit of ' + maxLimit.toLocaleString('en-US', {
+                                                minimumFractionDigits: 2, maximumFractionDigits: 2
+                                            }) + ' USDT (10x of subscription). Please increase your subscription to stake more.');
+                                            event.preventDefault();
+                                            return false;
+                                        }
+
+                                        if (enteredAmount > remainingLimit) {
+                                            alert('Amount cannot exceed the remaining stake limit of ' + remainingLimit.toLocaleString('en-US', {
+                                                minimumFractionDigits: 2, maximumFractionDigits: 2
+                                            }) + ' USDT.\n\nMaximum limit (10x subscription): ' + maxLimit.toLocaleString('en-US', {
+                                                minimumFractionDigits: 2, maximumFractionDigits: 2
+                                            }) + ' USDT\nAlready staked: ' + alreadyStaked.toLocaleString('en-US', {
+                                                minimumFractionDigits: 2, maximumFractionDigits: 2
+                                            }) + ' USDT');
                                             event.preventDefault();
                                             return false;
                                         }
@@ -1681,6 +1707,22 @@ if (count($plans) == 0) {
                                 }
                             });
 
+                            function setMaxStakeAmount() {
+                                var totalSub = {{ (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount') }};
+                                var maxLimit = totalSub * 10;
+                                var alreadyStaked = {{ (float) DB::table('customer_plans')->where('csId', $v->id)->where('pstatus', '1')->sum('pamount') }};
+                                var remainingLimit = Math.max(0, maxLimit - alreadyStaked);
+
+                                var usdt_bal = (typeof usdtbalance !== 'undefined') ? parseFloat(usdtbalance) : 0;
+                                var db_bal = (typeof dbTransferCredit !== 'undefined') ? parseFloat(dbTransferCredit) : 0;
+                                var totalAvailable = usdt_bal + db_bal;
+
+                                var fillAmount = Math.min(totalAvailable, remainingLimit);
+                                var input = document.getElementById('sil_amnt');
+                                if (input) {
+                                    input.value = fillAmount > 0 ? fillAmount.toFixed(2) : '0';
+                                }
+                            }
                         </script>
 
                         <!-- Modal aneeshvbmail -->
@@ -1963,6 +2005,28 @@ if (count($plans) == 0) {
                                             #modalCenter .dropdown-menu a {
                                                 color: #fff !important;
                                             }
+                                            #modalCenter .btn-max-custom {
+                                                background: rgba(249, 168, 38, 0.15);
+                                                border: 1px solid rgba(249, 168, 38, 0.3);
+                                                color: #f9a826;
+                                                padding: 0 14px;
+                                                font-size: 0.75rem;
+                                                font-weight: 700;
+                                                cursor: pointer;
+                                                transition: all 0.2s ease;
+                                                border-radius: 6px;
+                                                margin: 6px 8px;
+                                                outline: none;
+                                                letter-spacing: 0.5px;
+                                                display: inline-flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                            }
+                                            #modalCenter .btn-max-custom:hover {
+                                                background: #f9a826;
+                                                color: #051410;
+                                                box-shadow: 0 2px 8px rgba(249, 168, 38, 0.4);
+                                            }
                                         </style>
 
                                         <div style="display: none !important;">
@@ -1994,15 +2058,37 @@ if (count($plans) == 0) {
                                             </div>
                                         </div>
 
+                                        @php
+                                            $modal_sub_amount = (float) DB::table('customer_subs')->where('csId', $v->id)->sum('sub_amount');
+                                            $modal_max_limit = $modal_sub_amount * 10;
+                                            $modal_already_staked = (float) DB::table('customer_plans')->where('csId', $v->id)->where('pstatus', '1')->sum('pamount');
+                                            $modal_remaining_limit = max(0.0, $modal_max_limit - $modal_already_staked);
+                                        @endphp
                                         <!-- Amount Field -->
                                         <div id="diam_amnt_container" class="mb-4">
-                                            <label class="input-label-custom" for="sil_amnt">Amount</label>
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <label class="input-label-custom mb-0" for="sil_amnt">Amount</label>
+                                                <span style="font-size: 0.72rem; color: rgba(255, 255, 255, 0.6);">
+                                                    Remaining: <strong style="color: {{ $modal_remaining_limit > 0 ? '#00D094' : '#ff4d4f' }};">{{ number_format($modal_remaining_limit, 2) }}</strong> / {{ number_format($modal_max_limit, 2) }} USDT
+                                                </span>
+                                            </div>
                                             <div class="input-group-custom">
                                                 <div class="input-icon-custom">
                                                     <i class="bx bx-dollar"></i>
                                                 </div>
-                                                <input type="text" name="pamount" value="{{ old('pamount') }}" id="sil_amnt" class="input-field-custom" placeholder="Max {{ number_format(DB::table('customer_subs')->where('csId',$v->id)->sum('sub_amount') * 10,2)}}" aria-label="Amount" />
+                                                <input type="text" name="pamount" value="{{ old('pamount') }}" id="sil_amnt" class="input-field-custom" placeholder="Max {{ number_format($modal_remaining_limit, 2) }} USDT" aria-label="Amount" />
+                                                {{-- <button type="button" class="btn-max-custom" onclick="setMaxStakeAmount()" title="Fill Maximum Stake Amount">MAX</button> --}}
                                             </div>
+                                            <div class="d-flex justify-content-between align-items-center mt-1 px-1" style="font-size: 0.68rem; color: rgba(255, 255, 255, 0.45);">
+                                                <span>Already Staked: <strong style="color: #ffd700;">{{ number_format($modal_already_staked, 2) }}</strong> USDT</span>
+                                                <span>Subscription (10x): <strong>{{ number_format($modal_max_limit, 2) }}</strong> USDT</span>
+                                            </div>
+                                            @if($modal_remaining_limit <= 0)
+                                            <div class="mt-2 p-2 rounded" style="background: rgba(255, 77, 79, 0.15); border: 1px solid rgba(255, 77, 79, 0.3); font-size: 0.75rem; color: #ff7875; display: flex; align-items: center; gap: 6px;">
+                                                <i class="bx bx-error-circle" style="font-size: 1rem;"></i>
+                                                <span>Maximum stake limit reached ({{ number_format($modal_max_limit, 2) }} USDT). Increase subscription to stake more.</span>
+                                            </div>
+                                            @endif
                                         </div>
 
                                         <!-- Transaction Password Field -->
