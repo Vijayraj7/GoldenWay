@@ -60,7 +60,7 @@ class StakeIncomeController extends Controller
                     if ($newCreatedAt->gt(Carbon::now())) {
                         $newCreatedAt = Carbon::now();
                     }
-
+                    $newCreatedAt->subHours(4);
                     DB::table('customer_transactions')
                         ->insert([
                             'tType' => 'stake_income',
