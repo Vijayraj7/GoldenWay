@@ -24,8 +24,10 @@ class BinaryIncomeController extends Controller
     {
         $now = Carbon::now('Asia/Kolkata');
         if ($now->hour < 22) {
+            echo '1';
             return "too early";
         }
+        echo '2';
 
         $admin_config = DB::table('admin_config')->first();
         if ($admin_config) {
