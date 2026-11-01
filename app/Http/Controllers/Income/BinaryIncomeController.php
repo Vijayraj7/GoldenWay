@@ -65,6 +65,10 @@ class BinaryIncomeController extends Controller
                 }
 
                 $main_amount = 0;
+                if($user->id == 1307){
+                    echo 'left : ' . $left_amount . ' <br> ';
+                    echo 'right : ' . $right_amount . ' <br> ';
+                }
                 if ($left_amount <= $right_amount) {
                     $main_amount = $left_amount;
                 } else {
