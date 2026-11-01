@@ -23,11 +23,11 @@ class BinaryIncomeController extends Controller
     public function binaryincome()
     {
         $now = Carbon::now('Asia/Kolkata');
-        if ($now->hour < 22) {
-            echo '1';
-            return "too early";
-        }
-        echo '2';
+        // if ($now->hour < 22) {
+        //     echo '1';
+        //     return "too early";
+        // }
+        // echo '2';
 
         $admin_config = DB::table('admin_config')->first();
         if ($admin_config) {
@@ -41,10 +41,12 @@ class BinaryIncomeController extends Controller
             if ($admin_config && $admin_config->last_binary) {
                 $last_run = Carbon::parse($admin_config->last_binary);
                 if ($last_run->addHours(24)->isFuture()) {
+                    echo '3';
                     return "too early, less than 24 hours since last run";
                 }
             }
         }
+        echo '4';
 
         $users = DB::table('customers')->get();
         foreach ($users as $user) {
