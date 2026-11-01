@@ -65,7 +65,7 @@ class BinaryIncomeController extends Controller
                 }
 
                 $main_amount = 0;
-                if($user->id == 1466){
+                if($user->id == 1307){
                     echo 'left : ' . $left_amount . ' <br> ';
                     echo 'right : ' . $right_amount . ' <br> ';
                 }
