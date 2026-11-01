@@ -97,14 +97,14 @@ class BinaryIncomeController extends Controller
                             $left_total = $main_amount;
                             $original_left_income = $original_income;
                             $left_total = $this->confirm_sub($user->id, $main_left->id, $left_total, $original_left_income);
-                            $this->binary_side_total($user->id, $main_left->id, $left_total, $original_left_income);
+                            $this->confirm_side_total($user->id, $main_left->id, $left_total, $original_left_income);
                         }
 
                         if ($main_right) {
                             $right_total = $main_amount;
                             $original_right_income = $original_income;
                             $right_total = $this->confirm_sub($user->id, $main_right->id, $right_total, $original_right_income);
-                            $this->binary_side_total($user->id, $main_right->id, $right_total, $original_right_income);
+                            $this->confirm_side_total($user->id, $main_right->id, $right_total, $original_right_income);
                         }
                     }
                 }
@@ -139,6 +139,10 @@ class BinaryIncomeController extends Controller
 
     public function binary_side_total($user_id, $main_user_id, $confirm_amount = null, $original_income = null): float
     {
+        if ($confirm_amount !== null) {
+            return (float) $this->confirm_side_total($user_id, $main_user_id, $confirm_amount, $original_income);
+        }
+
         $main_user = DB::table('customers')->where('id', $main_user_id)->first();
         if (!$main_user) {
             return 0.0;
@@ -149,22 +153,43 @@ class BinaryIncomeController extends Controller
         $right_user = DB::table('customers')->where('id', $main_user->right)->first();
 
         if ($left_user) {
-            if ($confirm_amount !== null && $confirm_amount > 0) {
-                $confirm_amount = $this->confirm_sub($user_id, $left_user->id, $confirm_amount, $original_income);
-            }
             $total_amount += $this->balance_sub($user_id, $left_user->id);
-            $total_amount += $this->binary_side_total($user_id, $left_user->id, $confirm_amount, $original_income);
+            $total_amount += $this->binary_side_total($user_id, $left_user->id);
         }
 
         if ($right_user) {
-            if ($confirm_amount !== null && $confirm_amount > 0) {
-                $confirm_amount = $this->confirm_sub($user_id, $right_user->id, $confirm_amount, $original_income);
-            }
             $total_amount += $this->balance_sub($user_id, $right_user->id);
-            $total_amount += $this->binary_side_total($user_id, $right_user->id, $confirm_amount, $original_income);
+            $total_amount += $this->binary_side_total($user_id, $right_user->id);
         }
 
         return $total_amount;
+    }
+
+    public function confirm_side_total($user_id, $main_user_id, $confirm_amount, $original_income)
+    {
+        if ($confirm_amount <= 0) {
+            return 0.0;
+        }
+
+        $main_user = DB::table('customers')->where('id', $main_user_id)->first();
+        if (!$main_user) {
+            return $confirm_amount;
+        }
+
+        $left_user = DB::table('customers')->where('id', $main_user->left)->first();
+        $right_user = DB::table('customers')->where('id', $main_user->right)->first();
+
+        if ($left_user && $confirm_amount > 0) {
+            $confirm_amount = $this->confirm_sub($user_id, $left_user->id, $confirm_amount, $original_income);
+            $confirm_amount = $this->confirm_side_total($user_id, $left_user->id, $confirm_amount, $original_income);
+        }
+
+        if ($right_user && $confirm_amount > 0) {
+            $confirm_amount = $this->confirm_sub($user_id, $right_user->id, $confirm_amount, $original_income);
+            $confirm_amount = $this->confirm_side_total($user_id, $right_user->id, $confirm_amount, $original_income);
+        }
+
+        return $confirm_amount;
     }
 
     public function balance_sub($main_user_id, $user_id)
