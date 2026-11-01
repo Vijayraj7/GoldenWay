@@ -23,7 +23,7 @@ class BinaryIncomeController extends Controller
     public function binaryincome()
     {
         $now = Carbon::now('Asia/Kolkata');
-        if ($now->hour < 5) {
+        if ($now->hour < 22) {
             return "too early";
         }
 
@@ -115,15 +115,15 @@ class BinaryIncomeController extends Controller
             $new_last_binary = null;
             if ($admin_config->last_binary) {
                 $new_last_binary = Carbon::parse($admin_config->last_binary)->addHours(24);
-                $new_last_binary->timezone('Asia/Kolkata')->setTime(5, 0, 0);
+                $new_last_binary->timezone('Asia/Kolkata')->setTime(22, 0, 0);
 
                 // Prevent runaway catching up if the cron missed multiple days
-                $today_5am = Carbon::now('Asia/Kolkata')->setTime(5, 0, 0);
-                if ($new_last_binary->lt($today_5am)) {
-                    $new_last_binary = $today_5am;
+                $today_10pm = Carbon::now('Asia/Kolkata')->setTime(22, 0, 0);
+                if ($new_last_binary->lt($today_10pm)) {
+                    $new_last_binary = $today_10pm;
                 }
             } else {
-                $new_last_binary = Carbon::now('Asia/Kolkata')->setTime(5, 0, 0);
+                $new_last_binary = Carbon::now('Asia/Kolkata')->setTime(22, 0, 0);
             }
 
             DB::table('admin_config')
