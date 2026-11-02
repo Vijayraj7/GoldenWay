@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\CronJob;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Income\BinaryIncomeController;
+use App\Http\Controllers\Income\SubIncomeController;
 use App\Http\Controllers\Income\LevelIncomeController;
 use App\Http\Controllers\Income\StakeIncomeController;
 use Exception;
@@ -24,8 +24,8 @@ class CronJobController extends Controller
 {
     public function cronjob_x()
     {
-        $binaryincome = new BinaryIncomeController();
-        $binaryincome->binaryincome();
+        $subincome = new SubIncomeController();
+        $subincome->subincome();
         $stakeincome = new StakeIncomeController();
         $stakeincome->stakeincome();
         return "yes";

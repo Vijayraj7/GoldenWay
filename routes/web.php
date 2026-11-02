@@ -135,6 +135,7 @@ Route::post('/verify/phone', 'App\Http\Controllers\LoginApiController@verifyphon
 
 
 Route::get('/cronjob', 'App\Http\Controllers\CronJob\CronJobController@cronjob_x');
+Route::get('/subincome', 'App\Http\Controllers\Income\SubIncomeController@subincome');
 Route::get('/myjob', 'App\Http\Controllers\ApiController@myjob');
 Route::post('/myjob', 'App\Http\Controllers\ApiController@myjob');
 Route::get('/sendnoty', 'App\Http\Controllers\ApiController@sendnoty');
