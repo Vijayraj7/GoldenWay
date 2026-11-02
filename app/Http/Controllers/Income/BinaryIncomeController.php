@@ -37,8 +37,8 @@ class BinaryIncomeController extends Controller
             }
 
             if ($admin_config && $admin_config->last_binary) {
-                $last_run = Carbon::parse($admin_config->last_binary);
-                if ($last_run->addHours(24)->isFuture()) {
+                $last_run = Carbon::parse($admin_config->last_binary, 'Asia/Kolkata');
+                if ($last_run->addHours(24)->gt($now)) {
                     // return "too early, less than 24 hours since last run";
                 }
             }
@@ -118,8 +118,8 @@ class BinaryIncomeController extends Controller
         if ($admin_config) {
             $new_last_binary = null;
             if ($admin_config->last_binary) {
-                $new_last_binary = Carbon::parse($admin_config->last_binary)->addHours(24);
-                $new_last_binary->timezone('Asia/Kolkata')->setTime(22, 0, 0);
+                $new_last_binary = Carbon::parse($admin_config->last_binary, 'Asia/Kolkata')->addHours(24);
+                $new_last_binary->setTime(22, 0, 0);
 
                 // Prevent runaway catching up if the cron missed multiple days
                 $today_10pm = Carbon::now('Asia/Kolkata')->setTime(22, 0, 0);
