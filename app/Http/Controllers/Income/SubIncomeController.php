@@ -116,7 +116,7 @@ class SubIncomeController extends Controller
             if ($txnamount > 0) {
                 DB::table('customer_transactions')->insert([
                     'tType' => 'sub_income',
-                    'created_at' => Carbon::now('Asia/Kolkata')->setTime(22, 0, 0)->format('Y-m-d H:i:s'),
+                    'created_at' => Carbon::now('Asia/Kolkata')->setTime(18, 0, 0)->format('Y-m-d H:i:s'),
                     'csId' => $user->id,
                     'tAmount' => strval($txnamount),
                     'tStatus' => '1',
