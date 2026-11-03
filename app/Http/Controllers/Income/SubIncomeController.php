@@ -21,7 +21,7 @@ class SubIncomeController extends Controller
     {
         $now = Carbon::now('Asia/Kolkata');
         if ($now->hour < 22) {
-            return "too early";
+            // return "too early";
         }
 
         // Ensure necessary database schema columns exist
